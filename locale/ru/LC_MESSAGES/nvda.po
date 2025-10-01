@@ -1,0 +1,412 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-27 13:16+0700\n"
+"PO-Revision-Date: 2025-09-27 13:16+0700\n"
+"Last-Translator: Anonymous <anonymous@example.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: __init__.py:47
+msgid "This command is only available in File Explorer."
+msgstr "Эта команда доступна только в Проводнике."
+
+#: __init__.py:78
+msgid "Convert Audio"
+msgstr "Конвертировать аудио"
+
+#: __init__.py:79
+msgid "Convert MP3 to MP4"
+msgstr "Конвертировать MP3 в MP4"
+
+#: __init__.py:80
+msgid "Merge MP3"
+msgstr "Объединить MP3"
+
+#: __init__.py:81
+msgid "Trim Audio/Video File"
+msgstr "Обрезать аудио/видео файл"
+
+#: __init__.py:115
+msgid "Failed to retrieve selected files: {}"
+msgstr "Не удалось получить выбранные файлы: {}"
+
+#: __init__.py:131
+msgid "Failed to open Trim dialog: {}"
+msgstr "Не удалось открыть диалог обрезки: {}"
+
+#: __init__.py:140
+msgid "Failed to open Merge dialog: {}"
+msgstr "Не удалось открыть диалог объединения: {}"
+
+#: __init__.py:149
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Не удалось открыть диалог конвертации аудио: {}"
+
+#: __init__.py:158
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "Не удалось открыть диалог конвертации MP3 в MP4: {}"
+
+#: convertAudio.py:46
+msgid "Convert Audio: {} files"
+msgstr "Конвертировать аудио: {} файлов"
+
+#: convertAudio.py:67
+msgid "Files to Convert"
+msgstr "Файлы для конвертации"
+
+#: convertAudio.py:72
+msgid "Current File"
+msgstr "Текущий файл"
+
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Длительность файла: Вычисляется..."
+
+#: convertAudio.py:78
+msgid "Conversion Settings"
+msgstr "Настройки конвертации"
+
+#: convertAudio.py:82
+msgid "Output Format:"
+msgstr "Формат вывода:"
+
+#: convertAudio.py:88
+msgid "MP3 Quality:"
+msgstr "Качество MP3:"
+
+#: convertAudio.py:94
+msgid "Sample Rate:"
+msgstr "Частота дискретизации:"
+
+#: convertAudio.py:100
+msgid "Volume:"
+msgstr "Громкость:"
+
+#: convertAudio.py:111
+msgid "Convert"
+msgstr "Конвертировать"
+
+#: convertAudio.py:114
+msgid "Cancel"
+msgstr "Отмена"
+
+#: convertAudio.py:124
+msgid "File Duration: {}"
+msgstr "Длительность файла: {}"
+
+#: convertAudio.py:175
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe не найден"
+
+#: convertAudio.py:217
+msgid "Conversion complete!"
+msgstr "Конвертация завершена!"
+
+#: convertAudio.py:220
+msgid "Conversion complete for {}"
+msgstr "Конвертация завершена для {}"
+
+#: convertAudio.py:224
+msgid "All conversions complete!"
+msgstr "Все конвертации завершены!"
+
+#: convertAudio.py:228
+msgid "Conversion failed: {}"
+msgstr "Конвертация не удалась: {}"
+
+#: convertAudio.py:205
+msgid "Converting: {}%"
+msgstr "Конвертация: {}%"
+
+#: convertAudio.py:172
+msgid "Starting conversion..."
+msgstr "Начало конвертации..."
+
+#: convertAudio.py:153
+msgid "Paused."
+msgstr "Приостановлено."
+
+#: convertAudio.py:149
+msgid "Resuming..."
+msgstr "Возобновление..."
+
+#: convertMP3toMP4.py:44
+msgid "Convert MP3 to MP4: {}"
+msgstr "Конвертировать MP3 в MP4: {}"
+
+#: convertMP3toMP4.py:62
+msgid "Selected MP3 File"
+msgstr "Выбранный MP3 файл"
+
+#: convertMP3toMP4.py:64
+msgid "Duration: Calculating..."
+msgstr "Длительность: Вычисляется..."
+
+#: convertMP3toMP4.py:68
+msgid "Photo List"
+msgstr "Список фотографий"
+
+#: convertMP3toMP4.py:71
+msgid "Add Photo..."
+msgstr "Добавить фото..."
+
+#: convertMP3toMP4.py:74
+msgid "Remove Photo"
+msgstr "Удалить фото"
+
+#: convertMP3toMP4.py:78
+msgid "Loop Duration (seconds):"
+msgstr "Длительность цикла (секунды):"
+
+#: convertMP3toMP4.py:83
+msgid "Background Color:"
+msgstr "Цвет фона:"
+
+#: convertMP3toMP4.py:86
+msgid "None"
+msgstr "Нет"
+
+#: convertMP3toMP4.py:86
+msgid "Black"
+msgstr "Черный"
+
+#: convertMP3toMP4.py:86
+msgid "White"
+msgstr "Белый"
+
+#: convertMP3toMP4.py:86
+msgid "Red"
+msgstr "Красный"
+
+#: convertMP3toMP4.py:86
+msgid "Green"
+msgstr "Зеленый"
+
+#: convertMP3toMP4.py:86
+msgid "Blue"
+msgstr "Синий"
+
+#: convertMP3toMP4.py:90
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Автоматическая обрезка изображений до соотношения сторон 16:9"
+
+#: convertMP3toMP4.py:144
+msgid "Please select at least one photo or choose a background color."
+msgstr "Пожалуйста, выберите хотя бы одно фото или цвет фона."
+
+#: convertMP3toMP4.py:111
+msgid "Invalid image file: {}"
+msgstr "Недопустимый файл изображения: {}"
+
+#: convertMP3toMP4.py:159
+msgid "Failed to create file list: {}"
+msgstr "Не удалось создать список файлов: {}"
+
+#: convertMP3toMP4.py:101
+msgid "Duration: {}"
+msgstr "Длительность: {}"
+
+#: merge.py:47
+msgid "Files to Merge"
+msgstr "Файлы для объединения"
+
+#: merge.py:51
+msgid "Move Up"
+msgstr "Переместить вверх"
+
+#: merge.py:52
+msgid "Move Down"
+msgstr "Переместить вниз"
+
+#: merge.py:57
+msgid "Output Filename:"
+msgstr "Имя выходного файла:"
+
+#: merge.py:61
+msgid "Cross-fade Settings"
+msgstr "Настройки кроссфейда"
+
+#: merge.py:63
+msgid "Enable Cross-fade between tracks"
+msgstr "Включить кроссфейд между треками"
+
+#: merge.py:64
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Обеспечивает плавные переходы между треками за счет затухания конца одного трека и нарастания начала следующего"
+
+#: merge.py:67
+msgid "Cross-fade Duration (seconds):"
+msgstr "Длительность кроссфейда (секунды):"
+
+#: merge.py:69
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Длительность в секундах для кроссфейда между треками. Рекомендуемое значение: 5 секунд."
+
+#: merge.py:73
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Нарастание для следующего трека (секунды):"
+
+#: merge.py:75
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Дополнительная длительность нарастания для начала каждого трека (кроме первого трека)"
+
+#: merge.py:80
+msgid "Merge Mode"
+msgstr "Режим объединения"
+
+#: merge.py:82
+msgid "Re-encode with quality (slower)"
+msgstr "Перекодировать с качеством (медленнее)"
+
+#: merge.py:83
+msgid "Copy without re-encoding (faster)"
+msgstr "Копировать без перекодирования (быстрее)"
+
+#: merge.py:88
+msgid "Audio Quality:"
+msgstr "Качество аудио:"
+
+#: merge.py:94
+msgid "Merge"
+msgstr "Объединить"
+
+#: merge.py:126
+msgid "Please select at least 2 files"
+msgstr "Пожалуйста, выберите как минимум 2 файла"
+
+#: merge.py:130
+msgid "Please enter an output filename."
+msgstr "Пожалуйста, введите имя выходного файла."
+
+#: merge.py:140
+msgid "File not found: {}"
+msgstr "Файл не найден: {}"
+
+#: merge.py:145
+msgid "Starting merge..."
+msgstr "Начало объединения..."
+
+#: merge.py:108
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Кроссфейд требует режима перекодирования"
+
+#: merge.py:165
+msgid "Merge successful. Output saved to: {}"
+msgstr "Объединение успешно. Выход сохранен в: {}"
+
+#: merge.py:167
+msgid "Merge failed: {}"
+msgstr "Объединение не удалось: {}"
+
+#: merge.py:175
+msgid "{} percent"
+msgstr "{} процентов"
+
+#: merge.py:181
+msgid "Merge complete!"
+msgstr "Объединение завершено!"
+
+#: Trim.py:46
+msgid "Trim Audio: {}"
+msgstr "Обрезать аудио: {}"
+
+#: Trim.py:68
+msgid "Selected File"
+msgstr "Выбранный файл"
+
+#: Trim.py:74
+msgid "Start Time:"
+msgstr "Время начала:"
+
+#: Trim.py:76
+msgid "End Time:"
+msgstr "Время окончания:"
+
+#: Trim.py:80
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: Trim.py:85
+msgid "Output Format"
+msgstr "Формат вывода"
+
+#: Trim.py:91
+msgid "MP3 Quality"
+msgstr "Качество MP3"
+
+#: Trim.py:60
+msgid "Failed to load configuration: {}"
+msgstr "Не удалось загрузить конфигурацию: {}"
+
+#: Trim.py:70
+msgid "Failed to save configuration: {}"
+msgstr "Не удалось сохранить конфигурацию: {}"
+
+#: Trim.py:122
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe не найден"
+
+#: Trim.py:141
+msgid "Failed to get file duration: {}"
+msgstr "Не удалось получить длительность файла: {}"
+
+#: Trim.py:154
+msgid "File duration: {duration}; Trim period: {period} seconds"
+msgstr "Длительность файла: {duration}; Период обрезки: {period} секунд"
+
+#: Trim.py:159
+msgid "unknown"
+msgstr "неизвестно"
+
+#: Trim.py:162
+msgid "invalid"
+msgstr "недопустимо"
+
+#: Trim.py:164
+msgid "invalid (negative)"
+msgstr "недопустимо (отрицательное)"
+
+#: Trim.py:183
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Недопустимый формат времени. Используйте секунды (например, 10), MM:SS (например, 1:30) или HH:MM:SS (например, 1:30:45)"
+
+#: Trim.py:189
+msgid "Start time must be less than end time"
+msgstr "Время начала должно быть меньше времени окончания"
+
+#: Trim.py:192
+msgid "End time cannot be greater than file duration"
+msgstr "Время окончания не может быть больше длительности файла"
+
+#: Trim.py:195
+msgid "Invalid time values"
+msgstr "Недопустимые значения времени"
+
+#: Trim.py:224
+msgid "Preview failed: {}"
+msgstr "Предпросмотр не удался: {}"
+
+#: Trim.py:218
+msgid "Could not play preview with system player: {}"
+msgstr "Не удалось воспроизвести предпросмотр с помощью системного плеера: {}"
+
+#: Trim.py:221
+msgid "Preview file was not created or is empty"
+msgstr "Файл предпросмотра не создан или пуст"
+
+#: Trim.py:270
+msgid "Trimmed file saved as {}"
+msgstr "Обрезанный файл сохранен как {}"
+
+#: Trim.py:278
+msgid "Trimming failed: {}"
+msgstr "Обрезка не удалась: {}"
+
+#: Trim.py:305
+msgid "Failed to remove temporary file: {}"
+msgstr "Не удалось удалить временный файл: {}"
