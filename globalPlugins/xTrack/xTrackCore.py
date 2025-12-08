@@ -1,5 +1,4 @@
 # xTrackCore.py
-
 import os
 import json
 import logging
@@ -102,3 +101,19 @@ def get_file_duration(tools_path, file_path):
     except Exception:
         return 0, "N/A"
 
+def get_file_size(file_path):
+    """
+    Gets file size in bytes and returns a human-readable string.
+    """
+    try:
+        size_bytes = os.path.getsize(file_path)
+        if size_bytes < 1024:
+            return size_bytes, f"{size_bytes} B"
+        elif size_bytes < 1024 * 1024:
+            return size_bytes, f"{size_bytes/1024:.1f} KB"
+        elif size_bytes < 1024 * 1024 * 1024:
+            return size_bytes, f"{size_bytes/(1024*1024):.1f} MB"
+        else:
+            return size_bytes, f"{size_bytes/(1024*1024*1024):.1f} GB"
+    except Exception:
+        return 0, "N/A"

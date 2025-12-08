@@ -2,22 +2,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xTrack 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-27 13:09+0700\n"
-"PO-Revision-Date: 2025-09-27 13:09+0700\n"
+"POT-Creation-Date: 2025-12-08 13:09+0700\n"
+"PO-Revision-Date: 2025-12-08 16:24+0700\n"
 "Last-Translator: Anonymous <anonymous@example.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.7\n"
 
 #: __init__.py:47
 msgid "This command is only available in File Explorer."
 msgstr "This command is only available in File Explorer."
 
-#: __init__.py:78
+#: __init__.py:77
 msgid "Convert Audio"
 msgstr "Convert Audio"
+
+#: __init__.py:78
+msgid "Convert Video"
+msgstr "Convert Video"
 
 #: __init__.py:79
 msgid "Convert MP3 to MP4"
@@ -27,29 +32,73 @@ msgstr "Convert MP3 to MP4"
 msgid "Merge MP3"
 msgstr "Merge MP3"
 
-#: __init__.py:81
+#: __init__.py:81 Trim.py:46
 msgid "Trim Audio/Video File"
 msgstr "Trim Audio/Video File"
 
-#: __init__.py:115
+#: __init__.py:82
+msgid "Resize Image"
+msgstr "Resize Image"
+
+#: __init__.py:83
+msgid "Split Audio"
+msgstr "Split Audio"
+
+#: __init__.py:84
+msgid "Record Settings"
+msgstr "Record Settings"
+
+#: __init__.py:109
 msgid "Failed to retrieve selected files: {}"
 msgstr "Failed to retrieve selected files: {}"
 
-#: __init__.py:131
+#: __init__.py:133
 msgid "Failed to open Trim dialog: {}"
 msgstr "Failed to open Trim dialog: {}"
 
-#: __init__.py:140
+#: __init__.py:142
 msgid "Failed to open Merge dialog: {}"
 msgstr "Failed to open Merge dialog: {}"
 
-#: __init__.py:149
+#: __init__.py:151
 msgid "Failed to open Convert Audio dialog: {}"
 msgstr "Failed to open Convert Audio dialog: {}"
 
-#: __init__.py:158
+#: __init__.py:160
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Failed to open Convert Video dialog: {}"
+
+#: __init__.py:169
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Failed to open Resize Image dialog: {}"
+
+#: __init__.py:178
 msgid "Failed to open Convert MP3 to MP4 dialog: {}"
 msgstr "Failed to open Convert MP3 to MP4 dialog: {}"
+
+#: __init__.py:187
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Failed to open Split Audio dialog: {}"
+
+#: __init__.py:207
+msgid "Record settings saved"
+msgstr "Record settings saved"
+
+#: __init__.py:210
+msgid "Failed to open Record Settings: {}"
+msgstr "Failed to open Record Settings: {}"
+
+#: __init__.py:217
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Start recording; press again to pause; press again to continue"
+
+#: __init__.py:225
+msgid "Stop recording"
+msgstr "Stop recording"
+
+#: __init__.py:235
+msgid "Record Settings..."
+msgstr "Record Settings..."
 
 #: convertAudio.py:46
 msgid "Convert Audio: {} files"
@@ -143,10 +192,6 @@ msgstr "Convert MP3 to MP4: {}"
 msgid "Selected MP3 File"
 msgstr "Selected MP3 File"
 
-#: convertMP3toMP4.py:64
-msgid "Duration: Calculating..."
-msgstr "Duration: Calculating..."
-
 #: convertMP3toMP4.py:68
 msgid "Photo List"
 msgstr "Photo List"
@@ -191,6 +236,30 @@ msgstr "Green"
 msgid "Blue"
 msgstr "Blue"
 
+#: convertMP3toMP4.py:86
+msgid "Yellow"
+msgstr "Yellow"
+
+#: convertMP3toMP4.py:86
+msgid "Magenta"
+msgstr "Magenta"
+
+#: convertMP3toMP4.py:86
+msgid "Cyan"
+msgstr "Cyan"
+
+#: convertMP3toMP4.py:86
+msgid "Gray"
+msgstr "Gray"
+
+#: convertMP3toMP4.py:86
+msgid "Orange"
+msgstr "Orange"
+
+#: convertMP3toMP4.py:86
+msgid "Purple"
+msgstr "Purple"
+
 #: convertMP3toMP4.py:90
 msgid "Auto crop images to 16:9 aspect ratio"
 msgstr "Auto crop images to 16:9 aspect ratio"
@@ -207,7 +276,7 @@ msgstr "Invalid image file: {}"
 msgid "Failed to create file list: {}"
 msgstr "Failed to create file list: {}"
 
-#: convertMP3toMP4.py:101
+#: convertMP3toMP4.py:64 convertMP3toMP4.py:101
 msgid "Duration: {}"
 msgstr "Duration: {}"
 
@@ -236,24 +305,36 @@ msgid "Enable Cross-fade between tracks"
 msgstr "Enable Cross-fade between tracks"
 
 #: merge.py:64
-msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
-msgstr "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgid ""
+"Enable smooth transitions between tracks by fading out the end of one track "
+"and fading in the beginning of the next"
+msgstr ""
+"Enable smooth transitions between tracks by fading out the end of one track "
+"and fading in the beginning of the next"
 
 #: merge.py:67
 msgid "Cross-fade Duration (seconds):"
 msgstr "Cross-fade Duration (seconds):"
 
 #: merge.py:69
-msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
-msgstr "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgid ""
+"Duration in seconds for cross-fading between tracks. Recommended value is 5 "
+"seconds."
+msgstr ""
+"Duration in seconds for cross-fading between tracks. Recommended value is 5 "
+"seconds."
 
 #: merge.py:73
 msgid "Fade-in for Next Track (seconds):"
 msgstr "Fade-in for Next Track (seconds):"
 
 #: merge.py:75
-msgid "Additional fade-in duration for the beginning of each track (except the first track)"
-msgstr "Additional fade-in duration for the beginning of each track (except the first track)"
+msgid ""
+"Additional fade-in duration for the beginning of each track (except the "
+"first track)"
+msgstr ""
+"Additional fade-in duration for the beginning of each track (except the "
+"first track)"
 
 #: merge.py:80
 msgid "Merge Mode"
@@ -310,10 +391,6 @@ msgstr "{} percent"
 #: merge.py:181
 msgid "Merge complete!"
 msgstr "Merge complete!"
-
-#: Trim.py:46
-msgid "Trim Audio: {}"
-msgstr "Trim Audio: {}"
 
 #: Trim.py:68
 msgid "Selected File"
@@ -372,8 +449,12 @@ msgid "invalid (negative)"
 msgstr "invalid (negative)"
 
 #: Trim.py:183
-msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
-msgstr "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgid ""
+"Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS "
+"(e.g., 1:30:45)"
+msgstr ""
+"Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS "
+"(e.g., 1:30:45)"
 
 #: Trim.py:189
 msgid "Start time must be less than end time"

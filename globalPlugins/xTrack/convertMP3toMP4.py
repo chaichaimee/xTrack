@@ -69,11 +69,14 @@ class ConvertMP3toMP4Dialog(wx.Dialog):
         main_sizer.Add(self.loop_sizer, 0, wx.EXPAND | wx.ALL, 5)
         self.loop_sizer.ShowItems(False)  # Hide initially
         
-        # Background color setting
+        # Background color setting with 12 colors
         color_sizer = wx.BoxSizer(wx.HORIZONTAL)
         color_label = wx.StaticText(self, label=_("Background Color:"))
         color_sizer.Add(color_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        color_choices = [_("None"), _("Black"), _("White"), _("Red"), _("Green"), _("Blue")]
+        color_choices = [
+            _("None"), _("Black"), _("White"), _("Red"), _("Green"), _("Blue"),
+            _("Yellow"), _("Magenta"), _("Cyan"), _("Gray"), _("Orange"), _("Purple")
+        ]
         self.color_ctrl = wx.ComboBox(self, choices=color_choices, style=wx.CB_READONLY)
         self.color_ctrl.SetStringSelection(_("None"))
         color_sizer.Add(self.color_ctrl, 1, wx.EXPAND | wx.ALL, 5)
@@ -187,7 +190,7 @@ class ConvertMP3toMP4Dialog(wx.Dialog):
             return
         
         base_name = os.path.splitext(os.path.basename(self.selected_mp3))[0]
-        output_file = f"{base_name}_video.mp4"
+        output_file = f"{base_name}.mp4"
         output_path = os.path.join(self.output_path, output_file)
         
         ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
@@ -258,7 +261,13 @@ class ConvertMP3toMP4Dialog(wx.Dialog):
                 _("White"): "FFFFFF",
                 _("Red"): "FF0000",
                 _("Green"): "00FF00",
-                _("Blue"): "0000FF"
+                _("Blue"): "0000FF",
+                _("Yellow"): "FFFF00",
+                _("Magenta"): "FF00FF",
+                _("Cyan"): "00FFFF",
+                _("Gray"): "808080",
+                _("Orange"): "FFA500",
+                _("Purple"): "800080"
             }
             
             color_hex = color_map.get(selected_color, "000000")
@@ -394,4 +403,6 @@ class ConvertMP3toMP4Dialog(wx.Dialog):
             except Exception:
                 pass
         self.EndModal(wx.ID_CANCEL)
+
+
 
