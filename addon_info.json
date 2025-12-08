@@ -1,0 +1,10 @@
+﻿{
+  "addon_name": "xTrack",
+  "addon_description": "Convert Trim and Merge Audio File in various forms Based on the ability of FFMPEG.exe",
+  "addon_version": "2025.10",
+  "addon_author": "chai chaimee & malee yamazaki",
+  "addon_url": "https://github.com/chaichaimee/xTrack",
+  "addon_download_url": "https://github.com/chaichaimee/xTrack/releases/download/v2025.10/xTrack-v2025.10.nvda-addon",
+  "addon_min_nvda_version": "2022.4"
+}
+
