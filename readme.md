@@ -1,60 +1,53 @@
-# xTrack
-Multimedia File Conversion Tool
+# ![NVDA Logo](https://www.nvaccess.org/files/nvda/documentation/userGuide/images/nvda.ico) xTrack
 
-**author:** chai chaimee & malee yamazaki
-**url:** https://github.com/chaichaimee/xTrack
+### **Efficient Multimedia Conversion & Editing Toolkit**
+
+xTrack is a versatile NVDA add-on designed to simplify multimedia tasks directly from your file explorer. It provides a streamlined workflow for converting, merging, and editing audio, video, and images without the need for complex external software.
+
+**Author:** chai chaimee & malee yamazaki  
+**URL:** [https://github.com/chaichaimee/xTrack](https://github.com/chaichaimee/xTrack)
 
 ---
 
 ## What's New
-* Convert Video Function
-* Resize Image Function
-* Record Function
-* Split Audio Function
-* Trim Audio/Video Function: In the Audio section, Fade in FadeOut has been added and video can now be trimmed into various formats
+* **Image Info:** Quickly retrieve technical metadata of image files.
+* **Resize Image:** Added a new Crop function for precise image framing.
+* **Split Audio:** New tool to divide audio files at specific time intervals.
 
 ---
 
 ## Hotkeys
-* **NVDA+X:** Opens the context menu with the following options:
-    * Convert Audio
-    * Convert MP3 to MP4
-    * Convert video
-    * Merge MP3
-    * Record Setting
-    * Split Audio
-    * Trim Audio/Video File
-
-* **CTRL+Shift+Space Bar:** Record and if pressed again it will be Pause
-* **CTRL+Windows+Space Bar:** Stop Recording
+* **`NVDA+X`**: Opens the context menu with the following options:
+    * Convert Audio / Convert Video / Convert MP3 to MP4
+    * Merge MP3 / Trim Audio/Video File / Split Audio
+    * Resize Image / Image Info / Record Setting
+* **`CTRL+Shift+Space Bar`**: Record and if pressed again it will be Pause.
+* **`CTRL+Windows+Space Bar`**: Stop Recording.
 
 ---
 
-## Features
+## Features & Usage
 
-### Convert Audio
-Select one or more video or audio files. Press **NVDA+X** and select "Convert Audio" to open the settings window. The system will automatically calculate the file duration. You can customize the audio quality before converting. The tool includes a queueing system to process files one by one, which prevents heavy CPU and RAM usage.
+### 🚀 Convert Audio
+**Experience seamless audio extraction and conversion with professional-grade output.** Select one or more video or audio files in your file explorer, then press `NVDA+X` and choose **Convert Audio**. The configuration window will automatically calculate the file duration. You can customize the audio quality before starting. The system uses a queuing process to handle files one by one, ensuring smooth performance.
 
-### Convert MP3 to MP4
-Select an MP3 file, press **NVDA+X**, and open the "Convert MP3 to MP4" mode. The settings window will appear, allowing you to select one or more images to create a slideshow. You can set the loop duration for each image in seconds. If you don't want to use images, you can also choose a background color instead.
+### 🎬 Convert MP3 to MP4
+**Easily transform your audio tracks into ready-to-share video content.** Select an MP3 file, press `NVDA+X`, and select **Convert MP3 to MP4**. In the settings window, you can choose one or more images to create a slideshow for your audio. You can set a loop duration for each image or choose a solid background color instead.
 
-### Convert Video
-Select the video file you want to convert, then press **NVDA+X** to open the context menu.
-Choose Convert Video, and the conversion window will open.
+### 🎵 Merge MP3
+**Combine your audio projects with smooth transitions and unified sound quality.** Select multiple audio files or an entire folder, press `NVDA+X`, and choose **Merge Audio Files**. The interface allows you to reorder tracks and select between **Normal Merge** (sequential) or **Cross-fade Merge** (seamless transitions).
 
-### Merge MP3
-Select all the files or a folder containing audio files, press **NVDA+X**, and select "Merge Audio Files." This will open a window where you can reorder the files as you wish, adjust the audio quality, and quickly merge them.
+### 🎙️ Record
+**Capture every important moment with a powerful, accessible background recorder.** Start by configuring your preferred format in **Record Settings** via the `NVDA+X` menu. Once set, use `CTRL+Shift+Space Bar` to start/pause and `CTRL+Windows+Space Bar` to stop and save automatically.
 
-You can choose between two merge options:
-* Normal merge � files are joined end to end.
-* Cross-fade merge � uses a cross-fade feature so the songs play seamlessly with no gap between tracks.
+### 🔪 Split Audio
+**Achieve surgical precision when dividing long recordings into organized segments.** Select the audio file, press `NVDA+X`, and choose **Split Audio**. Define the number of split points and specify the exact end time for each segment you want to extract.
 
-### Record
-The first step is to configure the recording format in the Record Settings. After that, you will be able to automatically record audio from anywhere while you work.
+### ✂️ Trim Audio/Video File
+**Quickly remove unwanted sections and keep only the parts that matter.** Select your file, press `NVDA+X`, and choose **Trim Audio/Video File**. Enter the start and end points, adjust quality, and use the **Preview** button to verify the start point before processing.
 
-### Split Audio
-Select the audio file you want to split, then press **NVDA+X** and choose Split Audio to open the configuration window.
-Set the number of split points you need, and then specify the end time for each track you want to split.
+### 🖼️ Resize Image
+**Tailor your visuals to perfection with integrated resizing and cropping tools.** Select one or more images, press `NVDA+X`, and select **Resize Image**. Change dimensions, apply cropping, and convert between formats in a single operation.
 
-### Trim Audio/Video File
-Select the file you want to trim, press **NVDA+X**, and choose "Trim Audio/Video File." This will open a window to set the desired start and end points. The system will automatically calculate the total file length and display it in the end time field. You can choose to convert the output to MP3 or WAV and specify the audio quality. A "Preview" button is also available to check the start point.
+### 🔍 Image Info
+**Access critical image metadata instantly with a single shortcut.** Select an image and use the `NVDA+X` menu to choose **Image Info**. NVDA will immediately announce the dimensions and resolution of the selected image.

@@ -16,7 +16,7 @@ import addonHandler
 addonHandler.initTranslation()
 
 class ConvertAudioDialog(wx.Dialog):
-    """Dialog for converting various audio/video formats to MP3 or WAV."""
+    """Dialog for converting various audio/video formats to MP3 or WAV, including same-format re-encoding."""
     def __init__(self, parent, selected_files, tools_path):
         super().__init__(parent, title=_("Convert Audio"))
         self.selected_files = selected_files
@@ -114,6 +114,13 @@ class ConvertAudioDialog(wx.Dialog):
         self.volume_ctrl = wx.ComboBox(self, choices=volume_choices, style=wx.CB_READONLY)
         volume_sizer.Add(self.volume_ctrl, 1, wx.EXPAND | wx.ALL, 5)
         settings_sizer.Add(volume_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        
+        # Add same-format conversion note
+        note_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        note_label = wx.StaticText(self, label=_("Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."))
+        note_label.Wrap(400)  # Make text wrap
+        note_sizer.Add(note_label, 1, wx.EXPAND | wx.ALL, 5)
+        settings_sizer.Add(note_sizer, 0, wx.EXPAND | wx.ALL, 5)
         
         main_sizer.Add(settings_sizer, 0, wx.EXPAND | wx.ALL, 5)
         
@@ -225,7 +232,7 @@ class ConvertAudioDialog(wx.Dialog):
     def on_convert(self, event):
         self.save_settings()
         
-        # Add all files to queue
+        # Add all files to queue (including those with same format)
         for file_path in self.selected_files:
             self.conversion_queue.put(file_path)
         
@@ -248,7 +255,16 @@ class ConvertAudioDialog(wx.Dialog):
         volume_percent = int(self.volume_ctrl.GetStringSelection().replace('%', '')) / 100
         
         base_name = os.path.splitext(os.path.basename(file_path))[0]
-        output_file = f"{base_name}.{output_format}"
+        input_ext = os.path.splitext(file_path)[1].lower()
+        input_format = input_ext[1:] if input_ext else ""  # Remove the dot
+        
+        # Create output filename based on input format and output format
+        # If input format is same as output format, append "_converted" to avoid overwriting
+        if input_format == output_format:
+            output_file = f"{base_name}_converted.{output_format}"
+        else:
+            output_file = f"{base_name}.{output_format}"
+        
         output_path = os.path.join(self.output_path, output_file)
         
         ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
@@ -256,15 +272,16 @@ class ConvertAudioDialog(wx.Dialog):
             ui.message(_("ffmpeg.exe not found"))
             return
         
+        # Build command based on format
         cmd = [
             ffmpeg_path,
             "-i", file_path,
-            "-vn",
+            "-vn",  # No video
             "-ar", samplerate_str,
             "-af", f"volume={volume_percent}",
             "-progress", "pipe:1",
             "-nostats",
-            "-y",
+            "-y",  # Overwrite output file if exists
         ]
         
         if output_format == "mp3":
@@ -391,4 +408,3 @@ class ConvertAudioDialog(wx.Dialog):
                 break
         self.currently_processing = False
         self.EndModal(wx.ID_CANCEL)
-

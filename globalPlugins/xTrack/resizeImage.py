@@ -10,13 +10,14 @@ import json
 import queue
 import math
 from gui import guiHelper
-from .xTrackCore import load_config, save_config, get_file_size, get_unique_filename
+from .xTrackCore import load_config, save_config, get_file_size
 import addonHandler
+import core
 
 addonHandler.initTranslation()
 
 class ResizeImageDialog(wx.Dialog):
-    """Dialog for resizing images with simple percentage-based resizing."""
+    """Dialog for resizing images with width and height in pixels."""
     def __init__(self, parent, selected_files, tools_path):
         super().__init__(parent, title=_("Resize Image"))
         self.selected_files = selected_files
@@ -49,7 +50,6 @@ class ResizeImageDialog(wx.Dialog):
                 width, height = self.get_image_dimensions_fast(file_path)
                 self.image_dimensions[file_path] = (width, height)
             except Exception as e:
-                log.error(f"Error loading file info for {file_path}: {e}")
                 self.file_sizes[file_path] = "Error"
                 self.image_dimensions[file_path] = (0, 0)
         
@@ -100,14 +100,22 @@ class ResizeImageDialog(wx.Dialog):
         file_list_sizer.Add(wx.StaticText(self, label=_("Selected files:")), 0, wx.EXPAND | wx.ALL, 5)
         self.file_listbox = wx.ListBox(self, choices=[self.get_file_display_name(f) for f in self.selected_files], style=wx.LB_EXTENDED)
         self.file_listbox.Bind(wx.EVT_LISTBOX, self.on_file_selection_change)
+        self.file_listbox.Bind(wx.EVT_CONTEXT_MENU, self.on_context_menu)
+        self.file_listbox.Bind(wx.EVT_KEY_DOWN, self.on_key_down)
         file_list_sizer.Add(self.file_listbox, 1, wx.EXPAND | wx.ALL, 5)
+        
+        # Delete selected files button
+        self.delete_btn = wx.Button(self, label=_("Delete Selected Files"))
+        self.delete_btn.Bind(wx.EVT_BUTTON, self.on_delete_selected)
+        file_list_sizer.Add(self.delete_btn, 0, wx.EXPAND | wx.ALL, 5)
         file_sizer.Add(file_list_sizer, 1, wx.EXPAND)
         
         # Output filename
         output_filename_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        output_filename_label = wx.StaticText(self, label=_("Output Filename:"))
+        output_filename_label = wx.StaticText(self, label=_("Output Filename Pattern:"))
         output_filename_sizer.Add(output_filename_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
         self.output_filename_text = wx.TextCtrl(self, value="")
+        self.output_filename_text.SetHint(_("For single file only"))
         output_filename_sizer.Add(self.output_filename_text, 1, wx.EXPAND | wx.ALL, 5)
         file_sizer.Add(output_filename_sizer, 0, wx.EXPAND | wx.ALL, 5)
         
@@ -124,33 +132,84 @@ class ResizeImageDialog(wx.Dialog):
         
         main_sizer.Add(file_sizer, 1, wx.EXPAND | wx.ALL, 5)
         
-        # Settings section - Simplified like web tool
+        # Settings section
         settings_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Resize Settings"))
         
-        # Resize percentage
-        resize_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        resize_label = wx.StaticText(self, label=_("Resize (%):"))
-        resize_sizer.Add(resize_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        self.resize_percent = wx.SpinCtrl(self, min=1, max=100, initial=100)
-        self.resize_percent.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
-        resize_sizer.Add(self.resize_percent, 1, wx.EXPAND | wx.ALL, 5)
-        settings_sizer.Add(resize_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        # Width and height controls
+        size_sizer = wx.GridBagSizer(5, 5)
         
-        # New size display - Changed to ComboBox for better NVDA accessibility
-        new_size_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        new_size_label = wx.StaticText(self, label=_("New Size:"))
-        new_size_sizer.Add(new_size_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        self.new_size_display = wx.ComboBox(self, style=wx.CB_READONLY)
-        new_size_sizer.Add(self.new_size_display, 1, wx.EXPAND | wx.ALL, 5)
-        settings_sizer.Add(new_size_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        # Width
+        width_label = wx.StaticText(self, label=_("Width (pixels):"))
+        size_sizer.Add(width_label, pos=(0, 0), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.width_spin = wx.SpinCtrl(self, min=1, max=30000, initial=1920)
+        self.width_spin.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
+        size_sizer.Add(self.width_spin, pos=(0, 1), flag=wx.EXPAND | wx.ALL, border=5)
         
-        # Quality setting - Simple choices
+        # Height
+        height_label = wx.StaticText(self, label=_("Height (pixels):"))
+        size_sizer.Add(height_label, pos=(1, 0), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.height_spin = wx.SpinCtrl(self, min=1, max=30000, initial=1080)
+        self.height_spin.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
+        size_sizer.Add(self.height_spin, pos=(1, 1), flag=wx.EXPAND | wx.ALL, border=5)
+        
+        # Aspect ratio lock button
+        self.aspect_lock_btn = wx.ToggleButton(self, label=_("Lock Aspect Ratio"))
+        self.aspect_lock_btn.SetValue(True)
+        self.aspect_lock_btn.Bind(wx.EVT_TOGGLEBUTTON, self.on_aspect_lock_toggle)
+        size_sizer.Add(self.aspect_lock_btn, pos=(0, 2), span=(2, 1), flag=wx.EXPAND | wx.ALL, border=5)
+        
+        settings_sizer.Add(size_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        
+        # Crop settings
+        crop_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.crop_checkbox = wx.CheckBox(self, label=_("Crop Image"))
+        self.crop_checkbox.SetValue(False)
+        self.crop_checkbox.Bind(wx.EVT_CHECKBOX, self.on_crop_toggle)
+        crop_sizer.Add(self.crop_checkbox, 0, wx.EXPAND | wx.ALL, 5)
+        
+        # Crop controls (initially hidden)
+        self.crop_controls_sizer = wx.GridBagSizer(5, 5)
+        
+        # Top crop
+        top_label = wx.StaticText(self, label=_("Top (pixels):"))
+        self.crop_controls_sizer.Add(top_label, pos=(0, 0), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.crop_top_spin = wx.SpinCtrl(self, min=0, max=10000, initial=0)
+        self.crop_top_spin.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
+        self.crop_controls_sizer.Add(self.crop_top_spin, pos=(0, 1), flag=wx.EXPAND | wx.ALL, border=5)
+        
+        # Bottom crop
+        bottom_label = wx.StaticText(self, label=_("Bottom (pixels):"))
+        self.crop_controls_sizer.Add(bottom_label, pos=(1, 0), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.crop_bottom_spin = wx.SpinCtrl(self, min=0, max=10000, initial=0)
+        self.crop_bottom_spin.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
+        self.crop_controls_sizer.Add(self.crop_bottom_spin, pos=(1, 1), flag=wx.EXPAND | wx.ALL, border=5)
+        
+        # Left crop
+        left_label = wx.StaticText(self, label=_("Left (pixels):"))
+        self.crop_controls_sizer.Add(left_label, pos=(0, 2), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.crop_left_spin = wx.SpinCtrl(self, min=0, max=10000, initial=0)
+        self.crop_left_spin.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
+        self.crop_controls_sizer.Add(self.crop_left_spin, pos=(0, 3), flag=wx.EXPAND | wx.ALL, border=5)
+        
+        # Right crop
+        right_label = wx.StaticText(self, label=_("Right (pixels):"))
+        self.crop_controls_sizer.Add(right_label, pos=(1, 2), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.crop_right_spin = wx.SpinCtrl(self, min=0, max=10000, initial=0)
+        self.crop_right_spin.Bind(wx.EVT_SPINCTRL, self.on_setting_change)
+        self.crop_controls_sizer.Add(self.crop_right_spin, pos=(1, 3), flag=wx.EXPAND | wx.ALL, border=5)
+        
+        crop_sizer.Add(self.crop_controls_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        self.crop_controls_sizer.ShowItems(show=False)
+        
+        settings_sizer.Add(crop_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        
+        # Quality setting
         quality_sizer = wx.BoxSizer(wx.HORIZONTAL)
         quality_label = wx.StaticText(self, label=_("Quality:"))
         quality_sizer.Add(quality_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        quality_choices = [_("Best (No loss)"), _("Very Good (Minimal loss)"), _("Good (Small loss)"), _("Normal (Balanced)"), _("Small (Noticeable loss)")]
+        quality_choices = [_("Best (No loss)"), _("Very Good"), _("Good"), _("Normal"), _("Small")]
         self.quality_select = wx.ComboBox(self, choices=quality_choices, style=wx.CB_READONLY)
-        self.quality_select.SetStringSelection(_("Very Good (Minimal loss)"))
+        self.quality_select.SetStringSelection(_("Normal"))
         self.quality_select.Bind(wx.EVT_COMBOBOX, self.on_setting_change)
         quality_sizer.Add(self.quality_select, 1, wx.EXPAND | wx.ALL, 5)
         settings_sizer.Add(quality_sizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -166,23 +225,15 @@ class ResizeImageDialog(wx.Dialog):
         format_sizer.Add(self.format_select, 1, wx.EXPAND | wx.ALL, 5)
         settings_sizer.Add(format_sizer, 0, wx.EXPAND | wx.ALL, 5)
         
-        # Estimated size
-        estimated_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        estimated_label = wx.StaticText(self, label=_("Estimated Output Size:"))
-        estimated_sizer.Add(estimated_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-        self.estimated_size = wx.ComboBox(self, style=wx.CB_READONLY)
-        estimated_sizer.Add(self.estimated_size, 1, wx.EXPAND | wx.ALL, 5)
-        settings_sizer.Add(estimated_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        
         main_sizer.Add(settings_sizer, 0, wx.EXPAND | wx.ALL, 5)
         
         # Output Information section
         info_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Output Information"))
         self.info_list = wx.ListCtrl(self, style=wx.LC_REPORT)
-        self.info_list.InsertColumn(0, _("Output Name"), width=200)
-        self.info_list.InsertColumn(1, _("New Size (W×H)"), width=120)
+        self.info_list.InsertColumn(0, _("Output Name"), width=250)
+        self.info_list.InsertColumn(1, _("Dimensions"), width=120)
         self.info_list.InsertColumn(2, _("File Size"), width=100)
-        self.info_list.InsertColumn(3, _("Status"), width=100)
+        self.info_list.InsertColumn(3, _("Status"), width=120)
         info_sizer.Add(self.info_list, 1, wx.EXPAND | wx.ALL, 5)
         main_sizer.Add(info_sizer, 1, wx.EXPAND | wx.ALL, 5)
         
@@ -219,16 +270,99 @@ class ResizeImageDialog(wx.Dialog):
         main_sizer.Add(btn_sizer, 0, wx.ALIGN_CENTER | wx.ALL, 5)
         
         self.SetSizer(main_sizer)
-        self.SetSize((800, 600))
+        self.SetSize((800, 650))
         
-        # Update file info table
+        # Update file info table and output filename state
         self.update_info_list()
+        self.update_output_filename_state()
+
+    def get_unique_file_path(self, path):
+        """Generate a unique file path by adding a number if the file already exists."""
+        if not os.path.exists(path):
+            return path
+        base, ext = os.path.splitext(path)
+        i = 1
+        while True:
+            new_path = f"{base} ({i}){ext}"
+            if not os.path.exists(new_path):
+                return new_path
+            i += 1
+
+    def on_context_menu(self, event):
+        """Show context menu for file listbox."""
+        menu = wx.Menu()
+        delete_item = menu.Append(wx.ID_ANY, _("Delete Selected Files"))
+        # Use deferred execution for translation scope
+        core.callLater(0, self._bind_context_menu, menu, delete_item)
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def _bind_context_menu(self, menu, delete_item):
+        """Bind context menu event with proper translation scope."""
+        self.Bind(wx.EVT_MENU, self.on_delete_selected, delete_item)
+
+    def on_key_down(self, event):
+        """Handle key events in file listbox."""
+        if event.GetKeyCode() == wx.WXK_DELETE:
+            self.on_delete_selected(event)
+        else:
+            event.Skip()
+
+    def on_delete_selected(self, event):
+        """Delete selected files from the list."""
+        selections = self.file_listbox.GetSelections()
+        if not selections:
+            return
+        
+        # Remove files in reverse order to maintain indices
+        for idx in sorted(selections, reverse=True):
+            if idx < len(self.selected_files):
+                del self.selected_files[idx]
+        
+        # Update listbox
+        self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
+        
+        # Update info list and output filename state
+        self.update_info_list()
+        self.update_output_filename_state()
+        
+        # Update dialog title
+        self.SetTitle(_("Resize Image: {} files").format(len(self.selected_files)))
+        
+        # Disable start button if no files
+        if not self.selected_files:
+            self.start_btn.Enable(False)
+        
+        ui.message(_("{} files removed").format(len(selections)))
+
+    def on_crop_toggle(self, event):
+        """Handle crop checkbox toggle."""
+        is_checked = self.crop_checkbox.GetValue()
+        if is_checked:
+            self.crop_controls_sizer.ShowItems(show=True)
+        else:
+            self.crop_controls_sizer.ShowItems(show=False)
+        self.crop_controls_sizer.Layout()
+        self.Layout()
+        self.on_setting_change(event)
+
+    def on_aspect_lock_toggle(self, event):
+        """Handle aspect ratio lock toggle."""
+        self.on_setting_change(event)
+
+    def update_output_filename_state(self):
+        """Enable or disable output filename field based on number of files."""
+        if len(self.selected_files) > 1:
+            self.output_filename_text.Enable(False)
+            self.output_filename_text.SetValue("")
+        else:
+            self.output_filename_text.Enable(True)
 
     def on_file_selection_change(self, event):
         """Handle file selection change in the listbox."""
-        selection = self.file_listbox.GetSelection()
-        if selection != wx.NOT_FOUND:
-            self.current_file_index = selection
+        selections = self.file_listbox.GetSelections()
+        if selections:
+            self.current_file_index = selections[0]
             self.update_output_info()
 
     def update_output_info(self):
@@ -237,159 +371,116 @@ class ResizeImageDialog(wx.Dialog):
             return
             
         file_path = self.selected_files[self.current_file_index]
-        base_name = os.path.splitext(os.path.basename(file_path))[0]
         
-        # Set default output filename
-        self.output_filename_text.SetValue(f"{base_name}_resized")
+        # Set default output filename for single file
+        if len(self.selected_files) == 1 and not self.output_filename_text.GetValue().strip():
+            base_name = os.path.splitext(os.path.basename(file_path))[0]
+            self.output_filename_text.SetValue(f"{base_name}_resized")
         
-        # Update new size display
-        self.update_new_size_display()
+        # Set width and height to current image dimensions
+        width, height = self.image_dimensions.get(file_path, (0, 0))
+        if width > 0 and height > 0:
+            self.width_spin.SetValue(width)
+            self.height_spin.SetValue(height)
         
-        # Calculate estimated size
-        self.calculate_estimated_size()
-        
-        # Update info list
         self.update_info_list()
 
-    def update_new_size_display(self):
-        """Update the new size display based on resize percentage."""
-        if not self.selected_files:
-            self.new_size_display.SetValue("")
-            return
-            
-        file_path = self.selected_files[self.current_file_index]
-        orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
+    def calculate_final_dimensions(self, orig_width, orig_height):
+        """Calculate final dimensions after crop and resize with aspect ratio lock."""
+        # Calculate crop dimensions if enabled
+        crop_width = orig_width
+        crop_height = orig_height
         
-        if orig_width > 0 and orig_height > 0:
-            percent = self.resize_percent.GetValue() / 100.0
-            new_width = int(orig_width * percent)
-            new_height = int(orig_height * percent)
+        if self.crop_checkbox.GetValue():
+            crop_top = self.crop_top_spin.GetValue()
+            crop_bottom = self.crop_bottom_spin.GetValue()
+            crop_left = self.crop_left_spin.GetValue()
+            crop_right = self.crop_right_spin.GetValue()
             
-            size_text = f"{new_width}×{new_height}"
-            self.new_size_display.SetValue(size_text)
+            # Calculate crop width and height
+            crop_width = orig_width - (crop_left + crop_right)
+            crop_height = orig_height - (crop_top + crop_bottom)
             
-            # Announce the new size for NVDA
-            ui.message(_("New size: {} by {} pixels").format(new_width, new_height))
-        else:
-            self.new_size_display.SetValue("")
-
-    def calculate_estimated_size(self):
-        """Calculate estimated output size based on web tool logic."""
-        if not self.selected_files:
-            self.estimated_size.SetValue("N/A")
-            return
-            
-        total_estimated_size_mb = 0
+            # Validate crop dimensions
+            if crop_width <= 0 or crop_height <= 0:
+                # Invalid crop dimensions, use original
+                crop_width = orig_width
+                crop_height = orig_height
         
-        for file_path in self.selected_files:
-            try:
-                original_size_bytes = os.path.getsize(file_path)
-                percent = self.resize_percent.GetValue() / 100.0
-                
-                # Get quality factor based on selection
-                quality_selection = self.quality_select.GetStringSelection()
-                quality_factor = self.get_quality_factor(quality_selection)
-                
-                format_name = self.format_select.GetStringSelection().lower()
-                
-                # Web tool estimation logic
-                reduction_factor = math.pow(percent, 2)
-                
-                if format_name in ['jpeg', 'webp']:
-                    # Apply quality factor for lossy formats
-                    reduction_factor *= quality_factor
-                
-                # Heuristic constant for codec efficiency
-                reduction_factor *= 0.6
-                
-                estimated_size = original_size_bytes * reduction_factor
-                total_estimated_size_mb += estimated_size / (1024 * 1024)
-                
-            except Exception as e:
-                log.error(f"Error estimating size for {file_path}: {e}")
+        # Calculate target dimensions with aspect ratio lock
+        base_width = crop_width
+        base_height = crop_height
         
-        if total_estimated_size_mb > 0:
-            if total_estimated_size_mb < 1:
-                size_kb = total_estimated_size_mb * 1024
-                size_text = f"{size_kb:.1f} KB (Est.)"
+        target_width = self.width_spin.GetValue()
+        target_height = self.height_spin.GetValue()
+        
+        if self.aspect_lock_btn.GetValue():
+            orig_aspect = base_width / base_height
+            target_aspect = target_width / target_height
+            
+            if target_aspect > orig_aspect:
+                # Height is limiting factor
+                target_width = int(target_height * orig_aspect)
             else:
-                size_text = f"{total_estimated_size_mb:.2f} MB (Est.)"
-            self.estimated_size.SetValue(size_text)
-        else:
-            self.estimated_size.SetValue("N/A")
-
-    def get_quality_factor(self, quality_selection):
-        """Convert quality selection to numeric factor."""
-        quality_map = {
-            _("Best (No loss)"): 1.0,
-            _("Very Good (Minimal loss)"): 0.9,
-            _("Good (Small loss)"): 0.8,
-            _("Normal (Balanced)"): 0.7,
-            _("Small (Noticeable loss)"): 0.6
-        }
-        return quality_map.get(quality_selection, 0.8)
-
-    def get_quality_value(self, quality_selection, format_name):
-        """Convert quality selection to ffmpeg quality value."""
-        if format_name == "jpeg":
-            quality_map = {
-                _("Best (No loss)"): 2,      # Highest quality
-                _("Very Good (Minimal loss)"): 5,
-                _("Good (Small loss)"): 10,
-                _("Normal (Balanced)"): 15,
-                _("Small (Noticeable loss)"): 20
-            }
-            return quality_map.get(quality_selection, 10)
-        elif format_name == "webp":
-            quality_map = {
-                _("Best (No loss)"): 100,
-                _("Very Good (Minimal loss)"): 90,
-                _("Good (Small loss)"): 80,
-                _("Normal (Balanced)"): 70,
-                _("Small (Noticeable loss)"): 60
-            }
-            return quality_map.get(quality_selection, 80)
-        elif format_name == "png":
-            quality_map = {
-                _("Best (No loss)"): 0,      # No compression
-                _("Very Good (Minimal loss)"): 3,
-                _("Good (Small loss)"): 6,
-                _("Normal (Balanced)"): 7,
-                _("Small (Noticeable loss)"): 9
-            }
-            return quality_map.get(quality_selection, 6)
-        else:
-            return None
+                # Width is limiting factor
+                target_height = int(target_width / orig_aspect)
+        
+        return target_width, target_height
 
     def update_info_list(self):
         """Update the output information list."""
         self.info_list.DeleteAllItems()
         
+        format_name = self.format_select.GetStringSelection().lower()
+        
         for i, file_path in enumerate(self.selected_files):
-            base_name = os.path.basename(file_path)
-            output_filename = self.output_filename_text.GetValue().strip()
-            if not output_filename:
-                output_filename = f"{base_name}_resized"
+            base_name = os.path.splitext(os.path.basename(file_path))[0]
             
-            # Calculate new dimensions
+            # Determine output filename
+            if len(self.selected_files) > 1:
+                output_filename = f"{base_name}_resized.{format_name}"
+            else:
+                custom_name = self.output_filename_text.GetValue().strip()
+                if custom_name:
+                    output_filename = f"{custom_name}.{format_name}"
+                else:
+                    output_filename = f"{base_name}_resized.{format_name}"
+            
+            # Calculate final dimensions
             orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
-            percent = self.resize_percent.GetValue() / 100.0
-            new_width = int(orig_width * percent)
-            new_height = int(orig_height * percent)
+            if orig_width > 0 and orig_height > 0:
+                final_width, final_height = self.calculate_final_dimensions(orig_width, orig_height)
+                dimensions_str = f"{final_width} x {final_height}"
+            else:
+                dimensions_str = f"{self.width_spin.GetValue()} x {self.height_spin.GetValue()}"
             
-            # Get format
-            format_name = self.format_select.GetStringSelection().lower()
-            
-            # Show output information
-            index = self.info_list.InsertItem(i, f"{output_filename}.{format_name}")
-            self.info_list.SetItem(index, 1, f"{new_width}×{new_height}")
+            # Insert item
+            index = self.info_list.InsertItem(i, output_filename)
+            self.info_list.SetItem(index, 1, dimensions_str)
             self.info_list.SetItem(index, 2, _("Calculating..."))
             self.info_list.SetItem(index, 3, _("Ready"))
 
     def on_setting_change(self, event):
         """Handle setting changes."""
-        wx.CallLater(100, self.update_new_size_display)
-        wx.CallLater(100, self.calculate_estimated_size)
+        # Handle aspect ratio lock
+        if self.aspect_lock_btn.GetValue() and self.selected_files:
+            obj = event.GetEventObject()
+            file_path = self.selected_files[self.current_file_index]
+            orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
+            
+            if orig_width > 0 and orig_height > 0:
+                aspect_ratio = orig_width / orig_height
+                
+                if obj == self.width_spin:
+                    # Adjust height based on new width
+                    new_height = int(self.width_spin.GetValue() / aspect_ratio)
+                    self.height_spin.SetValue(new_height)
+                elif obj == self.height_spin:
+                    # Adjust width based on new height
+                    new_width = int(self.height_spin.GetValue() * aspect_ratio)
+                    self.width_spin.SetValue(new_width)
+        
+        # Update UI with slight delay
         wx.CallLater(100, self.update_info_list)
 
     def get_file_display_name(self, file_path):
@@ -398,7 +489,7 @@ class ResizeImageDialog(wx.Dialog):
         width, height = self.image_dimensions.get(file_path, (0, 0))
         size = self.file_sizes.get(file_path, _("Calculating..."))
         if width > 0 and height > 0:
-            return f"{base_name} ({width}×{height}, {size})"
+            return f"{base_name} ({width} x {height}, {size})"
         return f"{base_name} ({size})"
 
     def update_file_listbox(self):
@@ -413,24 +504,47 @@ class ResizeImageDialog(wx.Dialog):
                 self.output_path = dialog.GetPath()
 
     def load_settings(self):
+        """Load saved settings."""
         config_data = load_config(self.config_path)
-        self.resize_percent.SetValue(config_data.get("ResizePercent", 100))
+        self.width_spin.SetValue(config_data.get("ResizeWidth", 1920))
+        self.height_spin.SetValue(config_data.get("ResizeHeight", 1080))
+        self.aspect_lock_btn.SetValue(config_data.get("AspectLock", True))
         
-        quality = config_data.get("ResizeQuality", _("Very Good (Minimal loss)"))
-        if quality in [_("Best (No loss)"), _("Very Good (Minimal loss)"), _("Good (Small loss)"), _("Normal (Balanced)"), _("Small (Noticeable loss)")]:
+        # Crop settings
+        self.crop_checkbox.SetValue(config_data.get("CropEnabled", False))
+        self.crop_top_spin.SetValue(config_data.get("CropTop", 0))
+        self.crop_bottom_spin.SetValue(config_data.get("CropBottom", 0))
+        self.crop_left_spin.SetValue(config_data.get("CropLeft", 0))
+        self.crop_right_spin.SetValue(config_data.get("CropRight", 0))
+        
+        # Show/hide crop controls based on saved state
+        if self.crop_checkbox.GetValue():
+            self.crop_controls_sizer.ShowItems(show=True)
+        else:
+            self.crop_controls_sizer.ShowItems(show=False)
+        self.crop_controls_sizer.Layout()
+        
+        quality = config_data.get("ResizeQuality", _("Normal"))
+        if quality in [_("Best (No loss)"), _("Very Good"), _("Good"), _("Normal"), _("Small")]:
             self.quality_select.SetStringSelection(quality)
         
         format_name = config_data.get("ResizeFormat", "JPEG")
         if format_name in ["JPEG", "WEBP", "PNG", "TIFF", "BMP", "GIF"]:
             self.format_select.SetStringSelection(format_name)
         
-        self.update_new_size_display()
-        self.calculate_estimated_size()
         self.update_info_list()
 
     def save_settings(self):
+        """Save current settings."""
         config_data = load_config(self.config_path)
-        config_data["ResizePercent"] = self.resize_percent.GetValue()
+        config_data["ResizeWidth"] = self.width_spin.GetValue()
+        config_data["ResizeHeight"] = self.height_spin.GetValue()
+        config_data["AspectLock"] = self.aspect_lock_btn.GetValue()
+        config_data["CropEnabled"] = self.crop_checkbox.GetValue()
+        config_data["CropTop"] = self.crop_top_spin.GetValue()
+        config_data["CropBottom"] = self.crop_bottom_spin.GetValue()
+        config_data["CropLeft"] = self.crop_left_spin.GetValue()
+        config_data["CropRight"] = self.crop_right_spin.GetValue()
         config_data["ResizeQuality"] = self.quality_select.GetStringSelection()
         config_data["ResizeFormat"] = self.format_select.GetStringSelection()
         save_config(self.config_path, config_data)
@@ -457,6 +571,7 @@ class ResizeImageDialog(wx.Dialog):
         self.process_next_file()
 
     def process_next_file(self):
+        """Process next file in the queue."""
         if self.resize_queue.empty():
             self.currently_processing = False
             wx.CallAfter(self.on_all_processing_complete)
@@ -465,45 +580,117 @@ class ResizeImageDialog(wx.Dialog):
         file_path = self.resize_queue.get()
         self.current_file_index = self.selected_files.index(file_path)
         
-        # Calculate new dimensions
+        # Get original dimensions
         orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
-        percent = self.resize_percent.GetValue() / 100.0
-        new_width = max(1, int(orig_width * percent))
-        new_height = max(1, int(orig_height * percent))
-        
-        if new_width == 0 or new_height == 0:
+        if orig_width <= 0 or orig_height <= 0:
             # Skip files with invalid dimensions
             self.processed_files += 1
             wx.CallAfter(self.update_progress)
             self.process_next_file()
             return
         
-        # Prepare output file
-        output_filename = self.output_filename_text.GetValue().strip()
-        if not output_filename:
-            base_name = os.path.splitext(os.path.basename(file_path))[0]
-            output_filename = f"{base_name}_resized"
+        # Calculate crop dimensions if enabled
+        crop_width = orig_width
+        crop_height = orig_height
+        crop_top = 0
+        crop_left = 0
         
+        if self.crop_checkbox.GetValue():
+            crop_top = self.crop_top_spin.GetValue()
+            crop_bottom = self.crop_bottom_spin.GetValue()
+            crop_left = self.crop_left_spin.GetValue()
+            crop_right = self.crop_right_spin.GetValue()
+            
+            # Calculate crop width and height
+            crop_width = orig_width - (crop_left + crop_right)
+            crop_height = orig_height - (crop_top + crop_bottom)
+            
+            # Validate crop dimensions
+            if crop_width <= 0 or crop_height <= 0:
+                # Invalid crop dimensions, skip crop
+                ui.message(_("Warning: Invalid crop dimensions for {}. Crop disabled for this image.").format(os.path.basename(file_path)))
+                crop_width = orig_width
+                crop_height = orig_height
+                crop_top = 0
+                crop_left = 0
+        
+        # Calculate target dimensions with aspect ratio lock
+        # We need to use the cropped dimensions as base if crop is enabled
+        base_width = crop_width
+        base_height = crop_height
+        
+        target_width = self.width_spin.GetValue()
+        target_height = self.height_spin.GetValue()
+        
+        if self.aspect_lock_btn.GetValue():
+            orig_aspect = base_width / base_height
+            target_aspect = target_width / target_height
+            
+            if target_aspect > orig_aspect:
+                # Height is limiting factor
+                target_width = int(target_height * orig_aspect)
+            else:
+                # Width is limiting factor
+                target_height = int(target_width / orig_aspect)
+        
+        # Prepare output file
         format_name = self.format_select.GetStringSelection().lower()
-        output_file = f"{output_filename}.{format_name}"
-        output_path = os.path.join(self.output_path, output_file)
+        ext = "jpg" if format_name == "jpeg" else format_name
+        
+        if len(self.selected_files) > 1:
+            base_name = os.path.splitext(os.path.basename(file_path))[0]
+            output_filename = f"{base_name}_resized.{ext}"
+        else:
+            custom_name = self.output_filename_text.GetValue().strip()
+            if custom_name:
+                output_filename = f"{custom_name}.{ext}"
+            else:
+                base_name = os.path.splitext(os.path.basename(file_path))[0]
+                output_filename = f"{base_name}_resized.{ext}"
+        
+        output_path = self.get_unique_file_path(os.path.join(self.output_path, output_filename))
         
         ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
         if not os.path.exists(ffmpeg_path):
             ui.message(_("ffmpeg.exe not found"))
             return
         
-        # Build ffmpeg command based on format
+        # Build ffmpeg command
         cmd = [
             ffmpeg_path,
             "-i", file_path,
-            "-vf", f"scale={new_width}:{new_height}",
-            "-y",
         ]
+        
+        # Add crop filter if enabled
+        filter_chain = []
+        
+        if self.crop_checkbox.GetValue() and (crop_width != orig_width or crop_height != orig_height):
+            crop_filter = f"crop={crop_width}:{crop_height}:{crop_left}:{crop_top}"
+            filter_chain.append(crop_filter)
+        
+        # Always add scale filter
+        scale_filter = f"scale={target_width}:{target_height}"
+        filter_chain.append(scale_filter)
+        
+        # Combine filters
+        if filter_chain:
+            cmd.extend(["-vf", ",".join(filter_chain)])
+        
+        cmd.append("-y")
         
         # Add format-specific options
         quality_selection = self.quality_select.GetStringSelection()
-        quality_value = self.get_quality_value(quality_selection, format_name)
+        
+        # Quality mapping for different formats
+        quality_map = {
+            _("Best (No loss)"): {"jpeg": 2, "webp": 100, "png": 0, "tiff": 0, "bmp": 0, "gif": 0},
+            _("Very Good"): {"jpeg": 5, "webp": 90, "png": 2, "tiff": 2, "bmp": 0, "gif": 0},
+            _("Good"): {"jpeg": 10, "webp": 80, "png": 4, "tiff": 4, "bmp": 0, "gif": 0},
+            _("Normal"): {"jpeg": 15, "webp": 70, "png": 6, "tiff": 6, "bmp": 0, "gif": 0},
+            _("Small"): {"jpeg": 20, "webp": 60, "png": 9, "tiff": 9, "bmp": 0, "gif": 0},
+        }
+        
+        quality_value = quality_map.get(quality_selection, quality_map[_("Normal")]).get(format_name, 0)
         
         if format_name == "jpeg" and quality_value is not None:
             cmd.extend(["-q:v", str(quality_value)])
@@ -554,7 +741,7 @@ class ResizeImageDialog(wx.Dialog):
                     except:
                         output_size_str = _("Unknown")
                     
-                    wx.CallAfter(self.on_file_success, file_path, output_path, output_size_str)
+                    wx.CallAfter(self.on_file_success, file_path, output_path, output_size_str, target_width, target_height)
                 else:
                     stderr_output = self.ffmpeg_process.stderr.read()
                     wx.CallAfter(self.on_file_failure, file_path, stderr_output)
@@ -580,22 +767,16 @@ class ResizeImageDialog(wx.Dialog):
                 self.info_list.SetItem(i, 3, status)
                 break
 
-    def on_file_success(self, file_path, output_path, output_size_str):
+    def on_file_success(self, file_path, output_path, output_size_str, new_width, new_height):
         """Handle successful file processing."""
         self.processed_files += 1
         wx.CallAfter(self.current_progress.SetValue, 100)
-        
-        # Calculate new dimensions for display
-        orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
-        percent = self.resize_percent.GetValue() / 100.0
-        new_width = max(1, int(orig_width * percent))
-        new_height = max(1, int(orig_height * percent))
         
         # Update info list with final results
         for i in range(self.info_list.GetItemCount()):
             item_text = self.info_list.GetItemText(i)
             if os.path.basename(file_path) in item_text:
-                self.info_list.SetItem(i, 1, f"{new_width}×{new_height}")
+                self.info_list.SetItem(i, 1, f"{new_width} x {new_height}")
                 self.info_list.SetItem(i, 2, output_size_str)
                 self.info_list.SetItem(i, 3, _("Completed"))
                 break
@@ -605,7 +786,8 @@ class ResizeImageDialog(wx.Dialog):
         
         # Announce progress and set focus to info list
         wx.CallAfter(self.info_list.SetFocus)
-        ui.message(_("Processed: {} - New size: {}").format(os.path.basename(file_path), output_size_str))
+        ui.message(_("Processed: {} - New size: {}, Dimensions: {} x {}").format(
+            os.path.basename(file_path), output_size_str, new_width, new_height))
 
     def on_file_failure(self, file_path, error_message):
         """Handle file processing failure."""
@@ -617,7 +799,6 @@ class ResizeImageDialog(wx.Dialog):
         # Update progress
         wx.CallAfter(self.update_progress)
         
-        log.error(f"Failed to process {file_path}: {error_message}")
         ui.message(_("Failed: {}").format(os.path.basename(file_path)))
 
     def update_progress(self):

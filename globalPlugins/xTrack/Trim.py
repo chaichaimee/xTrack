@@ -101,33 +101,45 @@ class TrimAudioVideoDialog(wx.Dialog):
         audio_sizer.Add(audio_quality_sizer, 0, wx.EXPAND | wx.ALL, 5)
         
         # Fade Settings for Audio
-        fade_sizer = wx.StaticBoxSizer(wx.VERTICAL, self.audio_panel, label=_("Fade Settings"))
+        self.fade_sizer = wx.StaticBoxSizer(wx.VERTICAL, self.audio_panel, label=_("Fade Settings"))
         
-        fade_in_sizer = wx.StaticBoxSizer(wx.VERTICAL, self.audio_panel, label=_("Fade In"))
+        # Fade enable checkbox
+        fade_enable_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.fade_checkbox = wx.CheckBox(self.audio_panel, label=_("Enable Fade In/Out"))
+        fade_enable_sizer.Add(self.fade_checkbox, 0, wx.ALL, 5)
+        self.fade_sizer.Add(fade_enable_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        
+        # Fade in controls panel
+        self.fade_in_panel = wx.Panel(self.audio_panel)
+        fade_in_sizer = wx.StaticBoxSizer(wx.VERTICAL, self.fade_in_panel, label=_("Fade In"))
         fade_in_grid = wx.FlexGridSizer(2, 2, 5, 5)
-        fade_in_grid.Add(wx.StaticText(self.audio_panel, label=_("Start Time:")), 0, wx.ALIGN_CENTER_VERTICAL)
-        self.fade_in_start_ctrl = wx.TextCtrl(self.audio_panel, value="0")
+        fade_in_grid.Add(wx.StaticText(self.fade_in_panel, label=_("Start Time:")), 0, wx.ALIGN_CENTER_VERTICAL)
+        self.fade_in_start_ctrl = wx.TextCtrl(self.fade_in_panel, value="0")
         fade_in_grid.Add(self.fade_in_start_ctrl, 1, wx.EXPAND)
-        fade_in_grid.Add(wx.StaticText(self.audio_panel, label=_("End Time (100% volume):")), 0, wx.ALIGN_CENTER_VERTICAL)
-        self.fade_in_end_ctrl = wx.TextCtrl(self.audio_panel, value="3")
+        fade_in_grid.Add(wx.StaticText(self.fade_in_panel, label=_("End Time (100% volume):")), 0, wx.ALIGN_CENTER_VERTICAL)
+        self.fade_in_end_ctrl = wx.TextCtrl(self.fade_in_panel, value="3")
         fade_in_grid.Add(self.fade_in_end_ctrl, 1, wx.EXPAND)
         fade_in_grid.AddGrowableCol(1)
         fade_in_sizer.Add(fade_in_grid, 1, wx.EXPAND | wx.ALL, 5)
-        fade_sizer.Add(fade_in_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        self.fade_in_panel.SetSizer(fade_in_sizer)
+        self.fade_sizer.Add(self.fade_in_panel, 0, wx.EXPAND | wx.ALL, 5)
         
-        fade_out_sizer = wx.StaticBoxSizer(wx.VERTICAL, self.audio_panel, label=_("Fade Out"))
+        # Fade out controls panel
+        self.fade_out_panel = wx.Panel(self.audio_panel)
+        fade_out_sizer = wx.StaticBoxSizer(wx.VERTICAL, self.fade_out_panel, label=_("Fade Out"))
         fade_out_grid = wx.FlexGridSizer(2, 2, 5, 5)
-        fade_out_grid.Add(wx.StaticText(self.audio_panel, label=_("Start Time (100% volume):")), 0, wx.ALIGN_CENTER_VERTICAL)
-        self.fade_out_start_ctrl = wx.TextCtrl(self.audio_panel)
+        fade_out_grid.Add(wx.StaticText(self.fade_out_panel, label=_("Start Time (100% volume):")), 0, wx.ALIGN_CENTER_VERTICAL)
+        self.fade_out_start_ctrl = wx.TextCtrl(self.fade_out_panel)
         fade_out_grid.Add(self.fade_out_start_ctrl, 1, wx.EXPAND)
-        fade_out_grid.Add(wx.StaticText(self.audio_panel, label=_("End Time:")), 0, wx.ALIGN_CENTER_VERTICAL)
-        self.fade_out_end_ctrl = wx.TextCtrl(self.audio_panel)
+        fade_out_grid.Add(wx.StaticText(self.fade_out_panel, label=_("End Time:")), 0, wx.ALIGN_CENTER_VERTICAL)
+        self.fade_out_end_ctrl = wx.TextCtrl(self.fade_out_panel)
         fade_out_grid.Add(self.fade_out_end_ctrl, 1, wx.EXPAND)
         fade_out_grid.AddGrowableCol(1)
         fade_out_sizer.Add(fade_out_grid, 1, wx.EXPAND | wx.ALL, 5)
-        fade_sizer.Add(fade_out_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        self.fade_out_panel.SetSizer(fade_out_sizer)
+        self.fade_sizer.Add(self.fade_out_panel, 0, wx.EXPAND | wx.ALL, 5)
         
-        audio_sizer.Add(fade_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        audio_sizer.Add(self.fade_sizer, 0, wx.EXPAND | wx.ALL, 5)
         self.audio_panel.SetSizer(audio_sizer)
         main_sizer.Add(self.audio_panel, 0, wx.EXPAND | wx.ALL, 5)
         
@@ -234,6 +246,7 @@ class TrimAudioVideoDialog(wx.Dialog):
         self.fade_in_end_ctrl.Bind(wx.EVT_TEXT, self.on_fade_text)
         self.fade_out_start_ctrl.Bind(wx.EVT_TEXT, self.on_fade_text)
         self.fade_out_end_ctrl.Bind(wx.EVT_TEXT, self.on_fade_text)
+        self.fade_checkbox.Bind(wx.EVT_CHECKBOX, self.on_fade_checkbox)
         
         config_data = self.load_config()
         last_output_type = config_data.get("TrimLastOutputType", "audio")
@@ -243,6 +256,7 @@ class TrimAudioVideoDialog(wx.Dialog):
         last_sample_rate = config_data.get("TrimLastSampleRate", "Keep Original")
         last_channels = config_data.get("TrimLastChannels", "Keep Original")
         last_audio_codec = config_data.get("TrimLastAudioCodec", "AAC (Recommended)")
+        last_fade_enabled = config_data.get("TrimLastFadeEnabled", False)
         
         if last_output_type == "video":
             self.video_radio.SetValue(True)
@@ -258,8 +272,13 @@ class TrimAudioVideoDialog(wx.Dialog):
                 self.mp3_radio.SetValue(True)
             self.audio_quality_ctrl.SetStringSelection(f"{last_quality} kbps")
         
+        # Set fade checkbox state
+        self.fade_checkbox.SetValue(last_fade_enabled)
+        
         self.on_output_type_change(None)
         self.on_format_change(None)
+        # Call on_fade_checkbox to set initial state
+        self.on_fade_checkbox(None)
         
     def on_output_type_change(self, event):
         """Show/hide audio and video panels based on output type selection."""
@@ -271,6 +290,17 @@ class TrimAudioVideoDialog(wx.Dialog):
         
     def on_format_change(self, event):
         self.audio_quality_ctrl.Enable(self.mp3_radio.GetValue())
+        
+    def on_fade_checkbox(self, event):
+        """Show/hide fade controls based on checkbox state."""
+        fade_enabled = self.fade_checkbox.GetValue()
+        
+        # Show/hide fade in and fade out panels
+        self.fade_in_panel.Show(fade_enabled)
+        self.fade_out_panel.Show(fade_enabled)
+        
+        self.Layout()
+        self.Fit()
         
     def on_time_control_text(self, event):
         wx.CallAfter(self.update_duration_label)
@@ -344,7 +374,7 @@ class TrimAudioVideoDialog(wx.Dialog):
                 period_str = f"{period:.2f}"
                 
             fade_info = ""
-            if self.audio_radio.GetValue():
+            if self.audio_radio.GetValue() and self.fade_checkbox.GetValue():
                 fade_in_start = self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None
                 fade_in_end = self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None
                 fade_out_start = self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None
@@ -398,8 +428,8 @@ class TrimAudioVideoDialog(wx.Dialog):
                 
             trim_duration = end_seconds - start_seconds
             
-            # Check fade settings only for audio
-            if self.audio_radio.GetValue():
+            # Check fade settings only for audio and if fade is enabled
+            if self.audio_radio.GetValue() and self.fade_checkbox.GetValue():
                 fade_in_start = self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None
                 fade_in_end = self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None
                 fade_out_start = self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None
@@ -441,13 +471,17 @@ class TrimAudioVideoDialog(wx.Dialog):
         
         # Build filters based on output type
         if self.audio_radio.GetValue():
-            filter_complex = self.build_fade_filter(
-                self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None,
-                self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None,
-                self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None,
-                self.time_to_seconds(self.fade_out_end_ctrl.GetValue()) if self.fade_out_end_ctrl.GetValue() else None,
-                trim_duration
-            )
+            # Only apply fade filter if fade is enabled
+            filter_complex = None
+            if self.fade_checkbox.GetValue():
+                filter_complex = self.build_fade_filter(
+                    self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None,
+                    self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None,
+                    self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None,
+                    self.time_to_seconds(self.fade_out_end_ctrl.GetValue()) if self.fade_out_end_ctrl.GetValue() else None,
+                    trim_duration
+                )
+            
             if filter_complex:
                 cmd.extend(["-af", filter_complex])
             
@@ -498,6 +532,7 @@ class TrimAudioVideoDialog(wx.Dialog):
         log.info(f"Video radio: {self.video_radio.GetValue()}")
         log.info(f"Audio panel visible: {self.audio_panel.IsShown()}")
         log.info(f"Video panel visible: {self.video_panel.IsShown()}")
+        log.info(f"Fade enabled: {self.fade_checkbox.GetValue()}")
         
         self.cleanup_temp_file()
         start_time = self.start_time_ctrl.GetValue() or "0"
@@ -519,8 +554,8 @@ class TrimAudioVideoDialog(wx.Dialog):
                 
             trim_duration = end_seconds - start_seconds
             
-            # Check fade settings only for audio
-            if self.audio_radio.GetValue():
+            # Check fade settings only for audio and if fade is enabled
+            if self.audio_radio.GetValue() and self.fade_checkbox.GetValue():
                 fade_in_start = self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None
                 fade_in_end = self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None
                 fade_out_start = self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None
@@ -607,13 +642,18 @@ class TrimAudioVideoDialog(wx.Dialog):
         if is_audio_mode:
             # Audio processing
             log.info("Building command for AUDIO processing")
-            filter_complex = self.build_fade_filter(
-                self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None,
-                self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None,
-                self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None,
-                self.time_to_seconds(self.fade_out_end_ctrl.GetValue()) if self.fade_out_end_ctrl.GetValue() else None,
-                trim_duration
-            )
+            
+            # Only apply fade filter if fade is enabled
+            filter_complex = None
+            if self.fade_checkbox.GetValue():
+                filter_complex = self.build_fade_filter(
+                    self.time_to_seconds(self.fade_in_start_ctrl.GetValue()) if self.fade_in_start_ctrl.GetValue() else None,
+                    self.time_to_seconds(self.fade_in_end_ctrl.GetValue()) if self.fade_in_end_ctrl.GetValue() else None,
+                    self.time_to_seconds(self.fade_out_start_ctrl.GetValue()) if self.fade_out_start_ctrl.GetValue() else None,
+                    self.time_to_seconds(self.fade_out_end_ctrl.GetValue()) if self.fade_out_end_ctrl.GetValue() else None,
+                    trim_duration
+                )
+            
             if filter_complex:
                 cmd.extend(["-af", filter_complex])
             
@@ -713,6 +753,7 @@ class TrimAudioVideoDialog(wx.Dialog):
                     wx.CallAfter(ui.message, _("Trimmed file saved as {}").format(output_path))
                     config_data = self.load_config()
                     config_data["TrimLastOutputType"] = "audio" if is_audio_mode else "video"
+                    config_data["TrimLastFadeEnabled"] = self.fade_checkbox.GetValue()
                     if is_audio_mode:
                         config_data["TrimLastFormat"] = output_format
                         if quality_kbps:
