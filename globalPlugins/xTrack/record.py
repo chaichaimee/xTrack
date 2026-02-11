@@ -14,6 +14,7 @@ import tones
 import sys
 import shutil
 import tempfile
+import psutil
 
 addonHandler.initTranslation()
 
@@ -60,114 +61,12 @@ class Recorder:
         }
 
     def _play_count_in(self):
-        """Generate beep tones using system tones with shorter final beep."""
+        """Generate beep tones using system tones with shorter final beep and extra delay."""
         for _ in range(3):
             tones.beep(440, 200)
             time.sleep(0.5)
         tones.beep(880, 200)  # Changed from 500ms to 200ms
-        time.sleep(0.1)  # Add small delay to ensure beep ends before recording starts
-
-    def _apply_ffmpeg_audio_enhancement(self, input_file, enhancement_config, is_microphone=True):
-        """Apply audio enhancement using ffmpeg 8.0 filters."""
-        if not is_microphone:
-            return input_file
-        
-        try:
-            # Create temporary output file
-            temp_file = tempfile.NamedTemporaryFile(
-                delete=False, 
-                suffix=os.path.splitext(input_file)[1]
-            )
-            temp_file.close()
-            output_path = temp_file.name
-            
-            # Build filter chain based on enhancement configuration
-            filter_parts = []
-            
-            # 1. Hum removal (high-pass filter)
-            if enhancement_config.get("hum_removal", False):
-                # Remove low frequency hum (50-60 Hz and harmonics)
-                filter_parts.append("highpass=f=80,lowpass=f=16000")
-            
-            # 2. Noise reduction based on preset
-            if enhancement_config.get("noise_suppression", False):
-                noise_preset = enhancement_config.get("noise_preset", "medium")
-                noise_filters = {
-                    "light": "afftdn=nr=20:nf=-15:nt=w:tn=1:om=o",  # Gentle noise reduction
-                    "medium": "afftdn=nr=40:nf=-25:nt=w:tn=1:om=o:track_noise=1",  # Balanced reduction
-                    "aggressive": "afftdn=nr=60:nf=-35:nt=w:tn=1:om=o:track_noise=1:track_residual=1",  # Strong reduction
-                    "studio": "afftdn=nr=50:nf=-30:nt=w:tn=1:om=o:track_noise=1:track_residual=1:band_multiplier=1.5",  # Studio quality
-                    "broadcast": "afftdn=nr=55:nf=-28:nt=w:tn=1:om=o:track_noise=1:track_residual=1:band_multiplier=2.0",  # Broadcast quality
-                    "custom": enhancement_config.get("custom_filter", "afftdn=nr=45:nf=-22:nt=w:tn=1:om=o")
-                }
-                filter_parts.append(noise_filters.get(noise_preset, noise_filters["medium"]))
-            
-            # 3. Clarity enhancement (presence boost)
-            if enhancement_config.get("clarity_boost", False):
-                # Multi-band equalizer for voice clarity
-                # Boost presence frequencies (2-5 kHz) and reduce muddiness (200-500 Hz)
-                clarity_filter = (
-                    "equalizer=f=300:width_type=h:width=100:g=-3,"
-                    "equalizer=f=500:width_type=h:width=200:g=-2,"
-                    "equalizer=f=3000:width_type=h:width=1000:g=4,"
-                    "equalizer=f=5000:width_type=h:width=2000:g=2"
-                )
-                filter_parts.append(clarity_filter)
-            
-            # 4. Dynamic range compression for more consistent volume
-            if enhancement_config.get("dynamic_compression", False):
-                # Gentle compression for voice recording
-                compression_filter = "compand=attacks=0:decays=0.2:points=-80/-80|-30/-15|-20/-10|0/0"
-                filter_parts.append(compression_filter)
-            
-            # 5. Limiter to prevent clipping
-            if enhancement_config.get("limiter", False):
-                filter_parts.append("alimiter=limit=0.8")
-            
-            # Combine all filters
-            if filter_parts:
-                filter_str = ",".join(filter_parts)
-                log.info(f"xTrack: Applying audio enhancement filters: {filter_str}")
-                
-                # Build ffmpeg command with enhancement chain
-                cmd = [
-                    self.ffmpeg_exe, "-y", "-i", input_file,
-                    "-af", filter_str,
-                    "-ar", "48000",  # Upsample to 48kHz for better quality
-                    "-ac", "2",
-                    "-codec:a", "libmp3lame",
-                    "-q:a", "2",  # High quality MP3
-                    output_path
-                ]
-                
-                # Run ffmpeg
-                result = subprocess.run(
-                    cmd,
-                    capture_output=True,
-                    text=True,
-                    creationflags=subprocess.CREATE_NO_WINDOW,
-                    timeout=45  # Increased timeout for complex processing
-                )
-                
-                if result.returncode == 0:
-                    # Replace original file with processed file
-                    shutil.move(output_path, input_file)
-                    log.info("xTrack: Audio enhancement applied successfully")
-                    return input_file
-                else:
-                    log.error(f"xTrack: Audio enhancement failed: {result.stderr}")
-                    if os.path.exists(output_path):
-                        os.remove(output_path)
-                    return input_file
-            else:
-                # No filters to apply
-                return input_file
-                
-        except Exception as e:
-            log.error(f"xTrack: Error applying audio enhancement: {e}")
-            if 'output_path' in locals() and os.path.exists(output_path):
-                os.remove(output_path)
-            return input_file
+        time.sleep(0.3)  # Increased delay to ensure beep ends before recording starts
 
     def _setup_backend_recorder(self):
         """Setup the backend recorder with current settings."""
@@ -209,13 +108,6 @@ class Recorder:
         try:
             conf = config.conf["xTrack"]["record"]
             mode = conf.get("recordingMode", "system_and_mic")
-            noise_suppression = conf.get("noiseSuppression", False)
-            noise_preset = conf.get("noiseReductionPreset", "medium")
-            hum_removal = conf.get("humRemoval", False)
-            clarity_boost = conf.get("clarityBoost", False)
-            dynamic_compression = conf.get("dynamicCompression", False)
-            limiter = conf.get("limiter", True)
-            custom_filter = conf.get("noiseCustomFilter", "afftdn=nr=45:nf=-22:nt=w:tn=1:om=o")
             
             # Setup backend recorder
             if not self._setup_backend_recorder():
@@ -266,53 +158,10 @@ class Recorder:
                     system_files = [f for f in files if 'system' in f.lower()]
                     mic_files = [f for f in files if 'mic' in f.lower()]
                     self.output_files = system_files[:1] + mic_files[:1]
-                    
-                    # Apply audio enhancement to microphone files if enabled
-                    if (noise_suppression or hum_removal or clarity_boost or dynamic_compression) and mic_files:
-                        for i, mic_file in enumerate(mic_files[:1]):
-                            enhancement_config = {
-                                "noise_suppression": noise_suppression,
-                                "noise_preset": noise_preset,
-                                "hum_removal": hum_removal,
-                                "clarity_boost": clarity_boost,
-                                "dynamic_compression": dynamic_compression,
-                                "limiter": limiter,
-                                "custom_filter": custom_filter
-                            }
-                            processed_file = self._apply_ffmpeg_audio_enhancement(
-                                mic_file, 
-                                enhancement_config,
-                                is_microphone=True
-                            )
-                            if i < len(self.output_files):
-                                # Find the mic file in output_files and update it
-                                for j, out_file in enumerate(self.output_files):
-                                    if 'mic' in out_file.lower():
-                                        self.output_files[j] = processed_file
-                                        break
                 else:
                     # Look for recording files (not system or mic specific)
                     recording_files = [f for f in files if 'recording' in f.lower()]
                     self.output_files = recording_files[:1]  # Get most recent
-                    
-                    # Apply audio enhancement if enabled and mode includes microphone
-                    if (noise_suppression or hum_removal or clarity_boost or dynamic_compression) and mode in ["system_and_mic", "mic_only"]:
-                        for i, rec_file in enumerate(recording_files[:1]):
-                            enhancement_config = {
-                                "noise_suppression": noise_suppression,
-                                "noise_preset": noise_preset,
-                                "hum_removal": hum_removal,
-                                "clarity_boost": clarity_boost,
-                                "dynamic_compression": dynamic_compression,
-                                "limiter": limiter,
-                                "custom_filter": custom_filter
-                            }
-                            processed_file = self._apply_ffmpeg_audio_enhancement(
-                                rec_file,
-                                enhancement_config,
-                                is_microphone=True
-                            )
-                            self.output_files[i] = processed_file
             
             log.info(f"xTrack: Recording completed. Found files: {self.output_files}")
             
@@ -335,6 +184,29 @@ class Recorder:
             self._pause_event.clear()
             self.backend_recorder = None
             log.info("xTrack: Recording thread finished")
+
+    def is_folder_already_open(self, folder_path):
+        """Check if the folder is already open in File Explorer."""
+        try:
+            # Normalize the folder path
+            folder_path = os.path.normpath(folder_path)
+            
+            # Check all explorer.exe processes
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                try:
+                    if proc.info['name'] and proc.info['name'].lower() == 'explorer.exe':
+                        cmdline = proc.info['cmdline']
+                        if cmdline:
+                            # Look for the folder path in command line arguments
+                            for arg in cmdline:
+                                if arg and folder_path in arg:
+                                    return True
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+            return False
+        except Exception as e:
+            log.error(f"Error checking if folder is open: {e}")
+            return False
 
     def start(self):
         """Start recording."""
@@ -403,7 +275,13 @@ class Recorder:
             try:
                 dest_dir = os.path.dirname(self.output_files[0])
                 log.info(f"xTrack: Opening folder: {dest_dir}")
-                subprocess.Popen(f'explorer "{dest_dir}"', shell=True)
+                
+                # Check if folder is already open
+                if not self.is_folder_already_open(dest_dir):
+                    subprocess.Popen(f'explorer "{dest_dir}"', shell=True)
+                    log.info(f"xTrack: Folder opened: {dest_dir}")
+                else:
+                    log.info(f"xTrack: Folder already open: {dest_dir}")
             except Exception as e:
                 log.error(f"xTrack: Failed to open folder: {e}")
         
@@ -441,13 +319,6 @@ class RecordSettingsDialog(wx.Dialog):
             "mp3Quality": 192,
             "countIn": False,
             "openFolderAfter": False,
-            "noiseSuppression": False,
-            "noiseReductionPreset": "medium",
-            "noiseCustomFilter": "afftdn=nr=45:nf=-22:nt=w:tn=1:om=o",
-            "humRemoval": False,
-            "clarityBoost": False,
-            "dynamicCompression": False,
-            "limiter": True,
             "systemGain": 0,
             "microphoneGain": 0,
             "destinationFolder": os.path.expanduser("~/xTrack_recordings")
@@ -496,100 +367,18 @@ class RecordSettingsDialog(wx.Dialog):
         else:
             self.qualityCombo.SetSelection(4)  # Default to 192
 
-        # 4. Advanced Audio Enhancement Settings
-        enhancement_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, _("Audio Enhancement (Microphone)"))
-        enhancement_box = enhancement_sizer.GetStaticBox()
-        
-        # Noise suppression checkbox
-        self.noiseCheck = wx.CheckBox(enhancement_box, label=_("&Enable Noise Reduction"))
-        self.noiseCheck.SetValue(bool(self.settings.get("noiseSuppression", False)))
-        self.noiseCheck.Bind(wx.EVT_CHECKBOX, self.onEnhancementCheck)
-        enhancement_sizer.Add(self.noiseCheck, 0, wx.ALL, 5)
-        
-        # Noise reduction preset
-        preset_label = wx.StaticText(enhancement_box, label=_("Noise Reduction Preset:"))
-        enhancement_sizer.Add(preset_label, 0, wx.LEFT | wx.TOP, 5)
-        
-        self.noisePresetCombo = wx.Choice(enhancement_box, choices=[
-            _("Light - Gentle reduction for minimal noise"),
-            _("Medium - Balanced reduction for normal environments"),
-            _("Aggressive - Strong reduction for noisy environments"),
-            _("Studio - Professional quality for studio recording"),
-            _("Broadcast - Broadcast quality with voice clarity"),
-            _("Custom - Custom filter settings")
-        ])
-        
-        preset_map = {
-            "light": 0,
-            "medium": 1,
-            "aggressive": 2,
-            "studio": 3,
-            "broadcast": 4,
-            "custom": 5
-        }
-        curr_preset = self.settings.get("noiseReductionPreset", "medium")
-        self.noisePresetCombo.SetSelection(preset_map.get(curr_preset, 1))
-        self.noisePresetCombo.Bind(wx.EVT_CHOICE, self.onNoisePresetChange)
-        enhancement_sizer.Add(self.noisePresetCombo, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 5)
-        
-        # Custom filter settings (hidden by default)
-        custom_sizer = wx.BoxSizer(wx.VERTICAL)
-        custom_label = wx.StaticText(enhancement_box, label=_("Custom FFmpeg Filter (Advanced):"))
-        custom_sizer.Add(custom_label, 0, wx.TOP, 5)
-        
-        self.customFilterText = wx.TextCtrl(enhancement_box, value=self.settings.get("noiseCustomFilter", "afftdn=nr=45:nf=-22:nt=w:tn=1:om=o"))
-        custom_sizer.Add(self.customFilterText, 0, wx.EXPAND | wx.TOP, 2)
-        
-        # Help text for custom filter
-        help_text = _("Example filters:") + "\n" + \
-                   _("- Light: afftdn=nr=20:nf=-15:nt=w") + "\n" + \
-                   _("- Medium: afftdn=nr=40:nf=-25:nt=w") + "\n" + \
-                   _("- Aggressive: afftdn=nr=60:nf=-35:nt=w")
-        help_label = wx.StaticText(enhancement_box, label=help_text)
-        help_label.SetFont(wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        custom_sizer.Add(help_label, 0, wx.TOP, 5)
-        
-        self.customFilterSizer = custom_sizer
-        enhancement_sizer.Add(custom_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        
-        # Hum removal checkbox
-        self.humRemovalCheck = wx.CheckBox(enhancement_box, label=_("&Remove low-frequency hum (50-60 Hz)"))
-        self.humRemovalCheck.SetValue(bool(self.settings.get("humRemoval", False)))
-        enhancement_sizer.Add(self.humRemovalCheck, 0, wx.ALL, 5)
-        
-        # Clarity boost checkbox
-        self.clarityBoostCheck = wx.CheckBox(enhancement_box, label=_("Boost voice &clarity (reduce muddiness)"))
-        self.clarityBoostCheck.SetValue(bool(self.settings.get("clarityBoost", False)))
-        enhancement_sizer.Add(self.clarityBoostCheck, 0, wx.ALL, 5)
-        
-        # Dynamic compression checkbox
-        self.dynamicCompressionCheck = wx.CheckBox(enhancement_box, label=_("Apply &dynamic compression"))
-        self.dynamicCompressionCheck.SetValue(bool(self.settings.get("dynamicCompression", False)))
-        enhancement_sizer.Add(self.dynamicCompressionCheck, 0, wx.ALL, 5)
-        
-        # Limiter checkbox
-        self.limiterCheck = wx.CheckBox(enhancement_box, label=_("Enable &limiter (prevent clipping)"))
-        self.limiterCheck.SetValue(bool(self.settings.get("limiter", True)))
-        enhancement_sizer.Add(self.limiterCheck, 0, wx.ALL, 5)
-        
-        sHelper.addItem(enhancement_sizer)
-        
-        # Show/hide custom filter based on initial state
-        self.onEnhancementCheck(None)
-        self.onNoisePresetChange(None)
-
-        # 5. Gain controls
+        # 4. Gain controls
         self.micGainEdit = sHelper.addLabeledControl(_("&Microphone Gain (0-10):"), wx.SpinCtrl, min=0, max=10, initial=int(self.settings.get("microphoneGain", 0)))
         self.sysGainEdit = sHelper.addLabeledControl(_("&System Gain (0-10):"), wx.SpinCtrl, min=0, max=10, initial=int(self.settings.get("systemGain", 0)))
 
-        # 6. Other options
+        # 5. Other options
         self.countInCheck = sHelper.addItem(wx.CheckBox(self, label=_("&Count-in before recording")))
         self.countInCheck.SetValue(bool(self.settings.get("countIn", False)))
         
         self.openFolderCheck = sHelper.addItem(wx.CheckBox(self, label=_("&Open folder after recording")))
         self.openFolderCheck.SetValue(bool(self.settings.get("openFolderAfter", False)))
 
-        # 7. Destination folder
+        # 6. Destination folder
         destLabel = wx.StaticText(self, label=_("&Destination Folder:"))
         sHelper.addItem(destLabel)
         dest_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -611,12 +400,6 @@ class RecordSettingsDialog(wx.Dialog):
         status_label.Wrap(400)
         sHelper.addItem(status_label)
 
-        # Note about audio enhancement
-        note_text = _("Note: Audio enhancement uses FFmpeg 8.0 filters for professional audio processing.")
-        note_label = wx.StaticText(self, label=note_text)
-        note_label.Wrap(400)
-        sHelper.addItem(note_label)
-
         btnSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
         mainSizer.Add(sHelper.sizer, 1, wx.ALL | wx.EXPAND, 10)
         mainSizer.Add(btnSizer, 0, wx.ALL | wx.ALIGN_RIGHT, 10)
@@ -637,29 +420,6 @@ class RecordSettingsDialog(wx.Dialog):
             self.qualityCombo.Show()
         self.Layout()
 
-    def onEnhancementCheck(self, event):
-        """Handle enhancement checkbox."""
-        enabled = self.noiseCheck.GetValue()
-        # Enable/disable all enhancement controls
-        for child in self.noisePresetCombo.GetParent().GetChildren():
-            if child not in [self.humRemovalCheck, self.clarityBoostCheck, self.dynamicCompressionCheck, self.limiterCheck]:
-                child.Enable(enabled)
-        self.onNoisePresetChange(None)
-        self.Layout()
-
-    def onNoisePresetChange(self, event):
-        """Handle noise preset change."""
-        enabled = self.noiseCheck.GetValue()
-        preset_idx = self.noisePresetCombo.GetSelection()
-        
-        # Show custom filter settings only for "Custom" preset
-        if enabled and preset_idx == 5:  # Custom
-            self.customFilterSizer.ShowItems(True)
-        else:
-            self.customFilterSizer.ShowItems(False)
-        
-        self.Layout()
-
     def onBrowse(self, event):
         dlg = wx.DirDialog(self, _("Select Destination Folder"), self.destEdit.GetValue())
         if dlg.ShowModal() == wx.ID_OK:
@@ -669,30 +429,11 @@ class RecordSettingsDialog(wx.Dialog):
     def onOk(self, event):
         fmt = self.formatCombo.GetStringSelection()
         
-        # Map preset selection back to string value
-        preset_map = {
-            0: "light",
-            1: "medium", 
-            2: "aggressive",
-            3: "studio",
-            4: "broadcast",
-            5: "custom"
-        }
-        preset_idx = self.noisePresetCombo.GetSelection()
-        noise_preset = preset_map.get(preset_idx, "medium")
-        
         self.settings.update({
             "recordingMode": self.modeValues[self.modeCombo.GetSelection()],
             "format": fmt,
             "mp3Quality": int(self.qualityCombo.GetStringSelection()) if fmt == "mp3" else 192,
             "countIn": self.countInCheck.GetValue(),
-            "noiseSuppression": self.noiseCheck.GetValue(),
-            "noiseReductionPreset": noise_preset,
-            "noiseCustomFilter": self.customFilterText.GetValue(),
-            "humRemoval": self.humRemovalCheck.GetValue(),
-            "clarityBoost": self.clarityBoostCheck.GetValue(),
-            "dynamicCompression": self.dynamicCompressionCheck.GetValue(),
-            "limiter": self.limiterCheck.GetValue(),
             "openFolderAfter": self.openFolderCheck.GetValue(),
             "destinationFolder": self.destEdit.GetValue(),
             "systemGain": self.sysGainEdit.GetValue(),
