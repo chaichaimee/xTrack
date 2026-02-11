@@ -1,0 +1,10 @@
+﻿{
+  "addon_name": "xTrack",
+  "addon_description": "Efficient Multimedia Conversion & Editing Toolkit",
+  "addon_version": "2026.3",
+  "addon_author": "chai chaimee & malee yamazaki",
+  "addon_url": "https://github.com/chaichaimee/xTrack",
+  "addon_download_url": "https://github.com/chaichaimee/xTrack/releases/download/2026.3/xTrack-v2026.3.nvda-addon",
+  "addon_min_nvda_version": "2022.4"
+}
+
