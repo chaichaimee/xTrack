@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: 2026-05-17 17:15+0700\n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Finnish\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} Päättymisaika:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Häivytys sisään: {} -> {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Häivytys ulos: {} -> {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&Selaa..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "&Laskenta ennen tallennusta"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "&Kohdekansio:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&Muoto:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "&Mikrofonin vahvistus (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "&Avaa kansio tallennuksen jälkeen"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "&Järjestelmän vahvistus (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC-bittinopeus (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "Lisää kuva..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Lisähäivytyksen kesto kunkin raidan alussa (paitsi ensimmäinen raita)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "Kaikki muunnokset valmiit!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "Kaikki muunnokset suoritettu"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "Kaikki kuvat käsitelty!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "Yhdistämisen aikana tapahtui virhe: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "Ääni"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Äänirajapinnan tila: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "Äänikanavat:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Äänikoodekki:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "Äänimuoto"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "Äänenlaatu"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "Äänenlaatu:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "Ääniasetukset"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "Äänitiedosto jaettu {} raitaan"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Rajaa kuvat automaattisesti 16:9-suhteeseen"
+
+#: record.py:357
+msgid "Available"
+msgstr "Käytettävissä"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "Taustaväri:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "Paras (Häviötön)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "Musta"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "Sininen"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "Alareuna (pikseliä):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "Selaa..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "Lasketaan..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "Videon resoluutiota ei voida lukea"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "Kanavat:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "Valitse kohdekansio"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "Valmis!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "Suoritettu"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "Muunnosasetukset"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "Muunnos valmis tiedostolle {}"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "Muunnos valmis!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "Muunnos valmis: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "Muunnos epäonnistui"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "Muunnos epäonnistui tiedostolle {}: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "Muunnos epäonnistui."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "Muunnos epäonnistui: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "Muunna"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "Muunna ääni"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "Muunna ääni: {} tiedostoa"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "Muunna MP3 videoksi (MP4)"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "Muunna MP3 videoksi (MP4): {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "Muunna video"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "Muunna video: {} tiedostoa"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "Muunnetaan..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "Muunnetaan: {} %"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "Kopioi ilman uudelleenkoodausta (nopeampi)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "Esikatselua ei voitu toistaa: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "Ei voitu lukea"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "Kuvan mittoja ei voitu lukea"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "Videon mittoja ei voitu lukea"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "Rajaa kuva"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Ristihäivytyksen kesto (sekuntia):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Ristihäivytysasetukset"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Ristihäivytys vaatii uudelleenkoodaustilan"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "Nykyinen tiedosto"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "Nykyinen tiedosto:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "Syaani"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "Poista valitut tiedostot"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "Mitat"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Ristihäivytyksen kesto sekunteina raitojen välillä. Suositus on 5 sekuntia."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "Kesto: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "Kesto: Lasketaan..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "Kesto: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "Käytä ristihäivytystä raitojen välillä"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Ota häivytys käyttöön"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Mahdollistaa sujuvat siirtymät häivyttämällä edellisen raidan loppua ja seuraavan alkua"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "Päättymisaika (100 % voimakkuus):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "Päättymisaika:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "Päättymisaika ei voi olla pidempi kuin tiedoston kesto"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "Virhe"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "Virhe haettaessa kuvan tietoja"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "Virhe haettaessa videon tietoja"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Häivytys sisään"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Häivytys ulos"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Häivytysasetukset"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Seuraavan raidan häivytys sisään (sekuntia):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "Epäonnistui"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "Tiedostolistan luominen epäonnistui: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "Tiedoston keston haku epäonnistui: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "Kuvan tietojen haku epäonnistui: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "Videon tietojen haku epäonnistui: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "Asetusten lataaminen epäonnistui: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Äänen muunnosikkunan avaaminen epäonnistui: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "MP3->MP4 -muunnosikkunan avaaminen epäonnistui: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Videon muunnosikkunan avaaminen epäonnistui: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "Yhdistämisikkunan avaaminen epäonnistui: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "Tallennusasetusten avaaminen epäonnistui: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Kuvan koon muutosikkunan avaaminen epäonnistui: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Äänen jakamisikkunan avaaminen epäonnistui: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "Trimmausikkunan avaaminen epäonnistui: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "Asetusten tallennus epäonnistui: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "Äänitiedoston jakaminen epäonnistui"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "Epäonnistui: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Tiedoston kesto: Lasketaan..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "Tiedoston kesto: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "Tiedostokoko"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "Tiedoston kesto: {duration}; Trimmausjakso: {period} sekuntia{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "Tiedostoa ei löydy"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "Tiedostoa ei löydy: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "Muunnettavat tiedostot"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "Yhdistettävät tiedostot"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "Vain yhdelle tiedostolle"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "Muoto:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Kuvanopeus: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Kuvanopeus: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "Hyvä"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "Harmaa"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "Vihreä"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "Korkeus (pikseliä):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "Kuvan tiedot"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "Kuvatiedostot (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "Kuvien käsittely valmis! Katso tulokset tulostietoluettelosta."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "Lähdetiedostot"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Virheellinen häivytys sisään -alue"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Virheellinen häivytys ulos -alue"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "Virheellinen kuvatiedosto: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "Virheellinen kohdekoko"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "Virheellinen aikamuoto raidalle {:02d}"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Virheellinen aikamuoto. Käytä sekunteja (esim. 10), MM:SS (esim. 1:30) tai HH:MM:SS (esim. 1:30:45)"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "Virheellinen aika-arvo raidalle {:02d}"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "Virheelliset aika-arvot"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "Viimeisen raidan päättymisaika ei voi ylittää tiedoston kestoa"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "Vasen reuna (pikseliä):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "Lukitse kuvasuhde"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "Silmukan kesto (sekuntia):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3-laatu (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3-laatu:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "Magenta"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "Yhdistä"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "Yhdistä MP3-tiedostot"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "Yhdistämistila"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "Yhdistäminen valmis!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "Yhdistäminen epäonnistui."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "Yhdistäminen epäonnistui: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "Yhdistäminen onnistui. Tulos tallennettu kohteeseen: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "Yhdistetään: {} %"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "Vain mikrofoni"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "Siirrä alas"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "Siirrä ylös"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "Tiedostoja ei valittu"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "Ei mitään"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "Normaali"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "Ei käytettävissä - tarkista tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "Huom: Videon trimmaus säilyttää alkuperäisen laadun. Uudelleenkoodausta ei tehdä."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "Huom: WAV-muoto käyttää pakkaamatonta ääntä"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "Huom: Voit muuntaa tiedostoja samaan muotoon (esim. MP3->MP3) muuttaaksesi laatua, voimakkuutta tai näytteenottotaajuutta."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "Raitojen määrä:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "Oranssi"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "Tulostiedoston nimeämismalli:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "Tulostiedoston nimi:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "Tulostusmuoto:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "Tulostiedot"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "Tulostiedoston nimi"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "Tulostyyppi"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "Kohdekansio:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "Keskeytä"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "Keskeytetty."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "Kuvalista"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "Anna tulostiedoston nimi."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "Täytä kaikki aikakentät"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "Valitse ensin MP3-tiedosto."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "Valitse ensin äänitiedosto"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "Valitse ensin ääni- tai videotiedosto"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "Valitse ensin vähintään 2 MP3-tiedostoa."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "Valitse vähintään 2 tiedostoa"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "Valitse vähintään yksi kuva tai taustaväri."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "Valitse ensin ääni- tai videotiedostot."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "Valitse ensin kuvatiedostot."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "Valitse ensin videotiedostot."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "Esikatselu epäonnistui: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "Esikatselutiedostoa ei luotu tai se on liian pieni"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "Esikatseluprosessi epäonnistui: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "Käsitelty: {} - Uusi koko: {}, Mitat: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "Käsitellään raitaa {} / {}"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "Käsitellään..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "Käsitellään: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "Edistyminen: {} %"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "Purppura"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "Laatu:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "Uudelleenkoodaa laadulla (hitaampi)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "Valmis"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "Tallennusasetukset"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "Tallennusasetukset..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "Tallennusasetukset tallennettu"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "Tallennus&tila:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "Punainen"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "Poista kuva"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "Muuta kuvan kokoa"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "Muuta kuvan kokoa: {} tiedostoa"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "Koon muutosasetukset"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "Resoluutio: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "Resoluutio: tuntematon"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "Resoluutio: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "Jatka"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "Jatketaan..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "Oikea reuna (pikseliä):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Näytteenottotaajuus:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "Valitse kohdekansio"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "Valitse kuvat"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "Valittu tiedosto"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "Valittu MP3-tiedosto"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "Valitut tiedostot:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "Koko: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "Koko: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "Pieni"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "Jaa"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "Jaa ääni"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "Jaa äänitiedosto"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "Jaa ääni: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "Jakoasetukset"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "Jako valmis! {} raitaa luotu"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "Jako epäonnistui!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "Aloita"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "Alkamisaika (100 % voimakkuus):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "Alkamisaika:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Aloita tallennus; paina uudelleen keskeyttääksesi; paina uudelleen jatkaaksesi"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "Alkamisajan on oltava ennen päättymisaikaa"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "Aloitetaan muunnos..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "Aloitetaan yhdistäminen..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "Aloitetaan jakaminen..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "Aloitetaan trimmaus..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "Tila"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "Lopeta tallennus"
+
+#: record.py:311
+msgid "System Only"
+msgstr "Vain järjestelmä"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "Järjestelmä ja mikrofoni (Yhdistetty)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "Järjestelmä ja mikrofoni (Erilliset tiedostot)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "Kohdekoko:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "Yläreuna (pikseliä):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "Kokonaisedistyminen:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "Raitojen päättymisajojen on oltava nousevassa järjestyksessä"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "Raidat"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "Trimmaa"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "Trimmaa ääni-/videotiedosto"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "Trimmaa ääni/video: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "Trimmaus valmis!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "Trimmaus epäonnistui!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "Trimmattu tiedosto tallennettu nimellä {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "Trimmaus epäonnistui: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "Erittäin hyvä"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "Video"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "Video-muoto"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "Videon tiedot"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "Äänenvoimakkuus:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "Varoitus: Virheelliset rajausmitat kohteelle {}. Rajaus poistettu käytöstä."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "Valkoinen"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "Leveys (pikseliä):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "Keltainen"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe ei löydy"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "ffmpeg.exe tai ffprobe.exe ei löydy tools-kansiosta"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe ei löydy"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "virheellinen"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "virheellinen (negatiivinen)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "keskeytetty"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "jatka"
+
+#: record.py:223
+msgid "resumed"
+msgstr "jatkettu"
+
+#: __init__.py:418
+msgid "start"
+msgstr "aloita"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "pysäytetty, tiedostoa ei tallennettu"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "pysäytetty, tallennettu kohteeseen: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "tuntematon"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} pikseliä, koko {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} pikseliä, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} pikseliä, {fps} fps, koko {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} tiedostoa poistettu"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} prosenttia"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{} %"

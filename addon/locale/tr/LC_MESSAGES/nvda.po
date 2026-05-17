@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} Bitiş Zamanı:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Belirerek Giriş: {} - {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Karararak Çıkış: {} - {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&Gözat..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "Kayıttan önce &sayım yap"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "&Hedef Klasör:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&Format:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "&Mikrofon Kazancı (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "Kayıttan sonra klasörü &aç"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "&Sistem Kazancı (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC Bit Hızı (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "Fotoğraf Ekle..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Her parçanın başlangıcı için ek belirme süresi (ilk parça hariç)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "Tüm dönüştürmeler tamamlandı!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "Tüm dönüştürmeler bitti"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "Tüm resimler işlendi!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "Birleştirme sırasında bir hata oluştu: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "Ses"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Ses Altyapı Durumu: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "Ses Kanalları:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Ses Kodeği:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "Ses Formatı"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "Ses Kalitesi"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "Ses Kalitesi:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "Ses Ayarları"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "Ses dosyası {} parçaya bölündü"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Resimleri otomatik olarak 16:9 oranında kırp"
+
+#: record.py:357
+msgid "Available"
+msgstr "Mevcut"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "Arka Plan Rengi:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "En İyi (Kayıpsız)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "Siyah"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "Mavi"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "Alt (piksel):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "Gözat..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "Hesaplanıyor..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "İptal"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "Video çözünürlüğü okunamıyor"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "Kanallar:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "Çıktı klasörünü seçin"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "Tamamlandı!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "Tamamlandı"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "Dönüştürme Ayarları"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "{} için dönüştürme tamamlandı"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "Dönüştürme tamamlandı!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "Dönüştürme tamamlandı: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "Dönüştürme başarısız"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "{} için dönüştürme başarısız oldu: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "Dönüştürme başarısız oldu."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "Dönüştürme başarısız oldu: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "Dönüştür"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "Sesi Dönüştür"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "Sesi Dönüştür: {} dosya"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "MP3'ü MP4'e Dönüştür"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "MP3'ü MP4'e Dönüştür: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "Videoyu Dönüştür"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "Videoyu Dönüştür: {} dosya"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "Dönüştürülüyor..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "Dönüştürülüyor: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "Yeniden kodlamadan kopyala (daha hızlı)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "Önizleme oynatılamadı: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "Okunamadı"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "Resim boyutları okunamadı"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "Video boyutları okunamadı"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "Resmi Kırp"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Çapraz Geçiş Süresi (saniye):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Çapraz Geçiş Ayarları"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Çapraz geçiş için yeniden kodlama modu gereklidir"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "Geçerli Dosya"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "Geçerli dosya:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "Camgöbeği"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "Seçili Dosyaları Sil"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "Boyutlar"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Parçalar arası çapraz geçiş süresi (saniye). Önerilen değer 5 saniyedir."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "Süre: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "Süre: Hesaplanıyor..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "Süre: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "Parçalar arası çapraz geçişi etkinleştir"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Belirme/Kararma özelliğini etkinleştir"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Bir parçanın sonunu karartıp diğerinin başlangıcını belirterek parçalar arası yumuşak geçişi etkinleştirir"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "Bitiş Zamanı (%100 ses seviyesi):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "Bitiş Zamanı:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "Bitiş zamanı dosya süresinden büyük olamaz"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "Hata"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "Resim bilgisi alınırken hata oluştu"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "Video bilgisi alınırken hata oluştu"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Belirerek Giriş"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Karararak Çıkış"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Geçiş Ayarları"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Sonraki Parça İçin Belirme Süresi (saniye):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "Başarısız"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "Dosya listesi oluşturulamadı: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "Dosya süresi alınamadı: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "Resim bilgisi alınamadı: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "Video bilgisi alınamadı: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "Yapılandırma yüklenemedi: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Ses Dönüştürme penceresi açılamadı: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "MP3'ü MP4'e Dönüştür penceresi açılamadı: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Video Dönüştürme penceresi açılamadı: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "Birleştirme penceresi açılamadı: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "Kayıt Ayarları açılamadı: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Resim Boyutlandır penceresi açılamadı: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Sesi Böl penceresi açılamadı: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "Kırpma penceresi açılamadı: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "Yapılandırma kaydedilemedi: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "Ses dosyası bölünemedi"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "Başarısız: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Dosya Süresi: Hesaplanıyor..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "Dosya Süresi: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "Dosya Boyutu"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "Dosya süresi: {duration}; Kırpma aralığı: {period} saniye{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "Dosya bulunamadı"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "Dosya bulunamadı: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "Dönüştürülecek Dosyalar"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "Birleştirilecek Dosyalar"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "Yalnızca tek dosya için"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "Format:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Kare hızı: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Kare hızı: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "İyi"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "Gri"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "Yeşil"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "Yükseklik (piksel):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "Resim Bilgisi"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "Resim dosyaları (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "Resim işleme tamamlandı! Sonuçlar için çıktı bilgi listesini kontrol edin."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "Girdi Dosyaları"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Geçersiz belirme aralığı"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Geçersiz kararma aralığı"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "Geçersiz resim dosyası: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "Geçersiz hedef boyut"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "{:02d}. parça için geçersiz zaman formatı"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Geçersiz zaman formatı. Saniye (örn. 10), DD:SS (örn. 1:30) veya SS:DD:SS (örn. 1:30:45) kullanın"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "{:02d}. parça için geçersiz zaman değeri"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "Geçersiz zaman değerleri"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "Son parçanın bitiş zamanı dosya süresini aşamaz"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "Sol (piksel):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "En-Boy Oranını Kilitle"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "Döngü Süresi (saniye):"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "Kayıt &Modu:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "Kırmızı"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "Fotoğrafı Kaldır"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "Resmi Boyutlandır"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "Resmi Boyutlandır: {} dosya"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "Boyutlandırma Ayarları"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "Çözünürlük: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "Çözünürlük: bilinmiyor"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "Çözünürlük: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "Devam Et"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "Devam ettiriliyor..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "Sağ (piksel):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Örnekleme Hızı:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "Hedef Klasörü Seçin"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "Fotoğrafları seçin"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "Seçilen Dosya"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "Seçilen MP3 Dosyası"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "Seçilen dosyalar:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "Boyut: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "Boyut: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "Küçük"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "Böl"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "Sesi Böl"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "Ses Dosyasını Böl"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "Sesi Böl: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "Bölme Ayarları"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "Bölme tamamlandı! {} parça oluşturuldu"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "Bölme başarısız!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "Başlat"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "Başlangıç Zamanı (%100 ses seviyesi):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "Başlangıç Zamanı:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Kaydı başlat; duraklatmak için tekrar bas; devam etmek için tekrar bas"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "Başlangıç zamanı bitiş zamanından küçük olmalıdır"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "Dönüştürme başlatılıyor..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "Birleştirme başlatılıyor..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "Bölme işlemi başlatılıyor..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "Kırpma işlemi başlatılıyor..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "Durum"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "Kaydı durdur"
+
+#: record.py:311
+msgid "System Only"
+msgstr "Yalnızca Sistem"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "Sistem ve Mikrofon (Birleştirilmiş)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "Sistem ve Mikrofon (Ayrı Dosyalar)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "Hedef Boyut:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "Üst (piksel):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "Toplam ilerleme:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "Parça bitiş zamanları artan sırada olmalıdır"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "Parçalar"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "Kırp"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "Ses/Video Dosyasını Kırp"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "Ses/Video Kırp: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "Kırpma tamamlandı!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "Kırpma başarısız!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "Kırpılan dosya {} olarak kaydedildi"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "Kırpma başarısız oldu: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "Bilinmiyor"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "Çok İyi"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "Video"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "Video Formatı"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "Video Bilgisi"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "Ses Seviyesi:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "Uyarı: {} için geçersiz kırpma boyutları. Bu resim için kırpma devre dışı bırakıldı."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "Beyaz"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "Genişlik (piksel):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "Sarı"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe bulunamadı"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "tools klasöründe ffmpeg.exe veya ffprobe.exe bulunamadı"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe bulunamadı"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "geçersiz"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "geçersiz (negatif)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "duraklatıldı"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "devam et"
+
+#: record.py:223
+msgid "resumed"
+msgstr "devam ettirildi"
+
+#: __init__.py:418
+msgid "start"
+msgstr "başlat"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "durduruldu Dosya kaydedilmedi"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "durduruldu Şuraya kaydedildi: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "bilinmiyor"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} piksel, boyut {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} piksel, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} piksel, {fps} fps, boyut {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} dosya kaldırıldı"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "yüzde {}"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "%{}"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3 Kalitesi (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3 Kalitesi:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "Macenta"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "Birleştir"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "MP3 Birleştir"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "Birleştirme Modu"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "Birleştirme tamamlandı!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "Birleştirme başarısız."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "Birleştirme başarısız: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "Birleştirme başarılı. Çıktı şuraya kaydedildi: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "Birleştiriliyor: %{}"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "Yalnızca Mikrofon"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "Aşağı Taşı"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "Yukarı Taşı"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "Dosya seçilmedi"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "Yok"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "Normal"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "Mevcut değil - tools/recorder_backend.py dosyasını kontrol edin"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "Not: Video kırpma varsayılan olarak orijinal kaliteyi korur. Yeniden kodlama yapılmaz."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "Not: WAV formatı sıkıştırılmamış ses kullanır"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "Not: Artık kalite, ses seviyesi veya örnekleme hızını değiştirmek için dosyaları aynı formata (örn. MP3'ten MP3'e) dönüştürebilirsiniz."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "Parça sayısı:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "Turuncu"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "Çıktı Dosya Adı Deseni:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "Çıktı Dosya Adı:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "Çıktı Formatı:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "Çıktı Bilgisi"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "Çıktı Adı"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "Çıktı Türü"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "Çıktı klasörü:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "Duraklat"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "Duraklatıldı."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "Fotoğraf Listesi"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "Lütfen bir çıktı dosya adı girin."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "Lütfen tüm zaman girişlerini doldurun"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "Lütfen önce bir MP3 dosyası seçin."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "Lütfen önce bir ses dosyası seçin"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "Lütfen önce bir ses veya video dosyası seçin"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "Lütfen önce en az 2 MP3 dosyası seçin."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "Lütfen en az 2 dosya seçin"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "Lütfen en az bir fotoğraf seçin veya bir arka plan rengi belirleyin."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "Lütfen önce ses veya video dosyalarını seçin."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "Lütfen önce resim dosyalarını seçin."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "Lütfen önce video dosyalarını seçin."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "Önizleme"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "Önizleme başarısız: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "Önizleme dosyası oluşturulmadı veya çok küçük"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "Önizleme işlemi başarısız oldu: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "İşlendi: {} - Yeni boyut: {}, Boyutlar: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "Parça {} / {} işleniyor"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "İşleniyor..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "İşleniyor: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "İlerleme: %{}"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "Mor"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "Kalite:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "Kalite ile yeniden kodla (daha yavaş)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "Hazır"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "Kayıt Ayarları"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "Kayıt Ayarları..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "Kayıt ayarları kaydedildi"

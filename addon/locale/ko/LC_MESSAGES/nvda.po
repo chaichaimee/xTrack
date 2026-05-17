@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} 종료 시간:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | 페이드 인: {} ~ {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | 페이드 아웃: {} ~ {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "찾아보기(&B)..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "녹음 전 카운트인(&C)"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "대상 폴더(&D):"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "형식(&F):"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "마이크 게인(&M) (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "녹음 후 폴더 열기(&O)"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "시스템 게인(&S) (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC 비트레이트 (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "사진 추가..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "각 트랙 시작 부분의 추가 페이드 인 시간 (첫 트랙 제외)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "모든 변환이 완료되었습니다!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "모든 변환 종료"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "모든 이미지 처리가 완료되었습니다!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "병합 중 오류 발생: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "오디오"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "오디오 백엔드 상태: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "오디오 채널:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "오디오 코덱:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "오디오 형식"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "오디오 음질"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "오디오 음질:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "오디오 설정"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "오디오 파일이 {}개의 트랙으로 분할되었습니다."
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "이미지를 16:9 비율로 자동 자르기"
+
+#: record.py:357
+msgid "Available"
+msgstr "사용 가능"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "배경색:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "최상 (무손실)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "검정색"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "파란색"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "하단 (픽셀):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "찾아보기..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "계산 중..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "취소"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "동영상 해상도를 읽을 수 없습니다"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "채널:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "출력 폴더 선택"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "완료!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "완료됨"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "변환 설정"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "{} 변환 완료"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "변환 완료!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "변환 완료: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "변환 실패"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "{} 변환 실패: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "변환에 실패했습니다."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "변환 실패: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "변환"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "오디오 변환"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "오디오 변환: {}개 파일"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "MP3를 MP4로 변환"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "MP3를 MP4로 변환: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "동영상 변환"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "동영상 변환: {}개 파일"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "변환 중..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "변환 중: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "재인코딩 없이 복사 (빠름)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "미리보기를 재생할 수 없습니다: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "읽을 수 없음"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "이미지 크기를 읽을 수 없습니다"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "동영상 크기를 읽을 수 없습니다"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "이미지 자르기"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "크로스페이드 시간 (초):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "크로스페이드 설정"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "크로스페이드는 재인코딩 모드가 필요합니다"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "현재 파일"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "현재 파일:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "시안색"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "선택한 파일 삭제"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "크기"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "트랙 간 크로스페이드 시간(초)입니다. 권장값은 5초입니다."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "길이: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "길이: 계산 중..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "길이: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "트랙 간 크로스페이드 활성화"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "페이드 인/아웃 활성화"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "한 트랙의 끝을 페이드 아웃하고 다음 트랙의 시작을 페이드 인하여 트랙 간 부드러운 전환을 활성화합니다."
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "종료 시간 (100% 볼륨):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "종료 시간:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "종료 시간은 파일 길이보다 길 수 없습니다"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "오류"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "이미지 정보를 가져오는 중 오류 발생"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "동영상 정보를 가져오는 중 오류 발생"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "페이드 인"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "페이드 아웃"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "페이드 설정"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "다음 트랙 페이드 인 (초):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "실패"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "파일 목록 생성 실패: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "파일 길이를 가져오지 못했습니다: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "이미지 정보 가져오기 실패: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "동영상 정보 가져오기 실패: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "설정을 로드하지 못했습니다: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "오디오 변환 대화 상자를 열지 못했습니다: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "MP3-MP4 변환 대화 상자를 열지 못했습니다: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "동영상 변환 대화 상자를 열지 못했습니다: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "병합 대화 상자를 열지 못했습니다: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "녹음 설정을 열지 못했습니다: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "이미지 크기 조정 대화 상자를 열지 못했습니다: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "오디오 분할 대화 상자를 열지 못했습니다: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "자르기 대화 상자를 열지 못했습니다: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "설정을 저장하지 못했습니다: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "오디오 파일 분할 실패"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "실패: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "파일 길이: 계산 중..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "파일 길이: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "파일 크기"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "파일 길이: {duration}; 자르기 구간: {period}초{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "파일을 찾을 수 없음"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "파일을 찾을 수 없음: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "변환할 파일"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "병합할 파일"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "단일 파일 전용"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "형식:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "프레임 레이트: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "프레임 레이트: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "좋음"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "회색"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "초록색"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "높이 (픽셀):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "이미지 정보"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "이미지 파일 (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "이미지 처리가 완료되었습니다! 결과는 출력 정보 목록을 확인하세요."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "입력 파일"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "유효하지 않은 페이드 인 범위"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "유효하지 않은 페이드 아웃 범위"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "유효하지 않은 이미지 파일: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "유효하지 않은 대상 크기"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "트랙 {:02d}의 시간 형식이 잘못되었습니다"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "잘못된 시간 형식입니다. 초(예: 10), 분:초(예: 1:30) 또는 시:분:초(예: 1:30:45)를 사용하세요."
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "트랙 {:02d}의 시간 값이 잘못되었습니다"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "잘못된 시간 값"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "마지막 트랙의 종료 시간은 파일 길이를 초과할 수 없습니다"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "왼쪽 (픽셀):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "종횡비 고정"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "반복 시간 (초):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3 음질 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3 음질:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "마젠타색"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "병합"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "MP3 병합"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "병합 모드"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "병합 완료!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "병합에 실패했습니다."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "병합 실패: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "병합 성공. 저장 위치: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "병합 중: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "마이크만"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "아래로 이동"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "위로 이동"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "선택된 파일 없음"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "없음"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "보통"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "사용 불가 - tools/recorder_backend.py를 확인하세요"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "참고: 동영상 자르기는 기본적으로 원본 화질을 유지하며, 재인코딩을 수행하지 않습니다."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "참고: WAV 형식은 비압축 오디오를 사용합니다"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "참고: 음질, 볼륨 또는 샘플 레이트를 변경하기 위해 동일한 형식(예: MP3에서 MP3)으로 변환할 수 있습니다."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "트랙 수:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "주황색"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "출력 파일 이름 패턴:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "출력 파일 이름:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "출력 형식:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "출력 정보"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "출력 이름"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "출력 유형"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "출력 폴더:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "일시 중지"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "일시 중지됨."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "사진 목록"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "출력 파일 이름을 입력하세요."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "모든 시간 항목을 입력하세요"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "먼저 MP3 파일을 선택하세요."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "먼저 오디오 파일을 선택하세요"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "먼저 오디오 또는 동영상 파일을 선택하세요"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "먼저 최소 2개의 MP3 파일을 선택하세요."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "최소 2개의 파일을 선택하세요"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "최소 하나 이상의 사진을 선택하거나 배경색을 선택하세요."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "먼저 오디오 또는 동영상 파일을 선택하세요."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "먼저 이미지 파일을 선택하세요."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "먼저 동영상 파일을 선택하세요."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "미리보기"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "미리보기 실패: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "미리보기 파일이 생성되지 않았거나 크기가 너무 작습니다"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "미리보기 프로세스 실패: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "처리됨: {} - 새 크기: {}, 치수: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "트랙 {} / {} 처리 중"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "처리 중..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "처리 중: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "진행률: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "보라색"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "품질:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "품질 유지하며 재인코딩 (느림)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "준비됨"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "녹음 설정"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "녹음 설정..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "녹음 설정 저장됨"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "녹음 모드(&M):"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "빨간색"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "사진 제거"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "이미지 크기 조정"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "이미지 크기 조정: {}개 파일"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "크기 조정 설정"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "해상도: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "해상도: 알 수 없음"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "해상도: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "재개"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "재개 중..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "오른쪽 (픽셀):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "샘플 레이트:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "대상 폴더 선택"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "사진 선택"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "선택된 파일"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "선택된 MP3 파일"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "선택된 파일:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "크기: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "크기: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "작게"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "분할"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "오디오 분할"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "오디오 파일 분할"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "오디오 분할: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "분할 설정"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "분할 완료! {}개의 트랙이 생성되었습니다"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "분할 실패!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "시작"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "시작 시간 (100% 볼륨):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "시작 시간:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "녹음 시작; 다시 누르면 일시 중지; 다시 누르면 계속"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "시작 시간은 종료 시간보다 빨라야 합니다"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "변환을 시작합니다..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "병합을 시작합니다..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "분할 작업을 시작합니다..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "자르기 작업을 시작합니다..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "상태"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "녹음 중지"
+
+#: record.py:311
+msgid "System Only"
+msgstr "시스템 소리만"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "시스템 및 마이크 (병합)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "시스템 및 마이크 (개별 파일)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "대상 크기:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "상단 (픽셀):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "전체 진행률:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "트랙 종료 시간은 오름차순이어야 합니다"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "트랙"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "자르기"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "오디오/동영상 파일 자르기"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "오디오/동영상 자르기: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "자르기 완료!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "자르기 실패!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "자른 파일이 {}로 저장되었습니다"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "자르기 실패: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "알 수 없는 오류"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "매우 좋음"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "동영상"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "동영상 형식"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "동영상 정보"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "볼륨:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "경고: {}의 자르기 치수가 잘못되었습니다. 이 이미지의 자르기가 비활성화됩니다."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "흰색"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "너비 (픽셀):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "노란색"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe를 찾을 수 없습니다"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "tools 폴더에서 ffmpeg.exe 또는 ffprobe.exe를 찾을 수 없습니다"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe를 찾을 수 없습니다"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "잘못됨"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "잘못됨 (음수)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "일시 중지됨"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "재개"
+
+#: record.py:223
+msgid "resumed"
+msgstr "재개됨"
+
+#: __init__.py:418
+msgid "start"
+msgstr "시작"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "중지됨 (파일이 저장되지 않음)"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "중지됨 (저장 위치: {})"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "알 수 없음"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} 픽셀, 크기 {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} 픽셀, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} 픽셀, {fps} fps, 크기 {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{}개 파일 제거됨"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} 퍼센트"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

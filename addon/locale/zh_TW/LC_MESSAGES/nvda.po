@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: 2026-05-17 16:35+0700\n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Chinese (Traditional)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} 結束時間:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | 淡入: {} 到 {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | 淡出: {} 到 {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "瀏覽(&B)..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "錄音前預拍(&C)"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "目標資料夾(&D):"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "格式(&F):"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "麥克風增益 (0-10)(&M):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "錄音後開啟資料夾(&O)"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "系統增益 (0-10)(&S):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC 位元率 (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "新增相片..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "每條音軌開頭的額外淡入時長（第一條音軌除外）"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "所有轉換已完成！"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "所有轉換已結束"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "所有影像處理完畢！"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "合併過程中發生錯誤: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "音訊"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "音訊後端狀態: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "音訊聲道:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "音訊編碼器:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "音訊格式"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "音訊品質"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "音訊品質:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "音訊設定"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "音訊檔案已分割為 {} 個軌道"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "自動將影像裁剪為 16:9 縱橫比"
+
+#: record.py:357
+msgid "Available"
+msgstr "可用"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "背景顏色:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "最佳 (無損)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "黑色"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "藍色"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "底部 (像素):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "瀏覽..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "正在計算..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "取消"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "無法讀取影片解析度"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "聲道:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "選擇輸出資料夾"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "完成！"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "已完成"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "轉換設定"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "{} 轉換完成"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "轉換完成！"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "轉換完成: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "轉換失敗"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "{} 轉換失敗: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "轉換失敗。"
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "轉換失敗: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "轉換"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "轉換音訊"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "轉換音訊: {} 個檔案"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "MP3 轉換為 MP4"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "MP3 轉換為 MP4: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "轉換影片"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "轉換影片: {} 個檔案"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "正在轉換..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "正在轉換: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "直接複製而不重新編碼（較快）"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "無法播放預覽: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "無法讀取"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "無法讀取影像尺寸"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "無法讀取影片尺寸"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "裁剪影像"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "淡入淡出時長 (秒):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "淡入淡出設定"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "淡入淡出需要重新編碼模式"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "目前檔案"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "目前檔案:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "青色"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "刪除選定檔案"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "尺寸"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "音軌間淡入淡出的時長（秒）。建議值為 5 秒。"
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "時長: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "時長: 正在計算..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "時長: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "啟用音軌間淡入淡出"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "藉由淡出前一音軌末尾並淡入後一音軌開頭，達成平滑過渡"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "啟用淡入/淡出"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "結束時間 (100% 音量):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "結束時間:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "結束時間不能大於檔案總時長"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "錯誤"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "獲取影像資訊時出錯"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "獲取影片資訊時出錯"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "淡入"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "淡出"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "淡入淡出設定"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "下一音軌淡入 (秒):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "失敗"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "建立檔案列表失敗: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "獲取檔案時長失敗: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "獲取影像資訊失敗: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "獲取影片資訊失敗: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "載入配置失敗: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "開啟轉換音訊對話方塊失敗: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "開啟 MP3 轉換 MP4 對話方塊失敗: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "開啟轉換影片對話方塊失敗: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "開啟合併對話方塊失敗: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "開啟錄音設定失敗: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "開啟調整影像尺寸對話方塊失敗: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "開啟分割音訊對話方塊失敗: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "開啟修剪對話方塊失敗: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "儲存配置失敗: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "分割音訊檔案失敗"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "失敗: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "檔案時長: 正在計算..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "檔案時長: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "檔案大小"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "檔案時長: {duration}; 修剪週期: {period} 秒{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "找不到檔案"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "找不到檔案: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "待轉換檔案"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "待合併檔案"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "僅限單一檔案"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "格式:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "幀率: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "幀率: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "好"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "灰色"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "綠色"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "高度 (像素):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "影像資訊"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "影像檔案 (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "影像處理完成！請查看輸出資訊列表以獲取結果。"
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "輸入檔案"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "無效的淡入範圍"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "無效的淡出範圍"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "無效的影像檔案: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "無效的目标大小"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "音軌 {:02d} 的時間格式無效"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "無效的時間格式。請使用秒（如 10）、分:秒（如 1:30）或時:分:秒（如 1:30:45）"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "音軌 {:02d} 的時間值無效"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "無效的時間值"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "最後一個音軌的結束時間不能超過檔案總時長"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "左側 (像素):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "鎖定縱橫比"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "循環時長 (秒):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3 品質 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3 品質:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "洋紅色"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "合併"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "合併 MP3"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "合併模式"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "合併完成！"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "合併失敗。"
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "合併失敗: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "合併成功。輸出儲存至: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "正在合併: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "僅麥克風"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "下移"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "上移"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "未選擇檔案"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "無"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "正常"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "不可用 - 請檢查 tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "注意：影片修剪預設保留原始品質，不進行重新編碼。"
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "注意：WAV 格式使用未壓縮音訊"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "注意：您現在可以將檔案轉換為相同格式（如 MP3 到 MP3），以更改品質、音量或採樣率。"
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "軌道數量:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Orange"
+msgstr "橙色"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "輸出檔名格式:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "輸出檔名:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "輸出格式:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "輸出資訊"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "輸出名稱"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "輸出類型"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "輸出資料夾:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "暫停"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "已暫停。"
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "相片列表"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "請輸入輸出檔名。"
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "請填寫所有時間項"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "請先選擇一個 MP3 檔案。"
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "請先選擇一個音訊檔案"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "請先選擇一個音訊或影片檔案"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "請先選擇至少 2 個 MP3 檔案。"
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "請選擇至少 2 個檔案"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "請至少選擇一張相片或選擇一種背景顏色。"
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "請先選擇音訊或影片檔案。"
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "請先選擇影像檔案。"
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "請先選擇影片檔案。"
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "預覽"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "預覽失敗: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "預覽檔案未建立或過小"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "預覽過程失敗: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "已處理: {} - 新大小: {}, 尺寸: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "正在處理第 {}/{} 個軌道"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "正在處理..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "正在處理: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "進度: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "紫色"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "品質:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "以指定品質重新編碼（較慢）"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "就緒"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "錄音設定"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "錄音設定..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "錄音設定已儲存"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "錄音模式(&M):"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "紅色"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "移除相片"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "調整影像尺寸"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "調整影像尺寸: {} 個檔案"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "尺寸設定"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "解析度: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "解析度: 未知"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "解析度: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "繼續"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "正在繼續..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "右側 (像素):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "採樣率:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "選擇目標資料夾"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "選擇相片"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "已選檔案"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "已選 MP3 檔案"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "已選檔案:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "大小: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "大小: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "小"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "分割"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "分割音訊"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "分割音訊檔案"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "分割音訊: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "分割設定"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "分割完成！已建立 {} 個軌道"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "分割失敗！"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "開始"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "開始時間 (100% 音量):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "開始時間:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "開始錄音；再次按下暫停；再次按下繼續"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "開始時間必須早於結束時間"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "開始轉換..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "開始合併..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "開始分割操作..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "開始修剪操作..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "狀態"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "停止錄音"
+
+#: record.py:311
+msgid "System Only"
+msgstr "僅系統"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "系統和麥克风 (合併)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "系統和麥克风 (獨立檔案)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "目標大小:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "頂部 (像素):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "總進度:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "音軌結束時間必須依次遞增"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "軌道"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "修剪"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "修剪音/影片檔案"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "修剪音/影片: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "修剪完成！"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "修剪失敗！"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "修剪後的檔案儲存為 {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "修剪失敗: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "未知"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "未知錯誤"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "非常好"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "影片"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "影片格式"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "影片資訊"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "音量:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "警告：{} 的裁剪尺寸無效。該影像已停用裁剪。"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "白色"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "寬度 (像素):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "黃色"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "找不到 ffmpeg.exe"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "tools 資料夾中未找到 ffmpeg.exe 或 ffprobe.exe"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "找不到 ffprobe.exe"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "無效"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "無效 (負值)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "已暫停"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "繼續"
+
+#: record.py:223
+msgid "resumed"
+msgstr "已恢復"
+
+#: __init__.py:418
+msgid "start"
+msgstr "開始"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "已停止，未儲存檔案"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "已停止，儲存至: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "未知"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} 像素，大小 {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} 像素，{dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} 像素，{fps} fps，大小 {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} 個檔案已移除"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} 百分比"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

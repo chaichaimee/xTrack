@@ -1,32 +1,32 @@
 class PydubException(Exception):
-    """
-    Base class for any Pydub exception
-    """
+	"""
+	Base class for any Pydub exception
+	"""
 
 
 class TooManyMissingFrames(PydubException):
-    pass
+	pass
 
 
 class InvalidDuration(PydubException):
-    pass
+	pass
 
 
 class InvalidTag(PydubException):
-    pass
+	pass
 
 
 class InvalidID3TagVersion(PydubException):
-    pass
+	pass
 
 
 class CouldntDecodeError(PydubException):
-    pass
+	pass
 
 
 class CouldntEncodeError(PydubException):
-    pass
+	pass
 
 
 class MissingAudioParameter(PydubException):
-    pass
+	pass

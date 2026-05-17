@@ -1,92 +1,94 @@
 # overlay_loader.py
-# Dual-architecture binary loader for NVDA add-ons
-# Cleans up unused architecture folders after deployment.
 # Copyright (C) 2026 Chai Chaimee
 # Licensed under GNU General Public License.
 
 import os
 import sys
 import shutil
-import time
-
-PACKAGES_TO_DEPLOY = ["pyaudiowpatch", "numpy"]
-ARCH_FOLDERS = ["x86", "x64"]
 
 def _is_64bit_process():
-    return sys.maxsize > 2**32
+	return sys.maxsize > 2**32
 
 def _get_architecture_subdir():
-    return "x64" if _is_64bit_process() else "x86"
+	return "x64" if _is_64bit_process() else "x86"
 
 def _add_dll_directory(path):
-    if hasattr(os, 'add_dll_directory'):
-        try:
-            os.add_dll_directory(path)
-        except (OSError, FileNotFoundError):
-            pass
+	if hasattr(os, 'add_dll_directory'):
+		try:
+			os.add_dll_directory(path)
+		except (OSError, FileNotFoundError):
+			pass
 
 def _log(msg):
-    import builtins
-    builtins.print(f"[overlay_loader] {msg}")
+	try:
+		from logHandler import log
+		log.info(f"[overlay_loader] {msg}")
+	except ImportError:
+		import builtins
+		builtins.print(f"[overlay_loader] {msg}")
+
+def _log_error(msg):
+	try:
+		from logHandler import log
+		log.error(f"[overlay_loader] {msg}")
+	except ImportError:
+		import builtins
+		builtins.print(f"[overlay_loader] ERROR: {msg}")
 
 def overlayBinaries():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    tools_dir = os.path.join(base_dir, "tools")   # พิมพ์เล็ก
-    arch = _get_architecture_subdir()
-    src_arch_dir = os.path.join(tools_dir, arch)
+	base_dir = os.path.dirname(os.path.abspath(__file__))
+	tools_dir = os.path.join(base_dir, "tools")
+	arch = _get_architecture_subdir()
+	src_arch_dir = os.path.join(tools_dir, arch)
 
-    _log(f"Architecture: {arch}")
-    _log(f"Tools dir: {tools_dir}")
+	_log(f"Architecture: {arch}")
+	_log(f"Tools dir: {tools_dir}")
 
-    # -------------------- คัดลอก (ถ้ามีโฟลเดอร์สถาปัตยกรรม) --------------------
-    if os.path.isdir(src_arch_dir):
-        # ลบแพ็กเกจเก่าที่ root
-        for pkg in PACKAGES_TO_DEPLOY:
-            old_root = os.path.join(base_dir, pkg)
-            if os.path.exists(old_root):
-                _log(f"Removing old root: {old_root}")
-                shutil.rmtree(old_root, ignore_errors=True)
+	pkg_name = "pyaudiowpatch"
+	src_pkg = os.path.join(src_arch_dir, pkg_name)
+	dst_pkg = os.path.join(tools_dir, pkg_name)
 
-        # คัดลอกจากสถาปัตยกรรมที่ถูกต้องไปยัง tools/
-        for pkg in PACKAGES_TO_DEPLOY:
-            src = os.path.join(src_arch_dir, pkg)
-            dst = os.path.join(tools_dir, pkg)
-            if os.path.isdir(src):
-                if os.path.exists(dst):
-                    _log(f"Removing old: {dst}")
-                    shutil.rmtree(dst, ignore_errors=True)
-                shutil.copytree(src, dst)
-                _log(f"Copied {src} -> {dst}")
-            else:
-                _log(f"WARNING: {src} not found, skipping")
-    else:
-        _log(f"WARNING: {src_arch_dir} not found! Architecture-specific packages will NOT be deployed.")
+	old_root_pkg = os.path.join(base_dir, pkg_name)
+	if os.path.exists(old_root_pkg):
+		_log(f"Removing old root package: {old_root_pkg}")
+		shutil.rmtree(old_root_pkg, ignore_errors=True)
 
-    # -------------------- ลบโฟลเดอร์ x86/x64 (ถ้ายังเหลือ) --------------------
-    for folder in ARCH_FOLDERS:
-        path = os.path.join(tools_dir, folder)
-        if os.path.exists(path):
-            _log(f"Removing {path}")
-            shutil.rmtree(path, ignore_errors=True)
+	if os.path.isdir(src_pkg):
+		if os.path.exists(dst_pkg):
+			_log(f"Removing existing package: {dst_pkg}")
+			shutil.rmtree(dst_pkg, ignore_errors=True)
+		_log(f"Copying {src_pkg} -> {dst_pkg}")
+		shutil.copytree(src_pkg, dst_pkg)
+	else:
+		_log_error(f"Source package not found: {src_pkg}")
 
-    # -------------------- เพิ่ม sys.path และ DLL search path เสมอ --------------------
-    if os.path.isdir(tools_dir):
-        if tools_dir not in sys.path:
-            sys.path.insert(0, tools_dir)
-            _log(f"Added {tools_dir} to sys.path")
-        _add_dll_directory(tools_dir)
+	for folder in ["x86", "x64"]:
+		folder_path = os.path.join(tools_dir, folder)
+		if os.path.exists(folder_path):
+			_log(f"Removing architecture folder: {folder_path}")
+			shutil.rmtree(folder_path, ignore_errors=True)
 
-        pyaudiowpatch_dir = os.path.join(tools_dir, "pyaudiowpatch")
-        if os.path.isdir(pyaudiowpatch_dir):
-            if pyaudiowpatch_dir not in sys.path:
-                sys.path.insert(0, pyaudiowpatch_dir)
-                _log(f"Added {pyaudiowpatch_dir} to sys.path")
-            _add_dll_directory(pyaudiowpatch_dir)
-            _log(f"Added {pyaudiowpatch_dir} to DLL search path")
-    else:
-        _log(f"ERROR: {tools_dir} not found!")
+	if tools_dir not in sys.path:
+		sys.path.insert(0, tools_dir)
+		_log(f"Added {tools_dir} to sys.path")
 
-    time.sleep(0.2)
-    _log("overlayBinaries completed.")
+	_add_dll_directory(tools_dir)
+	_log(f"Added {tools_dir} to DLL search path")
+
+	pkg_path = os.path.join(tools_dir, pkg_name)
+	if os.path.isdir(pkg_path):
+		if pkg_path not in sys.path:
+			sys.path.insert(0, pkg_path)
+			_log(f"Added {pkg_path} to sys.path")
+		_add_dll_directory(pkg_path)
+		_log(f"Added {pkg_path} to DLL search path")
+
+		try:
+			import pyaudiowpatch
+			_log("pyaudiowpatch imported successfully")
+		except ImportError as e:
+			_log_error(f"Failed to import pyaudiowpatch: {e}")
+
+	_log("overlayBinaries completed.")
 
 overlayBinaries()

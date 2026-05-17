@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Hebrew\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} זמן סיום:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | עמעום כניסה: {} עד {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | עמעום יציאה: {} עד {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&עיון..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "&ספירה לאחור לפני הקלטה"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "&תיקיית יעד:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&פורמט:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "&עוצמת כניסת מיקרופון (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "&פתח תיקייה לאחר ההקלטה"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "&עוצמת כניסת מערכת (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "קצב נתונים AAC (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "הוסף תמונה..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "משך עמעום כניסה נוסף לתחילת כל רצועה (למעט הראשונה)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "כל ההמרות הושלמו!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "כל ההמרות הסתיימו"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "כל התמונות עובדו!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "אירעה שגיאה במהלך המיזוג: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "שמע"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "סטטוס מנוע שמע: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "ערוצי שמע:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "מקודד שמע:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "פורמט שמע"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "איכות שמע"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "איכות שמע:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "הגדרות שמע"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "קובץ השמע פוצל ל-{} רצועות"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "חיתוך תמונות אוטומטי ליחס גובה-רוחב 16:9"
+
+#: record.py:357
+msgid "Available"
+msgstr "זמין"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "צבע רקע:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "הכי טוב (ללא איבוד נתונים)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "שחור"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "כחול"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "למטה (פיקסלים):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "עיון..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "מחשב..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "ביטול"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "לא ניתן לקרוא את רזולוציית הווידאו"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "ערוצים:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "בחר תיקיית יעד"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "הושלם!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "הסתיים"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "הגדרות המרה"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "ההמרה הושלמה עבור {}"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "ההמרה הושלמה!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "ההמרה הושלמה: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "ההמרת נכשלה"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "ההמרת נכשלה עבור {}: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "ההמרת נכשלה."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "ההמרת נכשלה: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "המר"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "המרת שמע"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "המרת שמע: {} קבצים"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "המרת MP3 ל-MP4"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "המרת MP3 ל-MP4: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "המרת וידאו"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "המרת וידאו: {} קבצים"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "ממיר..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "ממיר: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "העתקה ללא קידוד מחדש (מהיר יותר)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "לא ניתן היה להפעיל תצוגה מקדימה: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "לא ניתן לקרוא"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "לא ניתן לקרוא את ממדי התמונה"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "לא ניתן לקרוא את ממדי הווידאו"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "חיתוך תמונה"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "משך עמעום צולב (שניות):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "הגדרות עמעום צולב"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "עמעום צולב דורש מצב קידוד מחדש"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "קובץ נוכחי"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "קובץ נוכחי:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "ציאן"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "מחק קבצים שנבחרו"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "ממדים"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "משך בשניות לעמעום צולב בין רצועות. הערך המומלץ הוא 5 שניות."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "משך: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "משך: מחשב..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "משך: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "אפשר עמעום צולב בין רצועות"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "אפשר עמעום כניסה/יציאה"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "אפשר מעברים חלקים בין רצועות על ידי עמעום יציאה בסוף רצועה ועמעום כניסה בתחילת הבאה"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "זמן סיום (100% עוצמה):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "זמן סיום:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "זמן הסיום לא יכול להיות ארוך ממשך הקובץ"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "שגיאה"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "שגיאה בקבלת מידע על התמונה"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "שגיאה בקבלת מידע על הווידאו"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "עמעום כניסה"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "עמעום יציאה"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "הגדרות עמעום"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "עמעום כניסה לרצועה הבאה (שניות):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "נכשל"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "יצירת רשימת הקבצים נכשלה: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "קבלת משך הקובץ נכשלה: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "קבלת מידע על התמונה נכשלה: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "קבלת מידע על הווידאו נכשלה: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "טעינת התצורה נכשלה: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "פתיחת דיאלוג המרת שמע נכשלה: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "פתיחת דיאלוג המרת MP3 ל-MP4 נכשלה: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "פתיחת דיאלוג המרת וידאו נכשלה: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "פתיחת דיאלוג המיזוג נכשלה: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "פתיחת הגדרות הקלטה נכשלה: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "פתיחת דיאלוג שינוי גודל תמונה נכשלה: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "פתיחת דיאלוג פיצול שמע נכשלה: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "פתיחת דיאלוג חיתוך נכשלה: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "שמירת התצורה נכשלה: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "פיצול קובץ השמע נכשל"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "נכשל: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "משך הקובץ: מחשב..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "משך הקובץ: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "גודל קובץ"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "משך קובץ: {duration}; תקופת חיתוך: {period} שניות{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "קובץ לא נמצא"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "קובץ לא נמצא: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "קבצים להמרה"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "קבצים למיזוג"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "עבור קובץ בודד בלבד"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "פורמט:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "קצב פריימים: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "קצב פריימים: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "טוב"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "אפור"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "ירוק"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "גובה (פיקסלים):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "מידע על תמונה"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "קבצי תמונה (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "עיבוד התמונות הושלם! בדוק את רשימת המידע לקבלת תוצאות."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "קבצי קלט"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "טווח עמעום כניסה לא חוקי"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "טווח עמעום יציאה לא חוקי"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "קובץ תמונה לא חוקי: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "גודל יעד לא חוקי"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "פורמט זמן לא חוקי עבור רצועה {:02d}"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "פורמט זמן לא חוקי. השתמש בשניות (למשל, 10), דקות:שניות (למשל, 1:30), או שעות:דקות:שניות"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "ערך זמן לא חוקי עבור רצועה {:02d}"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "ערכי זמן לא חוקיים"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "זמן הסיום של הרצועה האחרונה לא יכול לחרוג ממשך הקובץ"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "שמאל (פיקסלים):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "נעילת יחס גובה-רוחב"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "משך לופ (שניות):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "איכות MP3 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "איכות MP3:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "מגנטה"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "מיזוג"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "מיזוג MP3"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "מצב מיזוג"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "המיזוג הושלם!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "המיזוג נכשל."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "המיזוג נכשל: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "המיזוג הצליח. הפלט נשמר ב: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "ממזג: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "מיקרופון בלבד"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "הזז למטה"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "הזז למעלה"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "לא נבחרו קבצים"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "ללא"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "רגיל"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "לא זמין - בדוק את tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "הערה: חיתוך וידאו שומר על האיכות המקורית כברירת מחדל. לא מתבצע קידוד מחדש."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "הערה: פורמט WAV משתמש בשמע לא דחוס"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "הערה: ניתן להמיר קבצים לאותו פורמט (למשל MP3 ל-MP3) כדי לשנות איכות, עוצמה או קצב דגימה."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "מספר רצועות:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "כתום"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "תבנית שם קובץ פלט:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "שם קובץ פלט:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "פורמט פלט:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "מידע פלט"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "שם פלט"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "סוג פלט"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "תיקיית פלט:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "השהה"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "מושהה."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "רשימת תמונות"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "אנא הזן שם לקובץ הפלט."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "אנא מלא את כל ערכי הזמן"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "אנא בחר קובץ MP3 תחילה."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "אנא בחר קובץ שמע תחילה"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "אנא בחר קובץ שמע או וידאו תחילה"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "אנא בחר לפחות 2 קבצי MP3 תחילה."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "אנא בחר לפחות 2 קבצים"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "אנא בחר לפחות תמונה אחת או בחר צבע רקע."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "אנא בחר קבצי שמע או וידאו תחילה."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "אנא בחר קבצי תמונה תחילה."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "אנא בחר קבצי וידאו תחילה."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "תצוגה מקדימה"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "התצוגה המקדימה נכשלה: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "קובץ התצוגה המקדימה לא נוצר או שהוא קטן מדי"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "תהליך התצוגה המקדימה נכשל: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "עובד: {} - גודל חדש: {}, ממדים: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "מעבד רצועה {} מתוך {}"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "מעבד..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "מעבד: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "התקדמות: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "סגול"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "איכות:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "קידוד מחדש עם איכות (איטי יותר)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "מוכן"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "הגדרות הקלטה"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "הגדרות הקלטה..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "הגדרות ההקלטה נשמרו"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "&מצב הקלטה:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "אדום"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "הסר תמונה"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "שינוי גอดל תמונה"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "שינוי גודל תמונה: {} קבצים"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "הגדרות גודל"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "רזולוציה: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "רזולוציה: לא ידועה"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "רזולוציה: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "המשך"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "ממשיך..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "ימין (פיקסלים):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "קצב דגימה:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "בחר תיקיית יעד"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "בחר תמונות"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "קובץ שנבחר"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "קובץ MP3 שנבחר"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "קבצים שנבחרו:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "גודל: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "גודל: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "קטן"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "פיצול"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "פיצול שמע"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "פיצול קובץ שמע"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "פיצול שמע: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "הגדרות פיצול"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "הפיצול הושלם! נוצרו {} רצועות"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "הפיצול נכשל!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "התחל"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "זמן התחלה (100% עוצמה):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "זמן התחלה:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "התחל הקלטה; לחץ שוב להשהיה; לחץ שוב להמשך"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "זמן ההתחלה חייב להיות קטן מזמן הסיום"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "מתחיל המרה..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "מתחיל מיזוג..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "מתחיל פעולת פיצול..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "מתחיל פעולת חיתוך..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "סטטוס"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "עצור הקלטה"
+
+#: record.py:311
+msgid "System Only"
+msgstr "מערכת בלבד"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "מערכת ומיקרופון (מוזגו)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "מערכת ומיקרופון (קבצים נפרדים)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "גודל יעד:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "למעלה (פיקסלים):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "התקדמות כוללת:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "זמני הסיום של הרצועות חייבים להיות בסדר עולה"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "רצועות"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "חתוך"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "חיתוך קובץ שמע/וידאו"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "חיתוך שמע/וידאו: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "החיתוך הושלם!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "החיתוך נכשל!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "הקובץ החתוך נשמר בתור {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "החיתוך נכשל: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "לא ידוע"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "שגיאה לא ידועה"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "טוב מאוד"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "וידאו"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "פורמט וידאו"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "מידע על וידאו"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "עוצמת קול:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "אזהרה: ממדי חיתוך לא חוקיים עבור {}. החיתוך בוטל עבור תמונה זו."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "לבן"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "רוחב (פיקסלים):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "צהוב"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe לא נמצא"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "ffmpeg.exe או ffprobe.exe לא נמצאו בתיקיית הכלים"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe לא נמצא"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "לא חוקי"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "לא חוקי (שלילי)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "מושהה"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "המשך"
+
+#: record.py:223
+msgid "resumed"
+msgstr "הומשך"
+
+#: __init__.py:418
+msgid "start"
+msgstr "התחל"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "נעצר. לא נשמר קובץ"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "נעצר. נשמר ב: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "לא ידוע"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} על {height} פיקסלים, גודל {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} על {height} פיקסלים, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} על {height} פיקסלים, {fps} fps, גודל {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} קבצים הוסרו"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} אחוז"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

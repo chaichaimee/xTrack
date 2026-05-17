@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} Tempo di fine:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Dissolvenza in entrata: da {} a {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Dissolvenza in uscita: da {} a {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&Sfoglia..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "&Pre-conteggio prima di registrare"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "Cartella di &destinazione:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&Formato:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "Guadagno &microfono (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "&Apri cartella dopo la registrazione"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "Guadagno di &sistema (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "Bitrate AAC (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "Aggiungi foto..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Durata aggiuntiva della dissolvenza in entrata per l'inizio di ogni traccia (eccetto la prima)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "Tutte le conversioni sono completate!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "Tutte le conversioni sono terminate"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "Tutte le immagini sono state elaborate!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "Si è verificato un errore durante l'unione: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "Audio"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Stato backend audio: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "Canali audio:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Codec audio:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "Formato audio"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "Qualità audio"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "Qualità audio:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "Impostazioni audio"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "File audio diviso in {} tracce"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Ritaglio automatico immagini in formato 16:9"
+
+#: record.py:357
+msgid "Available"
+msgstr "Disponibile"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "Colore di sfondo:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "Migliore (Senza perdita)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "Nero"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "Blu"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "Basso (pixel):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "Sfoglia..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "Calcolo in corso..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "Annulla"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "Impossibile leggere la risoluzione video"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "Canali:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "Scegli cartella di destinazione"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "Completato!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "Completato"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "Impostazioni di conversione"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "Conversione completata per {}"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "Conversione completata!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "Conversione completata: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "Conversione non riuscita"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "Conversione non riuscita per {}: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "Conversione non riuscita."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "Conversione non riuscita: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "Converti"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "Converti audio"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "Converti audio: {} file"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "Converti MP3 in MP4"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "Converti MP3 in MP4: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "Converti video"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "Converti video: {} file"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "Conversione in corso..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "Conversione: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "Copia senza ricodifica (più veloce)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "Impossibile riprodurre l'anteprima: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "Impossibile leggere"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "Impossibile leggere le dimensioni dell'immagine"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "Impossibile leggere le dimensioni del video"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "Ritaglia immagine"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Durata dissolvenza incrociata (secondi):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Impostazioni dissolvenza incrociata"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "La dissolvenza incrociata richiede la modalità di ricodifica"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "File corrente"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "File corrente:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "Ciano"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "Elimina file selezionati"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "Dimensioni"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Durata in secondi per la dissolvenza incrociata tra le tracce. Il valore consigliato è 5 secondi."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "Durata: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "Durata: Calcolo in corso..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "Durata: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "Abilita dissolvenza incrociata tra le tracce"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Abilita dissolvenza in entrata/uscita"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Abilita transizioni fluide tra le tracce applicando una dissolvenza in uscita alla fine di una traccia e una in entrata all'inizio della successiva"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "Tempo di fine (volume 100%):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "Tempo di fine:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "Il tempo di fine non può essere superiore alla durata del file"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "Errore"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "Errore durante il recupero delle informazioni sull'immagine"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "Errore durante il recupero delle informazioni sul video"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Dissolvenza in entrata"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Dissolvenza in uscita"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Impostazioni dissolvenza"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Dissolvenza in entrata per la traccia successiva (secondi):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "Fallito"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "Impossibile creare l'elenco dei file: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "Impossibile ottenere la durata del file: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "Impossibile ottenere le info sull'immagine: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "Impossibile ottenere le info sul video: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "Impossibile caricare la configurazione: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Impossibile aprire la finestra Converti audio: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "Impossibile aprire la finestra Converti MP3 in MP4: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Impossibile aprire la finestra Converti video: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "Impossibile aprire la finestra Unisci: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "Impossibile aprire le impostazioni di registrazione: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Impossibile aprire la finestra Ridimensiona immagine: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Impossibile aprire la finestra Dividi audio: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "Impossibile aprire la finestra Ritaglia: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "Impossibile salvare la configurazione: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "Impossibile dividere il file audio"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "Fallito: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Durata file: Calcolo in corso..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "Durata file: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "Dimensione file"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "Durata file: {duration}; Periodo ritaglio: {period} secondi{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "File non trovato"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "File non trovato: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "File da convertire"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "File da unire"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "Solo per file singolo"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "Formato:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Frequenza fotogrammi: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Frequenza fotogrammi: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "Buona"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "Grigio"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "Verde"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "Altezza (pixel):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "Info immagine"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "File immagine (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "Elaborazione immagine completata! Controlla l'elenco delle informazioni di output per i risultati."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "File di input"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Intervallo dissolvenza in entrata non valido"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Intervallo dissolvenza in uscita non valido"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "File immagine non valido: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "Dimensione di destinazione non valida"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "Formato ora non valido per la traccia {:02d}"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Formato ora non valido. Usa i secondi (es. 10), MM:SS (es. 1:30) o HH:MM:SS (es. 1:30:45)"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "Valore tempo non valido per la traccia {:02d}"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "Valori tempo non validi"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "Il tempo di fine dell'ultima traccia non può superare la durata del file"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "Sinistra (pixel):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "Blocca proporzioni"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "Durata ciclo (secondi):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "Qualità MP3 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "Qualità MP3:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "Magenta"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "Unisci"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "Unisci MP3"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "Modalità unione"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "Unione completata!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "Unione fallita."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "Unione fallita: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "Unione riuscita. Output salvato in: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "Unione in corso: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "Solo microfono"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "Sposta giù"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "Sposta su"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "Nessun file selezionato"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "Nessuno"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "Normale"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "Non disponibile - controlla tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "Nota: il ritaglio video mantiene la qualità originale per impostazione predefinita. Non viene eseguita alcuna ricodifica."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "Nota: il formato WAV utilizza audio non compresso"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "Nota: ora puoi convertire i file nello stesso formato (es. da MP3 a MP3) per modificare qualità, volume o frequenza di campionamento."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "Numero di tracce:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "Arancione"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "Modello nome file di output:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "Nome file di output:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "Formato di output:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "Informazioni di output"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "Nome output"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "Tipo di output"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "Cartella di output:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "Pausa"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "In pausa."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "Elenco foto"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "Inserire un nome per il file di output."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "Compilare tutte le voci relative al tempo"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "Selezionare prima un file MP3."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "Selezionare prima un file audio"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "Selezionare prima un file audio o video"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "Selezionare prima almeno 2 file MP3."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "Selezionare almeno 2 file"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "Selezionare almeno una foto o scegliere un colore di sfondo."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "Selezionare prima file audio o video."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "Selezionare prima i file immagine."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "Selezionare prima i file video."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "Anteprima"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "Anteprima non riuscita: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "Il file di anteprima non è stato creato o è troppo piccolo"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "Processo di anteprima fallito: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "Elaborato: {} - Nuova dimensione: {}, Dimensioni: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "Elaborazione traccia {} di {}"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "Elaborazione in corso..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "Elaborazione: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "Avanzamento: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "Viola"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "Qualità:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "Ricodifica con qualità (più lento)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "Pronto"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "Impostazioni registrazione"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "Impostazioni registrazione..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "Impostazioni di registrazione salvate"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "&Modalità di registrazione:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "Rosso"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "Rimuovi foto"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "Ridimensiona immagine"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "Ridimensiona immagine: {} file"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "Impostazioni ridimensionamento"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "Risoluzione: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "Risoluzione: sconosciuta"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "Risoluzione: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "Riprendi"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "Ripresa in corso..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "Destra (pixel):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Frequenza di campionamento:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "Seleziona cartella di destinazione"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "Seleziona foto"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "File selezionato"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "File MP3 selezionato"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "File selezionati:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "Dimensione: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "Dimensione: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "Piccola"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "Dividi"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "Dividi audio"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "Dividi file audio"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "Dividi audio: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "Impostazioni divisione"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "Divisione completata! Create {} tracce"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "Divisione fallita!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "Avvia"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "Tempo di inizio (volume 100%):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "Tempo di inizio:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Avvia registrazione; premi ancora per mettere in pausa; premi ancora per continuare"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "Il tempo di inizio deve essere inferiore al tempo di fine"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "Avvio conversione..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "Avvio unione..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "Avvio operazione di divisione..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "Avvio operazione di ritaglio..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "Stato"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "Interrompi registrazione"
+
+#: record.py:311
+msgid "System Only"
+msgstr "Solo sistema"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "Sistema e microfono (Uniti)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "Sistema e microfono (File separati)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "Dimensione di destinazione:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "Alto (pixel):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "Avanzamento totale:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "I tempi di fine delle tracce devono essere in ordine crescente"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "Tracce"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "Ritaglia"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "Ritaglia file audio/video"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "Ritaglia audio/video: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "Ritaglio completato!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "Ritaglio fallito!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "File ritagliato salvato come {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "Ritaglio fallito: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "Sconosciuto"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "Errore sconosciuto"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "Molto buona"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "Video"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "Formato video"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "Info video"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "Volume:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "Avviso: dimensioni di ritaglio non valide per {}. Ritaglio disabilitato per questa immagine."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "Bianco"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "Larghezza (pixel):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "Giallo"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe non trovato"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "ffmpeg.exe o ffprobe.exe non trovati nella cartella tools"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe non trovato"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "non valido"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "non valido (negativo)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "in pausa"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "riprendi"
+
+#: record.py:223
+msgid "resumed"
+msgstr "ripreso"
+
+#: __init__.py:418
+msgid "start"
+msgstr "avvia"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "interrotto Nessun file salvato"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "interrotto Salvato in: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "sconosciuto"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} per {height} pixel, dimensione {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} per {height} pixel, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} per {height} pixel, {fps} fps, dimensione {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} file rimossi"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} percento"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Romanian\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} Timp Final:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Fade In: {} la {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Fade Out: {} la {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&Răsfoiește..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "&Numărătoare înainte de înregistrare"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "Dosar &Destinație:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&Format:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "Amplificare &Microfon (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "&Deschide dosarul după înregistrare"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "Amplificare &Sistem (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "Bitrate AAC (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "Adaugă Fotografie..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Durată suplimentară fade-in pentru începutul fiecărei piese (cu excepția primei)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "Toate conversiile s-au terminat!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "Toate conversiile au fost finalizate"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "Toate imaginile au fost procesate!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "A apărut o eroare în timpul îmbinării: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "Audio"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Stare Motor Audio: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "Canale Audio:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Codec Audio:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "Format Audio"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "Calitate Audio"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "Calitate Audio:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "Setări Audio"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "Fișier audio divizat în {} piese"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Decupare automată imagini la format 16:9"
+
+#: record.py:357
+msgid "Available"
+msgstr "Disponibil"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "Culoare Fundal:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "Cea mai bună (Fără pierderi)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "Negru"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "Albastru"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "Jos (pixeli):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "Răsfoiește..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "Se calculează..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "Anulează"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "Nu se poate citi rezoluția video"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "Canale:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "Alege dosarul de ieșire"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "Finalizat!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "Finalizat"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "Setări Conversie"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "Conversie finalizată pentru {}"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "Conversie finalizată!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "Conversie finalizată: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "Conversie eșuată"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "Conversie eșuată pentru {}: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "Conversie eșuată."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "Conversie eșuată: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "Convertește"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "Convertește Audio"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "Convertește Audio: {} fișiere"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "Convertește MP3 în MP4"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "Convertește MP3 în MP4: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "Convertește Video"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "Convertește Video: {} fișiere"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "Se convertește..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "Se convertește: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "Copiază fără re-codare (mai rapid)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "Nu s-a putut reda previzualizarea: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "Nu s-a putut citi"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "Nu s-au putut citi dimensiunile imaginii"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "Nu s-au putut citi dimensiunile video"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "Decupează Imaginea"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Durată Cross-fade (secunde):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Setări Cross-fade"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Cross-fade necesită modul re-codare"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "Fișier Curent"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "Fișier curent:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "Cyan"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "Șterge Fișierele Selectate"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "Dimensiuni"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Durata în secunde pentru cross-fade între piese. Valoarea recomandată este 5 secunde."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "Durată: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "Durată: Se calculează..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "Durată: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "Activează Cross-fade între piese"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Activează Fade In/Out"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Activează tranziții line între piese prin fade out la finalul unei piese și fade in la începutul următoarei"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "Timp Final (volum 100%):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "Timp Final:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "Timpul final nu poate fi mai mare decât durata fișierului"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "Eroare"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "Eroare la obținerea informațiilor despre imagine"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "Eroare la obținerea informațiilor despre video"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Fade In"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Fade Out"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Setări Fade"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Fade-in pentru Piesa Următoare (secunde):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "Eșuat"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "Eșec la crearea listei de fișiere: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "Eșec la obținerea duratei fișierului: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "Eșec la obținerea informațiilor despre imagine: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "Eșec la obținerea informațiilor despre video: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "Eșec la încărcarea configurației: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Eșec la deschiderea dialogului Conversie Audio: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "Eșec la deschiderea dialogului Conversie MP3 în MP4: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Eșec la deschiderea dialogului Conversie Video: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "Eșec la deschiderea dialogului Îmbinare: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "Eșec la deschiderea Setărilor de Înregistrare: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Eșec la deschiderea dialogului Redimensionare Imagine: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Eșec la deschiderea dialogului Divizare Audio: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "Eșec la deschiderea dialogului Tăiere: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "Eșec la salvarea configurației: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "Eșec la divizarea fișierului audio"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "Eșuat: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Durată Fișier: Se calculează..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "Durată Fișier: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "Mărime Fișier"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "Durată fișier: {duration}; Perioadă tăiere: {period} secunde{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "Fișierul nu a fost găsit"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "Fișierul nu a fost găsit: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "Fișiere de Convertit"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "Fișiere de Îmbinat"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "Doar pentru un singur fișier"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "Format:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Rata de cadre: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Rata de cadre: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "Bună"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "Gri"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "Verde"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "Înălțime (pixeli):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "Info Imagine"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "Fișiere imagine (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "Procesarea imaginilor s-a terminat! Verificați lista de rezultate."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "Fișiere Intrare"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Interval fade-in nevalid"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Interval fade-out nevalid"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "Fișier imagine nevalid: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "Mărime țintă nevalidă"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "Format timp nevalid pentru piesa {:02d}"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Format timp nevalid. Folosiți secunde (ex. 10), MM:SS (ex. 1:30), sau HH:MM:SS (ex. 1:30:45)"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "Valoare timp nevalidă pentru piesa {:02d}"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "Valori timp nevalide"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "Timpul final al ultimei piese nu poate depăși durata fișierului"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "Stânga (pixeli):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "Blochează Raport Aspect"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "Durată Loop (secunde):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "Calitate MP3 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "Calitate MP3:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "Magenta"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "Îmbină"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "Îmbină MP3"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "Mod Îmbinare"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "Îmbinare finalizată!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "Îmbinare eșuată."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "Îmbinare eșuată: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "Îmbinare reușită. Rezultat salvat la: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "Se îmbină: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "Doar Microfon"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "Mută în Jos"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "Mută în Sus"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "Niciun fișier selectat"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "Niciunul"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "Normal"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "Indisponibil - verificați tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "Notă: Tăierea video păstrează calitatea originală. Nu se face re-codare."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "Notă: Formatul WAV folosește audio necomprimat"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "Notă: Acum puteți converti fișiere în același format (ex. MP3 în MP3) pentru a schimba calitatea sau volumul."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "Număr de piese:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "Portocaliu"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "Model Nume Fișier Ieșire:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "Nume Fișier Ieșire:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "Format Ieșire:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "Informații Ieșire"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "Nume Ieșire"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "Tip Ieșire"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "Dosar ieșire:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "Pauză"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "Suspendat."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "Listă Fotografii"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "Vă rugăm să introduceți un nume pentru fișierul de ieșire."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "Vă rugăm să completați toate câmpurile de timp"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "Vă rugăm să selectați mai întâi un fișier MP3."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "Vă rugăm să selectați mai întâi un fișier audio"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "Vă rugăm să selectați un fișier audio sau video"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "Selectați cel puțin 2 fișiere MP3."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "Vă rugăm să selectați cel puțin 2 fișiere"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "Selectați cel puțin o fotografie sau alegeți o culoare de fundal."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "Selectați mai întâi fișiere audio sau video."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "Vă rugăm să selectați mai întâi fișiere imagine."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "Vă rugăm să selectați mai întâi fișiere video."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "Previzualizare"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "Previzualizare eșuată: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "Fișierul de previzualizare nu a fost creat sau este prea mic"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "Procesul de previzualizare a eșuat: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "Procesat: {} - Mărime nouă: {}, Dimensiuni: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "Se procesează piesa {} din {}"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "Se procesează..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "Se procesează: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "Progres: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "Violet"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "Calitate:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "Re-codare cu calitate (mai lent)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "Gata"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "Setări Înregistrare"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "Setări Înregistrare..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "Setările de înregistrare au fost salvate"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "&Mod Înregistrare:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "Roșu"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "Elimină Fotografia"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "Redimensionează Imaginea"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "Redimensionează Imaginea: {} fișiere"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "Setări Redimensionare"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "Rezoluție: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "Rezoluție: necunoscută"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "Rezoluție: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "Reluare"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "Se reia..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "Dreapta (pixeli):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Rată eșantionare:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "Selectați Dosarul Destinație"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "Selectați fotografii"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "Fișier Selectat"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "Fișier MP3 Selectat"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "Fișiere selectate:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "Mărime: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "Mărime: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "Mică"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "Divide"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "Divide Audio"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "Divide Fișierul Audio"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "Divide Audio: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "Setări Divizare"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "Divizare finalizată! {} piese create"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "Divizare eșuată!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "Start"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "Timp Start (volum 100%):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "Timp Start:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Începe înregistrarea; apasă din nou pentru pauză; apasă pentru a continua"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "Timpul de start trebuie să fie mai mic decât cel de final"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "Se începe conversia..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "Se începe îmbinarea..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "Se începe operațiunea de divizare..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "Se începe operațiunea de tăiere..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "Stare"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "Oprește înregistrarea"
+
+#: record.py:311
+msgid "System Only"
+msgstr "Doar Sistem"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "Sistem și Microfon (Îmbinate)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "Sistem și Microfon (Fișiere Separate)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "Mărime Țintă:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "Sus (pixeli):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "Progres total:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "Timpii de final ai pieselor trebuie să fie în ordine crescătoare"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "Piese"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "Tăiere"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "Tăiere Fișier Audio/Video"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "Tăiere Audio/Video: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "Tăiere finalizată!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "Tăiere eșuată!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "Fișierul tăiat a fost salvat ca {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "Tăierea a eșuat: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "Necunoscut"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "Eroare necunoscută"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "Foarte Bună"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "Video"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "Format Video"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "Info Video"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "Volum:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "Atenție: Dimensiuni decupare nevalide pentru {}. Decuparea a fost dezactivată."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "Alb"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "Lățime (pixeli):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "Galben"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe nu a fost găsit"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "ffmpeg.exe sau ffprobe.exe nu a fost găsit în dosarul tools"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe nu a fost găsit"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "nevalid"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "nevalid (negativ)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "suspendat"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "reluare"
+
+#: record.py:223
+msgid "resumed"
+msgstr "reluat"
+
+#: __init__.py:418
+msgid "start"
+msgstr "start"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "oprit Niciun fișier salvat"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "oprit Salvat la: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "necunoscut"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} pe {height} pixeli, mărime {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} pe {height} pixeli, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} pe {height} pixeli, {fps} fps, mărime {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} fișiere eliminate"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} la sută"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: 2026-05-17 16:50+0700\n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Czech\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} Čas ukončení:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Roztmívání: {} do {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Stmívání: {} do {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&Procházet..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "&Odpočet před nahráváním"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "&Cílová složka:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&Formát:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "Zesílení &mikrofonu (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "&Otevřít složku po nahrávání"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "&Systémové zesílení (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "Datový tok AAC (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "Přidat fotku..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Dodatečná délka roztmívání na začátku každé stopy (kromě první stopy)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "Všechny převody byly dokončeny!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "Všechny převody byly dokončeny"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "Všechny obrázky byly zpracovány!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "Během slučování došlo k chybě: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "Audio"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Stav zvukového subsystému: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "Zvukové kanály:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Audio kodek:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "Formát zvuku"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "Kvalita zvuku"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "Kvalita zvuku:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "Nastavení zvuku"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "Zvukový soubor byl rozdělen na {} stop"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Automaticky oříznout obrázky na poměr stran 16:9"
+
+#: record.py:357
+msgid "Available"
+msgstr "Dostupné"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "Barva pozadí:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "Nejlepší (bezeztrátová)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "Černá"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "Modrá"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "Dole (pixely):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "Procházet..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "Počítám..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "Storno"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "Nelze načíst rozlišení videa"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "Kanály:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "Vyberte cílovou složku"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "Hotovo!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "Dokončeno"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "Nastavení převodu"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "Převod dokončen pro: {}"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "Převod dokončen!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "Převod dokončen: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "Převod se nezdařil"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "Převod se nezdařil pro {}: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "Převod selhal."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "Převod selhal: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "Převést"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "Převést zvuk"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "Převést zvuk: {} souborů"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "Převést MP3 do MP4"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "Převést MP3 do MP4: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "Převést video"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "Převést video: {} souborů"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "Převádím..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "Převádím: {} %"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "Kopírovat bez překódování (rychlejší)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "Nelze přehrát náhled: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "Nelze načíst"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "Nelze načíst rozměry obrázku"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "Nelze načíst rozměry videa"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "Oříznout obrázek"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Délka prolnutí (sekundy):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Nastavení prolnutí"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Prolnutí vyžaduje režim překódování"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "Aktuální soubor"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "Aktuální soubor:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "Azurová"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "Smazat vybrané soubory"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "Rozměry"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Doba v sekundách pro prolnutí mezi stopami. Doporučená hodnota je 5 sekund."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "Délka: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "Délka: Počítám..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "Délka: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "Povolit prolnutí mezi stopami"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Povolit roztmívání/stmívání"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Povolí plynulé přechody mezi stopami postupným zeslabením konce jedné stopy a zesílením začátku stopy následující"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "Čas konce (100% hlasitost):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "Čas konce:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "Čas konce nemůže být větší než délka souboru"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "Chyba"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "Chyba při získávání informací o obrázku"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "Chyba při získávání informací o videu"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Roztmívání (Fade In)"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Stmívání (Fade Out)"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Nastavení prolínání"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Roztmívání pro další stopu (sekundy):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "Selhalo"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "Nepodařilo se vytvořit seznam souborů: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "Nepodařilo se získat délku souboru: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "Nepodařilo se získat informace o obrázku: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "Nepodařilo se získat informace o videu: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "Nepodařilo se načíst konfiguraci: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Nepodařilo se otevřít dialog převodu zvuku: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "Nepodařilo se otevřít dialog převodu MP3 do MP4: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Nepodařilo se otevřít dialog převodu videa: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "Nepodařilo se otevřít dialog sloučení: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "Nepodařilo se otevřít nastavení nahrávání: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Nepodařilo se otevřít dialog změny velikosti obrázku: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Nepodařilo se otevřít dialog rozdělení zvuku: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "Nepodařilo se otevřít dialog oříznutí: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "Nepodařilo se uložit konfiguraci: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "Nepodařilo se rozdělit zvukový soubor"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "Selhalo: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Délka souboru: Počítám..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "Délka souboru: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "Velikost souboru"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "Délka souboru: {duration}; Doba oříznutí: {period} sekund{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "Soubor nebyl nalezen"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "Soubor nebyl nalezen: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "Soubory k převodu"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "Soubory ke sloučení"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "Pouze pro jeden soubor"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "Formát:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Snímková frekvence: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Snímková frekvence: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "Dobrá"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "Šedá"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "Zelená"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "Výška (pixely):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "Informace o obrázku"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "Obrázkové soubory (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "Zpracování obrázků dokončeno! Výsledky naleznete v seznamu výstupních informací."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "Vstupní soubory"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Neplatný rozsah roztmívání"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Neplatný rozsah stmívání"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "Neplatný obrázkový soubor: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "Neplatná cílová velikost"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "Neplatný formát času pro stopu {:02d}"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Neplatný formát času. Použijte sekundy (např. 10), MM:SS (např. 1:30) nebo HH:MM:SS (např. 1:30:45)"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "Neplatná hodnota času pro stopu {:02d}"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "Neplatné časové hodnoty"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "Čas konce poslední stopy nesmí překročit délku souboru"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "Vlevo (pixely):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "Zamknout poměr stran"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "Délka smyčky (sekundy):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "Kvalita MP3 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "Kvalita MP3:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "Purpurová"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "Sloučit"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "Sloučit MP3"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "Režim sloučení"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "Sloučení dokončeno!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "Sloučení selhalo."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "Sloučení selhalo: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "Sloučení proběhlo úspěšně. Výstup uložen do: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "Slučování: {} %"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "Pouze mikrofon"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "Posunout dolů"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "Posunout nahoru"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "Nebyly vybrány žádné soubory"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "Žádné"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "Normální"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "Není k dispozici – zkontrolujte tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "Poznámka: Oříznutí videa standardně zachovává původní kvalitu. Neprobíhá žádné překódování."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "Poznámka: Formát WAV používá nekomprimovaný zvuk"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "Poznámka: Nyní můžete převádět soubory do stejného formátu (např. MP3 na MP3) a měnit tak jejich kvalitu, hlasitost nebo vzorkovací frekvenci."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "Počet stop:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Orange"
+msgstr "Oranžová"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "Vzor názvu výstupního souboru:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "Název výstupního souboru:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "Výstupní formát:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "Informace o výstupu"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "Výstupní název"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "Typ výstupu"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "Cílová složka:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "Pozastaveno."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "Seznam fotek"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "Zadejte prosím název výstupního souboru."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "Vyplňte prosím všechny časové údaje"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "Nejprve prosím vyberte soubor MP3."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "Nejprve prosím vyberte zvukový soubor"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "Nejprve prosím vyberte zvukový soubor nebo video"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "Nejprve prosím vyberte alespoň 2 soubory MP3."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "Vyberte prosím alespoň 2 soubory"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "Vyberte prosím alespoň jednu fotku nebo zvolte barvu pozadí."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "Nejprve prosím vyberte zvukové soubory nebo videa."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "Nejprve prosím vyberte obrázky."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "Nejprve prosím vyberte videa."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "Náhled"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "Náhled selhal: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "Soubor náhledu nebyl vytvořen nebo je příliš malý"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "Proces náhledu selhal: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "Zpracováno: {} – Nová velikost: {}, Rozměry: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "Zpracovávám stopu {} z {}"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "Zpracovávám..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "Zpracovávám: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "Průběh: {} %"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "Fialová"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "Kvalita:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "Překódovat s důrazem na kvalitu (pomalejší)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "Připraveno"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "Nastavení nahrávání"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "Nastavení nahrávání..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "Nastavení nahrávání bylo uloženo"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "&Režim nahrávání:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "Červená"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "Odebrat fotku"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "Změnit velikost obrázku"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "Změnit velikost obrázku: {} souborů"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "Nastavení velikosti"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "Rozlišení: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "Rozlišení: neznámé"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "Rozlišení: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "Pokračovat"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "Pokračuji..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "Vpravo (pixely):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Vzorkovací frekvence:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "Vyberte cílovou složku"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "Vybrat fotky"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "Vybraný soubor"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "Vybraný soubor MP3"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "Vybrané soubory:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "Velikost: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "Velikost: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "Malá"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "Rozdělit"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "Rozdělit zvuk"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "Rozdělit zvukový soubor"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "Rozdělit zvuk: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "Nastavení rozdělení"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "Rozdělení dokončeno! Bylo vytvořeno {} stop"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "Rozdělení selhalo!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "Start"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "Čas začátku (100% hlasitost):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "Čas začátku:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Spustit nahrávání; stiskněte znovu pro pozastavení; stiskněte znovu pro pokračování"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "Čas začátku musí být menší než čas konce"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "Spouštím převod..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "Spouštím slučování..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "Spouštím rozdělování..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "Spouštím ořezávání..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "Stav"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "Zastavit nahrávání"
+
+#: record.py:311
+msgid "System Only"
+msgstr "Pouze systém"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "Systém a mikrofon (sloučeno)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "Systém a mikrofon (oddělené soubory)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "Cílová velikost:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "Nahoře (pixely):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "Celkový průběh:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "Časy konců stop musí být vzestupné"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "Stopy"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "Oříznout"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "Oříznout zvukový soubor/video"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "Oříznout zvuk/video: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "Oříznutí dokončeno!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "Oříznutí selhalo!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "Oříznutý soubor byl uložen jako {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "Ořezávání selhalo: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "Neznámé"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "Neznámá chyba"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "Velmi dobrá"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "Video"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "Formát videa"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "Informace o videu"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "Hlasitost:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "Varování: Neplatné rozměry ořezu pro {}. Ořez pro tento obrázek byl zakázán."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "Bílá"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "Šířka (pixely):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "Žlutá"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe nebyl nalezen"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "ffmpeg.exe nebo ffprobe.exe nebyly ve složce tools nalezeny"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe nebyl nalezen"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "neplatné"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "neplatné (záporné)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "pozastaveno"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "pokračovat"
+
+#: record.py:223
+msgid "resumed"
+msgstr "obnoveno"
+
+#: __init__.py:418
+msgid "start"
+msgstr "start"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "zastaveno; žádný soubor nebyl uložen"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "zastaveno; uloženo do: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "neznámé"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} na {height} pixelů, velikost {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} na {height} pixelů, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} na {height} pixelů, {fps} fps, velikost {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} souborů bylo odebráno"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} procent"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{} %"

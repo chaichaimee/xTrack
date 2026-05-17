@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Telugu\n"
+"Language: te\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} ముగింపు సమయం:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | ఫేడ్ ఇన్: {} నుండి {} వరకు"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | ఫేడ్ అవుట్: {} నుండి {} వరకు"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&బ్రౌజ్ చేయండి..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "రికార్డింగ్ ముందు &కౌంట్-ఇన్"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "&గమ్యస్థాన ఫోల్డర్:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&ఫార్మాట్:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "&మైక్రోఫోన్ గెయిన్ (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "రికార్డింగ్ తర్వాత ఫోల్డర్‌ను &తెరవండి"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "&సిస్టమ్ గెయిన్ (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC బిట్రేట్ (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "ఫోటోను జోడించండి..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "ప్రతి ట్రాక్ ప్రారంభంలో అదనపు ఫేడ్-ఇన్ వ్యవధి (మొదటి ట్రాక్ మినహా)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "అన్ని మార్పిడులు పూర్తయ్యాయి!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "అన్ని మార్పిడులు ముగిశాయి"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "అన్ని చిత్రాలు ప్రాసెస్ చేయబడ్డాయి!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "విలీనం చేసేటప్పుడు లోపం సంభవించింది: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "ఆడియో"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "ఆడియో బ్యాకెండ్ స్థితి: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "ఆడియో ఛానెల్‌లు:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "ఆడియో కోడెక్:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "ఆడియో ఫార్మాట్"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "ఆడియో నాణ్యత"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "ఆడియో నాణ్యత:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "ఆడియో సెట్టింగ్‌లు"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "ఆడియో ఫైల్ {} ట్రాక్‌లుగా విభజించబడింది"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "చిత్రాలను ఆటోమేటిక్‌గా 16:9 యాస్పెక్ట్ రేషియోకు క్రాప్ చేయండి"
+
+#: record.py:357
+msgid "Available"
+msgstr "అందుబాటులో ఉంది"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "నేపథ్య రంగు:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "ఉత్తమమైనది (నష్టం లేదు)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "నలుపు"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "నీలం"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "క్రింద (పిక్సెల్‌లు):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "బ్రౌజ్ చేయండి..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "గణిస్తోంది..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "రద్దు చేయి"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "వీడియో రిజల్యూషన్‌ను చదవడం సాధ్యపడదు"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "ఛానెల్‌లు:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "అవుట్‌పుట్ ఫోల్డర్‌ను ఎంచుకోండి"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "పూర్తయింది!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "పూర్తయినది"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "మార్పిడి సెట్టింగ్‌లు"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "{} కోసం మార్పిడి పూర్తయింది"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "మార్పిడి పూర్తయింది!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "మార్పిడి పూర్తయింది: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "మార్పిడి విఫలమైంది"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "{} కోసం మార్పిడి విఫలమైంది: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "మార్పిడి విఫలమైంది."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "మార్పిడి విఫలమైంది: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "మార్చు"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "ఆడియోను మార్చండి"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "ఆడియోను మార్చండి: {} ఫైల్‌లు"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "MP3 ని MP4 కి మార్చండి"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "MP3 ని MP4 కి మార్చండి: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "వీడియోను మార్చండి"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "వీడియోను మార్చండి: {} ఫైల్‌లు"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "మారుస్తోంది..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "మారుస్తోంది: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "రీ-ఎన్కోడింగ్ లేకుండా కాపీ చేయండి (వేగంగా)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "ప్రివ్యూను ప్లే చేయడం సాధ్యపడలేదు: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "చదవడం సాధ్యపడలేదు"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "చిత్రం కొలతలను చదవడం సాధ్యపడలేదు"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "వీడియో కొలతలను చదవడం సాధ్యపడలేదు"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "చిత్రాన్ని క్రాప్ చేయండి"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "క్రాస్-ఫేడ్ వ్యవధి (సెకన్లు):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "క్రాస్-ఫేడ్ సెట్టింగ్‌లు"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "క్రాస్-ఫేడ్ కోసం రీ-ఎన్కోడింగ్ మోడ్ అవసరం"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "ప్రస్తుత ఫైల్"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "ప్రస్తుత ఫైల్:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "సియాన్"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "ఎంచుకున్న ఫైల్‌లను తొలగించండి"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "కొలతలు"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "ట్రాక్‌ల మధ్య క్రాస్-ఫేడింగ్ కోసం సెకన్లలో వ్యవధి. సిఫార్సు చేసిన విలువ 5 సెకన్లు."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "వ్యవధి: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "వ్యవధి: గణిస్తోంది..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "వ్యవధి: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "ట్రాక్‌ల మధ్య క్రాస్-ఫేడ్‌ను ప్రారంభించండి"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "ఫేడ్ ఇన్/అవుట్‌ను ప్రారంభించండి"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "ఒక ట్రాక్ ముగింపును ఫేడ్ అవుట్ చేయడం మరియు తదుపరి ట్రాక్ ప్రారంభాన్ని ఫేడ్ ఇన్ చేయడం ద్వారా ట్రాక్‌ల మధ్య సాఫీగా మార్పును ప్రారంభించండి"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "ముగింపు సమయం (100% వాల్యూమ్):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "ముగింపు సమయం:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "ముగింపు సమయం ఫైల్ వ్యవధి కంటే ఎక్కువ ఉండకూడదు"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "లోపం"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "చిత్రం సమాచారాన్ని పొందడంలో లోపం"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "వీడియో సమాచారాన్ని పొందడంలో లోపం"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "ఫేడ్ ఇన్"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "ఫేడ్ అవుట్"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "ఫేడ్ సెట్టింగ్‌లు"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "తదుపరి ట్రాక్ కోసం ఫేడ్-ఇన్ (సెకన్లు):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "విఫలమైంది"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "ఫైల్ జాబితాను సృష్టించడం విఫలమైంది: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "ఫైల్ వ్యవధిని పొందడం విఫలమైంది: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "చిత్ర సమాచారాన్ని పొందడం విఫలమైంది: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "వీడియో సమాచారాన్ని పొందడం విఫలమైంది: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "కాన్ఫిగరేషన్‌ను లోడ్ చేయడం విఫలమైంది: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "ఆడియో మార్పిడి డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "MP3 నుండి MP4 మార్పిడి డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "వీడియో మార్పిడి డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "విలీన డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "రికార్డ్ సెట్టింగ్‌లను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "చిత్రం పరిమాణం మార్పు డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "ఆడియో విభజన డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "ట్రిమ్ డైలాగ్‌ను తెరవడం విఫలమైంది: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "కాన్ఫిగరేషన్‌ను సేవ్ చేయడం విఫలమైంది: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "ఆడియో ఫైల్‌ను విభజించడం విఫలమైంది"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "విఫలమైంది: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "ఫైల్ వ్యవధి: గణిస్తోంది..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "ఫైల్ వ్యవధి: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "ఫైల్ పరిమాణం"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "ఫైల్ వ్యవధి: {duration}; ట్రిమ్ వ్యవధి: {period} సెకన్లు{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "ఫైల్ కనుగొనబడలేదు"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "ఫైల్ కనుగొనబడలేదు: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "మార్చాల్సిన ఫైల్‌లు"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "విలీనం చేయాల్సిన ఫైల్‌లు"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "ఒకే ఫైల్ కోసం మాత్రమే"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "ఫార్మాట్:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "ఫ్రేమ్ రేట్: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "ఫ్రేమ్ రేట్: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "మంచిది"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "బూడిద"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "ఆకుపచ్చ"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "ఎత్తు (పిక్సెల్‌లు):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "చిత్ర సమాచారం"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "చిత్ర ఫైల్‌లు (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "చిత్ర ప్రాసెసింగ్ పూర్తయింది! ఫలితాల కోసం అవుట్‌పుట్ సమాచార జాబితాను తనిఖీ చేయండి."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "ఇన్పుట్ ఫైల్‌లు"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "చెల్లని ఫేడ్-ఇన్ పరిధి"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "చెల్లని ఫేడ్-అవుట్ పరిధి"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "చెల్లని చిత్ర ఫైల్: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "చెల్లని లక్ష్య పరిమాణం"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "ట్రాక్ {:02d} కోసం చెల్లని సమయ ఫార్మాట్"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "చెల్లని సమయ ఫార్మాట్. సెకన్లు (ఉదా., 10), MM:SS (ఉదా., 1:30), లేదా HH:MM:SS (ఉదా., 1:30:45) ఉపయోగించండి"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "ట్రాక్ {:02d} కోసం చెల్లని సమయ విలువ"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "చెల్లని సమయ విలువలు"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "చివరి ట్రాక్ ముగింపు సమయం ఫైల్ వ్యవధి కంటే ఎక్కువ ఉండకూడదు"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "ఎడమ (పిక్సెల్‌లు):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "యాస్పెక్ట్ రేషియోను లాక్ చేయండి"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "లూప్ వ్యవధి (సెకన్లు):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3 నాణ్యత (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3 నాణ్యత:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "మెజెంటా"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "విలీనం చేయండి"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "MP3 విలీనం"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "విలీన మోడ్"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "విలీనం పూర్తయింది!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "విలీనం విఫలమైంది."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "విలీనం విఫలమైంది: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "విలీనం విజయవంతమైంది. అవుట్‌పుట్ ఇక్కడ సేవ్ చేయబడింది: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "విలీనం చేస్తోంది: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "మైక్రోఫోన్ మాత్రమే"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "క్రిందకు జరుపు"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "పైకి జరుపు"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "ఏ ఫైల్‌లు ఎంచుకోబడలేదు"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "ఏమీ లేదు"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "సాధారణం"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "అందుబాటులో లేదు - tools/recorder_backend.py తనిఖీ చేయండి"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "గమనిక: వీడియో ట్రిమ్మింగ్ డిఫాల్ట్‌గా అసలు నాణ్యతను సంరక్షిస్తుంది. ఎటువంటి రీ-ఎన్కోడింగ్ నిర్వహించబడదు."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "గమనిక: WAV ఫార్మాట్ కంప్రెస్ చేయని ఆడియోను ఉపయోగిస్తుంది"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "గమనిక: నాణ్యత, వాల్యూమ్ లేదా శాంపిల్ రేట్ మార్చడానికి మీరు ఇప్పుడు ఫైల్‌లను అదే ఫార్మాట్‌కు (ఉదా., MP3 నుండి MP3 కి) మార్చవచ్చు."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "ట్రాక్‌ల సంఖ్య:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "నారింజ"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "అవుట్‌పుట్ ఫైల్ పేరు నమూనా:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "అవుట్‌పుట్ ఫైల్ పేరు:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "అవుట్‌పుట్ ఫార్మాట్:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "అవుట్‌పుట్ సమాచారం"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "అవుట్‌పుట్ పేరు"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "అవుట్‌పుట్ రకం"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "అవుట్‌పుట్ ఫోల్డర్:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "నిలిపివేయి"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "నిలిపివేయబడింది."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "ఫోటో జాబితా"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "దయచేసి అవుట్‌పుట్ ఫైల్ పేరును నమోదు చేయండి."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "దయచేసి అన్ని సమయ ఎంట్రీలను పూరించండి"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "దయచేసి ముందుగా ఒక MP3 ఫైల్‌ను ఎంచుకోండి."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "దయచేసి ముందుగా ఒక ఆడియో ఫైల్‌ను ఎంచుకోండి"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "దయచేసి ముందుగా ఆడియో లేదా వీడియో ఫైల్‌ను ఎంచుకోండి"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "దయచేసి ముందుగా కనీసం 2 MP3 ఫైల్‌లను ఎంచుకోండి."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "దయచేసి కనీసం 2 ఫైల్‌లను ఎంచుకోండి"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "దయచేసి కనీసం ఒక ఫోటోను ఎంచుకోండి లేదా నేపథ్య రంగును ఎంచుకోండి."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "దయచేసి ముందుగా ఆడియో లేదా వీడియో ఫైల్‌లను ఎంచుకోండి."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "దయచేసి ముందుగా చిత్ర ఫైల్‌లను ఎంచుకోండి."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "దయచేసి ముందుగా వీడియో ఫైల్‌లను ఎంచుకోండి."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "ప్రివ్యూ"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "ప్రివ్యూ విఫలమైంది: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "ప్రివ్యూ ఫైల్ సృష్టించబడలేదు లేదా చాలా చిన్నదిగా ఉంది"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "ప్రివ్యూ ప్రక్రియ విఫలమైంది: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "ప్రాసెస్ చేయబడింది: {} - కొత్త పరిమాణం: {}, కొలతలు: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "{} లో {} ట్రాక్ ప్రాసెస్ చేయబడుతోంది"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "ప్రాసెస్ చేస్తోంది..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "ప్రాసెస్ చేస్తోంది: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "పురోగతి: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "ఊదా"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "నాణ్యత:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "నాణ్యతతో రీ-ఎన్కోడ్ చేయండి (నెమ్మదిగా)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "సిద్ధం"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "రికార్డ్ సెట్టింగ్‌లు"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "రికార్డ్ సెట్టింగ్‌లు..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "రికార్డ్ సెట్టింగ్‌లు సేవ్ చేయబడ్డాయి"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "రికార్డింగ్ &మోడ్:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "ఎరుపు"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "ఫోటోను తొలగించండి"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "చిత్రం పరిమాణం మార్చండి"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "చిత్రం పరిమాణం మార్చండి: {} ఫైల్‌లు"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "పరిమాణం మార్పు సెట్టింగ్‌లు"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "రిజల్యూషన్: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "రిజల్యూషన్: తెలియదు"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "రిజల్యూషన్: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "కొనసాగించు"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "కొనసాగిస్తోంది..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "కుడి (పిక్సెల్‌లు):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "శాంపిల్ రేట్:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "గమ్యస్థాన ఫోల్డర్‌ను ఎంచుకోండి"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "ఫోటోలను ఎంచుకోండి"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "ఎంచుకున్న ఫైల్"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "ఎంచుకున్న MP3 ఫైల్"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "ఎంచుకున్న ఫైల్‌లు:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "పరిమాణం: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "పరిమాణం: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "చిన్నది"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "విభజించు"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "ఆడియోను విభజించండి"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "ఆడియో ఫైల్‌ను విభజించండి"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "ఆడియోను విభజించండి: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "విభజన సెట్టింగ్‌లు"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "విభజన పూర్తయింది! {} ట్రాక్‌లు సృష్టించబడ్డాయి"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "విభజన విఫలమైంది!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "ప్రారంభించు"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "ప్రారంభ సమయం (100% వాల్యూమ్):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "ప్రారంభ సమయం:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "రికార్డింగ్ ప్రారంభించండి; నిలిపివేయడానికి మళ్ళీ నొక్కండి; కొనసాగించడానికి మళ్ళీ నొక్కండి"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "ప్రారంభ సమయం ముగింపు సమయం కంటే తక్కువ ఉండాలి"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "మార్పిడిని ప్రారంభిస్తోంది..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "విలీనాన్ని ప్రారంభిస్తోంది..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "విభజన ఆపరేషన్‌ను ప్రారంభిస్తోంది..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "ట్రిమ్ ఆపరేషన్‌ను ప్రారంభిస్తోంది..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "స్థితి"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "రికార్డింగ్ ఆపండి"
+
+#: record.py:311
+msgid "System Only"
+msgstr "సిస్టమ్ మాత్రమే"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "సిస్టమ్ మరియు మైక్రోఫోన్ (విలీనం చేయబడింది)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "సిస్టమ్ మరియు మైక్రోఫోన్ (ప్రత్యేక ఫైల్‌లు)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "లక్ష్య పరిమాణం:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "పైన (పిక్సెల్‌లు):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "మొత్తం పురోగతి:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "ట్రాక్ ముగింపు సమయాలు పెరుగుతున్న క్రమంలో ఉండాలి"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "ట్రాక్‌లు"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "ట్రిమ్"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "ఆడియో/వీడియో ఫైల్‌ను ట్రిమ్ చేయండి"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "ఆడియో/వీడియో ట్రిమ్ చేయండి: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "ట్రిమ్ పూర్తయింది!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "ట్రిమ్ విఫలమైంది!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "ట్రిమ్ చేయబడిన ఫైల్ {} గా సేవ్ చేయబడింది"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "ట్రిమ్ చేయడం విఫలమైంది: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "తెలియదు"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "తెలియని లోపం"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "చాలా బాగుంది"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "వీడియో"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "వీడియో ఫార్మాట్"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "వీడియో సమాచారం"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "వాల్యూమ్:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "హెచ్చరిక: {} కోసం చెల్లని క్రాప్ కొలతలు. ఈ చిత్రం కోసం క్రాప్ నిలిపివేయబడింది."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "తెలుపు"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "వెడల్పు (పిక్సెల్‌లు):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "పసుపు"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe కనుగొనబడలేదు"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "tools ఫోల్డర్‌లో ffmpeg.exe లేదా ffprobe.exe కనుగొనబడలేదు"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe కనుగొనబడలేదు"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "చెల్లనిది"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "చెల్లనిది (ప్రతికూల)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "నిలిపివేయబడింది"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "కొనసాగించు"
+
+#: record.py:223
+msgid "resumed"
+msgstr "కొనసాగించబడింది"
+
+#: __init__.py:418
+msgid "start"
+msgstr "ప్రారంభించు"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "ఆగిపోయింది ఫైల్ సేవ్ చేయబడలేదు"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "ఆగిపోయింది ఇక్కడ సేవ్ చేయబడింది: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "తెలియదు"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} పిక్సెల్‌లు, పరిమాణం {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} పిక్సెల్‌లు, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} పిక్సెల్‌లు, {fps} fps, పరిమాణం {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} ఫైల్‌లు తొలగించబడ్డాయి"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} శాతం"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

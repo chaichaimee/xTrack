@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: \n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Hindi\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} समाप्ति समय:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | फेड इन: {} से {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | फेड आउट: {} से {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "ब्राउज़ करें (&B)..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "रिकॉर्डिंग से पहले काउंट-इन (&C)"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "गंतव्य फ़ोल्डर (&D):"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "प्रारूप (&F):"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "माइक्रोफ़ोन गेन (0-10) (&M):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "रिकॉर्डिंग के बाद फ़ोल्डर खोलें (&O)"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "सिस्टम गेन (0-10) (&S):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC बिटरेट (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "फोटो जोड़ें..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "प्रत्येक ट्रैक की शुरुआत के लिए अतिरिक्त फेड-इन अवधि (पहले ट्रैक को छोड़कर)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "सभी रूपांतरण पूरे हुए!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "सभी रूपांतरण समाप्त"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "सभी छवियों को संसाधित किया गया!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "मर्ज के दौरान त्रुटि हुई: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "ऑडियो"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "ऑडियो बैकएंड स्थिति: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "ऑडियो चैनल:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "ऑडियो कोडेक:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "ऑडियो प्रारूप"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "ऑडियो गुणवत्ता"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "ऑडियो गुणवत्ता:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "ऑडियो सेटिंग्स"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "ऑडियो फ़ाइल को {} ट्रैक्स में विभाजित किया गया"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "छवियों को 16:9 अनुपात में ऑटो क्रॉप करें"
+
+#: record.py:357
+msgid "Available"
+msgstr "उपलब्ध"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "पृष्ठभूमि का रंग:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "सर्वश्रेष्ठ (कोई हानि नहीं)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "काला"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "नीला"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "नीचे (पिक्सेल):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "ब्राउज़ करें..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "गणना की जा रही है..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "वीडियो रिज़ॉल्यूशन नहीं पढ़ा जा सकता"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "चैनल:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "आउटपुट फ़ोल्डर चुनें"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "पूर्ण!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "पूरा हुआ"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "रूपांतरण सेटिंग्स"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "{} के लिए रूपांतरण पूरा हुआ"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "रूपांतरण पूरा हुआ!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "रूपांतरण पूरा: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "रूपांतरण विफल"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "{} के लिए रूपांतरण विफल: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "रूपांतरण विफल रहा।"
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "रूपांतरण विफल: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "रूपांतरित करें"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "ऑडियो रूपांतरित करें"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "ऑडियो रूपांतरण: {} फ़ाइलें"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "MP3 को MP4 में बदलें"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "MP3 से MP4 रूपांतरण: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "वीडियो रूपांतरित करें"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "वीडियो रूपांतरण: {} फ़ाइलें"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "रूपांतरित किया जा रहा है..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "रूपांतरण जारी: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "बिना री-एन्कोडिंग के कॉपी करें (तेज़)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "पूर्वावलोकन नहीं चलाया जा सका: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "पढ़ा नहीं जा सका"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "छवि के आयाम नहीं पढ़े जा सके"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "वीडियो के आयाम नहीं पढ़े जा सके"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "छवि क्रॉप करें"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "क्रॉस-फ़ेड अवधि (सेकंड):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "क्रॉस-फ़ेड सेटिंग्स"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "क्रॉस-फ़ेड के लिए री-एन्कोडिंग मोड आवश्यक है"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "वर्तमान फ़ाइल"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "वर्तमान फ़ाइल:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "स्यान"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "चयनित फ़ाइलें हटाएं"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "आयाम"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "ट्रैक्स के बीच क्रॉस-फ़ेडिंग के लिए सेकंड में अवधि। अनुशंसित मान 5 सेकंड है।"
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "अवधि: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "अवधि: गणना जारी..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "अवधि: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "ट्रैक्स के बीच क्रॉस-फ़ेड सक्षम करें"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "फेड इन/आउट सक्षम करें"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "एक ट्रैक के अंत को फेड आउट और अगले की शुरुआत को फेड इन करके ट्रैक्स के बीच सहज संक्रमण सक्षम करें"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "समाप्ति समय (100% वॉल्यूम):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "समाप्ति समय:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "समाप्ति समय फ़ाइल की अवधि से अधिक नहीं हो सकता"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "त्रुटि"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "छवि जानकारी प्राप्त करने में त्रुटि"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "वीडियो जानकारी प्राप्त करने में त्रुटि"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "फेड इन"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "फेड आउट"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "फेड सेटिंग्स"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "अगले ट्रैक के लिए फेड-इन (सेकंड):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "विफल"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "फ़ाइल सूची बनाने में विफल: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "फ़ाइल अवधि प्राप्त करने में विफल: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "छवि जानकारी प्राप्त करने में विफल: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "वीडियो जानकारी प्राप्त करने में विफल: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "कॉन्फ़िगरेशन लोड करने में विफल: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "ऑडियो रूपांतरण संवाद खोलने में विफल: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "MP3 से MP4 रूपांतरण संवाद खोलने में विफल: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "वीडियो रूपांतरण संवाद खोलने में विफल: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "मर्ज संवाद खोलने में विफल: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "रिकॉर्डिंग सेटिंग्स खोलने में विफल: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "छवि आकार बदलें संवाद खोलने में विफल: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "ऑडियो विभाजन संवाद खोलने में विफल: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "ट्रिम संवाद खोलने में विफल: {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "कॉन्फ़िगरेशन सहेजने में विफल: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "ऑडियो फ़ाइल को विभाजित करने में विफल"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "विफल: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "फ़ाइल अवधि: गणना जारी..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "फ़ाइल अवधि: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "फ़ाइल का आकार"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "फ़ाइल अवधि: {duration}; ट्रिम अवधि: {period} सेकंड {fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "फ़ाइल नहीं मिली"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "फ़ाइल नहीं मिली: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "रूपांतरित करने के लिए फ़ाइलें"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "मर्ज करने के लिए फ़ाइलें"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "केवल एकल फ़ाइल के लिए"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "प्रारूप:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "फ़्रेम दर: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "फ़्रेम दर: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "अच्छा"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "धूसर (ग्रे)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "हरा"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "ऊंचाई (पिक्सेल):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "छवि जानकारी"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "छवि फ़ाइलें (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "छवि प्रसंस्करण पूरा हुआ! परिणामों के लिए आउटपुट जानकारी सूची देखें।"
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "इनपुट फ़ाइलें"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "अमान्य फेड-इन श्रेणी"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "अमान्य फेड-आउट श्रेणी"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "अमान्य छवि फ़ाइल: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "अमान्य लक्षित आकार"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "ट्रैक {:02d} के लिए अमान्य समय प्रारूप"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "अमान्य समय प्रारूप। सेकंड (जैसे, 10), MM:SS (जैसे, 1:30), या HH:MM:SS (जैसे, 1:30:45) का उपयोग करें"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "ट्रैक {:02d} के लिए अमान्य समय मान"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "अमान्य समय मान"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "अंतिम ट्रैक का समाप्ति समय फ़ाइल अवधि से अधिक नहीं हो सकता"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "बायां (पिक्सेल):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "पहलू अनुपात लॉक करें"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "लूप अवधि (सेकंड):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3 गुणवत्ता (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3 गुणवत्ता:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "मैजेंटा"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "मर्ज करें"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "MP3 मर्ज करें"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "मर्ज मोड"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "मर्ज पूरा हुआ!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "मर्ज विफल रहा।"
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "मर्ज विफल: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "मर्ज सफल। आउटपुट यहां सहेजा गया: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "मर्ज किया जा रहा है: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "केवल माइक्रोफ़ोन"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "नीचे ले जाएं"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "ऊपर ले जाएं"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "कोई फ़ाइल चुनी नहीं गई"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "कोई नहीं"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "सामान्य"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "उपलब्ध नहीं है - tools/recorder_backend.py की जांच करें"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "नोट: वीडियो ट्रिमिंग डिफ़ॉल्ट रूप से मूल गुणवत्ता बनाए रखती है। कोई री-एन्कोडिंग नहीं की जाती है।"
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "नोट: WAV प्रारूप असम्पीडित ऑडियो का उपयोग करता है"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "नोट: अब आप गुणवत्ता, वॉल्यूम या नमूना दर बदलने के लिए फ़ाइलों को उसी प्रारूप (जैसे, MP3 से MP3) में रूपांतरित कर सकते हैं।"
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "ट्रैक्स की संख्या:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "नारंगी"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "आउटपुट फ़ाइल नाम पैटर्न:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "आउटपुट फ़ाइल नाम:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "आउटपुट प्रारूप:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "आउटपुट जानकारी"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "आउटपुट नाम"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "आउटपुट प्रकार"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "आउटपुट फ़ोल्डर:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "रोकें"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "रोका गया।"
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "फोटो सूची"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "कृपया आउटपुट फ़ाइल नाम दर्ज करें।"
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "कृपया सभी समय प्रविष्टियां भरें"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "कृपया पहले एक MP3 फ़ाइल चुनें।"
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "कृपया पहले एक ऑडियो फ़ाइल चुनें"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "कृपया पहले एक ऑडियो या वीडियो फ़ाइल चुनें"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "कृपया पहले कम से कम 2 MP3 फ़ाइलें चुनें।"
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "कृपया कम से कम 2 फ़ाइलें चुनें"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "कृपया कम से कम एक फोटो चुनें या पृष्ठभूमि का रंग चुनें।"
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "कृपया पहले ऑडियो या वीडियो फ़ाइलें चुनें।"
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "कृपया पहले छवि फ़ाइलें चुनें।"
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "कृपया पहले वीडियो फ़ाइलें चुनें।"
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "पूर्वावलोकन"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "पूर्वावलोकन विफल: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "पूर्वावलोकन फ़ाइल नहीं बनाई गई थी या बहुत छोटी है"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "पूर्वावलोकन प्रक्रिया विफल रही: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "संसाधित: {} - नया आकार: {}, आयाम: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "ट्रैक {}/{} संसाधित किया जा रहा है"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "संसाधित किया जा रहा है..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "प्रसंस्करण: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "प्रगति: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "बैंगनी"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "गुणवत्ता:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "गुणवत्ता के साथ री-एन्कोड करें (धीमा)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "तैयार"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "रिकॉर्डिंग सेटिंग्स"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "रिकॉर्डिंग सेटिंग्स..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "रिकॉर्डिंग सेटिंग्स सहेजी गईं"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "रिकॉर्डिंग मोड (&M):"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "लाल"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "फोटो हटाएं"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "छवि का आकार बदलें"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "छवि आकार बदलें: {} फ़ाइलें"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "आकार बदलें सेटिंग्स"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "रिज़ॉल्यूशन: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "रिज़ॉल्यूशन: अज्ञात"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "रिज़ॉल्यूशन: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "जारी रखें"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "फिर से शुरू किया जा रहा है..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "दायां (पिक्सेल):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "नमूना दर:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "गंतव्य फ़ोल्डर चुनें"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "फोटो चुनें"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "चयनित फ़ाइल"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "चयनित MP3 फ़ाइल"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "चयनित फ़ाइलें:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "आकार: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "आकार: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "छोटा"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "विभाजित करें"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "ऑडियो विभाजित करें"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "ऑडियो फ़ाइल विभाजित करें"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "ऑडियो विभाजन: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "विभाजन सेटिंग्स"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "विभाजन पूरा हुआ! {} ट्रैक्स बनाए गए"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "विभाजन विफल रहा!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "शुरू करें"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "प्रारंभ समय (100% वॉल्यूम):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "प्रारंभ समय:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "रिकॉर्डिंग शुरू करें; रोकने के लिए फिर से दबाएं; जारी रखने के लिए फिर से दबाएं"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "प्रारंभ समय समाप्ति समय से कम होना चाहिए"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "रूपांतरण शुरू किया जा रहा है..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "मर्ज शुरू किया जा रहा है..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "विभाजन कार्य शुरू किया जा रहा है..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "ट्रिम कार्य शुरू किया जा रहा है..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "स्थिति"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "रिकॉर्डिंग रोकें"
+
+#: record.py:311
+msgid "System Only"
+msgstr "केवल सिस्टम"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "सिस्टम और माइक्रोफ़ोन (मर्ज किया हुआ)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "सिस्टम और माइक्रोफ़ोन (अलग फ़ाइलें)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "लक्षित आकार:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "ऊपर (पिक्सेल):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "कुल प्रगति:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "ट्रैक समाप्ति समय बढ़ते क्रम में होना चाहिए"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "ट्रैक्स"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "ट्रिम करें"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "ऑडियो/वीडियो फ़ाइल ट्रिम करें"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "ऑडियो/वीडियो ट्रिम: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "ट्रिम पूरा हुआ!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "ट्रिम विफल रहा!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "ट्रिम की गई फ़ाइल {} के रूप में सहेजी गई"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "ट्रिमिंग विफल: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "अज्ञात"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "अज्ञात त्रुटि"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "बहुत अच्छा"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "वीडियो"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "वीडियो प्रारूप"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "वीडियो जानकारी"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "वॉल्यूम:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "चेतावनी: {} के लिए अमान्य क्रॉप आयाम। इस छवि के लिए क्रॉप अक्षम किया गया।"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "सफेद"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "चौड़ाई (पिक्सेल):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "पीला"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe नहीं मिला"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "tools फ़ोल्डर में ffmpeg.exe या ffprobe.exe नहीं मिला"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe नहीं मिला"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "अमान्य"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "अमान्य (नकारात्मक)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "रोका गया"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "जारी रखें"
+
+#: record.py:223
+msgid "resumed"
+msgstr "फिर शुरू हुआ"
+
+#: __init__.py:418
+msgid "start"
+msgstr "शुरू करें"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "बंद कोई फ़ाइल सहेजी नहीं गई"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "बंद सहेजा गया: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "अज्ञात"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} पिक्सेल, आकार {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} पिक्सेल, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} पिक्सेल, {fps} fps, आकार {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} फ़ाइलें हटाई गईं"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} प्रतिशत"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

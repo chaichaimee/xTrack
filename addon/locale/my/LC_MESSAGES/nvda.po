@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: 2026-05-17 17:45+0700\n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Burmese\n"
+"Language: my\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} ပြီးဆုံးချိန် -"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Fade In - {} မှ {} သို့"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Fade Out - {} မှ {} သို့"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&ရှာဖွေရန်..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "အသံမသွင်းမီ &ကြိုတင်ရေတွက်ရန်"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "သိမ်းဆည်းမည့် &ဖိုင်တွဲ -"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&ဖိုင်အမျိုးအစား -"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "&မိုက်ခရိုဖုန်း အသံချဲ့အား (0-10) -"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "အသံသွင်းပြီးနောက် ဖိုင်တွဲကို &ဖွင့်ရန်"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "&စနစ် အသံချဲ့အား (0-10) -"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "AAC Bitrate (kbps) -"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "ဓာတ်ပုံထည့်ရန်..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "ပထမဆုံးသီချင်းမှလွဲ၍ ကျန်သီချင်းများ၏အစတွင် Fade-in ကြာချိန် ထပ်ထည့်ရန်"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "ပြောင်းလဲမှုအားလုံး ပြီးဆုံးပါပြီ။"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "ပြောင်းလဲမှုအားလုံး ပြီးဆုံးသွားပါပြီ"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "ပုံအားလုံး လုပ်ဆောင်ပြီးပါပြီ။"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "ပေါင်းစည်းနေစဉ် အမှားတစ်ခု ဖြစ်ပွားခဲ့သည် - {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "အသံဖိုင်"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Audio Backend အခြေအနေ -"
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "အသံလိုင်းများ -"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Audio Codec -"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "အသံဖိုင် အမျိုးအစား"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "အသံအရည်အသွေး"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "အသံအရည်အသွေး -"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "အသံ ဆက်တင်များ"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "အသံဖိုင်ကို အပိုင်း {} ပိုင်း ခွဲလိုက်ပါပြီ"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "ပုံများကို ၁၆:၉ အချိုးသို့ အလိုအလျောက် ဖြတ်ရန်"
+
+#: record.py:357
+msgid "Available"
+msgstr "ရရှိနိုင်သည်"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "နောက်ခံအရောင် -"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "အကောင်းဆုံး (အရည်အသွေးမကျစေဘဲ)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "အနက်ရောင်"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "အပြာရောင်"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "အောက်ခြေ (pixels) -"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "ရှာဖွေရန်..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "တွက်ချက်နေသည်..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "ပယ်ဖျက်ရန်"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "ဗီဒီယို၏ ရုပ်ထွက်အရွယ်အစားကို ဖတ်၍မရပါ"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "လိုင်းများ -"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "သိမ်းဆည်းမည့် ဖိုင်တွဲကို ရွေးပါ"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "ပြီးပါပြီ။"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "ပြီးဆုံးပါပြီ"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "ပြောင်းလဲမှုဆိုင်ရာ ဆက်တင်များ"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "{} အတွက် ပြောင်းလဲမှု ပြီးဆုံးပါပြီ"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "ပြောင်းလဲမှု ပြီးဆုံးပါပြီ။"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "ပြောင်းလဲမှု ပြီးဆုံးပါပြီ - {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "ပြောင်းလဲမှု မအောင်မြင်ပါ"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "{} အတွက် ပြောင်းလဲမှု မအောင်မြင်ပါ - {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "ပြောင်းလဲမှု မအောင်မြင်ပါ။"
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "ပြောင်းလဲမှု မအောင်မြင်ပါ - {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "ပြောင်းရန်"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "အသံဖိုင် ပြောင်းရန်"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "အသံဖိုင် ပြောင်းရန် - ဖိုင်ပေါင်း {}"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "MP3 မှ MP4 သို့ ပြောင်းရန်"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "MP3 မှ MP4 သို့ ပြောင်းရန် - {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "ဗီဒီယိုဖိုင် ပြောင်းရန်"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "ဗီဒီယိုဖိုင် ပြောင်းရန် - ဖိုင်ပေါင်း {}"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "ပြောင်းနေသည်..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "ပြောင်းလဲနေသည် - {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "မူရင်းအတိုင်း ကူးယူရန် (ပိုမြန်သည်)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "နမူနာကို ဖွင့်၍မရပါ - {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "ဖတ်၍မရပါ"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "ပုံ၏ အရွယ်အစားကို ဖတ်၍မရပါ"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "ဗီဒီယို၏ အရွယ်အစားကို ဖတ်၍မရပါ"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "ပုံကို ဖြတ်ရန်"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Cross-fade ကြာချိန် (စက္ကန့်) -"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Cross-fade ဆက်တင်များ"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Cross-fade ပြုလုပ်ရန် re-encoding မုဒ် လိုအပ်သည်"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "လက်ရှိဖိုင်"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "လက်ရှိဖိုင် -"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "စိမ်းပြာရောင်"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "ရွေးချယ်ထားသော ဖိုင်များကို ဖျက်ရန်"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "အရွယ်အစား"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "သီချင်းများကြား Cross-fade ဖြစ်စေရန် ကြာချိန် (စက္ကန့်)။ ၅ စက္ကန့် ထားရန် အကြံပြုပါသည်။"
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "ကြာချိန် - ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "ကြာချိန် - တွက်ချက်နေသည်..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "ကြာချိန် - {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "သီချင်းများကြား Cross-fade ကို သုံးရန်"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Fade In/Out ကို သုံးရန်"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "သီချင်းတစ်ပုဒ်အဆုံးတွင် အသံတိုးသွားပြီး နောက်တစ်ပုဒ်အစတွင် အသံပြန်ကျယ်လာစေရန်"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "ပြီးဆုံးချိန် (အသံအပြည့်) -"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "ပြီးဆုံးချိန် -"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "ပြီးဆုံးချိန်သည် မူရင်းကြာချိန်ထက် မများရပါ"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "အမှား"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "ပုံအချက်အလက် ရယူရာတွင် အမှားဖြစ်နေသည်"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "ဗီဒီယိုအချက်အလက် ရယူရာတွင် အမှားဖြစ်နေသည်"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Fade In"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Fade Out"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Fade ဆက်တင်များ"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "နောက်သီချင်းအတွက် Fade-in ကြာချိန် (စက္ကန့်) -"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "မအောင်မြင်ပါ"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "ဖိုင်စာရင်း ဖန်တီး၍မရပါ - {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "ဖိုင်ကြာချိန်ကို ရယူ၍မရပါ - {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "ပုံအချက်အလက် ရယူ၍မရပါ - {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "ဗီဒီယိုအချက်အလက် ရယူ၍မရပါ - {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "ဆက်တင်များကို ခေါ်ယူ၍မရပါ - {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "အသံဖိုင်ပြောင်းလဲသည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "MP3 မှ MP4 ပြောင်းလဲသည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "ဗီဒီယိုဖိုင်ပြောင်းလဲသည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "ဖိုင်ပေါင်းသည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "အသံသွင်း ဆက်တင်ကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "ပုံအရွယ်အစားပြင်သည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "အသံဖိုင်ခွဲသည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "ဖိုင်ဖြတ်သည့် ဇယားကို ဖွင့်၍မရပါ - {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "ဆက်တင်များကို သိမ်းဆည်း၍မရပါ - {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "အသံဖိုင်ခွဲခြင်း မအောင်မြင်ပါ"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "မအောင်မြင်ပါ - {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "ဖိုင်ကြာချိန် - တွက်ချက်နေသည်..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "ဖိုင်ကြာချိန် - {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "ဖိုင်အရွယ်အစား"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "မူရင်းကြာချိန် - {duration}၊ ဖြတ်မည့်အပိုင်း - {period} စက္ကန့် {fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "ဖိုင်ရှာမတွေ့ပါ"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "ဖိုင်ရှာမတွေ့ပါ - {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "ပြောင်းလဲမည့် ဖိုင်များ"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "ပေါင်းစည်းမည့် ဖိုင်များ"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "ဖိုင်တစ်ခုတည်းအတွက်သာ"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "ဖိုင်အမျိုးအစား -"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Frame rate - ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Frame rate - {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "ကောင်းသည်"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "မီးခိုးရောင်"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "အစိမ်းရောင်"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "အမြင့် (pixels) -"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "ပုံအချက်အလက်"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "ပုံဖိုင်များ (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "ပုံလုပ်ဆောင်မှု ပြီးဆုံးပါပြီ။ ရလဒ်များကို အချက်အလက်စာရင်းတွင် ကြည့်ပါ။"
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "ထည့်သွင်းမည့် ဖိုင်များ"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Fade-in အကွာအဝေး မှားယွင်းနေသည်"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Fade-out အကွာအဝေး မှားယွင်းနေသည်"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "မှားယွင်းသော ပုံဖိုင် - {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "မှားယွင်းသော သိမ်းဆည်းမည့် အရွယ်အစား"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "အပိုင်း {:02d} အတွက် အချိန်ပုံစံ မှားယွင်းနေသည်"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "အချိန်ပုံစံ မှားနေပါသည်။ စက္ကန့် (ဥပမာ ၁၀)၊ မိနစ်:စက္ကန့် (၁:၃၀) သို့မဟုတ် နာရီ:မိနစ်:စက္ကန့် သုံးပါ။"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "အပိုင်း {:02d} အတွက် အချိန်တန်ဖိုး မှားယွင်းနေသည်"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "အချိန်တန်ဖိုးများ မှားယွင်းနေသည်"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "နောက်ဆုံးအပိုင်း၏ ပြီးဆုံးချိန်သည် မူရင်းကြာချိန်ထက် မကျော်ရပါ"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "ဘယ်ဘက် (pixels) -"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "အချိုးအစားကို ထိန်းထားရန်"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "အလှည့်ကျကြာချိန် (စက္ကန့်) -"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "MP3 အရည်အသွေး (kbps) -"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "MP3 အရည်အသွေး -"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "ခရမ်းရင့်ရောင်"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "ပေါင်းစည်းရန်"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "MP3 များ ပေါင်းရန်"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "ပေါင်းစည်းမည့် မုဒ်"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "ပေါင်းစည်းမှု ပြီးဆုံးပါပြီ။"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "ပေါင်းစည်းမှု မအောင်မြင်ပါ။"
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "ပေါင်းစည်းမှု မအောင်မြင်ပါ - {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "ပေါင်းစည်းမှု အောင်မြင်သည်။ {} တွင် သိမ်းလိုက်ပါပြီ"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "ပေါင်းစည်းနေသည် - {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "မိုက်ခရိုဖုန်းသာ"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "အောက်သို့ ရွှေ့ရန်"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "အထက်သို့ ရွှေ့ရန်"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "ဖိုင်ကို မရွေးချယ်ထားပါ"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "မရှိပါ"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "သာမန်"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "မရရှိနိုင်ပါ - tools/recorder_backend.py ကို စစ်ဆေးပါ"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "မှတ်ချက် - ဗီဒီယိုဖြတ်ရာတွင် မူရင်းအရည်အသွေးကို ထိန်းသိမ်းထားမည်ဖြစ်ပြီး အသစ်ပြန်မဖန်တီးပါ။"
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "မှတ်ချက် - WAV ပုံစံသည် အသံကိုမချုံ့ဘဲ သိမ်းဆည်းသည်"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "မှတ်ချက် - ဖိုင်အမျိုးအစားတူများကြားတွင်လည်း အရည်အသွေး သို့မဟုတ် အသံပမာဏ ပြောင်းလဲနိုင်သည်။"
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "အပိုင်းအရေအတွက် -"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "လိမ္မော်ရောင်"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "အသစ်ထွက်မည့် ဖိုင်အမည်ပုံစံ -"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "အသစ်ထွက်မည့် ဖိုင်အမည် -"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "အသစ်ထွက်မည့် အမျိုးအစား -"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "ထွက်ပေါ်လာသော အချက်အလက်များ"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "အသစ်ထွက်မည့် အမည်"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "အသစ်ထွက်မည့် အမျိုးအစား"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "သိမ်းဆည်းမည့် ဖိုင်တွဲ -"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "ခေတ္တရပ်ရန်"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "ရပ်ထားသည်။"
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "ဓာတ်ပုံစာရင်း"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "အသစ်ထွက်မည့် ဖိုင်အမည်ကို ထည့်ပါ။"
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "အချိန်နေရာများအားလုံးကို ဖြည့်စွက်ပါ"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "ကျေးဇူးပြု၍ MP3 ဖိုင်ကို အရင်ရွေးချယ်ပါ။"
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "ကျေးဇူးပြု၍ အသံဖိုင်ကို အရင်ရွေးချယ်ပါ"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "ကျေးဇူးပြု၍ အသံ သို့မဟုတ် ဗီဒီယိုဖိုင်ကို အရင်ရွေးချယ်ပါ"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "ကျေးဇူးပြု၍ အနည်းဆုံး MP3 ဖိုင် ၂ ခုကို အရင်ရွေးချယ်ပါ။"
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "ကျေးဇူးပြု၍ အနည်းဆုံး ဖိုင် ၂ ခု ရွေးချယ်ပါ"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "ဓာတ်ပုံအနည်းဆုံး တစ်ပုံရွေးပါ သို့မဟုတ် နောက်ခံအရောင် ရွေးပါ။"
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "ကျေးဇူးပြု၍ အသံ သို့မဟုတ် ဗီဒီယိုဖိုင်များကို အရင်ရွေးချယ်ပါ။"
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "ကျေးဇူးပြု၍ ပုံဖိုင်များကို အရင်ရွေးချယ်ပါ။"
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်များကို အရင်ရွေးချယ်ပါ။"
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "နမူနာကြည့်ရန်"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "နမူနာပြသမှု မအောင်မြင်ပါ - {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "နမူနာဖိုင်ကို မဖန်တီးနိုင်ပါ သို့မဟုတ် သေးငယ်လွန်းသည်"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "နမူနာလုပ်ဆောင်မှု မအောင်မြင်ပါ - {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "လုပ်ဆောင်ပြီး - {}၊ အရွယ်အစားသစ် - {}၊ ပုံအရွယ် - {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "အပိုင်း {} (စုစုပေါင်း {}) ကို လုပ်ဆောင်နေသည်"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "လုပ်ဆောင်နေသည်..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "လုပ်ဆောင်နေသည် - {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "တိုးတက်မှု - {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "ခရမ်းရောင်"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "အရည်အသွေး -"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "အရည်အသွေးဖြင့် ပြန်လည်ဖန်တီးရန် (ပိုနှေးသည်)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "အဆင်သင့်ဖြစ်ပါပြီ"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "အသံသွင်း ဆက်တင်များ"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "အသံသွင်း ဆက်တင်များ..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "အသံသွင်း ဆက်တင်များကို သိမ်းလိုက်ပါပြီ"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "အသံသွင်း&မုဒ် -"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "အနီရောင်"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "ဓာတ်ပုံဖယ်ထုတ်ရန်"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "ပုံအရွယ်အစား ပြင်ရန်"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "ပုံအရွယ်အစား ပြင်ရန် - ဖိုင်ပေါင်း {}"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "အရွယ်အစား ဆက်တင်များ"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "ရုပ်ထွက်အရွယ်အစား - ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "ရုပ်ထွက်အရွယ်အစား - မသိရပါ"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "ရုပ်ထွက်အရွယ်အစား - {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "ပြန်စရန်"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "ပြန်စနေသည်..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "ညာဘက် (pixels) -"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Sample Rate -"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "သိမ်းဆည်းမည့် ဖိုင်တွဲကို ရွေးပါ"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "ဓာတ်ပုံများကို ရွေးပါ"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "ရွေးချယ်ထားသော ဖိုင်"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "ရွေးချယ်ထားသော MP3 ဖိုင်"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "ရွေးချယ်ထားသော ဖိုင်များ -"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "အရွယ်အစား - ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "အရွယ်အစား - {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "သေးငယ်သည်"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "ခွဲထုတ်ရန်"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "အသံဖိုင် ခွဲရန်"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "အသံဖိုင် ခွဲထုတ်ခြင်း"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "အသံဖိုင် ခွဲရန် - {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "အပိုင်းခွဲ ဆက်တင်များ"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "ခွဲထုတ်ခြင်း ပြီးပါပြီ။ အပိုင်း {} ပိုင်း ရရှိပါသည်"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "ခွဲထုတ်ခြင်း မအောင်မြင်ပါ"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "စတင်ရန်"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "စတင်ချိန် (အသံအပြည့်) -"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "စတင်ချိန် -"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "အသံသွင်းရန်။ ရပ်ရန် သို့မဟုတ် ဆက်လုပ်ရန် ထပ်နှိပ်ပါ။"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "စတင်ချိန်သည် ပြီးဆုံးချိန်ထက် နည်းရပါမည်"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "ပြောင်းလဲခြင်းကို စတင်နေသည်..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "ပေါင်းစည်းခြင်းကို စတင်နေသည်..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "ခွဲထုတ်ခြင်းကို စတင်နေသည်..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "ဖြတ်တောက်ခြင်းကို စတင်နေသည်..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "အခြေအနေ"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "အသံသွင်းခြင်း ရပ်ရန်"
+
+#: record.py:311
+msgid "System Only"
+msgstr "စနစ်အသံသာ"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "စနစ်နှင့် မိုက်ခရိုဖုန်း (ပေါင်းလျက်)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "စနစ်နှင့် မိုက်ရိုဖုန်း (ဖိုင်ခွဲလျက်)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "သိမ်းဆည်းမည့် အရွယ်အစား -"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "အပေါ်ဘက် (pixels) -"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "စုစုပေါင်း တိုးတက်မှု -"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "ပြီးဆုံးချိန်များသည် အစဉ်လိုက် ဖြစ်ရပါမည်"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "အပိုင်းများ"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "ဖြတ်တောက်ရန်"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "အသံ သို့မဟုတ် ဗီဒီယိုဖိုင် ဖြတ်ရန်"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "ဖိုင်ဖြတ်ရန် - {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "ဖြတ်တောက်မှု ပြီးဆုံးပါပြီ။"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "ဖြတ်တောက်မှု မအောင်မြင်ပါ"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "ဖြတ်ထားသောဖိုင်ကို {} အဖြစ် သိမ်းလိုက်ပါပြီ"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "ဖြတ်တောက်မှု မအောင်မြင်ပါ - {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "မသိရပါ"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "မသိရသော အမှား"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "အလွန်ကောင်းသည်"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "ဗီဒီယို"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "ဗီဒီယို အမျိုးအစား"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "ဗီဒီယို အချက်အလက်"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "အသံပမာဏ -"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "သတိပေးချက် - {} အတွက် ဖြတ်မည့်အရွယ်အစား မှားနေသဖြင့် ဤပုံကို မဖြတ်တော့ပါ။"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "အဖြူရောင်"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "အနံ (pixels) -"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "အဝါရောင်"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe ရှာမတွေ့ပါ"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "tools ဖိုင်တွဲထဲတွင် ffmpeg.exe သို့မဟုတ် ffprobe.exe ရှာမတွေ့ပါ"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe ရှာမတွေ့ပါ"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "မမှန်ကန်ပါ"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "မမှန်ကန်ပါ (အနှုတ်ကိန်းဖြစ်နေသည်)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "ရပ်ထားသည်"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "ပြန်စရန်"
+
+#: record.py:223
+msgid "resumed"
+msgstr "ပြန်စလိုက်ပါပြီ"
+
+#: __init__.py:418
+msgid "start"
+msgstr "စတင်ရန်"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "ရပ်လိုက်ပြီ။ ဖိုင်မသိမ်းထားပါ။"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "ရပ်လိုက်ပြီ။ {} တွင် သိမ်းလိုက်ပါပြီ"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "မသိရပါ"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} x {height} pixels၊ အရွယ်အစား {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} x {height} pixels၊ {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} x {height} pixels၊ {fps} fps၊ အရွယ်အစား {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "ဖိုင်ပေါင်း {} ကို ဖယ်ထုတ်လိုက်ပါပြီ"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} ရာခိုင်နှုန်း"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"

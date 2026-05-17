@@ -1,0 +1,1301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: xTrack 2026.5.3\n"
+"Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
+"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"PO-Revision-Date: 2026-05-17 17:45+0700\n"
+"Last-Translator: chaiBot and Malee Yamazaki\n"
+"Language-Team: Malay\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: DevOn Addon\n"
+
+#: splitAudio.py:151
+msgid " {:02d} End Time:"
+msgstr " {:02d} Masa Tamat:"
+
+#: Trim.py:385
+msgid " | Fade In: {} to {}"
+msgstr " | Fade In: {} ke {}"
+
+#: Trim.py:389
+msgid " | Fade Out: {} to {}"
+msgstr " | Fade Out: {} ke {}"
+
+#: record.py:350
+msgid "&Browse..."
+msgstr "&Layari..."
+
+#: record.py:339
+msgid "&Count-in before recording"
+msgstr "&Kiraan sebelum rakaman"
+
+#: record.py:345
+msgid "&Destination Folder:"
+msgstr "Fol&der Destinasi:"
+
+#: record.py:320
+msgid "&Format:"
+msgstr "&Format:"
+
+#: record.py:336
+msgid "&Microphone Gain (0-10):"
+msgstr "Gandaan &Mikrofon (0-10):"
+
+#: record.py:342
+msgid "&Open folder after recording"
+msgstr "Buka f&older selepas rakaman"
+
+#: record.py:337
+msgid "&System Gain (0-10):"
+msgstr "Gandaan &Sistem (0-10):"
+
+#: convertVideo.py:252
+#: convertVideo.py:257
+msgid "..."
+msgstr "..."
+
+#: convertVideo.py:273
+#: convertVideo.py:280
+msgid "?"
+msgstr "?"
+
+#: record.py:381
+msgid "AAC Bitrate (kbps):"
+msgstr "Bitrate AAC (kbps):"
+
+#: convertMP3toMP4.py:52
+msgid "Add Photo..."
+msgstr "Tambah Foto..."
+
+#: merge.py:103
+msgid "Additional fade-in duration for the beginning of each track (except the first track)"
+msgstr "Tempoh fade-in tambahan untuk permulaan setiap trek (kecuali trek pertama)"
+
+#: convertAudio.py:370
+#: convertAudio.py:371
+msgid "All conversions complete!"
+msgstr "Semua penukaran selesai!"
+
+#: convertVideo.py:529
+#: convertVideo.py:530
+msgid "All conversions finished"
+msgstr "Semua penukaran telah tamat"
+
+#: resizeImage.py:817
+msgid "All images processed!"
+msgstr "Semua imej telah diproses!"
+
+#: merge.py:339
+msgid "An error occurred during merge: {}"
+msgstr "Ralat berlaku semasa penggabungan: {}"
+
+#: Trim.py:72
+msgid "Audio"
+msgstr "Audio"
+
+#: record.py:355
+msgid "Audio Backend Status: "
+msgstr "Status Backend Audio: "
+
+#: Trim.py:174
+msgid "Audio Channels:"
+msgstr "Saluran Audio:"
+
+#: Trim.py:184
+#: convertVideo.py:215
+msgid "Audio Codec:"
+msgstr "Codec Audio:"
+
+#: Trim.py:89
+msgid "Audio Format"
+msgstr "Format Audio"
+
+#: Trim.py:97
+msgid "Audio Quality"
+msgstr "Kualiti Audio"
+
+#: merge.py:120
+msgid "Audio Quality:"
+msgstr "Kualiti Audio:"
+
+#: Trim.py:160
+#: convertVideo.py:198
+msgid "Audio Settings"
+msgstr "Tetapan Audio"
+
+#: splitAudio.py:436
+msgid "Audio file split into {} tracks"
+msgstr "Fail audio dibahagikan kepada {} trek"
+
+#: convertMP3toMP4.py:86
+msgid "Auto crop images to 16:9 aspect ratio"
+msgstr "Potong imej secara automatik ke nisbah aspek 16:9"
+
+#: record.py:357
+msgid "Available"
+msgstr "Tersedia"
+
+#: convertMP3toMP4.py:74
+msgid "Background Color:"
+msgstr "Warna Latar Belakang:"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:686
+msgid "Best (No loss)"
+msgstr "Terbaik (Tanpa kehilangan kualiti)"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:260
+msgid "Black"
+msgstr "Hitam"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:264
+msgid "Blue"
+msgstr "Biru"
+
+#: resizeImage.py:181
+msgid "Bottom (pixels):"
+msgstr "Bawah (piksel):"
+
+#: resizeImage.py:128
+msgid "Browse..."
+msgstr "Layari..."
+
+#: convertAudio.py:161
+#: convertAudio.py:177
+#: merge.py:170
+#: resizeImage.py:460
+#: resizeImage.py:490
+msgid "Calculating..."
+msgstr "Mengira..."
+
+#: Trim.py:230
+#: convertAudio.py:141
+#: convertMP3toMP4.py:104
+#: convertVideo.py:234
+#: merge.py:141
+#: resizeImage.py:265
+#: splitAudio.py:112
+msgid "Cancel"
+msgstr "Batal"
+
+#: convertVideo.py:349
+msgid "Cannot read video resolution"
+msgstr "Tidak dapat membaca resolusi video"
+
+#: convertVideo.py:208
+msgid "Channels:"
+msgstr "Saluran:"
+
+#: resizeImage.py:501
+msgid "Choose output folder"
+msgstr "Pilih folder output"
+
+#: resizeImage.py:811
+msgid "Complete!"
+msgstr "Selesai!"
+
+#: resizeImage.py:781
+msgid "Completed"
+msgstr "Telah Selesai"
+
+#: convertAudio.py:79
+#: convertVideo.py:171
+msgid "Conversion Settings"
+msgstr "Tetapan Penukaran"
+
+#: convertAudio.py:365
+msgid "Conversion complete for {}"
+msgstr "Penukaran selesai untuk {}"
+
+#: convertAudio.py:360
+#: convertMP3toMP4.py:375
+#: convertMP3toMP4.py:380
+msgid "Conversion complete!"
+msgstr "Penukaran selesai!"
+
+#: convertVideo.py:510
+msgid "Conversion complete: {}"
+msgstr "Penukaran selesai: {}"
+
+#: convertVideo.py:523
+msgid "Conversion failed"
+msgstr "Penukaran gagal"
+
+#: convertVideo.py:513
+msgid "Conversion failed for {}: {}"
+msgstr "Penukaran gagal untuk {}: {}"
+
+#: convertAudio.py:375
+#: convertMP3toMP4.py:386
+msgid "Conversion failed."
+msgstr "Penukaran gagal."
+
+#: convertAudio.py:376
+#: convertMP3toMP4.py:387
+msgid "Conversion failed: {}"
+msgstr "Penukaran gagal: {}"
+
+#: convertAudio.py:137
+#: convertAudio.py:368
+#: convertAudio.py:377
+#: convertMP3toMP4.py:100
+#: convertMP3toMP4.py:381
+#: convertMP3toMP4.py:388
+#: convertVideo.py:231
+msgid "Convert"
+msgstr "Tukar"
+
+#: __init__.py:164
+#: convertAudio.py:21
+msgid "Convert Audio"
+msgstr "Tukar Audio"
+
+#: convertAudio.py:34
+msgid "Convert Audio: {} files"
+msgstr "Tukar Audio: {} fail"
+
+#: __init__.py:166
+#: convertMP3toMP4.py:20
+msgid "Convert MP3 to MP4"
+msgstr "Tukar MP3 kepada MP4"
+
+#: convertMP3toMP4.py:31
+msgid "Convert MP3 to MP4: {}"
+msgstr "Tukar MP3 kepada MP4: {}"
+
+#: __init__.py:165
+#: convertVideo.py:99
+msgid "Convert Video"
+msgstr "Tukar Video"
+
+#: convertVideo.py:112
+msgid "Convert Video: {} files"
+msgstr "Tukar Video: {} fail"
+
+#: convertVideo.py:419
+msgid "Converting..."
+msgstr "Menukar..."
+
+#: convertAudio.py:356
+#: convertMP3toMP4.py:371
+msgid "Converting: {}%"
+msgstr "Menukar: {}%"
+
+#: merge.py:112
+msgid "Copy without re-encoding (faster)"
+msgstr "Salin tanpa pengekodan semula (lebih pantas)"
+
+#: Trim.py:518
+msgid "Could not play preview: {}"
+msgstr "Tidak dapat memainkan pratonton: {}"
+
+#: image.py:186
+#: video.py:153
+msgid "Could not read"
+msgstr "Tidak dapat membaca"
+
+#: image.py:143
+msgid "Could not read image dimensions"
+msgstr "Tidak dapat membaca dimensi imej"
+
+#: video.py:116
+msgid "Could not read video dimensions"
+msgstr "Tidak dapat membaca dimensi video"
+
+#: resizeImage.py:165
+msgid "Crop Image"
+msgstr "Potong Imej"
+
+#: merge.py:91
+msgid "Cross-fade Duration (seconds):"
+msgstr "Tempoh Cross-fade (saat):"
+
+#: merge.py:83
+msgid "Cross-fade Settings"
+msgstr "Tetapan Cross-fade"
+
+#: merge.py:184
+msgid "Cross-fade requires re-encoding mode"
+msgstr "Cross-fade memerlukan mod pengekodan semula"
+
+#: convertAudio.py:71
+#: convertVideo.py:158
+msgid "Current File"
+msgstr "Fail Semasa"
+
+#: resizeImage.py:243
+msgid "Current file:"
+msgstr "Fail semasa:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:267
+msgid "Cyan"
+msgstr "Sian"
+
+#: resizeImage.py:108
+#: resizeImage.py:294
+msgid "Delete Selected Files"
+msgstr "Padam Fail Terpilih"
+
+#: resizeImage.py:234
+msgid "Dimensions"
+msgstr "Dimensi"
+
+#: merge.py:94
+msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
+msgstr "Tempoh dalam saat untuk cross-fading antara trek. Nilai yang disyorkan ialah 5 saat."
+
+#: convertVideo.py:161
+msgid "Duration: ..."
+msgstr "Tempoh: ..."
+
+#: convertMP3toMP4.py:42
+#: splitAudio.py:66
+msgid "Duration: Calculating..."
+msgstr "Tempoh: Mengira..."
+
+#: convertMP3toMP4.py:118
+#: convertVideo.py:273
+#: splitAudio.py:220
+msgid "Duration: {}"
+msgstr "Tempoh: {}"
+
+#: merge.py:84
+msgid "Enable Cross-fade between tracks"
+msgstr "Aktifkan Cross-fade antara trek"
+
+#: Trim.py:109
+msgid "Enable Fade In/Out"
+msgstr "Aktifkan Fade In/Out"
+
+#: merge.py:85
+msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
+msgstr "Aktifkan peralihan lancar antara trek dengan mengecilkan suara di hujung satu trek dan membesarkan suara di permulaan trek seterusnya"
+
+#: Trim.py:120
+msgid "End Time (100% volume):"
+msgstr "Masa Tamat (100% volum):"
+
+#: Trim.py:81
+#: Trim.py:135
+msgid "End Time:"
+msgstr "Masa Tamat:"
+
+#: Trim.py:427
+#: Trim.py:553
+msgid "End time cannot be greater than file duration"
+msgstr "Masa tamat tidak boleh melebihi tempoh fail"
+
+#: Trim.py:317
+#: Trim.py:357
+#: Trim.py:418
+#: Trim.py:424
+#: Trim.py:427
+#: Trim.py:441
+#: Trim.py:445
+#: Trim.py:449
+#: Trim.py:454
+#: Trim.py:518
+#: Trim.py:520
+#: Trim.py:523
+#: Trim.py:525
+#: Trim.py:543
+#: Trim.py:550
+#: Trim.py:553
+#: Trim.py:567
+#: Trim.py:571
+#: Trim.py:575
+#: Trim.py:626
+#: splitAudio.py:193
+#: splitAudio.py:227
+#: splitAudio.py:321
+#: splitAudio.py:325
+#: splitAudio.py:332
+#: splitAudio.py:338
+#: splitAudio.py:343
+#: splitAudio.py:359
+msgid "Error"
+msgstr "Ralat"
+
+#: image.py:160
+msgid "Error getting image information"
+msgstr "Ralat mendapatkan maklumat imej"
+
+#: video.py:133
+msgid "Error getting video information"
+msgstr "Ralat mendapatkan maklumat video"
+
+#: Trim.py:115
+msgid "Fade In"
+msgstr "Fade In"
+
+#: Trim.py:130
+msgid "Fade Out"
+msgstr "Fade Out"
+
+#: Trim.py:105
+msgid "Fade Settings"
+msgstr "Tetapan Fade"
+
+#: merge.py:100
+msgid "Fade-in for Next Track (seconds):"
+msgstr "Fade-in untuk Trek Seterusnya (saat):"
+
+#: resizeImage.py:797
+msgid "Failed"
+msgstr "Gagal"
+
+#: convertMP3toMP4.py:235
+msgid "Failed to create file list: {}"
+msgstr "Gagal membuat senarai fail: {}"
+
+#: Trim.py:356
+#: splitAudio.py:226
+msgid "Failed to get file duration: {}"
+msgstr "Gagal mendapatkan tempoh fail: {}"
+
+#: __init__.py:379
+msgid "Failed to get image info: {}"
+msgstr "Gagal mendapatkan info imej: {}"
+
+#: __init__.py:391
+msgid "Failed to get video info: {}"
+msgstr "Gagal mendapatkan info video: {}"
+
+#: Trim.py:49
+#: splitAudio.py:45
+msgid "Failed to load configuration: {}"
+msgstr "Gagal memuatkan konfigurasi: {}"
+
+#: __init__.py:307
+msgid "Failed to open Convert Audio dialog: {}"
+msgstr "Gagal membuka dialog Tukar Audio: {}"
+
+#: __init__.py:352
+msgid "Failed to open Convert MP3 to MP4 dialog: {}"
+msgstr "Gagal membuka dialog Tukar MP3 ke MP4: {}"
+
+#: __init__.py:322
+msgid "Failed to open Convert Video dialog: {}"
+msgstr "Gagal membuka dialog Tukar Video: {}"
+
+#: __init__.py:292
+msgid "Failed to open Merge dialog: {}"
+msgstr "Gagal membuka dialog Gabung: {}"
+
+#: __init__.py:410
+msgid "Failed to open Record Settings: {}"
+msgstr "Gagal membuka Tetapan Rakaman: {}"
+
+#: __init__.py:337
+msgid "Failed to open Resize Image dialog: {}"
+msgstr "Gagal membuka dialog Ubah Saiz Imej: {}"
+
+#: __init__.py:367
+msgid "Failed to open Split Audio dialog: {}"
+msgstr "Gagal membuka dialog Bahagi Audio: {}"
+
+#: __init__.py:277
+msgid "Failed to open Trim dialog: {}"
+msgstr "Gagal membuka dialog Kerat (Trim): {}"
+
+#: Trim.py:61
+#: splitAudio.py:57
+msgid "Failed to save configuration: {}"
+msgstr "Gagal menyimpan konfigurasi: {}"
+
+#: splitAudio.py:447
+msgid "Failed to split audio file"
+msgstr "Gagal membahagikan fail audio"
+
+#: resizeImage.py:802
+msgid "Failed: {}"
+msgstr "Gagal: {}"
+
+#: Trim.py:213
+#: convertAudio.py:74
+msgid "File Duration: Calculating..."
+msgstr "Tempoh Fail: Mengira..."
+
+#: convertAudio.py:178
+#: convertAudio.py:207
+msgid "File Duration: {}"
+msgstr "Tempoh Fail: {}"
+
+#: resizeImage.py:235
+msgid "File Size"
+msgstr "Saiz Fail"
+
+#: Trim.py:397
+msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
+msgstr "Tempoh fail: {duration}; Tempoh kerat: {period} saat{fade_info}"
+
+#: image.py:137
+#: image.py:186
+#: video.py:111
+#: video.py:153
+msgid "File not found"
+msgstr "Fail tidak dijumpai"
+
+#: merge.py:271
+msgid "File not found: {}"
+msgstr "Fail tidak dijumpai: {}"
+
+#: convertAudio.py:65
+#: convertVideo.py:152
+msgid "Files to Convert"
+msgstr "Fail untuk Ditukar"
+
+#: merge.py:62
+msgid "Files to Merge"
+msgstr "Fail untuk Digabungkan"
+
+#: resizeImage.py:118
+msgid "For single file only"
+msgstr "Untuk fail tunggal sahaja"
+
+#: resizeImage.py:219
+msgid "Format:"
+msgstr "Format:"
+
+#: convertVideo.py:163
+msgid "Frame rate: ..."
+msgstr "Kadar bingkai: ..."
+
+#: convertVideo.py:279
+msgid "Frame rate: {}"
+msgstr "Kadar bingkai: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:688
+msgid "Good"
+msgstr "Baik"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:268
+msgid "Gray"
+msgstr "Kelabu"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:263
+msgid "Green"
+msgstr "Hijau"
+
+#: resizeImage.py:149
+msgid "Height (pixels):"
+msgstr "Tinggi (piksel):"
+
+#: __init__.py:171
+msgid "Image Info"
+msgstr "Info Imej"
+
+#: convertMP3toMP4.py:121
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "Fail imej (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:825
+msgid "Image processing complete! Check the output information list for results."
+msgstr "Pemprosesan imej selesai! Semak senarai maklumat output untuk keputusan."
+
+#: resizeImage.py:98
+msgid "Input Files"
+msgstr "Fail Input"
+
+#: Trim.py:441
+#: Trim.py:567
+msgid "Invalid fade-in range"
+msgstr "Julat fade-in tidak sah"
+
+#: Trim.py:445
+#: Trim.py:571
+msgid "Invalid fade-out range"
+msgstr "Julat fade-out tidak sah"
+
+#: convertMP3toMP4.py:133
+msgid "Invalid image file: {}"
+msgstr "Fail imej tidak sah: {}"
+
+#: convertVideo.py:368
+msgid "Invalid target size"
+msgstr "Saiz sasaran tidak sah"
+
+#: splitAudio.py:325
+msgid "Invalid time format for track {:02d}"
+msgstr "Format masa tidak sah untuk trek {:02d}"
+
+#: Trim.py:418
+#: Trim.py:543
+#: splitAudio.py:282
+msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
+msgstr "Format masa tidak sah. Gunakan saat (cth., 10), MM:SS (cth., 1:30), atau HH:MM:SS (cth., 1:30:45)"
+
+#: splitAudio.py:332
+msgid "Invalid time value for track {:02d}"
+msgstr "Nilai masa tidak sah untuk trek {:02d}"
+
+#: Trim.py:449
+#: Trim.py:575
+msgid "Invalid time values"
+msgstr "Nilai masa tidak sah"
+
+#: splitAudio.py:343
+msgid "Last track end time cannot exceed file duration"
+msgstr "Masa tamat trek terakhir tidak boleh melebihi tempoh fail"
+
+#: resizeImage.py:188
+msgid "Left (pixels):"
+msgstr "Kiri (piksel):"
+
+#: resizeImage.py:156
+msgid "Lock Aspect Ratio"
+msgstr "Kunci Nisbah Aspek"
+
+#: convertMP3toMP4.py:65
+msgid "Loop Duration (seconds):"
+msgstr "Tempoh Gelung (saat):"
+
+#: record.py:325
+#: record.py:379
+msgid "MP3 Quality (kbps):"
+msgstr "Kualiti MP3 (kbps):"
+
+#: convertAudio.py:93
+msgid "MP3 Quality:"
+msgstr "Kualiti MP3:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:266
+msgid "Magenta"
+msgstr "Magenta"
+
+#: merge.py:138
+#: merge.py:445
+#: merge.py:452
+msgid "Merge"
+msgstr "Gabung"
+
+#: __init__.py:167
+#: merge.py:20
+msgid "Merge MP3"
+msgstr "Gabung MP3"
+
+#: merge.py:110
+msgid "Merge Mode"
+msgstr "Mod Gabung"
+
+#: merge.py:444
+msgid "Merge complete!"
+msgstr "Gabung selesai!"
+
+#: merge.py:450
+msgid "Merge failed."
+msgstr "Gabung gagal."
+
+#: merge.py:336
+#: merge.py:451
+msgid "Merge failed: {}"
+msgstr "Gabung gagal: {}"
+
+#: merge.py:333
+msgid "Merge successful. Output saved to: {}"
+msgstr "Gabung berjaya. Output disimpan di: {}"
+
+#: merge.py:437
+msgid "Merging: {}%"
+msgstr "Menggabung: {}%"
+
+#: record.py:312
+msgid "Microphone Only"
+msgstr "Mikrofon Sahaja"
+
+#: merge.py:68
+msgid "Move Down"
+msgstr "Gerak ke Bawah"
+
+#: merge.py:67
+msgid "Move Up"
+msgstr "Gerak ke Atas"
+
+#: image.py:166
+#: video.py:138
+msgid "No files selected"
+msgstr "Tiada fail dipilih"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:81
+#: convertMP3toMP4.py:188
+msgid "None"
+msgstr "Tiada"
+
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
+#: resizeImage.py:528
+#: resizeImage.py:689
+#: resizeImage.py:693
+msgid "Normal"
+msgstr "Normal"
+
+#: record.py:359
+msgid "Not available - check tools/recorder_backend.py"
+msgstr "Tidak tersedia - semak tools/recorder_backend.py"
+
+#: Trim.py:195
+msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
+msgstr "Nota: Pemotongan video mengekalkan kualiti asal secara lalai. Tiada pengekodan semula dilakukan."
+
+#: record.py:375
+msgid "Note: WAV format uses uncompressed audio"
+msgstr "Nota: Format WAV menggunakan audio tanpa mampatan"
+
+#: convertAudio.py:120
+msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+msgstr "Nota: Anda kini boleh menukar fail ke format yang sama (cth., MP3 ke MP3) untuk menukar kualiti, volum, atau kadar sampel."
+
+#: splitAudio.py:75
+msgid "Number of tracks:"
+msgstr "Bilangan trek:"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:269
+msgid "Orange"
+msgstr "Jingga"
+
+#: resizeImage.py:115
+msgid "Output Filename Pattern:"
+msgstr "Corak Nama Fail Output:"
+
+#: Trim.py:205
+#: merge.py:76
+msgid "Output Filename:"
+msgstr "Nama Fail Output:"
+
+#: convertAudio.py:83
+#: convertVideo.py:174
+msgid "Output Format:"
+msgstr "Format Output:"
+
+#: resizeImage.py:231
+msgid "Output Information"
+msgstr "Maklumat Output"
+
+#: resizeImage.py:233
+msgid "Output Name"
+msgstr "Nama Output"
+
+#: Trim.py:71
+msgid "Output Type"
+msgstr "Jenis Output"
+
+#: resizeImage.py:124
+msgid "Output folder:"
+msgstr "Folder output:"
+
+#: convertAudio.py:222
+#: convertAudio.py:299
+#: convertMP3toMP4.py:173
+#: convertMP3toMP4.py:297
+#: merge.py:235
+#: merge.py:274
+msgid "Pause"
+msgstr "Jeda"
+
+#: convertAudio.py:228
+#: convertMP3toMP4.py:179
+#: merge.py:241
+msgid "Paused."
+msgstr "Dijeda."
+
+#: convertMP3toMP4.py:47
+msgid "Photo List"
+msgstr "Senarai Foto"
+
+#: merge.py:251
+msgid "Please enter an output filename."
+msgstr "Sila masukkan nama fail output."
+
+#: splitAudio.py:321
+msgid "Please fill in all time entries"
+msgstr "Sila isi semua entri masa"
+
+#: __init__.py:341
+msgid "Please select an MP3 file first."
+msgstr "Sila pilih fail MP3 terlebih dahulu."
+
+#: __init__.py:356
+msgid "Please select an audio file first"
+msgstr "Sila pilih fail audio terlebih dahulu"
+
+#: __init__.py:266
+msgid "Please select an audio or video file first"
+msgstr "Sila pilih fail audio atau video terlebih dahulu"
+
+#: __init__.py:281
+msgid "Please select at least 2 MP3 files first."
+msgstr "Sila pilih sekurang-kurangnya 2 fail MP3 terlebih dahulu."
+
+#: merge.py:247
+msgid "Please select at least 2 files"
+msgstr "Sila pilih sekurang-kurangnya 2 fail"
+
+#: convertMP3toMP4.py:189
+msgid "Please select at least one photo or choose a background color."
+msgstr "Sila pilih sekurang-kurangnya satu foto atau pilih warna latar belakang."
+
+#: __init__.py:296
+msgid "Please select audio or video files first."
+msgstr "Sila pilih fail audio atau video terlebih dahulu."
+
+#: __init__.py:326
+#: __init__.py:371
+msgid "Please select image files first."
+msgstr "Sila pilih fail imej terlebih dahulu."
+
+#: __init__.py:311
+#: __init__.py:383
+msgid "Please select video files first."
+msgstr "Sila pilih fail video terlebih dahulu."
+
+#: Trim.py:215
+msgid "Preview"
+msgstr "Pratonton"
+
+#: Trim.py:523
+msgid "Preview failed: {}"
+msgstr "Pratonton gagal: {}"
+
+#: Trim.py:520
+msgid "Preview file was not created or is too small"
+msgstr "Fail pratonton tidak dicipta atau terlalu kecil"
+
+#: Trim.py:525
+msgid "Preview process failed: {}"
+msgstr "Proses pratonton gagal: {}"
+
+#: resizeImage.py:789
+msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
+msgstr "Diproses: {} - Saiz baru: {}, Dimensi: {} x {}"
+
+#: splitAudio.py:421
+msgid "Processing track {} of {}"
+msgstr "Memproses trek {} daripada {}"
+
+#: resizeImage.py:713
+msgid "Processing..."
+msgstr "Memproses..."
+
+#: resizeImage.py:709
+msgid "Processing: {}"
+msgstr "Memproses: {}"
+
+#: convertVideo.py:503
+msgid "Progress: {}%"
+msgstr "Kemajuan: {}%"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:270
+msgid "Purple"
+msgstr "Ungu"
+
+#: resizeImage.py:208
+msgid "Quality:"
+msgstr "Kualiti:"
+
+#: merge.py:111
+msgid "Re-encode with quality (slower)"
+msgstr "Kod semula dengan kualiti (lebih perlahan)"
+
+#: resizeImage.py:256
+#: resizeImage.py:461
+msgid "Ready"
+msgstr "Sedia"
+
+#: __init__.py:173
+#: record.py:271
+msgid "Record Settings"
+msgstr "Tetapan Rakaman"
+
+#: __init__.py:441
+msgid "Record Settings..."
+msgstr "Tetapan Rakaman..."
+
+#: __init__.py:405
+msgid "Record settings saved"
+msgstr "Tetapan rakaman disimpan"
+
+#: record.py:317
+msgid "Recording &Mode:"
+msgstr "&Mod Rakaman:"
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:262
+msgid "Red"
+msgstr "Merah"
+
+#: convertMP3toMP4.py:56
+msgid "Remove Photo"
+msgstr "Buang Foto"
+
+#: __init__.py:170
+#: resizeImage.py:22
+msgid "Resize Image"
+msgstr "Ubah Saiz Imej"
+
+#: resizeImage.py:35
+#: resizeImage.py:330
+msgid "Resize Image: {} files"
+msgstr "Ubah Saiz Imej: {} fail"
+
+#: resizeImage.py:136
+msgid "Resize Settings"
+msgstr "Tetapan Saiz"
+
+#: convertVideo.py:162
+msgid "Resolution: ..."
+msgstr "Resolusi: ..."
+
+#: convertVideo.py:278
+msgid "Resolution: unknown"
+msgstr "Resolusi: tidak diketahui"
+
+#: convertVideo.py:278
+msgid "Resolution: {}x{}"
+msgstr "Resolusi: {}x{}"
+
+#: convertAudio.py:227
+#: convertMP3toMP4.py:178
+#: merge.py:240
+msgid "Resume"
+msgstr "Sambung"
+
+#: convertAudio.py:223
+#: convertMP3toMP4.py:174
+#: merge.py:236
+msgid "Resuming..."
+msgstr "Menyambung..."
+
+#: resizeImage.py:195
+msgid "Right (pixels):"
+msgstr "Kanan (piksel):"
+
+#: Trim.py:164
+#: convertAudio.py:102
+#: convertVideo.py:201
+msgid "Sample Rate:"
+msgstr "Kadar Sampel:"
+
+#: record.py:386
+msgid "Select Destination Folder"
+msgstr "Pilih Folder Destinasi"
+
+#: convertMP3toMP4.py:122
+msgid "Select photos"
+msgstr "Pilih foto"
+
+#: Trim.py:65
+#: splitAudio.py:63
+msgid "Selected File"
+msgstr "Fail Terpilih"
+
+#: convertMP3toMP4.py:39
+msgid "Selected MP3 File"
+msgstr "Fail MP3 Terpilih"
+
+#: resizeImage.py:100
+msgid "Selected files:"
+msgstr "Fail terpilih:"
+
+#: convertVideo.py:164
+msgid "Size: ..."
+msgstr "Saiz: ..."
+
+#: convertVideo.py:280
+msgid "Size: {}"
+msgstr "Saiz: {}"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:690
+msgid "Small"
+msgstr "Kecil"
+
+#: splitAudio.py:109
+msgid "Split"
+msgstr "Bahagi"
+
+#: __init__.py:169
+msgid "Split Audio"
+msgstr "Bahagi Audio"
+
+#: splitAudio.py:21
+msgid "Split Audio File"
+msgstr "Bahagi Fail Audio"
+
+#: splitAudio.py:32
+msgid "Split Audio: {}"
+msgstr "Bahagi Audio: {}"
+
+#: splitAudio.py:71
+msgid "Split Settings"
+msgstr "Tetapan Bahagi"
+
+#: splitAudio.py:435
+msgid "Split complete! {} tracks created"
+msgstr "Bahagi selesai! {} trek dicipta"
+
+#: splitAudio.py:446
+msgid "Split failed!"
+msgstr "Bahagi gagal!"
+
+#: resizeImage.py:261
+msgid "Start"
+msgstr "Mula"
+
+#: Trim.py:132
+msgid "Start Time (100% volume):"
+msgstr "Masa Mula (100% volum):"
+
+#: Trim.py:80
+#: Trim.py:117
+msgid "Start Time:"
+msgstr "Masa Mula:"
+
+#: __init__.py:413
+msgid "Start recording; press again to pause; press again to continue"
+msgstr "Mula rakaman; tekan lagi untuk jeda; tekan lagi untuk sambung"
+
+#: Trim.py:424
+#: Trim.py:550
+msgid "Start time must be less than end time"
+msgstr "Masa mula mesti kurang daripada masa tamat"
+
+#: convertAudio.py:301
+#: convertMP3toMP4.py:299
+msgid "Starting conversion..."
+msgstr "Memulakan penukaran..."
+
+#: merge.py:276
+msgid "Starting merge..."
+msgstr "Memulakan penggabungan..."
+
+#: splitAudio.py:349
+msgid "Starting split operation..."
+msgstr "Memulakan operasi bahagi..."
+
+#: Trim.py:631
+msgid "Starting trim operation..."
+msgstr "Memulakan operasi kerat..."
+
+#: resizeImage.py:236
+msgid "Status"
+msgstr "Status"
+
+#: __init__.py:428
+msgid "Stop recording"
+msgstr "Henti rakaman"
+
+#: record.py:311
+msgid "System Only"
+msgstr "Sistem Sahaja"
+
+#: record.py:309
+msgid "System and Microphone (Merged)"
+msgstr "Sistem dan Mikrofon (Digabung)"
+
+#: record.py:310
+msgid "System and Microphone (Separate Files)"
+msgstr "Sistem dan Mikrofon (Fail Berasingan)"
+
+#: convertVideo.py:181
+msgid "Target Size:"
+msgstr "Saiz Sasaran:"
+
+#: resizeImage.py:174
+msgid "Top (pixels):"
+msgstr "Atas (piksel):"
+
+#: resizeImage.py:249
+msgid "Total progress:"
+msgstr "Jumlah kemajuan:"
+
+#: splitAudio.py:338
+msgid "Track end times must be in increasing order"
+msgstr "Masa tamat trek mesti dalam tertib menaik"
+
+#: splitAudio.py:89
+msgid "Tracks"
+msgstr "Trek"
+
+#: Trim.py:227
+msgid "Trim"
+msgstr "Kerat"
+
+#: Trim.py:22
+#: __init__.py:168
+msgid "Trim Audio/Video File"
+msgstr "Kerat Fail Audio/Video"
+
+#: Trim.py:33
+msgid "Trim Audio/Video: {}"
+msgstr "Kerat Audio/Video: {}"
+
+#: Trim.py:753
+msgid "Trim complete!"
+msgstr "Kerat selesai!"
+
+#: Trim.py:779
+#: Trim.py:785
+msgid "Trim failed!"
+msgstr "Kerat gagal!"
+
+#: Trim.py:754
+msgid "Trimmed file saved as {}"
+msgstr "Fail yang dikerat disimpan sebagai {}"
+
+#: Trim.py:780
+#: Trim.py:786
+msgid "Trimming failed: {}"
+msgstr "Pemotongan gagal: {}"
+
+#: resizeImage.py:742
+msgid "Unknown"
+msgstr "Tidak diketahui"
+
+#: Trim.py:522
+#: Trim.py:777
+msgid "Unknown error"
+msgstr "Ralat tidak diketahui"
+
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:687
+msgid "Very Good"
+msgstr "Sangat Baik"
+
+#: Trim.py:73
+msgid "Video"
+msgstr "Video"
+
+#: Trim.py:152
+msgid "Video Format"
+msgstr "Format Video"
+
+#: __init__.py:172
+msgid "Video Info"
+msgstr "Info Video"
+
+#: convertAudio.py:111
+msgid "Volume:"
+msgstr "Volum:"
+
+#: resizeImage.py:611
+msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
+msgstr "Amaran: Dimensi potongan tidak sah untuk {}. Pemotongan dinyahaktifkan untuk imej ini."
+
+#: convertMP3toMP4.py:77
+#: convertMP3toMP4.py:261
+msgid "White"
+msgstr "Putih"
+
+#: resizeImage.py:142
+msgid "Width (pixels):"
+msgstr "Lebar (piksel):"
+
+#: convertMP3toMP4.py:78
+#: convertMP3toMP4.py:265
+msgid "Yellow"
+msgstr "Kuning"
+
+#: Trim.py:454
+#: Trim.py:626
+#: convertAudio.py:272
+#: convertMP3toMP4.py:198
+#: convertVideo.py:382
+#: merge.py:265
+#: resizeImage.py:655
+#: splitAudio.py:359
+msgid "ffmpeg.exe not found"
+msgstr "ffmpeg.exe tidak dijumpai"
+
+#: __init__.py:68
+msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
+msgstr "ffmpeg.exe atau ffprobe.exe tidak dijumpai dalam folder tools"
+
+#: Trim.py:317
+#: splitAudio.py:193
+msgid "ffprobe.exe not found"
+msgstr "ffprobe.exe tidak dijumpai"
+
+#: Trim.py:394
+msgid "invalid"
+msgstr "tidak sah"
+
+#: Trim.py:373
+msgid "invalid (negative)"
+msgstr "tidak sah (negatif)"
+
+#: __init__.py:424
+#: record.py:214
+msgid "paused"
+msgstr "dijeda"
+
+#: __init__.py:421
+msgid "resume"
+msgstr "sambung"
+
+#: record.py:223
+msgid "resumed"
+msgstr "disambung semula"
+
+#: __init__.py:418
+msgid "start"
+msgstr "mula"
+
+#: __init__.py:436
+msgid "stopped No file saved"
+msgstr "dihentikan Tiada fail disimpan"
+
+#: __init__.py:434
+msgid "stopped Saved to: {}"
+msgstr "dihentikan Disimpan di: {}"
+
+#: Trim.py:367
+#: convertVideo.py:277
+msgid "unknown"
+msgstr "tidak diketahui"
+
+#: image.py:191
+#: video.py:156
+msgid "{filename}: {result}"
+msgstr "{filename}: {result}"
+
+#: video.py:122
+msgid "{width} by {height} pixels, size {size}"
+msgstr "{width} kali {height} piksel, saiz {size}"
+
+#: image.py:149
+msgid "{width} by {height} pixels, {dpi} DPI"
+msgstr "{width} kali {height} piksel, {dpi} DPI"
+
+#: video.py:126
+msgid "{width} by {height} pixels, {fps} fps, size {size}"
+msgstr "{width} kali {height} piksel, {fps} fps, saiz {size}"
+
+#: resizeImage.py:336
+msgid "{} files removed"
+msgstr "{} fail dibuang"
+
+#: merge.py:440
+msgid "{} percent"
+msgstr "{} peratus"
+
+#: convertVideo.py:499
+msgid "{}%"
+msgstr "{}%"
