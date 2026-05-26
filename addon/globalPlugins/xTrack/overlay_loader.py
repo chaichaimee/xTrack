@@ -1,6 +1,4 @@
 # overlay_loader.py
-# Copyright (C) 2026 Chai Chaimee
-# Licensed under GNU General Public License.
 
 import os
 import sys
@@ -19,76 +17,62 @@ def _add_dll_directory(path):
 		except (OSError, FileNotFoundError):
 			pass
 
-def _log(msg):
+def _log_warning(msg):
 	try:
 		from logHandler import log
-		log.info(f"[overlay_loader] {msg}")
+		log.warning(f"[overlay_loader] {msg}")
 	except ImportError:
 		import builtins
-		builtins.print(f"[overlay_loader] {msg}")
+		builtins.print(f"[overlay_loader] WARNING: {msg}")
 
-def _log_error(msg):
+def _remove_module_from_cache(module_name):
 	try:
-		from logHandler import log
-		log.error(f"[overlay_loader] {msg}")
-	except ImportError:
-		import builtins
-		builtins.print(f"[overlay_loader] ERROR: {msg}")
+		if module_name in sys.modules:
+			del sys.modules[module_name]
+	except Exception:
+		pass
 
 def overlayBinaries():
 	base_dir = os.path.dirname(os.path.abspath(__file__))
 	tools_dir = os.path.join(base_dir, "tools")
+
+	if not os.path.isdir(tools_dir):
+		_log_warning(f"Tools directory not found at {tools_dir}, skipping binary load")
+		return
+
 	arch = _get_architecture_subdir()
 	src_arch_dir = os.path.join(tools_dir, arch)
+	src_pkg_dir = os.path.join(src_arch_dir, "pyaudiowpatch")
+	dst_pkg_dir = os.path.join(tools_dir, "pyaudiowpatch")
 
-	_log(f"Architecture: {arch}")
-	_log(f"Tools dir: {tools_dir}")
+	if not os.path.isdir(src_pkg_dir):
+		_log_warning(f"Binary package not found for {arch} at {src_pkg_dir}")
+		if os.path.exists(dst_pkg_dir):
+			shutil.rmtree(dst_pkg_dir, ignore_errors=True)
+		return
 
-	pkg_name = "pyaudiowpatch"
-	src_pkg = os.path.join(src_arch_dir, pkg_name)
-	dst_pkg = os.path.join(tools_dir, pkg_name)
+	if os.path.exists(dst_pkg_dir):
+		shutil.rmtree(dst_pkg_dir, ignore_errors=True)
 
-	old_root_pkg = os.path.join(base_dir, pkg_name)
-	if os.path.exists(old_root_pkg):
-		_log(f"Removing old root package: {old_root_pkg}")
-		shutil.rmtree(old_root_pkg, ignore_errors=True)
-
-	if os.path.isdir(src_pkg):
-		if os.path.exists(dst_pkg):
-			_log(f"Removing existing package: {dst_pkg}")
-			shutil.rmtree(dst_pkg, ignore_errors=True)
-		_log(f"Copying {src_pkg} -> {dst_pkg}")
-		shutil.copytree(src_pkg, dst_pkg)
-	else:
-		_log_error(f"Source package not found: {src_pkg}")
-
-	for folder in ["x86", "x64"]:
-		folder_path = os.path.join(tools_dir, folder)
-		if os.path.exists(folder_path):
-			_log(f"Removing architecture folder: {folder_path}")
-			shutil.rmtree(folder_path, ignore_errors=True)
+	shutil.copytree(src_pkg_dir, dst_pkg_dir)
 
 	if tools_dir not in sys.path:
 		sys.path.insert(0, tools_dir)
-		_log(f"Added {tools_dir} to sys.path")
 
-	_add_dll_directory(tools_dir)
-	_log(f"Added {tools_dir} to DLL search path")
+	if os.path.isdir(dst_pkg_dir):
+		if dst_pkg_dir not in sys.path:
+			sys.path.insert(0, dst_pkg_dir)
+		_add_dll_directory(dst_pkg_dir)
 
-	pkg_path = os.path.join(tools_dir, pkg_name)
-	if os.path.isdir(pkg_path):
-		if pkg_path not in sys.path:
-			sys.path.insert(0, pkg_path)
-			_log(f"Added {pkg_path} to sys.path")
-		_add_dll_directory(pkg_path)
-		_log(f"Added {pkg_path} to DLL search path")
+		for module_name in ['pyaudiowpatch', '_portaudiowpatch']:
+			_remove_module_from_cache(module_name)
 
 		try:
 			import pyaudiowpatch
-			_log("pyaudiowpatch imported successfully")
+			_log_warning(f"Successfully loaded pyaudiowpatch for {arch}")
 		except ImportError as e:
-			_log_error(f"Failed to import pyaudiowpatch: {e}")
-
-	_log("overlayBinaries completed.")
+			_log_warning(f"pyaudiowpatch import failed: {e}")
+		except Exception as e:
+			_log_warning(f"Unexpected error during import: {e}")
 
 overlayBinaries()
