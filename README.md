@@ -1,81 +1,187 @@
-<img src="https://www.nvaccess.org/files/nvda/documentation/userGuide/images/nvda.ico" alt="NVDA Logo" width="120" align="center" style="display: block; margin: 0 auto 20px;">
+<p align="center">
+  <img src="https://www.nvaccess.org/files/nvda/documentation/userGuide/images/nvda.ico" alt="NVDA Logo" width="120">
+</p>
 
 # xTrack
 
-### **Efficient Multimedia Conversion & Editing Toolkit**
+<p align="center">
+  <b>Author:</b> Chai Chaimee &amp; Malee Yamazaki<br>
+  <b>URL:</b> <a href="https://github.com/chaichaimee/xTrack">https://github.com/chaichaimee/xTrack</a>
+</p>
 
-xTrack is a versatile NVDA add-on designed to simplify multimedia tasks directly from your file explorer. It provides a streamlined workflow for converting, merging, and editing audio, video, and images without the need for complex external software.
+<br>
 
-**author:** chai chaimee & malee yamazaki  
-**url:** https://github.com/chaichaimee/xTrack
+xTrack is an NVDA add-on that lets you quickly save and access frequently used files and folders, while providing a versatile, highly accessible media processing suite directly within Windows File Explorer. Effortlessly convert, edit, gain-adjust, mix, and record audio, video, and images with full screen reader compatibility.
 
----
-
-## What's New
-
-• **Video Info:** Quickly retrieve technical metadata of Video files.  
-• **Image Info:** Quickly retrieve technical metadata of image files.  
-• **Resize Image:** Added a new Crop function for precise image framing.  
-• **Split Audio:** New tool to divide audio files at specific time intervals.  
+<br>
 
 ---
 
-## Hotkeys
+<br><br>
 
-* **NVDA+X:** Opens the context menu with the following options:
+## How to Operate xTrack
+
+To use xTrack features, simply navigate inside Windows File Explorer, select your target file(s) or folder(s), and press **ALT+Windows+X** to open the xTrack Context Menu. Choose your desired function using the arrow keys and press **Enter**.
+
+<br>
+
+* **ALT+Windows+X:** Opens the xTrack context menu on selected files/folders in File Explorer, containing:
   * Convert Audio
   * Convert Video
   * Convert MP3 to MP4
+  * MP3 Gain
+  * MP3 WAV Mixdown
   * Merge MP3
   * Trim Audio/Video File
   * Split Audio
   * Resize Image
   * Image Info
   * Video Info
-  * Record Setting
+  * Record Settings
+  <br>
+* **CTRL+Shift+Space Bar:** Start background audio recording; press again to pause or resume.
+* **CTRL+Windows+Space Bar:** Stop recording and automatically save the output file.
 
-* **CTRL+Shift+Space Bar:** Record and if pressed again it will be Pause
-* **CTRL+Windows+Space Bar:** Stop Recording
+---
+
+<br><br>
+
+## Features
+
+* **1. Audio Conversion Engine:**
+
+  Batch convert audio and video files into popular audio formats including MP3, WAV, FLAC, M4A, OGG, OPUS, M4R, and ALAC. Allows full adjustment of bitrates, sample rates, channel layouts, and output volume levels.
+
+  <br>
+
+* **2. Video Transcoding Engine:**
+
+  Process video files into MP4, MKV, MOV, AVI, or WebM containers. Provides complete control over video codecs, frame rates, audio sample rates, and channel configurations.
+
+  <br>
+
+* **3. MP3 to MP4 Visualizer:**
+
+  Transform audio files into video slideshows ready for uploading to video platforms. Uses a single static image, a folder of multiple rotating images, or custom solid background colors.
+
+  <br>
+
+* **4. MP3 Gain Volume Normalization:**
+
+  Analyze peak amplitude and normalize audio levels across single tracks or entire folder trees without re-encoding or sacrificing original quality. Full undo history is retained for safety.
+
+  <br>
+
+* **5. MP3 WAV Mixdown Studio (Vocal Ducking & Presets):**
+
+  Seamlessly blend speech recordings with background music using dedicated production presets or custom controls. The mixdown module is divided into two operational modes:
+
+  * **Built-in Ready-to-Use Presets:**
+    * **Podcast Standard:** Applies a -12 dB background music attenuation when voice is detected, with smooth 150ms attack and 500ms release curves.
+    * **Voiceover / Audiobook:** Aggressive -18 dB music ducking with a rapid 50ms attack time to keep speech crisp and legible over continuous music.
+    * **Background Chill:** Subtle -6 dB music ducking for gentle ambient leveling without jarring volume jumps.
+    * **Radio Promo / Commercial:** Fast 30ms attack time, -20 dB deep ducking, and integrated peak output limiting for high-impact promotional spots.
+
+    <br>
+
+  * **Custom Mixdown Configuration:**
+    * **Speech & Music Selection:** Select specific primary speech files and background tracks.
+    * **Music Delay Offset:** Set an exact start delay for the background music in seconds or milliseconds.
+    * **Ducking Level (dB):** Custom adjustment of how far background music drops during vocal detection.
+    * **Sensitivity Threshold:** Fine-tune input audio sensitivity required to activate auto-ducking.
+    * **Attack & Release Speeds:** Control how quickly background audio drops when speech begins and recovers during pauses.
+    * **Master Gain & Balance:** Set output levels and L/R stereo panning independently for voice and music.
+
+  <br>
+
+* **6. Audio Merging & Cross-fading:**
+
+  Merge multiple MP3 files sequentially into a single track, or apply smooth cross-fade overlaps ranging from 1 to 10 seconds between songs.
+
+  <br>
+
+* **7. Lossless Audio & Video Trimming:**
+
+  Cut audio and video files by entering precise start and end timestamps (HH:MM:SS.ms). Features non-destructive stream-copy trimming for videos and audio fade-in/out envelopes.
+
+  <br>
+
+* **8. Audio Splitting:**
+
+  Divide long audio files or audiobooks into smaller, manageable clips by specifying segment durations or total split counts.
+
+  <br>
+
+* **9. Image Processing & Resizing:**
+
+  Resize, crop, and convert image dimensions individually or in batch across formats like JPG, PNG, WebP, and AVIF while maintaining aspect ratios.
+
+  <br>
+
+* **10. File Metadata Inspection (Image & Video Info):**
+
+  Instantly retrieve and speak technical metadata via an accessible popup dialog, including resolution, color space, duration, codecs, frame rates, and bitrates.
+
+  <br>
+
+* **11. Multi-Source Background Audio Recorder:**
+
+  Capture system audio output, external microphone input, or both simultaneously. Includes configurable noise gating, high-pass rumble filters, and real-time voice-over-system auto-ducking.
+
+  <br>
+
+* **12. Wide Format & Codec Compatibility:**
+
+  Full support across mobile and professional desktop formats:
+
+  * **Audio Formats:** MP3, WAV, OGG, FLAC, M4A, AAC, AMR, CAF, OPUS, 3GA, WMA, M4R, ALAC, AIFF, AIF, PCM.
+  * **Video Formats:** MP4, AVI, MKV, MOV, WMV, FLV, WebM, M4V, 3GP, 3G2, TS, MTS, M2TS, M3U8, OGV, H.264, HEVC, VOB.
+  * **Image Formats:** JPG, JPEG, PNG, BMP, TIFF, TIF, WebP, AVIF, GIF, ICO, SVG, HEIC, HEIF, JXL, DNG, RAW, APNG.
 
 ---
 
-## Features & Usage
+<br><br>
 
-### • Convert Audio
-**Experience seamless audio extraction and conversion with professional-grade output.** Select one or more video or audio files in your file explorer, then press **NVDA+X** and choose **Convert Audio**. The configuration window will automatically calculate the file duration. You can customize the audio quality before starting. The system uses a queuing process to handle files one by one, ensuring smooth performance without overloading your CPU or RAM.
+## Benefits
 
-### • Convert MP3 to MP4
-**Easily transform your audio tracks into ready-to-share video content.** Select an MP3 file, press **NVDA+X**, and select **Convert MP3 to MP4**. In the settings window, you can choose one or more images to create a slideshow for your audio. You can set a loop duration for each image or, if you prefer, choose a solid background color instead of images to generate the video file.
-
-### • Convert Video
-**Bridge the gap between formats with reliable and high-fidelity video transcoding.** Highlight the video file you wish to convert and press **NVDA+X** to access the menu. Selecting **Convert Video** will open a settings window where you can choose your desired output format and quality settings to match your specific needs.
-
-### • Merge MP3
-**Combine your audio projects with smooth transitions and unified sound quality.** Select multiple audio files or an entire folder, press **NVDA+X**, and choose **Merge Audio Files**. The interface allows you to reorder the tracks, adjust audio quality, and select between **Normal Merge** (sequential joining) or **Cross-fade Merge** (smooth transitions between tracks).
-
-### • Record
-**Capture every important moment with a powerful, accessible background recorder.** Start by configuring your preferred format in **Record Settings** via the **NVDA+X** menu. Once set, you can use **CTRL+Shift+Space Bar** to start or pause recording from anywhere in Windows, and **CTRL+Windows+Space Bar** to stop and save your recording automatically.
-
-### • Split Audio
-**Achieve surgical precision when dividing long recordings into organized segments.** Select the audio file you want to divide, press **NVDA+X**, and choose **Split Audio**. In the configuration window, define the number of split points and specify the exact end time for each segment you want to extract as a separate file.
-
-### • Trim Audio/Video File
-**Quickly remove unwanted sections and keep only the parts that matter.** Select your target file, press **NVDA+X**, and choose **Trim Audio/Video File**. The tool calculates the total length automatically; you simply enter the start and end points. You can output to MP3 or WAV, adjust quality, and use the **Preview** button to listen to the start point before processing.
-
-### • Resize Image
-**Tailor your visuals to perfection with integrated resizing and cropping tools.** Select one or more image files, press **NVDA+X**, and select **Resize Image**. This utility allows you to change image dimensions, apply cropping, and convert between different image formats in a single operation.
-
-### • Image Info
-**Access critical image metadata instantly with a single shortcut.** Select an image and use the **NVDA+X** menu to choose **Image Info**. NVDA will immediately announce the dimensions and resolution of the selected image, providing quick access to file specifications.
+* **Accelerated Editing Workflow:** Complete complex audio mixes, conversions, and image edits directly inside File Explorer without opening bulky software.
+* **Reduced Keystroke Fatigue:** Seamless NVDA screen reader integration removes the need to navigate complex, inaccessible graphical control panels.
+* **Lossless & Safe Editing:** Non-destructive video copy modes and MP3 Gain undo histories protect original source media from permanent damage.
+* **Studio-Grade Output Quality:** Integrated DSP processing (auto-ducking, limiters, noise gates) yields professional sound for podcasts and voiceovers.
+* **Universal Device Support:** Easily handle locked smartphone audio memos (iOS CAF/ALAC, Android AMR/3GA) by converting them into standard playback formats.
 
 ---
+
+<br><br>
+
+## Why Use It
+
+Managing multimedia tasks often forces screen reader users to jump between multiple complex, inaccessible, or slow desktop applications. xTrack solves this core problem by placing a powerful, streamlined production suite directly inside your native Windows Context Menu. Whether you need to normalize folder audio, overlay voice over music with precision ducking, losslessly trim video files, or record system sound, xTrack offers an efficient, reliable, and screen-reader-friendly environment built specifically for screen reader users.
+
+---
+
+<br><br>
+
+## Marketing
+
+Transform how you interact with media on Windows. Upgrade your daily productivity with xTrack today and experience total control over audio, video, and image processing through quick, accessible shortcuts designed specifically for NVDA users!
+
+<br><br>
 
 ## Support Me
+
 If this tool has made your life easier, consider fueling the next update with a small donation.
+
+<br>
 
 [![Support me](https://img.shields.io/badge/Donate-Support%20Me-blue?style=for-the-badge&logo=stripe)](https://buy.stripe.com/dRm9AU1xQ3Ds22N6VK1VK01)
 
-Your support means the world. Let's build something great together
+<br>
 
----
-&copy; 2026 Chai Chaimee NVDA Add-on Released under GNU
+Your support means the world. Let's build something great together.
+
+<br>
+
+<p align="center">
+  <sub>&copy; 2026 Chai Chaimee. NVDA Add-on Released under GNU General Public License.</sub>
+</p>
