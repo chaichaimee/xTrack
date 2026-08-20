@@ -18,17 +18,18 @@ addonHandler.initTranslation()
 
 class TrimAudioVideoDialog(wx.Dialog):
 	"""Dialog for trimming audio and video files using FFmpeg."""
-	def __init__(self, parent, selected_files, tools_path):
+	def __init__(self, parent, selected_files, libs_path):
 		super().__init__(parent, title=_("Trim Audio/Video File"))
 		if not selected_files:
 			raise ValueError("No file was selected.")
 		self.selected_file = selected_files[0]
-		self.tools_path = tools_path
+		self.libs_path = libs_path
 		self.file_duration = ""
 		self.file_duration_seconds = 0
 		self.output_path = os.path.dirname(self.selected_file)
 		self.config_path = get_config_path()
 		self.temp_preview_file = ""
+		self.has_video_stream_cache = None
 		self.init_ui()
 		self.SetTitle(_("Trim Audio/Video: {}").format(os.path.basename(self.selected_file)))
 		
@@ -312,7 +313,7 @@ class TrimAudioVideoDialog(wx.Dialog):
 		event.Skip()
 		
 	def get_file_duration(self):
-		ffprobe_path = os.path.join(self.tools_path, "ffprobe.exe")
+		ffprobe_path = os.path.join(self.libs_path, "ffprobe.exe")
 		if not os.path.exists(ffprobe_path):
 			wx.CallAfter(wx.MessageBox, _("ffprobe.exe not found"), _("Error"), wx.OK | wx.ICON_ERROR)
 			return
@@ -449,7 +450,11 @@ class TrimAudioVideoDialog(wx.Dialog):
 			wx.MessageBox(_("Invalid time values"), _("Error"), wx.OK | wx.ICON_ERROR)
 			return
 			
-		ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
+		if self.video_radio.GetValue() and not self.has_video_stream():
+			wx.MessageBox(_("The selected file has no video stream and cannot be previewed as video."), _("Error"), wx.OK | wx.ICON_ERROR)
+			return
+			
+		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
 		if not os.path.exists(ffmpeg_path):
 			wx.MessageBox(_("ffmpeg.exe not found"), _("Error"), wx.OK | wx.ICON_ERROR)
 			return
@@ -492,9 +497,13 @@ class TrimAudioVideoDialog(wx.Dialog):
 				"-ar", "44100",
 			])
 		else:
-			# Video preview - use simple copy for faster preview
+			# Video preview - use simple copy for faster preview. When the
+			# trim start does not land on a keyframe, copy mode can leave the
+			# first frame frozen or audio out of sync, so timestamps are
+			# renormalized to zero.
 			cmd.extend([
 				"-c", "copy",
+				"-avoid_negative_ts", "make_zero",
 			])
 		
 		cmd.append(self.temp_preview_file)
@@ -536,6 +545,11 @@ class TrimAudioVideoDialog(wx.Dialog):
 		log.info(f"Fade enabled: {self.fade_checkbox.GetValue()}")
 		
 		self.cleanup_temp_file()
+		
+		if self.video_radio.GetValue() and not self.has_video_stream():
+			wx.MessageBox(_("The selected file has no video stream and cannot be trimmed as video. Choose Audio output instead."), _("Error"), wx.OK | wx.ICON_ERROR)
+			return
+			
 		start_time = self.start_time_ctrl.GetValue() or "0"
 		end_time = self.end_time_ctrl.GetValue() or self.file_duration
 		
@@ -621,7 +635,7 @@ class TrimAudioVideoDialog(wx.Dialog):
 			output_file_name = os.path.splitext(os.path.basename(self.selected_file))[0] + "_trimmed"
 		output_file = self.get_unique_filename(output_file_name, output_format)
 		output_path = os.path.join(self.output_path, output_file)
-		ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
+		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
 		if not os.path.exists(ffmpeg_path):
 			wx.MessageBox(_("ffmpeg.exe not found"), _("Error"), wx.OK | wx.ICON_ERROR)
 			return
@@ -675,7 +689,7 @@ class TrimAudioVideoDialog(wx.Dialog):
 			# Always detect source audio codec first
 			source_audio_codec = None
 			try:
-				ffprobe_path = os.path.join(self.tools_path, "ffprobe.exe")
+				ffprobe_path = os.path.join(self.libs_path, "ffprobe.exe")
 				probe_cmd = [
 					ffprobe_path,
 					"-v", "error",
@@ -702,6 +716,10 @@ class TrimAudioVideoDialog(wx.Dialog):
 
 			# FIXED: Use explicit stream mapping with proper codec selection
 			cmd.extend(["-c:v", "copy"])  # Always copy video stream
+			# When the trim start does not land on a keyframe, copy mode can
+			# leave the first frame frozen, show a black screen, or drift
+			# audio out of sync, so timestamps are renormalized to zero.
+			cmd.extend(["-avoid_negative_ts", "make_zero"])
 			
 			# Handle audio based on source codec and output format
 			if output_format == "mp4":
@@ -794,6 +812,37 @@ class TrimAudioVideoDialog(wx.Dialog):
 		pcm_codecs = ['pcm_s16le', 'pcm_s24le', 'pcm_s32le', 'pcm_f32le', 'pcm_f64le']
 		return codec_name in pcm_codecs
 		
+	def has_video_stream(self):
+		"""Probe the selected file for a video stream, so pure-audio files cannot be sent through the video output path. Result is cached since the file never changes for the lifetime of this dialog."""
+		if self.has_video_stream_cache is not None:
+			return self.has_video_stream_cache
+		ffprobe_path = os.path.join(self.libs_path, "ffprobe.exe")
+		if not os.path.exists(ffprobe_path):
+			self.has_video_stream_cache = False
+			return False
+		cmd = [
+			ffprobe_path,
+			"-v", "error",
+			"-select_streams", "v:0",
+			"-show_entries", "stream=codec_type",
+			"-of", "default=noprint_wrappers=1:nokey=1",
+			self.selected_file,
+		]
+		try:
+			result = subprocess.run(
+				cmd,
+				stdout=subprocess.PIPE,
+				stderr=subprocess.PIPE,
+				creationflags=subprocess.CREATE_NO_WINDOW,
+				encoding='utf-8',
+				errors='ignore'
+			)
+			self.has_video_stream_cache = result.returncode == 0 and result.stdout.strip() == "video"
+		except Exception as e:
+			log.error(f"Failed to probe for video stream: {str(e)}")
+			self.has_video_stream_cache = False
+		return self.has_video_stream_cache
+		
 	def on_cancel(self, event):
 		self.cleanup_temp_file()
 		self.EndModal(wx.ID_CANCEL)
@@ -842,3 +891,6 @@ class TrimAudioVideoDialog(wx.Dialog):
 			output_file = f"{base_name}_{counter}.{extension}"
 			counter += 1
 		return output_file
+
+
+

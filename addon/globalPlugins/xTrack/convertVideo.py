@@ -13,8 +13,8 @@ addonHandler.initTranslation()
 
 from .xTrackCore import load_config, save_config, get_config_path, get_unique_filename
 
-def get_video_info(tools_path, file_path):
-	ffprobe = os.path.join(tools_path, "ffprobe.exe")
+def get_video_info(libs_path, file_path):
+	ffprobe = os.path.join(libs_path, "ffprobe.exe")
 	if not os.path.exists(ffprobe):
 		return 0, 0, None, 0
 	cmd = [
@@ -95,10 +95,10 @@ def format_size(bytes):
 		return f"{bytes/(1024*1024*1024):.1f} GB"
 
 class ConvertVideoDialog(wx.Dialog):
-	def __init__(self, parent, selected_files, tools_path):
+	def __init__(self, parent, selected_files, libs_path):
 		super().__init__(parent, title=_("Convert Video"))
 		self.selected_files = selected_files
-		self.tools_path = tools_path
+		self.libs_path = libs_path
 		self.output_path = os.path.dirname(self.selected_files[0]) if self.selected_files else os.getcwd()
 		self.config_path = get_config_path()
 		self.ffmpeg_process = None
@@ -125,7 +125,7 @@ class ConvertVideoDialog(wx.Dialog):
 		wx.BeginBusyCursor()
 		try:
 			for path in self.selected_files:
-				w, h, fps, dur_sec = get_video_info(self.tools_path, path)
+				w, h, fps, dur_sec = get_video_info(self.libs_path, path)
 				size_bytes = os.path.getsize(path) if os.path.exists(path) else 0
 				size_str = format_size(size_bytes)
 				dur_str = format_duration(dur_sec)
@@ -377,7 +377,7 @@ class ConvertVideoDialog(wx.Dialog):
 		out_name = get_unique_filename(self.output_path, base, out_ext)
 		out_path = os.path.join(self.output_path, out_name)
 
-		ffmpeg = os.path.join(self.tools_path, "ffmpeg.exe")
+		ffmpeg = os.path.join(self.libs_path, "ffmpeg.exe")
 		if not os.path.exists(ffmpeg):
 			self.on_failure(_("ffmpeg.exe not found"), path)
 			return
@@ -547,3 +547,4 @@ class ConvertVideoDialog(wx.Dialog):
 
 	def on_close(self, event):
 		self.on_cancel(event)
+

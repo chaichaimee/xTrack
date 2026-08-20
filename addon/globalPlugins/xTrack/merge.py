@@ -16,10 +16,10 @@ import addonHandler
 addonHandler.initTranslation()
 
 class MergeAudioDialog(wx.Dialog):
-	def __init__(self, parent, selected_files, tools_path):
+	def __init__(self, parent, selected_files, libs_path):
 		super().__init__(parent, title=_("Merge MP3"))
 		self.selected_files = selected_files
-		self.tools_path = tools_path
+		self.libs_path = libs_path
 		self.output_path = os.path.dirname(selected_files[0]) if selected_files else os.getcwd()
 		self.ffmpeg_process = None
 		self.is_paused = False
@@ -35,7 +35,7 @@ class MergeAudioDialog(wx.Dialog):
 		"""Calculate total duration and load individual file durations."""
 		total = 0
 		for file in self.selected_files:
-			duration_sec, duration_str = get_file_duration(self.tools_path, file)
+			duration_sec, duration_str = get_file_duration(self.libs_path, file)
 			total += duration_sec
 			self.file_durations[file] = self.format_duration(duration_sec)
 		self.total_duration = total
@@ -260,7 +260,7 @@ class MergeAudioDialog(wx.Dialog):
 		# Get selected quality if re-encode
 		quality_kbps = self.quality_ctrl.GetStringSelection().split()[0] if self.reencode_radio.GetValue() else None
 		
-		ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
+		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
 		if not os.path.exists(ffmpeg_path):
 			ui.message(_("ffmpeg.exe not found"))
 			return
@@ -467,3 +467,5 @@ class MergeAudioDialog(wx.Dialog):
 			except Exception:
 				pass
 		self.EndModal(wx.ID_CANCEL)
+
+

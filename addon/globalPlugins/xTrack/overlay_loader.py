@@ -1,78 +1,115 @@
 # overlay_loader.py
+# Copyright (C) 2026 Chai Chaimee
+# Licensed under GNU General Public License. See COPYING.txt for details.
 
 import os
 import sys
-import shutil
 
-def _is_64bit_process():
-	return sys.maxsize > 2**32
 
-def _get_architecture_subdir():
-	return "x64" if _is_64bit_process() else "x86"
+def _isRunning64Bit():
+	return sys.maxsize > 2 ** 32
 
-def _add_dll_directory(path):
-	if hasattr(os, 'add_dll_directory'):
+
+def _getRuntimeArchDirName():
+	return "x64" if _isRunning64Bit() else "x86"
+
+
+def _addDllDirectorySafe(path):
+	if not os.path.isdir(path):
+		return
+	if hasattr(os, "add_dll_directory"):
 		try:
 			os.add_dll_directory(path)
 		except (OSError, FileNotFoundError):
 			pass
 
-def _log_warning(msg):
+
+def _addSysPathSafe(path):
+	if os.path.isdir(path) and path not in sys.path:
+		sys.path.insert(0, path)
+
+
+def _logWarning(message):
 	try:
 		from logHandler import log
-		log.warning(f"[overlay_loader] {msg}")
+		log.warning("[overlay_loader] %s" % message)
 	except ImportError:
 		import builtins
-		builtins.print(f"[overlay_loader] WARNING: {msg}")
+		builtins.print("[overlay_loader] WARNING: %s" % message)
 
-def _remove_module_from_cache(module_name):
-	try:
-		if module_name in sys.modules:
-			del sys.modules[module_name]
-	except Exception:
-		pass
 
 def overlayBinaries():
-	base_dir = os.path.dirname(os.path.abspath(__file__))
-	tools_dir = os.path.join(base_dir, "tools")
+	"""
+	Wires up sys.path so the bundled 'libs' folder (recorder_backend.py,
+	pydub) and the architecture-matched subfolder (libs/x64 or libs/x86,
+	which each hold their own copy of numpy and pyaudiowpatch) become
+	importable.
 
-	if not os.path.isdir(tools_dir):
-		_log_warning(f"Tools directory not found at {tools_dir}, skipping binary load")
+	installTasks.py already deletes whichever architecture folder does NOT
+	match this NVDA process at install time, so only the folder for the
+	architecture actually running remains on disk. This function therefore
+	never copies or deletes files at runtime; it just inserts paths, which
+	keeps this well under NVDA's main-thread execution budget on every
+	startup.
+
+	IMPORTANT: pyaudiowpatch/__init__.py does an ABSOLUTE import,
+	`import _portaudiowpatch as pa` (not a relative `from . import`), so
+	for that to resolve, the pyaudiowpatch package folder itself
+	(libs/{arch}/pyaudiowpatch) must be inserted into sys.path directly --
+	adding only its parent (libs/{arch}) is not enough, since Python has
+	no way to find a top-level "_portaudiowpatch" module sitting one
+	level deeper than a sys.path entry. add_dll_directory is a separate,
+	unrelated mechanism (it only affects how Windows resolves DLLs that
+	_portaudiowpatch.pyd itself depends on); it does not make the .pyd
+	importable, so both steps are required.
+	"""
+	baseDir = os.path.dirname(os.path.abspath(__file__))
+	libsDir = os.path.join(baseDir, "libs")
+
+	if not os.path.isdir(libsDir):
+		_logWarning("libs directory not found at %s, skipping binary load" % libsDir)
 		return
 
-	arch = _get_architecture_subdir()
-	src_arch_dir = os.path.join(tools_dir, arch)
-	src_pkg_dir = os.path.join(src_arch_dir, "pyaudiowpatch")
-	dst_pkg_dir = os.path.join(tools_dir, "pyaudiowpatch")
+	_addSysPathSafe(libsDir)
 
-	if not os.path.isdir(src_pkg_dir):
-		_log_warning(f"Binary package not found for {arch} at {src_pkg_dir}")
-		if os.path.exists(dst_pkg_dir):
-			shutil.rmtree(dst_pkg_dir, ignore_errors=True)
+	runtimeArch = _getRuntimeArchDirName()
+	archDir = os.path.join(libsDir, runtimeArch)
+
+	if not os.path.isdir(archDir):
+		_logWarning(
+			"Architecture folder '%s' not found under %s. installTasks.py "
+			"may not have run during install, or the add-on package is "
+			"incomplete. numpy/pyaudiowpatch imports will likely fail."
+			% (runtimeArch, libsDir)
+		)
 		return
 
-	if os.path.exists(dst_pkg_dir):
-		shutil.rmtree(dst_pkg_dir, ignore_errors=True)
+	# archDir on sys.path makes "import numpy" and "import pyaudiowpatch"
+	# resolve (both are normal packages found one level under a sys.path
+	# entry).
+	_addSysPathSafe(archDir)
 
-	shutil.copytree(src_pkg_dir, dst_pkg_dir)
+	# pyaudiowpatch's own package folder must ALSO be on sys.path directly,
+	# and be a registered DLL directory, so its absolute
+	# "import _portaudiowpatch" (the compiled .pyd living in that same
+	# folder) can resolve along with any DLLs it depends on.
+	pyaudiowpatchPkgDir = os.path.join(archDir, "pyaudiowpatch")
+	if os.path.isdir(pyaudiowpatchPkgDir):
+		_addSysPathSafe(pyaudiowpatchPkgDir)
+		_addDllDirectorySafe(pyaudiowpatchPkgDir)
+	else:
+		_logWarning(
+			"pyaudiowpatch package folder not found at %s. Recording via "
+			"WasapiSoundRecorder will not be available." % pyaudiowpatchPkgDir
+		)
 
-	if tools_dir not in sys.path:
-		sys.path.insert(0, tools_dir)
+	try:
+		import pyaudiowpatch  # noqa: F401
+		_logWarning("Successfully loaded pyaudiowpatch for %s" % runtimeArch)
+	except ImportError as e:
+		_logWarning("pyaudiowpatch import failed: %s" % e)
+	except Exception as e:
+		_logWarning("Unexpected error during import: %s" % e)
 
-	if os.path.isdir(dst_pkg_dir):
-		if dst_pkg_dir not in sys.path:
-			sys.path.insert(0, dst_pkg_dir)
-		_add_dll_directory(dst_pkg_dir)
-
-		for module_name in ['pyaudiowpatch', '_portaudiowpatch']:
-			_remove_module_from_cache(module_name)
-
-		try:
-			import pyaudiowpatch
-			_log_warning(f"Successfully loaded pyaudiowpatch for {arch}")
-		except ImportError as e:
-			_log_warning(f"pyaudiowpatch import failed: {e}")
-		except Exception as e:
-			_log_warning(f"Unexpected error during import: {e}")
 
 overlayBinaries()

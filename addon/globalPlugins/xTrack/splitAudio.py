@@ -17,12 +17,12 @@ addonHandler.initTranslation()
 
 class SplitAudioDialog(wx.Dialog):
 	"""Dialog for splitting audio files into multiple tracks."""
-	def __init__(self, parent, selected_file, tools_path):
+	def __init__(self, parent, selected_file, libs_path):
 		super().__init__(parent, title=_("Split Audio File"))
 		if not selected_file:
 			raise ValueError("No file was selected.")
 		self.selected_file = selected_file
-		self.tools_path = tools_path
+		self.libs_path = libs_path
 		self.file_duration_seconds = 0
 		self.file_duration_str = ""
 		self.output_path = os.path.dirname(self.selected_file)
@@ -188,7 +188,7 @@ class SplitAudioDialog(wx.Dialog):
 	
 	def get_file_duration(self):
 		"""Get file duration using ffprobe."""
-		ffprobe_path = os.path.join(self.tools_path, "ffprobe.exe")
+		ffprobe_path = os.path.join(self.libs_path, "ffprobe.exe")
 		if not os.path.exists(ffprobe_path):
 			wx.CallAfter(wx.MessageBox, _("ffprobe.exe not found"), _("Error"), wx.OK | wx.ICON_ERROR)
 			return
@@ -354,7 +354,7 @@ class SplitAudioDialog(wx.Dialog):
 	
 	def perform_split(self, end_times):
 		"""Perform the actual split operation using ffmpeg."""
-		ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
+		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
 		if not os.path.exists(ffmpeg_path):
 			wx.CallAfter(wx.MessageBox, _("ffmpeg.exe not found"), _("Error"), wx.OK | wx.ICON_ERROR)
 			wx.CallAfter(self.reset_buttons)
@@ -460,3 +460,4 @@ class SplitAudioDialog(wx.Dialog):
 	def on_close(self, event):
 		"""Handle dialog close event."""
 		event.Skip()
+

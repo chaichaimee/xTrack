@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: xTrack 2026.5.3\n"
+"Project-Id-Version: xTrack 2026.8.8\n"
 "Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
-"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"POT-Creation-Date: 2026-08-20 12:05+0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: chaiBot and Malee Yamazaki\n"
 "Language-Team: English\n"
@@ -16,41 +16,46 @@ msgstr ""
 msgid " {:02d} End Time:"
 msgstr " {:02d} End Time:"
 
-#: Trim.py:385
+#: Trim.py:386
 msgid " | Fade In: {} to {}"
 msgstr " | Fade In: {} to {}"
 
-#: Trim.py:389
+#: Trim.py:390
 msgid " | Fade Out: {} to {}"
 msgstr " | Fade Out: {} to {}"
 
-#: record.py:350
+#: mp3Gain.py:178
+msgid "\"Normal\" Volume (dB):"
+msgstr "\"Normal\" Volume (dB):"
+
+#: mp3Gain.py:195
+#: record.py:471
 msgid "&Browse..."
 msgstr "&Browse..."
 
-#: record.py:339
+#: record.py:460
 msgid "&Count-in before recording"
 msgstr "&Count-in before recording"
 
-#: record.py:345
+#: record.py:466
 msgid "&Destination Folder:"
 msgstr "&Destination Folder:"
 
-#: record.py:320
+#: record.py:409
 msgid "&Format:"
 msgstr "&Format:"
 
-#: record.py:336
-msgid "&Microphone Gain (0-10):"
-msgstr "&Microphone Gain (0-10):"
+#: record.py:425
+msgid "&Microphone Volume (%):"
+msgstr "&Microphone Volume (%):"
 
-#: record.py:342
+#: record.py:463
 msgid "&Open folder after recording"
 msgstr "&Open folder after recording"
 
-#: record.py:337
-msgid "&System Gain (0-10):"
-msgstr "&System Gain (0-10):"
+#: record.py:426
+msgid "&System Volume (%):"
+msgstr "&System Volume (%):"
 
 #: convertVideo.py:252
 #: convertVideo.py:257
@@ -62,11 +67,15 @@ msgstr "..."
 msgid "?"
 msgstr "?"
 
-#: record.py:381
+#: record.py:502
 msgid "AAC Bitrate (kbps):"
 msgstr "AAC Bitrate (kbps):"
 
-#: convertMP3toMP4.py:52
+#: convertAudio.py:76
+msgid "AAC Quality:"
+msgstr "AAC Quality:"
+
+#: convertAudio.py:579
 msgid "Add Photo..."
 msgstr "Add Photo..."
 
@@ -74,8 +83,32 @@ msgstr "Add Photo..."
 msgid "Additional fade-in duration for the beginning of each track (except the first track)"
 msgstr "Additional fade-in duration for the beginning of each track (except the first track)"
 
-#: convertAudio.py:370
-#: convertAudio.py:371
+#: mp3_mixdown.py:87
+msgid "Adds punchy low-end weight and bright, clear highs."
+msgstr "Adds punchy low-end weight and bright, clear highs."
+
+#: mp3_mixdown.py:595
+msgid "Adjust Tempo"
+msgstr "Adjust Tempo"
+
+#: mp3_mixdown.py:633
+msgid "Advanced Parametric Equalizer (3-Band)"
+msgstr "Advanced Parametric Equalizer (3-Band)"
+
+#: mp3_mixdown.py:738
+msgid "Advanced Time-Based Panning"
+msgstr "Advanced Time-Based Panning"
+
+#: mp3Gain.py:205
+msgid "Album Analysis"
+msgstr "Album Analysis"
+
+#: mp3Gain.py:522
+msgid "Album analysis complete for {count} folder(s)"
+msgstr "Album analysis complete for {count} folder(s)"
+
+#: convertAudio.py:486
+#: convertAudio.py:487
 msgid "All conversions complete!"
 msgstr "All conversions complete!"
 
@@ -84,7 +117,7 @@ msgstr "All conversions complete!"
 msgid "All conversions finished"
 msgstr "All conversions finished"
 
-#: resizeImage.py:817
+#: resizeImage.py:823
 msgid "All images processed!"
 msgstr "All images processed!"
 
@@ -92,28 +125,73 @@ msgstr "All images processed!"
 msgid "An error occurred during merge: {}"
 msgstr "An error occurred during merge: {}"
 
-#: Trim.py:72
+#: mp3Gain.py:203
+msgid "Analysis"
+msgstr "Analysis"
+
+#: mp3Gain.py:339
+msgid "Analysis cleared"
+msgstr "Analysis cleared"
+
+#: mp3Gain.py:491
+msgid "Analyzing: {}"
+msgstr "Analyzing: {}"
+
+#: mp3_mixdown.py:913
+msgid "Applies a genre-tuned EQ curve for the selected music style."
+msgstr "Applies a genre-tuned EQ curve for the selected music style."
+
+#: mp3Gain.py:223
+#: mp3_mixdown.py:819
+msgid "Apply"
+msgstr "Apply"
+
+#: mp3Gain.py:220
+msgid "Apply Album Gain"
+msgstr "Apply Album Gain"
+
+#: mp3_mixdown.py:763
+msgid "Apply Compressor"
+msgstr "Apply Compressor"
+
+#: mp3_mixdown.py:796
+msgid "Apply Limiter"
+msgstr "Apply Limiter"
+
+#: mp3Gain.py:219
+msgid "Apply Track Gain"
+msgstr "Apply Track Gain"
+
+#: Trim.py:73
 msgid "Audio"
 msgstr "Audio"
 
-#: record.py:355
+#: record.py:435
+msgid "Audio &Processing:"
+msgstr "Audio &Processing:"
+
+#: record.py:476
 msgid "Audio Backend Status: "
 msgstr "Audio Backend Status: "
 
-#: Trim.py:174
+#: Trim.py:175
 msgid "Audio Channels:"
 msgstr "Audio Channels:"
 
-#: Trim.py:184
+#: Trim.py:185
 #: convertVideo.py:215
 msgid "Audio Codec:"
 msgstr "Audio Codec:"
 
-#: Trim.py:89
+#: mp3_mixdown.py:520
+msgid "Audio Files"
+msgstr "Audio Files"
+
+#: Trim.py:90
 msgid "Audio Format"
 msgstr "Audio Format"
 
-#: Trim.py:97
+#: Trim.py:98
 msgid "Audio Quality"
 msgstr "Audio Quality"
 
@@ -121,7 +199,7 @@ msgstr "Audio Quality"
 msgid "Audio Quality:"
 msgstr "Audio Quality:"
 
-#: Trim.py:160
+#: Trim.py:161
 #: convertVideo.py:198
 msgid "Audio Settings"
 msgstr "Audio Settings"
@@ -130,56 +208,114 @@ msgstr "Audio Settings"
 msgid "Audio file split into {} tracks"
 msgstr "Audio file split into {} tracks"
 
-#: convertMP3toMP4.py:86
+#: convertAudio.py:613
 msgid "Auto crop images to 16:9 aspect ratio"
 msgstr "Auto crop images to 16:9 aspect ratio"
 
-#: record.py:357
+#: mp3_mixdown.py:712
+msgid "Auto-Pan Loop (Circular, Dance Style)"
+msgstr "Auto-Pan Loop (Circular, Dance Style)"
+
+#: mp3_mixdown.py:730
+msgid "Auto-Pan Loop Direction"
+msgstr "Auto-Pan Loop Direction"
+
+#: mp3_mixdown.py:720
+msgid "Auto-Pan Loop Speed"
+msgstr "Auto-Pan Loop Speed"
+
+#: record.py:392
+msgid "Automatic (Default)"
+msgstr "Automatic (Default)"
+
+#: record.py:368
+msgid "Automatically lowers the system audio whenever the microphone picks up speech, then raises it back once you stop talking. Only applies when Recording Mode is System and Microphone (Merged)."
+msgstr "Automatically lowers the system audio whenever the microphone picks up speech, then raises it back once you stop talking. Only applies when Recording Mode is System and Microphone (Merged)."
+
+#: record.py:478
 msgid "Available"
 msgstr "Available"
 
-#: convertMP3toMP4.py:74
+#: convertAudio.py:601
 msgid "Background Color:"
 msgstr "Background Color:"
 
-#: resizeImage.py:210
-#: resizeImage.py:528
-#: resizeImage.py:686
+#: mp3_mixdown.py:86
+msgid "Bass & Treble Boost"
+msgstr "Bass & Treble Boost"
+
+#: mp3_mixdown.py:32
+msgid "Bass Boosted Warmth"
+msgstr "Bass Boosted Warmth"
+
+#: mp3_mixdown.py:619
+msgid "Bass Gain"
+msgstr "Bass Gain"
+
+#: mp3_mixdown.py:617
+msgid "Bass Gain (dB):"
+msgstr "Bass Gain (dB):"
+
+#: resizeImage.py:211
+#: resizeImage.py:529
+#: resizeImage.py:692
 msgid "Best (No loss)"
 msgstr "Best (No loss)"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:260
+#: mp3_mixdown.py:662
+msgid "Binaural Audio (3D Headphone Simulation)"
+msgstr "Binaural Audio (3D Headphone Simulation)"
+
+#: mp3_mixdown.py:669
+msgid "Binaural Width Intensity"
+msgstr "Binaural Width Intensity"
+
+#: convertAudio.py:604
+#: convertAudio.py:787
 msgid "Black"
 msgstr "Black"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:264
+#: convertAudio.py:604
+#: convertAudio.py:791
 msgid "Blue"
 msgstr "Blue"
 
-#: resizeImage.py:181
+#: resizeImage.py:182
 msgid "Bottom (pixels):"
 msgstr "Bottom (pixels):"
 
-#: resizeImage.py:128
+#: mp3_mixdown.py:68
+msgid "Broadcast Standard (EBU R128)"
+msgstr "Broadcast Standard (EBU R128)"
+
+#: mp3Gain.py:165
+#: mp3_mixdown.py:523
+msgid "Browse Files..."
+msgstr "Browse Files..."
+
+#: mp3Gain.py:168
+#: mp3_mixdown.py:526
+msgid "Browse Folder..."
+msgstr "Browse Folder..."
+
+#: resizeImage.py:129
 msgid "Browse..."
 msgstr "Browse..."
 
-#: convertAudio.py:161
-#: convertAudio.py:177
+#: convertAudio.py:262
+#: convertAudio.py:288
 #: merge.py:170
-#: resizeImage.py:460
-#: resizeImage.py:490
+#: resizeImage.py:461
+#: resizeImage.py:491
 msgid "Calculating..."
 msgstr "Calculating..."
 
-#: Trim.py:230
-#: convertAudio.py:141
-#: convertMP3toMP4.py:104
+#: Trim.py:231
+#: convertAudio.py:242
+#: convertAudio.py:631
 #: convertVideo.py:234
 #: merge.py:141
-#: resizeImage.py:265
+#: resizeImage.py:266
 #: splitAudio.py:112
 msgid "Cancel"
 msgstr "Cancel"
@@ -188,34 +324,99 @@ msgstr "Cancel"
 msgid "Cannot read video resolution"
 msgstr "Cannot read video resolution"
 
+#: mp3_mixdown.py:451
+msgid "Center"
+msgstr "Center"
+
 #: convertVideo.py:208
 msgid "Channels:"
 msgstr "Channels:"
 
-#: resizeImage.py:501
+#: mp3Gain.py:210
+msgid "Check"
+msgstr "Check"
+
+#: record.py:397
+msgid "Choose a specific microphone if it is not on your system's default recording device, for example when the microphone is on a separate sound card."
+msgstr "Choose a specific microphone if it is not on your system's default recording device, for example when the microphone is on a separate sound card."
+
+#: resizeImage.py:502
 msgid "Choose output folder"
 msgstr "Choose output folder"
 
-#: resizeImage.py:811
+#: record.py:405
+msgid "Choose which output device's audio to record, for example when speech and music play through different speakers than the system default."
+msgstr "Choose which output device's audio to record, for example when speech and music play through different speakers than the system default."
+
+#: mp3_mixdown.py:675
+msgid "Chorus"
+msgstr "Chorus"
+
+#: mp3_mixdown.py:681
+msgid "Chorus Delay"
+msgstr "Chorus Delay"
+
+#: mp3_mixdown.py:679
+msgid "Chorus Delay (ms):"
+msgstr "Chorus Delay (ms):"
+
+#: mp3_mixdown.py:44
+msgid "Cinematic Binaural Space"
+msgstr "Cinematic Binaural Space"
+
+#: mp3_mixdown.py:136
+msgid "Classical"
+msgstr "Classical"
+
+#: mp3_mixdown.py:27
+msgid "Clean audio export with no added filters."
+msgstr "Clean audio export with no added filters."
+
+#: mp3Gain.py:206
+msgid "Clear Analysis"
+msgstr "Clear Analysis"
+
+#: mp3Gain.py:234
+#: mp3_mixdown.py:822
+msgid "Close"
+msgstr "Close"
+
+#: record.py:430
+msgid "Communications"
+msgstr "Communications"
+
+#: record.py:439
+msgid "Communications requests Windows voice-processing features such as noise suppression, echo cancellation, and automatic gain control when supported by the operating system and audio driver."
+msgstr "Communications requests Windows voice-processing features such as noise suppression, echo cancellation, and automatic gain control when supported by the operating system and audio driver."
+
+#: resizeImage.py:817
 msgid "Complete!"
 msgstr "Complete!"
 
-#: resizeImage.py:781
+#: resizeImage.py:787
 msgid "Completed"
 msgstr "Completed"
 
-#: convertAudio.py:79
+#: mp3_mixdown.py:769
+msgid "Compressor Threshold"
+msgstr "Compressor Threshold"
+
+#: mp3_mixdown.py:767
+msgid "Compressor Threshold (dB):"
+msgstr "Compressor Threshold (dB):"
+
+#: convertAudio.py:179
 #: convertVideo.py:171
 msgid "Conversion Settings"
 msgstr "Conversion Settings"
 
-#: convertAudio.py:365
+#: convertAudio.py:481
 msgid "Conversion complete for {}"
 msgstr "Conversion complete for {}"
 
-#: convertAudio.py:360
-#: convertMP3toMP4.py:375
-#: convertMP3toMP4.py:380
+#: convertAudio.py:476
+#: convertAudio.py:902
+#: convertAudio.py:907
 msgid "Conversion complete!"
 msgstr "Conversion complete!"
 
@@ -231,45 +432,45 @@ msgstr "Conversion failed"
 msgid "Conversion failed for {}: {}"
 msgstr "Conversion failed for {}: {}"
 
-#: convertAudio.py:375
-#: convertMP3toMP4.py:386
+#: convertAudio.py:491
+#: convertAudio.py:913
 msgid "Conversion failed."
 msgstr "Conversion failed."
 
-#: convertAudio.py:376
-#: convertMP3toMP4.py:387
+#: convertAudio.py:492
+#: convertAudio.py:914
 msgid "Conversion failed: {}"
 msgstr "Conversion failed: {}"
 
-#: convertAudio.py:137
-#: convertAudio.py:368
-#: convertAudio.py:377
-#: convertMP3toMP4.py:100
-#: convertMP3toMP4.py:381
-#: convertMP3toMP4.py:388
+#: convertAudio.py:238
+#: convertAudio.py:484
+#: convertAudio.py:493
+#: convertAudio.py:627
+#: convertAudio.py:908
+#: convertAudio.py:915
 #: convertVideo.py:231
 msgid "Convert"
 msgstr "Convert"
 
-#: __init__.py:164
-#: convertAudio.py:21
+#: __init__.py:268
+#: convertAudio.py:121
 msgid "Convert Audio"
 msgstr "Convert Audio"
 
-#: convertAudio.py:34
+#: convertAudio.py:134
 msgid "Convert Audio: {} files"
 msgstr "Convert Audio: {} files"
 
-#: __init__.py:166
-#: convertMP3toMP4.py:20
+#: __init__.py:270
+#: convertAudio.py:547
 msgid "Convert MP3 to MP4"
 msgstr "Convert MP3 to MP4"
 
-#: convertMP3toMP4.py:31
+#: convertAudio.py:558
 msgid "Convert MP3 to MP4: {}"
 msgstr "Convert MP3 to MP4: {}"
 
-#: __init__.py:165
+#: __init__.py:269
 #: convertVideo.py:99
 msgid "Convert Video"
 msgstr "Convert Video"
@@ -282,8 +483,8 @@ msgstr "Convert Video: {} files"
 msgid "Converting..."
 msgstr "Converting..."
 
-#: convertAudio.py:356
-#: convertMP3toMP4.py:371
+#: convertAudio.py:472
+#: convertAudio.py:898
 msgid "Converting: {}%"
 msgstr "Converting: {}%"
 
@@ -291,7 +492,16 @@ msgstr "Converting: {}%"
 msgid "Copy without re-encoding (faster)"
 msgstr "Copy without re-encoding (faster)"
 
-#: Trim.py:518
+#: mp3Gain.py:517
+msgid "Could not analyze any of the selected files"
+msgstr "Could not analyze any of the selected files"
+
+#: mp3Gain.py:402
+#: mp3Gain.py:413
+msgid "Could not analyze {}"
+msgstr "Could not analyze {}"
+
+#: Trim.py:527
 msgid "Could not play preview: {}"
 msgstr "Could not play preview: {}"
 
@@ -308,7 +518,15 @@ msgstr "Could not read image dimensions"
 msgid "Could not read video dimensions"
 msgstr "Could not read video dimensions"
 
-#: resizeImage.py:165
+#: mp3Gain.py:452
+msgid "Created {name} at {target:.1f} dB"
+msgstr "Created {name} at {target:.1f} dB"
+
+#: mp3_mixdown.py:1168
+msgid "Created {}"
+msgstr "Created {}"
+
+#: resizeImage.py:166
 msgid "Crop Image"
 msgstr "Crop Image"
 
@@ -324,28 +542,81 @@ msgstr "Cross-fade Settings"
 msgid "Cross-fade requires re-encoding mode"
 msgstr "Cross-fade requires re-encoding mode"
 
-#: convertAudio.py:71
+#: convertAudio.py:171
 #: convertVideo.py:158
 msgid "Current File"
 msgstr "Current File"
 
-#: resizeImage.py:243
+#: resizeImage.py:244
 msgid "Current file:"
 msgstr "Current file:"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:267
+#: mp3_mixdown.py:543
+msgid "Custom (use effect settings below)"
+msgstr "Custom (use effect settings below)"
+
+#: mp3_mixdown.py:75
+msgid "Cuts rumble below 80 Hz, lifts vocal presence around 2-4 kHz, gates out background noise between words, and applies a dynamic limiter for clear, consistent speech."
+msgstr "Cuts rumble below 80 Hz, lifts vocal presence around 2-4 kHz, gates out background noise between words, and applies a dynamic limiter for clear, consistent speech."
+
+#: convertAudio.py:605
+#: convertAudio.py:794
 msgid "Cyan"
 msgstr "Cyan"
 
-#: resizeImage.py:108
-#: resizeImage.py:294
+#: mp3_mixdown.py:109
+msgid "Dance / EDM"
+msgstr "Dance / EDM"
+
+#: record.py:429
+msgid "Default"
+msgstr "Default"
+
+#: mp3_mixdown.py:876
+msgid "Delete"
+msgstr "Delete"
+
+#: resizeImage.py:109
+#: resizeImage.py:295
 msgid "Delete Selected Files"
 msgstr "Delete Selected Files"
 
-#: resizeImage.py:234
+#: mp3Gain.py:192
+msgid "Destination Folder"
+msgstr "Destination Folder"
+
+#: resizeImage.py:235
 msgid "Dimensions"
 msgstr "Dimensions"
+
+#: mp3Gain.py:527
+#: mp3_mixdown.py:1184
+msgid "Done"
+msgstr "Done"
+
+#: mp3_mixdown.py:50
+msgid "Dreamy Chorus & Wide"
+msgstr "Dreamy Chorus & Wide"
+
+#: record.py:377
+msgid "Ducking &Attack Time (ms):"
+msgstr "Ducking &Attack Time (ms):"
+
+#: record.py:373
+msgid "Ducking &Level (dB):"
+msgstr "Ducking &Level (dB):"
+
+#: record.py:379
+msgid "Ducking &Release Time (ms):"
+msgstr "Ducking &Release Time (ms):"
+
+#: record.py:375
+msgid "Ducking &Sensitivity Threshold (dB):"
+msgstr "Ducking &Sensitivity Threshold (dB):"
+
+#: mp3_mixdown.py:63
+msgid "Dull, muffled ambience as if heard through a wall or in a tiled room."
+msgstr "Dull, muffled ambience as if heard through a wall or in a tiled room."
 
 #: merge.py:94
 msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
@@ -355,22 +626,42 @@ msgstr "Duration in seconds for cross-fading between tracks. Recommended value i
 msgid "Duration: ..."
 msgstr "Duration: ..."
 
-#: convertMP3toMP4.py:42
+#: convertAudio.py:569
 #: splitAudio.py:66
 msgid "Duration: Calculating..."
 msgstr "Duration: Calculating..."
 
-#: convertMP3toMP4.py:118
+#: convertAudio.py:645
 #: convertVideo.py:273
 #: splitAudio.py:220
 msgid "Duration: {}"
 msgstr "Duration: {}"
 
+#: mp3_mixdown.py:761
+msgid "Dynamics && Limiter"
+msgstr "Dynamics && Limiter"
+
+#: mp3_mixdown.py:693
+msgid "Echo Delay"
+msgstr "Echo Delay"
+
+#: mp3_mixdown.py:691
+msgid "Echo Delay (ms):"
+msgstr "Echo Delay (ms):"
+
+#: record.py:366
+msgid "Enable Auto-&Ducking (lower music while you speak)"
+msgstr "Enable Auto-&Ducking (lower music while you speak)"
+
+#: mp3_mixdown.py:612
+msgid "Enable Bass / Treble Equalization"
+msgstr "Enable Bass / Treble Equalization"
+
 #: merge.py:84
 msgid "Enable Cross-fade between tracks"
 msgstr "Enable Cross-fade between tracks"
 
-#: Trim.py:109
+#: Trim.py:110
 msgid "Enable Fade In/Out"
 msgstr "Enable Fade In/Out"
 
@@ -378,40 +669,58 @@ msgstr "Enable Fade In/Out"
 msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
 msgstr "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
 
-#: Trim.py:120
+#: mp3_mixdown.py:444
+msgid "End Second:"
+msgstr "End Second:"
+
+#: Trim.py:121
 msgid "End Time (100% volume):"
 msgstr "End Time (100% volume):"
 
-#: Trim.py:81
-#: Trim.py:135
+#: Trim.py:82
+#: Trim.py:136
 msgid "End Time:"
 msgstr "End Time:"
 
-#: Trim.py:427
-#: Trim.py:553
+#: Trim.py:428
+#: Trim.py:567
 msgid "End time cannot be greater than file duration"
 msgstr "End time cannot be greater than file duration"
 
-#: Trim.py:317
-#: Trim.py:357
-#: Trim.py:418
-#: Trim.py:424
-#: Trim.py:427
-#: Trim.py:441
-#: Trim.py:445
-#: Trim.py:449
+#: mp3_mixdown.py:33
+msgid "Enhanced low frequencies with controlled peaks."
+msgstr "Enhanced low frequencies with controlled peaks."
+
+#: mp3_mixdown.py:610
+msgid "Equalization"
+msgstr "Equalization"
+
+#: mp3_mixdown.py:543
+msgid "Equalizer (choose a music style)"
+msgstr "Equalizer (choose a music style)"
+
+#: Trim.py:318
+#: Trim.py:358
+#: Trim.py:419
+#: Trim.py:425
+#: Trim.py:428
+#: Trim.py:442
+#: Trim.py:446
+#: Trim.py:450
 #: Trim.py:454
-#: Trim.py:518
-#: Trim.py:520
-#: Trim.py:523
-#: Trim.py:525
-#: Trim.py:543
+#: Trim.py:459
+#: Trim.py:527
+#: Trim.py:529
+#: Trim.py:532
+#: Trim.py:534
 #: Trim.py:550
-#: Trim.py:553
+#: Trim.py:557
+#: Trim.py:564
 #: Trim.py:567
-#: Trim.py:571
-#: Trim.py:575
-#: Trim.py:626
+#: Trim.py:581
+#: Trim.py:585
+#: Trim.py:589
+#: Trim.py:640
 #: splitAudio.py:193
 #: splitAudio.py:227
 #: splitAudio.py:321
@@ -431,15 +740,19 @@ msgstr "Error getting image information"
 msgid "Error getting video information"
 msgstr "Error getting video information"
 
-#: Trim.py:115
+#: convertAudio.py:69
+msgid "FLAC Compression:"
+msgstr "FLAC Compression:"
+
+#: Trim.py:116
 msgid "Fade In"
 msgstr "Fade In"
 
-#: Trim.py:130
+#: Trim.py:131
 msgid "Fade Out"
 msgstr "Fade Out"
 
-#: Trim.py:105
+#: Trim.py:106
 msgid "Fade Settings"
 msgstr "Fade Settings"
 
@@ -447,65 +760,83 @@ msgstr "Fade Settings"
 msgid "Fade-in for Next Track (seconds):"
 msgstr "Fade-in for Next Track (seconds):"
 
-#: resizeImage.py:797
+#: resizeImage.py:803
 msgid "Failed"
 msgstr "Failed"
 
-#: convertMP3toMP4.py:235
+#: mp3Gain.py:448
+msgid "Failed to apply gain to {}"
+msgstr "Failed to apply gain to {}"
+
+#: convertAudio.py:762
 msgid "Failed to create file list: {}"
 msgstr "Failed to create file list: {}"
 
-#: Trim.py:356
+#: Trim.py:357
 #: splitAudio.py:226
 msgid "Failed to get file duration: {}"
 msgstr "Failed to get file duration: {}"
 
-#: __init__.py:379
+#: __init__.py:520
 msgid "Failed to get image info: {}"
 msgstr "Failed to get image info: {}"
 
-#: __init__.py:391
+#: __init__.py:532
 msgid "Failed to get video info: {}"
 msgstr "Failed to get video info: {}"
 
-#: Trim.py:49
+#: Trim.py:50
 #: splitAudio.py:45
 msgid "Failed to load configuration: {}"
 msgstr "Failed to load configuration: {}"
 
-#: __init__.py:307
+#: __init__.py:420
 msgid "Failed to open Convert Audio dialog: {}"
 msgstr "Failed to open Convert Audio dialog: {}"
 
-#: __init__.py:352
+#: __init__.py:465
 msgid "Failed to open Convert MP3 to MP4 dialog: {}"
 msgstr "Failed to open Convert MP3 to MP4 dialog: {}"
 
-#: __init__.py:322
+#: __init__.py:435
 msgid "Failed to open Convert Video dialog: {}"
 msgstr "Failed to open Convert Video dialog: {}"
 
-#: __init__.py:292
+#: __init__.py:479
+msgid "Failed to open MP3 Gain dialog: {}"
+msgstr "Failed to open MP3 Gain dialog: {}"
+
+#: __init__.py:493
+msgid "Failed to open MP3 WAV Mixdown dialog: {}"
+msgstr "Failed to open MP3 WAV Mixdown dialog: {}"
+
+#: __init__.py:405
 msgid "Failed to open Merge dialog: {}"
 msgstr "Failed to open Merge dialog: {}"
 
-#: __init__.py:410
+#: __init__.py:551
 msgid "Failed to open Record Settings: {}"
 msgstr "Failed to open Record Settings: {}"
 
-#: __init__.py:337
+#: __init__.py:450
 msgid "Failed to open Resize Image dialog: {}"
 msgstr "Failed to open Resize Image dialog: {}"
 
-#: __init__.py:367
+#: __init__.py:508
 msgid "Failed to open Split Audio dialog: {}"
 msgstr "Failed to open Split Audio dialog: {}"
 
-#: __init__.py:277
+#: __init__.py:390
 msgid "Failed to open Trim dialog: {}"
 msgstr "Failed to open Trim dialog: {}"
 
-#: Trim.py:61
+#: mp3Gain.py:387
+#: mp3_mixdown.py:1094
+#: mp3_mixdown.py:1171
+msgid "Failed to process {}"
+msgstr "Failed to process {}"
+
+#: Trim.py:62
 #: splitAudio.py:57
 msgid "Failed to save configuration: {}"
 msgstr "Failed to save configuration: {}"
@@ -514,25 +845,25 @@ msgstr "Failed to save configuration: {}"
 msgid "Failed to split audio file"
 msgstr "Failed to split audio file"
 
-#: resizeImage.py:802
+#: resizeImage.py:808
 msgid "Failed: {}"
 msgstr "Failed: {}"
 
-#: Trim.py:213
-#: convertAudio.py:74
+#: Trim.py:214
+#: convertAudio.py:174
 msgid "File Duration: Calculating..."
 msgstr "File Duration: Calculating..."
 
-#: convertAudio.py:178
-#: convertAudio.py:207
+#: convertAudio.py:289
+#: convertAudio.py:318
 msgid "File Duration: {}"
 msgstr "File Duration: {}"
 
-#: resizeImage.py:235
+#: resizeImage.py:236
 msgid "File Size"
 msgstr "File Size"
 
-#: Trim.py:397
+#: Trim.py:398
 msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
 msgstr "File duration: {duration}; Trim period: {period} seconds{fade_info}"
 
@@ -547,7 +878,7 @@ msgstr "File not found"
 msgid "File not found: {}"
 msgstr "File not found: {}"
 
-#: convertAudio.py:65
+#: convertAudio.py:165
 #: convertVideo.py:152
 msgid "Files to Convert"
 msgstr "Files to Convert"
@@ -556,11 +887,19 @@ msgstr "Files to Convert"
 msgid "Files to Merge"
 msgstr "Files to Merge"
 
-#: resizeImage.py:118
+#: mp3_mixdown.py:26
+msgid "Flat / Default"
+msgstr "Flat / Default"
+
+#: mp3_mixdown.py:128
+msgid "Folk / Acoustic"
+msgstr "Folk / Acoustic"
+
+#: resizeImage.py:119
 msgid "For single file only"
 msgstr "For single file only"
 
-#: resizeImage.py:219
+#: resizeImage.py:220
 msgid "Format:"
 msgstr "Format:"
 
@@ -572,53 +911,97 @@ msgstr "Frame rate: ..."
 msgid "Frame rate: {}"
 msgstr "Frame rate: {}"
 
-#: resizeImage.py:210
-#: resizeImage.py:528
-#: resizeImage.py:688
+#: mp3_mixdown.py:451
+msgid "Full Left"
+msgstr "Full Left"
+
+#: mp3_mixdown.py:451
+msgid "Full Right"
+msgstr "Full Right"
+
+#: mp3_mixdown.py:581
+msgid "Gate Threshold (dB):"
+msgstr "Gate Threshold (dB):"
+
+#: mp3_mixdown.py:1123
+msgid "Generating preview: {}"
+msgstr "Generating preview: {}"
+
+#: resizeImage.py:211
+#: resizeImage.py:529
+#: resizeImage.py:694
 msgid "Good"
 msgstr "Good"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:268
+#: convertAudio.py:605
+#: convertAudio.py:795
 msgid "Gray"
 msgstr "Gray"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:263
+#: convertAudio.py:604
+#: convertAudio.py:790
 msgid "Green"
 msgstr "Green"
 
-#: resizeImage.py:149
+#: resizeImage.py:150
 msgid "Height (pixels):"
 msgstr "Height (pixels):"
 
-#: __init__.py:171
+#: mp3_mixdown.py:650
+msgid "High Gain @ 8 kHz (dB):"
+msgstr "High Gain @ 8 kHz (dB):"
+
+#: mp3_mixdown.py:114
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: record.py:374
+msgid "How much the music is lowered by while you are speaking."
+msgstr "How much the music is lowered by while you are speaking."
+
+#: record.py:380
+msgid "How quickly the music fades back up once you stop speaking."
+msgstr "How quickly the music fades back up once you stop speaking."
+
+#: record.py:378
+msgid "How quickly the music fades down once speech is detected."
+msgstr "How quickly the music fades down once speech is detected."
+
+#: __init__.py:253
 msgid "Image Info"
 msgstr "Image Info"
 
-#: convertMP3toMP4.py:121
+#: __init__.py:258
+msgid "Image Info: {info}"
+msgstr "Image Info: {info}"
+
+#: convertAudio.py:648
 msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
 msgstr "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
 
-#: resizeImage.py:825
+#: resizeImage.py:831
 msgid "Image processing complete! Check the output information list for results."
 msgstr "Image processing complete! Check the output information list for results."
 
-#: resizeImage.py:98
+#: mp3_mixdown.py:45
+msgid "Immersive 3D headphone experience with real stereo width and warm reverb."
+msgstr "Immersive 3D headphone experience with real stereo width and warm reverb."
+
+#: resizeImage.py:99
 msgid "Input Files"
 msgstr "Input Files"
 
-#: Trim.py:441
-#: Trim.py:567
+#: Trim.py:442
+#: Trim.py:581
 msgid "Invalid fade-in range"
 msgstr "Invalid fade-in range"
 
-#: Trim.py:445
-#: Trim.py:571
+#: Trim.py:446
+#: Trim.py:585
 msgid "Invalid fade-out range"
 msgstr "Invalid fade-out range"
 
-#: convertMP3toMP4.py:133
+#: convertAudio.py:660
 msgid "Invalid image file: {}"
 msgstr "Invalid image file: {}"
 
@@ -630,8 +1013,8 @@ msgstr "Invalid target size"
 msgid "Invalid time format for track {:02d}"
 msgstr "Invalid time format for track {:02d}"
 
-#: Trim.py:418
-#: Trim.py:543
+#: Trim.py:419
+#: Trim.py:557
 #: splitAudio.py:282
 msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
 msgstr "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
@@ -640,38 +1023,155 @@ msgstr "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:M
 msgid "Invalid time value for track {:02d}"
 msgstr "Invalid time value for track {:02d}"
 
-#: Trim.py:449
-#: Trim.py:575
+#: Trim.py:450
+#: Trim.py:589
 msgid "Invalid time values"
 msgstr "Invalid time values"
+
+#: mp3_mixdown.py:121
+msgid "Jazz"
+msgstr "Jazz"
+
+#: mp3Gain.py:187
+msgid "Keep in Same Folder"
+msgstr "Keep in Same Folder"
 
 #: splitAudio.py:343
 msgid "Last track end time cannot exceed file duration"
 msgstr "Last track end time cannot exceed file duration"
 
-#: resizeImage.py:188
+#: resizeImage.py:189
 msgid "Left (pixels):"
 msgstr "Left (pixels):"
 
-#: resizeImage.py:156
+#: mp3_mixdown.py:451
+#: mp3_mixdown.py:727
+msgid "Left to Right"
+msgstr "Left to Right"
+
+#: mp3_mixdown.py:800
+msgid "Limit (dB):"
+msgstr "Limit (dB):"
+
+#: mp3_mixdown.py:802
+msgid "Limiter Limit"
+msgstr "Limiter Limit"
+
+#: resizeImage.py:157
 msgid "Lock Aspect Ratio"
 msgstr "Lock Aspect Ratio"
 
-#: convertMP3toMP4.py:65
+#: mp3_mixdown.py:724
+msgid "Loop Direction:"
+msgstr "Loop Direction:"
+
+#: convertAudio.py:592
 msgid "Loop Duration (seconds):"
 msgstr "Loop Duration (seconds):"
 
-#: record.py:325
-#: record.py:379
+#: mp3_mixdown.py:717
+msgid "Loop Speed (Hz):"
+msgstr "Loop Speed (Hz):"
+
+#: convertAudio.py:63
+#: convertAudio.py:64
+msgid "Lossless (16-bit PCM)"
+msgstr "Lossless (16-bit PCM)"
+
+#: convertAudio.py:108
+#: convertAudio.py:109
+msgid "Lossless (ALAC)"
+msgstr "Lossless (ALAC)"
+
+#: mp3_mixdown.py:775
+msgid "Loudness Normalization (EBU R128)"
+msgstr "Loudness Normalization (EBU R128)"
+
+#: mp3_mixdown.py:782
+msgid "Loudness Normalization Target"
+msgstr "Loudness Normalization Target"
+
+#: mp3_mixdown.py:789
+msgid "Loudness Normalization True Peak"
+msgstr "Loudness Normalization True Peak"
+
+#: mp3_mixdown.py:638
+msgid "Low Gain @ 100 Hz (dB):"
+msgstr "Low Gain @ 100 Hz (dB):"
+
+#: record.py:453
+msgid "Lowers steady background noise picked up between spoken words. Only applies when Audio Processing is set to Default."
+msgstr "Lowers steady background noise picked up between spoken words. Only applies when Audio Processing is set to Default."
+
+#: convertAudio.py:97
+msgid "M4R Quality:"
+msgstr "M4R Quality:"
+
+#: mp3Gain.py:163
+msgid "MP3 Files"
+msgstr "MP3 Files"
+
+#: __init__.py:271
+#: mp3Gain.py:109
+msgid "MP3 Gain"
+msgstr "MP3 Gain"
+
+#: mp3Gain.py:331
+msgid "MP3 Gain is already processing files"
+msgstr "MP3 Gain is already processing files"
+
+#: mp3Gain.py:532
+msgid "MP3 Gain processing complete"
+msgstr "MP3 Gain processing complete"
+
+#: mp3Gain.py:131
+#: mp3Gain.py:264
+#: mp3Gain.py:279
+msgid "MP3 Gain: {} files"
+msgstr "MP3 Gain: {} files"
+
+#: record.py:414
+#: record.py:500
 msgid "MP3 Quality (kbps):"
 msgstr "MP3 Quality (kbps):"
 
-#: convertAudio.py:93
+#: convertAudio.py:55
+#: convertAudio.py:195
 msgid "MP3 Quality:"
 msgstr "MP3 Quality:"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:266
+#: __init__.py:272
+#: mp3_mixdown.py:378
+msgid "MP3 WAV Mixdown"
+msgstr "MP3 WAV Mixdown"
+
+#: mp3_mixdown.py:884
+#: mp3_mixdown.py:1117
+#: mp3_mixdown.py:1144
+msgid "MP3 WAV Mixdown is already processing files"
+msgstr "MP3 WAV Mixdown is already processing files"
+
+#: mp3_mixdown.py:1189
+msgid "MP3 WAV Mixdown processing complete"
+msgstr "MP3 WAV Mixdown processing complete"
+
+#: mp3_mixdown.py:392
+#: mp3_mixdown.py:846
+#: mp3_mixdown.py:861
+#: mp3_mixdown.py:896
+msgid "MP3 WAV Mixdown: {} files"
+msgstr "MP3 WAV Mixdown: {} files"
+
+#: mp3Gain.py:256
+msgid "MP3 files (*.mp3)|*.mp3"
+msgstr "MP3 files (*.mp3)|*.mp3"
+
+#: mp3_mixdown.py:838
+msgid "MP3/WAV files (*.mp3;*.wav)|*.mp3;*.wav"
+msgstr "MP3/WAV files (*.mp3;*.wav)|*.mp3;*.wav"
+
+#: convertAudio.py:605
+#: convertAudio.py:793
 msgid "Magenta"
 msgstr "Magenta"
 
@@ -681,7 +1181,7 @@ msgstr "Magenta"
 msgid "Merge"
 msgstr "Merge"
 
-#: __init__.py:167
+#: __init__.py:273
 #: merge.py:20
 msgid "Merge MP3"
 msgstr "Merge MP3"
@@ -711,9 +1211,25 @@ msgstr "Merge successful. Output saved to: {}"
 msgid "Merging: {}%"
 msgstr "Merging: {}%"
 
-#: record.py:312
+#: mp3_mixdown.py:146
+msgid "Metal"
+msgstr "Metal"
+
+#: record.py:394
+msgid "Microphone &Device:"
+msgstr "Microphone &Device:"
+
+#: record.py:357
 msgid "Microphone Only"
 msgstr "Microphone Only"
+
+#: mp3_mixdown.py:644
+msgid "Mid Gain @ 1 kHz (dB):"
+msgstr "Mid Gain @ 1 kHz (dB):"
+
+#: mp3Gain.py:218
+msgid "Modify Gain"
+msgstr "Modify Gain"
 
 #: merge.py:68
 msgid "Move Down"
@@ -723,99 +1239,204 @@ msgstr "Move Down"
 msgid "Move Up"
 msgstr "Move Up"
 
+#: mp3_mixdown.py:706
+msgid "Muffle Cutoff"
+msgstr "Muffle Cutoff"
+
+#: mp3_mixdown.py:703
+msgid "Muffle Cutoff (Hz):"
+msgstr "Muffle Cutoff (Hz):"
+
+#: mp3_mixdown.py:62
+#: mp3_mixdown.py:699
+msgid "Muffled Room (Pub / Bathroom)"
+msgstr "Muffled Room (Pub / Bathroom)"
+
+#: mp3_mixdown.py:80
+msgid "Music Master"
+msgstr "Music Master"
+
+#: mp3_mixdown.py:552
+msgid "Music Style"
+msgstr "Music Style"
+
+#: mp3_mixdown.py:550
+msgid "Music Style:"
+msgstr "Music Style:"
+
+#: mp3Gain.py:281
+msgid "No MP3 files found in the selected folder."
+msgstr "No MP3 files found in the selected folder."
+
+#: mp3_mixdown.py:863
+msgid "No MP3 or WAV files found in the selected folder."
+msgstr "No MP3 or WAV files found in the selected folder."
+
 #: image.py:166
 #: video.py:138
 msgid "No files selected"
 msgstr "No files selected"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:81
-#: convertMP3toMP4.py:188
+#: mp3_mixdown.py:570
+msgid "Noise Floor Level"
+msgstr "Noise Floor Level"
+
+#: mp3_mixdown.py:568
+msgid "Noise Floor Level (dB):"
+msgstr "Noise Floor Level (dB):"
+
+#: mp3_mixdown.py:577
+msgid "Noise Gate (Cut Background Noise Between Words)"
+msgstr "Noise Gate (Cut Background Noise Between Words)"
+
+#: mp3_mixdown.py:583
+msgid "Noise Gate Threshold"
+msgstr "Noise Gate Threshold"
+
+#: mp3_mixdown.py:562
+msgid "Noise Reduction"
+msgstr "Noise Reduction"
+
+#: mp3_mixdown.py:564
+msgid "Noise Reduction / Suppression (ANR)"
+msgstr "Noise Reduction / Suppression (ANR)"
+
+#: convertAudio.py:604
+#: convertAudio.py:608
+#: convertAudio.py:715
 msgid "None"
 msgstr "None"
 
-#: resizeImage.py:210
-#: resizeImage.py:212
-#: resizeImage.py:527
+#: resizeImage.py:211
+#: resizeImage.py:213
 #: resizeImage.py:528
-#: resizeImage.py:689
-#: resizeImage.py:693
+#: resizeImage.py:529
+#: resizeImage.py:695
+#: resizeImage.py:699
 msgid "Normal"
 msgstr "Normal"
 
-#: record.py:359
-msgid "Not available - check tools/recorder_backend.py"
-msgstr "Not available - check tools/recorder_backend.py"
+#: mp3_mixdown.py:69
+msgid "Normalizes loudness to the international streaming/broadcast standard (-16 LUFS, -1.5 dBTP true peak) so exports sound consistent on YouTube and podcast platforms."
+msgstr "Normalizes loudness to the international streaming/broadcast standard (-16 LUFS, -1.5 dBTP true peak) so exports sound consistent on YouTube and podcast platforms."
 
-#: Trim.py:195
+#: record.py:480
+msgid "Not available - check libs/recorder_backend.py"
+msgstr "Not available - check libs/recorder_backend.py"
+
+#: Trim.py:196
 msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
 msgstr "Note: Video trimming preserves original quality by default. No re-encoding is performed."
 
-#: record.py:375
+#: record.py:496
 msgid "Note: WAV format uses uncompressed audio"
 msgstr "Note: WAV format uses uncompressed audio"
 
-#: convertAudio.py:120
+#: convertAudio.py:221
 msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
 msgstr "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
+
+#: mp3_mixdown.py:746
+msgid "Number of Sections"
+msgstr "Number of Sections"
+
+#: mp3_mixdown.py:743
+msgid "Number of Sections:"
+msgstr "Number of Sections:"
 
 #: splitAudio.py:75
 msgid "Number of tracks:"
 msgstr "Number of tracks:"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:269
+#: convertAudio.py:83
+msgid "OGG Quality:"
+msgstr "OGG Quality:"
+
+#: convertAudio.py:90
+msgid "Opus Quality:"
+msgstr "Opus Quality:"
+
+#: convertAudio.py:605
+#: convertAudio.py:796
 msgid "Orange"
 msgstr "Orange"
 
-#: resizeImage.py:115
+#: resizeImage.py:116
 msgid "Output Filename Pattern:"
 msgstr "Output Filename Pattern:"
 
-#: Trim.py:205
+#: Trim.py:206
 #: merge.py:76
 msgid "Output Filename:"
 msgstr "Output Filename:"
 
-#: convertAudio.py:83
+#: convertAudio.py:183
 #: convertVideo.py:174
 msgid "Output Format:"
 msgstr "Output Format:"
 
-#: resizeImage.py:231
+#: resizeImage.py:232
 msgid "Output Information"
 msgstr "Output Information"
 
-#: resizeImage.py:233
+#: resizeImage.py:234
 msgid "Output Name"
 msgstr "Output Name"
 
-#: Trim.py:71
+#: Trim.py:72
 msgid "Output Type"
 msgstr "Output Type"
 
-#: resizeImage.py:124
+#: resizeImage.py:125
 msgid "Output folder:"
 msgstr "Output folder:"
 
-#: convertAudio.py:222
-#: convertAudio.py:299
-#: convertMP3toMP4.py:173
-#: convertMP3toMP4.py:297
+#: mp3_mixdown.py:462
+msgid "Pan Amount (%):"
+msgstr "Pan Amount (%):"
+
+#: mp3_mixdown.py:448
+msgid "Pan Direction:"
+msgstr "Pan Direction:"
+
+#: mp3_mixdown.py:652
+msgid "Parametric EQ High Gain"
+msgstr "Parametric EQ High Gain"
+
+#: mp3_mixdown.py:640
+msgid "Parametric EQ Low Gain"
+msgstr "Parametric EQ Low Gain"
+
+#: mp3_mixdown.py:646
+msgid "Parametric EQ Mid Gain"
+msgstr "Parametric EQ Mid Gain"
+
+#: convertAudio.py:333
+#: convertAudio.py:415
+#: convertAudio.py:700
+#: convertAudio.py:824
 #: merge.py:235
 #: merge.py:274
 msgid "Pause"
 msgstr "Pause"
 
-#: convertAudio.py:228
-#: convertMP3toMP4.py:179
+#: convertAudio.py:339
+#: convertAudio.py:706
 #: merge.py:241
 msgid "Paused."
 msgstr "Paused."
 
-#: convertMP3toMP4.py:47
+#: convertAudio.py:574
 msgid "Photo List"
 msgstr "Photo List"
+
+#: mp3_mixdown.py:1131
+msgid "Playing {}-second preview"
+msgstr "Playing {}-second preview"
+
+#: mp3_mixdown.py:57
+msgid "Plays audio backward at an increased tempo."
+msgstr "Plays audio backward at an increased tempo."
 
 #: merge.py:251
 msgid "Please enter an output filename."
@@ -825,19 +1446,23 @@ msgstr "Please enter an output filename."
 msgid "Please fill in all time entries"
 msgstr "Please fill in all time entries"
 
-#: __init__.py:341
+#: mp3Gain.py:334
+msgid "Please select MP3 files first, using the Browse button."
+msgstr "Please select MP3 files first, using the Browse button."
+
+#: __init__.py:454
 msgid "Please select an MP3 file first."
 msgstr "Please select an MP3 file first."
 
-#: __init__.py:356
+#: __init__.py:497
 msgid "Please select an audio file first"
 msgstr "Please select an audio file first"
 
-#: __init__.py:266
+#: __init__.py:379
 msgid "Please select an audio or video file first"
 msgstr "Please select an audio or video file first"
 
-#: __init__.py:281
+#: __init__.py:394
 msgid "Please select at least 2 MP3 files first."
 msgstr "Please select at least 2 MP3 files first."
 
@@ -845,41 +1470,67 @@ msgstr "Please select at least 2 MP3 files first."
 msgid "Please select at least 2 files"
 msgstr "Please select at least 2 files"
 
-#: convertMP3toMP4.py:189
+#: mp3_mixdown.py:1114
+#: mp3_mixdown.py:1141
+msgid "Please select at least one MP3 or WAV file first."
+msgstr "Please select at least one MP3 or WAV file first."
+
+#: convertAudio.py:716
 msgid "Please select at least one photo or choose a background color."
 msgstr "Please select at least one photo or choose a background color."
 
-#: __init__.py:296
+#: __init__.py:409
 msgid "Please select audio or video files first."
 msgstr "Please select audio or video files first."
 
-#: __init__.py:326
-#: __init__.py:371
+#: __init__.py:439
+#: __init__.py:512
 msgid "Please select image files first."
 msgstr "Please select image files first."
 
-#: __init__.py:311
-#: __init__.py:383
+#: __init__.py:424
+#: __init__.py:524
 msgid "Please select video files first."
 msgstr "Please select video files first."
 
-#: Trim.py:215
+#: mp3_mixdown.py:74
+msgid "Podcast Clarity"
+msgstr "Podcast Clarity"
+
+#: mp3_mixdown.py:99
+msgid "Pop"
+msgstr "Pop"
+
+#: mp3_mixdown.py:541
+#: mp3_mixdown.py:545
+msgid "Preset"
+msgstr "Preset"
+
+#: Trim.py:216
 msgid "Preview"
 msgstr "Preview"
 
-#: Trim.py:523
+#: mp3_mixdown.py:816
+msgid "Preview (15s)"
+msgstr "Preview (15s)"
+
+#: mp3_mixdown.py:1134
+msgid "Preview created but could not be opened automatically: {}"
+msgstr "Preview created but could not be opened automatically: {}"
+
+#: Trim.py:532
 msgid "Preview failed: {}"
 msgstr "Preview failed: {}"
 
-#: Trim.py:520
+#: Trim.py:529
 msgid "Preview file was not created or is too small"
 msgstr "Preview file was not created or is too small"
 
-#: Trim.py:525
+#: Trim.py:534
 msgid "Preview process failed: {}"
 msgstr "Preview process failed: {}"
 
-#: resizeImage.py:789
+#: resizeImage.py:795
 msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
 msgstr "Processed: {} - New size: {}, Dimensions: {} x {}"
 
@@ -887,11 +1538,13 @@ msgstr "Processed: {} - New size: {}, Dimensions: {} x {}"
 msgid "Processing track {} of {}"
 msgstr "Processing track {} of {}"
 
-#: resizeImage.py:713
+#: resizeImage.py:719
 msgid "Processing..."
 msgstr "Processing..."
 
-#: resizeImage.py:709
+#: mp3Gain.py:376
+#: mp3_mixdown.py:1161
+#: resizeImage.py:715
 msgid "Processing: {}"
 msgstr "Processing: {}"
 
@@ -899,61 +1552,88 @@ msgstr "Processing: {}"
 msgid "Progress: {}%"
 msgstr "Progress: {}%"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:270
+#: convertAudio.py:605
+#: convertAudio.py:797
 msgid "Purple"
 msgstr "Purple"
 
-#: resizeImage.py:208
+#: convertAudio.py:62
+#: convertAudio.py:107
+#: resizeImage.py:209
 msgid "Quality:"
 msgstr "Quality:"
+
+#: mp3_mixdown.py:141
+msgid "R&B / Soul"
+msgstr "R&B / Soul"
 
 #: merge.py:111
 msgid "Re-encode with quality (slower)"
 msgstr "Re-encode with quality (slower)"
 
-#: resizeImage.py:256
-#: resizeImage.py:461
+#: mp3_mixdown.py:1137
+#: resizeImage.py:257
+#: resizeImage.py:462
 msgid "Ready"
 msgstr "Ready"
 
-#: __init__.py:173
-#: record.py:271
+#: __init__.py:279
+#: record.py:306
 msgid "Record Settings"
 msgstr "Record Settings"
 
-#: __init__.py:441
+#: __init__.py:583
 msgid "Record Settings..."
 msgstr "Record Settings..."
 
-#: __init__.py:405
+#: __init__.py:546
 msgid "Record settings saved"
 msgstr "Record settings saved"
 
-#: record.py:317
+#: record.py:362
 msgid "Recording &Mode:"
 msgstr "Recording &Mode:"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:262
+#: convertAudio.py:604
+#: convertAudio.py:789
 msgid "Red"
 msgstr "Red"
 
-#: convertMP3toMP4.py:56
+#: record.py:451
+msgid "Reduce background &noise (Noise gate)"
+msgstr "Reduce background &noise (Noise gate)"
+
+#: record.py:445
+msgid "Reduce low-frequency noise (&High-pass filter)"
+msgstr "Reduce low-frequency noise (&High-pass filter)"
+
+#: convertAudio.py:583
 msgid "Remove Photo"
 msgstr "Remove Photo"
 
-#: __init__.py:170
-#: resizeImage.py:22
+#: mp3_mixdown.py:898
+msgid "Removed {} file(s) from the list"
+msgstr "Removed {} file(s) from the list"
+
+#: mp3_mixdown.py:39
+msgid "Removes background hiss and boosts vocal presence."
+msgstr "Removes background hiss and boosts vocal presence."
+
+#: record.py:447
+msgid "Removes low-frequency rumble, such as fan or handling noise, from the microphone. Only applies when Audio Processing is set to Default."
+msgstr "Removes low-frequency rumble, such as fan or handling noise, from the microphone. Only applies when Audio Processing is set to Default."
+
+#: __init__.py:276
+#: resizeImage.py:23
 msgid "Resize Image"
 msgstr "Resize Image"
 
-#: resizeImage.py:35
-#: resizeImage.py:330
+#: resizeImage.py:36
+#: resizeImage.py:331
 msgid "Resize Image: {} files"
 msgstr "Resize Image: {} files"
 
-#: resizeImage.py:136
+#: resizeImage.py:137
 msgid "Resize Settings"
 msgstr "Resize Settings"
 
@@ -969,46 +1649,107 @@ msgstr "Resolution: unknown"
 msgid "Resolution: {}x{}"
 msgstr "Resolution: {}x{}"
 
-#: convertAudio.py:227
-#: convertMP3toMP4.py:178
+#: convertAudio.py:338
+#: convertAudio.py:705
 #: merge.py:240
 msgid "Resume"
 msgstr "Resume"
 
-#: convertAudio.py:223
-#: convertMP3toMP4.py:174
+#: convertAudio.py:334
+#: convertAudio.py:701
 #: merge.py:236
 msgid "Resuming..."
 msgstr "Resuming..."
 
-#: resizeImage.py:195
+#: mp3_mixdown.py:687
+msgid "Reverb / Echo"
+msgstr "Reverb / Echo"
+
+#: mp3_mixdown.py:592
+msgid "Reverse Audio"
+msgstr "Reverse Audio"
+
+#: mp3_mixdown.py:56
+msgid "Reversed & Accelerated"
+msgstr "Reversed & Accelerated"
+
+#: resizeImage.py:196
 msgid "Right (pixels):"
 msgstr "Right (pixels):"
 
-#: Trim.py:164
-#: convertAudio.py:102
+#: mp3_mixdown.py:451
+#: mp3_mixdown.py:727
+msgid "Right to Left"
+msgstr "Right to Left"
+
+#: mp3_mixdown.py:104
+msgid "Rock"
+msgstr "Rock"
+
+#: Trim.py:165
+#: convertAudio.py:203
 #: convertVideo.py:201
 msgid "Sample Rate:"
 msgstr "Sample Rate:"
 
-#: record.py:386
+#: mp3_mixdown.py:437
+msgid "Section {}"
+msgstr "Section {}"
+
+#: mp3_mixdown.py:446
+msgid "Section {} End Second"
+msgstr "Section {} End Second"
+
+#: mp3_mixdown.py:465
+msgid "Section {} Pan Amount"
+msgstr "Section {} Pan Amount"
+
+#: mp3_mixdown.py:454
+msgid "Section {} Pan Direction"
+msgstr "Section {} Pan Direction"
+
+#: mp3_mixdown.py:442
+msgid "Section {} Start Second"
+msgstr "Section {} Start Second"
+
+#: record.py:539
 msgid "Select Destination Folder"
 msgstr "Select Destination Folder"
 
-#: convertMP3toMP4.py:122
+#: mp3Gain.py:257
+msgid "Select MP3 files"
+msgstr "Select MP3 files"
+
+#: mp3_mixdown.py:839
+msgid "Select MP3 or WAV files"
+msgstr "Select MP3 or WAV files"
+
+#: mp3Gain.py:195
+msgid "Select a directory"
+msgstr "Select a directory"
+
+#: mp3Gain.py:268
+msgid "Select a folder containing MP3 files"
+msgstr "Select a folder containing MP3 files"
+
+#: mp3_mixdown.py:850
+msgid "Select a folder containing MP3 or WAV files"
+msgstr "Select a folder containing MP3 or WAV files"
+
+#: convertAudio.py:649
 msgid "Select photos"
 msgstr "Select photos"
 
-#: Trim.py:65
+#: Trim.py:66
 #: splitAudio.py:63
 msgid "Selected File"
 msgstr "Selected File"
 
-#: convertMP3toMP4.py:39
+#: convertAudio.py:566
 msgid "Selected MP3 File"
 msgstr "Selected MP3 File"
 
-#: resizeImage.py:100
+#: resizeImage.py:101
 msgid "Selected files:"
 msgstr "Selected files:"
 
@@ -1020,17 +1761,29 @@ msgstr "Size: ..."
 msgid "Size: {}"
 msgstr "Size: {}"
 
-#: resizeImage.py:210
-#: resizeImage.py:528
-#: resizeImage.py:690
+#: resizeImage.py:591
+msgid "Skipped"
+msgstr "Skipped"
+
+#: resizeImage.py:592
+msgid "Skipped {}: unsupported or unreadable image format"
+msgstr "Skipped {}: unsupported or unreadable image format"
+
+#: resizeImage.py:211
+#: resizeImage.py:529
+#: resizeImage.py:696
 msgid "Small"
 msgstr "Small"
+
+#: mp3_mixdown.py:660
+msgid "Spatial, Modulation && Panning"
+msgstr "Spatial, Modulation && Panning"
 
 #: splitAudio.py:109
 msgid "Split"
 msgstr "Split"
 
-#: __init__.py:169
+#: __init__.py:275
 msgid "Split Audio"
 msgstr "Split Audio"
 
@@ -1054,30 +1807,34 @@ msgstr "Split complete! {} tracks created"
 msgid "Split failed!"
 msgstr "Split failed!"
 
-#: resizeImage.py:261
+#: resizeImage.py:262
 msgid "Start"
 msgstr "Start"
 
-#: Trim.py:132
+#: mp3_mixdown.py:440
+msgid "Start Second:"
+msgstr "Start Second:"
+
+#: Trim.py:133
 msgid "Start Time (100% volume):"
 msgstr "Start Time (100% volume):"
 
-#: Trim.py:80
-#: Trim.py:117
+#: Trim.py:81
+#: Trim.py:118
 msgid "Start Time:"
 msgstr "Start Time:"
 
-#: __init__.py:413
+#: __init__.py:554
 msgid "Start recording; press again to pause; press again to continue"
 msgstr "Start recording; press again to pause; press again to continue"
 
-#: Trim.py:424
-#: Trim.py:550
+#: Trim.py:425
+#: Trim.py:564
 msgid "Start time must be less than end time"
 msgstr "Start time must be less than end time"
 
-#: convertAudio.py:301
-#: convertMP3toMP4.py:299
+#: convertAudio.py:417
+#: convertAudio.py:826
 msgid "Starting conversion..."
 msgstr "Starting conversion..."
 
@@ -1089,41 +1846,89 @@ msgstr "Starting merge..."
 msgid "Starting split operation..."
 msgstr "Starting split operation..."
 
-#: Trim.py:631
+#: Trim.py:645
 msgid "Starting trim operation..."
 msgstr "Starting trim operation..."
 
-#: resizeImage.py:236
+#: resizeImage.py:237
 msgid "Status"
 msgstr "Status"
 
-#: __init__.py:428
+#: __init__.py:567
 msgid "Stop recording"
 msgstr "Stop recording"
 
-#: record.py:311
+#: record.py:402
+msgid "System Audio De&vice:"
+msgstr "System Audio De&vice:"
+
+#: record.py:356
 msgid "System Only"
 msgstr "System Only"
 
-#: record.py:309
+#: record.py:354
 msgid "System and Microphone (Merged)"
 msgstr "System and Microphone (Merged)"
 
-#: record.py:310
+#: record.py:355
 msgid "System and Microphone (Separate Files)"
 msgstr "System and Microphone (Separate Files)"
+
+#: mp3_mixdown.py:780
+msgid "Target Loudness (LUFS):"
+msgstr "Target Loudness (LUFS):"
 
 #: convertVideo.py:181
 msgid "Target Size:"
 msgstr "Target Size:"
 
-#: resizeImage.py:174
+#: mp3_mixdown.py:602
+msgid "Tempo Factor"
+msgstr "Tempo Factor"
+
+#: mp3_mixdown.py:599
+msgid "Tempo Factor (0.5-2.0):"
+msgstr "Tempo Factor (0.5-2.0):"
+
+#: record.py:376
+msgid "The microphone loudness, in dB, that starts ducking the music. Lower values duck more easily."
+msgstr "The microphone loudness, in dB, that starts ducking the music. Lower values duck more easily."
+
+#: Trim.py:454
+msgid "The selected file has no video stream and cannot be previewed as video."
+msgstr "The selected file has no video stream and cannot be previewed as video."
+
+#: Trim.py:550
+msgid "The selected file has no video stream and cannot be trimmed as video. Choose Audio output instead."
+msgstr "The selected file has no video stream and cannot be trimmed as video. Choose Audio output instead."
+
+#: mp3_mixdown.py:51
+msgid "Thickens sound with chorus, modulation, and extra stereo width."
+msgstr "Thickens sound with chorus, modulation, and extra stereo width."
+
+#: mp3_mixdown.py:590
+msgid "Time && Pitch"
+msgstr "Time && Pitch"
+
+#: mp3Gain.py:455
+msgid "Timed out applying gain to {}"
+msgstr "Timed out applying gain to {}"
+
+#: mp3_mixdown.py:1101
+msgid "Timed out processing {}"
+msgstr "Timed out processing {}"
+
+#: resizeImage.py:175
 msgid "Top (pixels):"
 msgstr "Top (pixels):"
 
-#: resizeImage.py:249
+#: resizeImage.py:250
 msgid "Total progress:"
 msgstr "Total progress:"
+
+#: mp3Gain.py:204
+msgid "Track Analysis"
+msgstr "Track Analysis"
 
 #: splitAudio.py:338
 msgid "Track end times must be in increasing order"
@@ -1133,140 +1938,163 @@ msgstr "Track end times must be in increasing order"
 msgid "Tracks"
 msgstr "Tracks"
 
-#: Trim.py:227
+#: mp3_mixdown.py:625
+msgid "Treble Gain"
+msgstr "Treble Gain"
+
+#: mp3_mixdown.py:623
+msgid "Treble Gain (dB):"
+msgstr "Treble Gain (dB):"
+
+#: Trim.py:228
 msgid "Trim"
 msgstr "Trim"
 
 #: Trim.py:22
-#: __init__.py:168
+#: __init__.py:274
 msgid "Trim Audio/Video File"
 msgstr "Trim Audio/Video File"
 
-#: Trim.py:33
+#: Trim.py:34
 msgid "Trim Audio/Video: {}"
 msgstr "Trim Audio/Video: {}"
 
-#: Trim.py:753
+#: Trim.py:771
 msgid "Trim complete!"
 msgstr "Trim complete!"
 
-#: Trim.py:779
-#: Trim.py:785
+#: Trim.py:797
+#: Trim.py:803
 msgid "Trim failed!"
 msgstr "Trim failed!"
 
-#: Trim.py:754
+#: Trim.py:772
 msgid "Trimmed file saved as {}"
 msgstr "Trimmed file saved as {}"
 
-#: Trim.py:780
-#: Trim.py:786
+#: Trim.py:798
+#: Trim.py:804
 msgid "Trimming failed: {}"
 msgstr "Trimming failed: {}"
 
-#: resizeImage.py:742
+#: mp3_mixdown.py:786
+msgid "True Peak Limit (dBTP):"
+msgstr "True Peak Limit (dBTP):"
+
+#: resizeImage.py:748
 msgid "Unknown"
 msgstr "Unknown"
 
-#: Trim.py:522
-#: Trim.py:777
+#: Trim.py:531
+#: Trim.py:795
 msgid "Unknown error"
 msgstr "Unknown error"
 
-#: resizeImage.py:210
-#: resizeImage.py:528
-#: resizeImage.py:687
+#: resizeImage.py:211
+#: resizeImage.py:529
+#: resizeImage.py:693
 msgid "Very Good"
 msgstr "Very Good"
 
-#: Trim.py:73
+#: Trim.py:74
 msgid "Video"
 msgstr "Video"
 
-#: Trim.py:152
+#: Trim.py:153
 msgid "Video Format"
 msgstr "Video Format"
 
-#: __init__.py:172
+#: __init__.py:260
 msgid "Video Info"
 msgstr "Video Info"
 
-#: convertAudio.py:111
+#: __init__.py:265
+msgid "Video Info: {info}"
+msgstr "Video Info: {info}"
+
+#: mp3_mixdown.py:38
+msgid "Vocal Clarity & Denoise (ANR)"
+msgstr "Vocal Clarity & Denoise (ANR)"
+
+#: convertAudio.py:212
 msgid "Volume:"
 msgstr "Volume:"
 
-#: resizeImage.py:611
+#: resizeImage.py:617
 msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
 msgstr "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:261
+#: convertAudio.py:604
+#: convertAudio.py:788
 msgid "White"
 msgstr "White"
 
-#: resizeImage.py:142
+#: mp3_mixdown.py:81
+msgid "Widens the stereo image, applies gentle multi-stage compression, and adds a touch of reverb for a fuller, more polished vocal and music mix."
+msgstr "Widens the stereo image, applies gentle multi-stage compression, and adds a touch of reverb for a fuller, more polished vocal and music mix."
+
+#: resizeImage.py:143
 msgid "Width (pixels):"
 msgstr "Width (pixels):"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:265
+#: mp3_mixdown.py:666
+msgid "Width Intensity:"
+msgstr "Width Intensity:"
+
+#: convertAudio.py:605
+#: convertAudio.py:792
 msgid "Yellow"
 msgstr "Yellow"
 
-#: Trim.py:454
-#: Trim.py:626
-#: convertAudio.py:272
-#: convertMP3toMP4.py:198
+#: record.py:257
+msgid "continue"
+msgstr "continue"
+
+#: Trim.py:459
+#: Trim.py:640
+#: convertAudio.py:383
+#: convertAudio.py:725
 #: convertVideo.py:382
 #: merge.py:265
-#: resizeImage.py:655
+#: resizeImage.py:661
 #: splitAudio.py:359
 msgid "ffmpeg.exe not found"
 msgstr "ffmpeg.exe not found"
 
-#: __init__.py:68
-msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
-msgstr "ffmpeg.exe or ffprobe.exe not found in tools folder"
+#: __init__.py:93
+msgid "ffmpeg.exe or ffprobe.exe not found in libs folder"
+msgstr "ffmpeg.exe or ffprobe.exe not found in libs folder"
 
-#: Trim.py:317
+#: Trim.py:318
 #: splitAudio.py:193
 msgid "ffprobe.exe not found"
 msgstr "ffprobe.exe not found"
 
-#: Trim.py:394
+#: Trim.py:395
 msgid "invalid"
 msgstr "invalid"
 
-#: Trim.py:373
+#: Trim.py:374
 msgid "invalid (negative)"
 msgstr "invalid (negative)"
 
-#: __init__.py:424
-#: record.py:214
+#: record.py:247
 msgid "paused"
 msgstr "paused"
 
-#: __init__.py:421
-msgid "resume"
-msgstr "resume"
-
-#: record.py:223
-msgid "resumed"
-msgstr "resumed"
-
-#: __init__.py:418
+#: __init__.py:559
 msgid "start"
 msgstr "start"
 
-#: __init__.py:436
+#: __init__.py:578
 msgid "stopped No file saved"
 msgstr "stopped No file saved"
 
-#: __init__.py:434
+#: __init__.py:576
 msgid "stopped Saved to: {}"
 msgstr "stopped Saved to: {}"
 
-#: Trim.py:367
+#: Trim.py:368
 #: convertVideo.py:277
 msgid "unknown"
 msgstr "unknown"
@@ -1275,6 +2103,10 @@ msgstr "unknown"
 #: video.py:156
 msgid "{filename}: {result}"
 msgstr "{filename}: {result}"
+
+#: mp3Gain.py:249
+msgid "{name} ({db:.1f} dB)"
+msgstr "{name} ({db:.1f} dB)"
 
 #: video.py:122
 msgid "{width} by {height} pixels, size {size}"
@@ -1288,7 +2120,7 @@ msgstr "{width} by {height} pixels, {dpi} DPI"
 msgid "{width} by {height} pixels, {fps} fps, size {size}"
 msgstr "{width} by {height} pixels, {fps} fps, size {size}"
 
-#: resizeImage.py:336
+#: resizeImage.py:337
 msgid "{} files removed"
 msgstr "{} files removed"
 

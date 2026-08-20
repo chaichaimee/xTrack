@@ -9,8 +9,8 @@ import re
 
 addonHandler.initTranslation()
 
-def get_video_info_fast(tools_path, file_path):
-	ffprobe_path = os.path.join(tools_path, "ffprobe.exe")
+def get_video_info_fast(libs_path, file_path):
+	ffprobe_path = os.path.join(libs_path, "ffprobe.exe")
 	if not os.path.exists(ffprobe_path):
 		log.error(f"ffprobe not found at {ffprobe_path}")
 		return None, None, None
@@ -103,14 +103,14 @@ def format_file_size(size_bytes):
 	else:
 		return f"{size_bytes / (1024 * 1024 * 1024):.1f} GB"
 
-def process_single_video(file_path, tools_path):
+def process_single_video(file_path, libs_path):
 	try:
 		log.info(f"Processing video: {file_path}")
 
 		if not os.path.exists(file_path):
 			return _("File not found")
 
-		width, height, fps = get_video_info_fast(tools_path, file_path)
+		width, height, fps = get_video_info_fast(libs_path, file_path)
 
 		if width is None or height is None:
 			return _("Could not read video dimensions")
@@ -132,7 +132,7 @@ def process_single_video(file_path, tools_path):
 		log.error(f"Error processing video {file_path}: {e}")
 		return _("Error getting video information")
 
-def show_video_info(selected_files, tools_path):
+def show_video_info(selected_files, libs_path):
 	if not selected_files:
 		log.error("No files selected for video info")
 		ui.message(_("No files selected"))
@@ -142,7 +142,7 @@ def show_video_info(selected_files, tools_path):
 
 	results = []
 	for file_path in selected_files:
-		result = process_single_video(file_path, tools_path)
+		result = process_single_video(file_path, libs_path)
 		results.append((os.path.basename(file_path), result))
 
 	def announce_results():
@@ -160,3 +160,4 @@ def show_video_info(selected_files, tools_path):
 
 	thread = threading.Thread(target=announce_results, daemon=True)
 	thread.start()
+

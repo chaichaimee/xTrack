@@ -13,15 +13,16 @@ from gui import guiHelper
 from .xTrackCore import load_config, save_config, get_file_size, get_config_path
 import addonHandler
 import core
+from logHandler import log
 
 addonHandler.initTranslation()
 
 class ResizeImageDialog(wx.Dialog):
 	"""Dialog for resizing images with width and height in pixels."""
-	def __init__(self, parent, selected_files, tools_path):
+	def __init__(self, parent, selected_files, libs_path):
 		super().__init__(parent, title=_("Resize Image"))
 		self.selected_files = selected_files
-		self.tools_path = tools_path
+		self.libs_path = libs_path
 		self.output_path = os.path.dirname(self.selected_files[0]) if self.selected_files else os.getcwd()
 		self.config_path = get_config_path()
 		self.ffmpeg_process = None
@@ -59,7 +60,7 @@ class ResizeImageDialog(wx.Dialog):
 
 	def get_image_dimensions_fast(self, file_path):
 		"""Get image dimensions quickly using ffprobe."""
-		ffprobe_path = os.path.join(self.tools_path, "ffprobe.exe")
+		ffprobe_path = os.path.join(self.libs_path, "ffprobe.exe")
 		if not os.path.exists(ffprobe_path):
 			return 0, 0
 		
@@ -583,7 +584,12 @@ class ResizeImageDialog(wx.Dialog):
 		# Get original dimensions
 		orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
 		if orig_width <= 0 or orig_height <= 0:
-			# Skip files with invalid dimensions
+			# Skip files whose dimensions could not be read, for example an
+			# image codec the bundled ffprobe build cannot decode, and tell
+			# the user explicitly instead of dropping the file silently.
+			log.error(f"Skipping resize for {file_path}: unreadable dimensions")
+			wx.CallAfter(self.update_processing_status, file_path, _("Skipped"))
+			ui.message(_("Skipped {}: unsupported or unreadable image format").format(os.path.basename(file_path)))
 			self.processed_files += 1
 			wx.CallAfter(self.update_progress)
 			self.process_next_file()
@@ -650,7 +656,7 @@ class ResizeImageDialog(wx.Dialog):
 		
 		output_path = self.get_unique_file_path(os.path.join(self.output_path, output_filename))
 		
-		ffmpeg_path = os.path.join(self.tools_path, "ffmpeg.exe")
+		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
 		if not os.path.exists(ffmpeg_path):
 			ui.message(_("ffmpeg.exe not found"))
 			return
@@ -855,3 +861,6 @@ class ResizeImageDialog(wx.Dialog):
 				break
 		self.currently_processing = False
 		self.EndModal(wx.ID_CANCEL)
+
+
+

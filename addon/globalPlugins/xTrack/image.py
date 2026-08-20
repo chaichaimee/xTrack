@@ -9,9 +9,9 @@ import threading
 
 addonHandler.initTranslation()
 
-def get_image_dimensions_fast(tools_path, file_path):
+def get_image_dimensions_fast(libs_path, file_path):
 	"""Get image dimensions quickly using ffprobe."""
-	ffprobe_path = os.path.join(tools_path, "ffprobe.exe")
+	ffprobe_path = os.path.join(libs_path, "ffprobe.exe")
 	if not os.path.exists(ffprobe_path):
 		log.error(f"ffprobe not found at {ffprobe_path}")
 		return 0, 0
@@ -49,9 +49,9 @@ def get_image_dimensions_fast(tools_path, file_path):
 	
 	return 0, 0
 
-def get_image_dpi_fast(tools_path, file_path):
+def get_image_dpi_fast(libs_path, file_path):
 	"""Get image DPI quickly using ffprobe."""
-	ffprobe_path = os.path.join(tools_path, "ffprobe.exe")
+	ffprobe_path = os.path.join(libs_path, "ffprobe.exe")
 	if not os.path.exists(ffprobe_path):
 		log.error(f"ffprobe not found at {ffprobe_path}")
 		return 96
@@ -128,7 +128,7 @@ def get_image_dpi_fast(tools_path, file_path):
 	log.info(f"No DPI found for {file_path}, using default 96")
 	return 96  # Default DPI
 
-def process_single_image(file_path, tools_path):
+def process_single_image(file_path, libs_path):
 	"""Process a single image and return the info message."""
 	try:
 		log.info(f"Processing image: {file_path}")
@@ -137,13 +137,13 @@ def process_single_image(file_path, tools_path):
 			return _("File not found")
 		
 		# Get dimensions
-		width, height = get_image_dimensions_fast(tools_path, file_path)
+		width, height = get_image_dimensions_fast(libs_path, file_path)
 		
 		if width == 0 or height == 0:
 			return _("Could not read image dimensions")
 		
 		# Get DPI
-		dpi = get_image_dpi_fast(tools_path, file_path)
+		dpi = get_image_dpi_fast(libs_path, file_path)
 		
 		# Create message without filename to avoid duplicate announcements
 		message = _("{width} by {height} pixels, {dpi} DPI").format(
@@ -159,7 +159,7 @@ def process_single_image(file_path, tools_path):
 		log.error(f"Error processing image {file_path}: {e}")
 		return _("Error getting image information")
 
-def show_image_info(selected_files, tools_path):
+def show_image_info(selected_files, libs_path):
 	"""Display image information (dimensions and DPI) for selected files."""
 	if not selected_files:
 		log.error("No files selected for image info")
@@ -171,7 +171,7 @@ def show_image_info(selected_files, tools_path):
 	# Process all images first
 	results = []
 	for file_path in selected_files:
-		result = process_single_image(file_path, tools_path)
+		result = process_single_image(file_path, libs_path)
 		results.append((os.path.basename(file_path), result))
 	
 	# Announce results with delay to avoid interruption from Explorer
@@ -199,4 +199,6 @@ def show_image_info(selected_files, tools_path):
 	# Start announcement in a separate thread to avoid blocking
 	thread = threading.Thread(target=announce_results, daemon=True)
 	thread.start()
+
+
 
