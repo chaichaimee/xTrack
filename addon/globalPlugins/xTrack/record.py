@@ -1,4 +1,3 @@
-# record.py
 
 import os
 import time
@@ -181,8 +180,8 @@ class Recorder:
 			try:
 				if self.backend_recorder and hasattr(self.backend_recorder, 'stop_recording'):
 					self.backend_recorder.stop_recording()
-			except:
-				pass
+			except Exception as cleanupError:
+				log.error(f"xTrack: Error while stopping backend recorder during cleanup: {cleanupError}")
 		finally:
 			self.is_recording = False
 			self.is_paused = False
@@ -565,6 +564,7 @@ class RecordSettingsDialog(wx.Dialog):
 			"duckingRelease": self.duckingReleaseSpin.GetValue()
 		})
 		event.Skip()
+
 
 
 

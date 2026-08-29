@@ -1,4 +1,3 @@
-# libs/recorder_backend.py
 
 import os
 import wave
@@ -446,6 +445,19 @@ class WasapiSoundRecorder:
 					return dev
 			log.error(f"Configured microphone '{self.microphone_device_name}' not found; falling back to automatic selection")
 
+		# Prefer the OS-configured default input device first, mirroring how
+		# _get_loopback_device() prefers the OS default output device. Without
+		# this, "Automatic" silently picked whichever input happened to enumerate
+		# first, which is not necessarily the microphone actually in use.
+		try:
+			defaultInputIndex = self.audio_interface.get_default_input_device_info()['index']
+			defaultInput = self.audio_interface.get_device_info_by_index(defaultInputIndex)
+			if defaultInput.get('maxInputChannels', 0) > 0 and 'loopback' not in defaultInput['name'].lower():
+				log.info(f"Selected default hardware microphone: {defaultInput['name']}")
+				return defaultInput
+		except (OSError, IOError, KeyError) as defaultInputError:
+			log.debug(f"No default input device reported: {defaultInputError}")
+
 		candidates = []
 		for i in range(self.audio_interface.get_device_count()):
 			dev = self.audio_interface.get_device_info_by_index(i)
@@ -478,12 +490,12 @@ class WasapiSoundRecorder:
 		try:
 			default_output_idx = self.audio_interface.get_default_output_device_info()['index']
 			default_output = self.audio_interface.get_device_info_by_index(default_output_idx)
-		except:
-			pass
+		except (OSError, IOError, KeyError) as defaultOutputError:
+			log.debug(f"No default output device reported: {defaultOutputError}")
 
 		if default_output:
 			for dev in loopbacks:
-				if default_output['name'] in dev['name']:
+				if default_output['name'].lower() in dev['name'].lower():
 					log.info(f"Matched loopback for default output: {dev['name']}")
 					return dev
 
@@ -959,8 +971,8 @@ class WasapiSoundRecorder:
 				if stream:
 					try:
 						stream.stop_stream()
-					except:
-						pass
+					except OSError as stopStreamError:
+						log.debug(f"Error stopping stream during pause: {stopStreamError}")
 
 			# ...then stop the writer loop immediately. Do NOT keep it running
 			# for a "grace" window: once one side has no more real data, the
@@ -978,8 +990,8 @@ class WasapiSoundRecorder:
 				if stream:
 					try:
 						stream.close()
-					except:
-						pass
+					except OSError as closeStreamError:
+						log.debug(f"Error closing stream during pause: {closeStreamError}")
 			self.stream_system = None
 			if not keepMicStreamAlive:
 				self.stream_mic = None
@@ -1043,8 +1055,8 @@ class WasapiSoundRecorder:
 					try:
 						stream.stop_stream()
 						stream.close()
-					except:
-						pass
+					except OSError as closeStreamError:
+						log.debug(f"Error closing stream during stop: {closeStreamError}")
 
 			time.sleep(0.1)
 
@@ -1056,19 +1068,20 @@ class WasapiSoundRecorder:
 				if wf:
 					try:
 						wf.close()
-					except:
-						pass
+					except OSError as closeWaveError:
+						log.debug(f"Error closing wave file during stop: {closeWaveError}")
 
 			for proc in [self.ffmpeg_process, self.ffmpeg_process_system, self.ffmpeg_process_mic]:
 				if proc:
 					try:
 						proc.stdin.close()
 						proc.wait(timeout=3)
-					except:
+					except (OSError, subprocess.TimeoutExpired) as ffmpegWaitError:
+						log.debug(f"ffmpeg process did not exit cleanly, terminating: {ffmpegWaitError}")
 						try:
 							proc.terminate()
-						except:
-							pass
+						except OSError as terminateError:
+							log.debug(f"Error terminating ffmpeg process: {terminateError}")
 
 			if self.should_merge_to_single_file:
 				self._merge_temp_files_to_final()
@@ -1125,17 +1138,28 @@ class WasapiSoundRecorder:
 					duckRatio = min(20.0, max(2.0, abs(self.ducking_level_db) / 1.2))
 					filterComplex = (
 						f"[0:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a0];"
-						f"[1:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a1];"
-						f"[a0][a1]sidechaincompress=threshold={thresholdLinear:.5f}:ratio={duckRatio:.2f}:"
+						# The microphone stream is needed twice further down: once as
+						# the sidechain trigger for sidechaincompress, and again as the
+						# actual voice track mixed into the final output. A filtergraph
+						# link label can only feed one filter input, so without this
+						# asplit the second reference resolved to nothing and the
+						# microphone was silently dropped from the merged recording
+						# whenever auto-ducking was enabled.
+						f"[1:a]aformat=sample_rates={targetRate}:channel_layouts=stereo,asplit=2[a1sc][a1mix];"
+						f"[a0][a1sc]sidechaincompress=threshold={thresholdLinear:.5f}:ratio={duckRatio:.2f}:"
 						f"attack={self.ducking_attack_ms}:release={self.ducking_release_ms}:makeup=1[ducked];"
-						f"[ducked][a1]amix=inputs=2:duration=longest:dropout_transition=0,volume=2[aout]"
+						# Microphone speech sits much quieter than system audio at
+						# unity gain, so without a mic-side makeup weight here the
+						# voice track stayed buried under the system audio in the
+						# final mix regardless of whether ducking triggered.
+						f"[ducked][a1mix]amix=inputs=2:duration=longest:dropout_transition=0:weights=1 1.4,volume=2[aout]"
 					)
 					log.info(f"Merging with auto-ducking enabled (threshold={thresholdLinear:.5f}, ratio={duckRatio:.2f})")
 				else:
 					filterComplex = (
 						f"[0:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a0];"
 						f"[1:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a1];"
-						f"[a0][a1]amix=inputs=2:duration=longest:dropout_transition=0,volume=2[aout]"
+						f"[a0][a1]amix=inputs=2:duration=longest:dropout_transition=0:weights=1 1.4,volume=2[aout]"
 					)
 				cmd = [
 					ffmpeg_exe, "-y",
@@ -1167,5 +1191,8 @@ class WasapiSoundRecorder:
 						os.remove(tempPath)
 				except Exception as cleanupError:
 					log.error(f"Failed to remove temp file {tempPath}: {cleanupError}")
+
+
+
 
 

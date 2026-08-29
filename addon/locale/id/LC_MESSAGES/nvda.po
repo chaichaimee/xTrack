@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: xTrack 2026.5.3\n"
+"Project-Id-Version: xTrack 2026.9.0\n"
 "Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
-"POT-Creation-Date: 2026-05-17 07:43+0700\n"
+"POT-Creation-Date: 2026-08-28 11:38+0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: chaiBot and Malee Yamazaki\n"
-"Language-Team: Indonesian\n"
+"Language-Team: English\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,59 +14,68 @@ msgstr ""
 
 #: splitAudio.py:151
 msgid " {:02d} End Time:"
-msgstr " {:02d} Waktu Selesai:"
+msgstr "{:02d} Waktu Selesai:"
 
-#: Trim.py:385
+#: Trim.py:386
 msgid " | Fade In: {} to {}"
-msgstr " | Fade In: {} ke {}"
+msgstr "| Fade In: {} ke {}"
 
-#: Trim.py:389
+#: Trim.py:390
 msgid " | Fade Out: {} to {}"
-msgstr " | Fade Out: {} ke {}"
+msgstr "| Fade Out: {} ke {}"
 
-#: record.py:350
+#: mp3Gain.py:178
+msgid "\"Normal\" Volume (dB):"
+msgstr "Volume \"Normal\" (dB):"
+
+#: mp3Gain.py:195
+#: record.py:470
 msgid "&Browse..."
-msgstr "&Telusuri..."
+msgstr "&Jelajahi..."
 
-#: record.py:339
+#: record.py:459
 msgid "&Count-in before recording"
 msgstr "&Hitung mundur sebelum merekam"
 
-#: record.py:345
+#: record.py:465
 msgid "&Destination Folder:"
 msgstr "&Folder Tujuan:"
 
-#: record.py:320
+#: record.py:408
 msgid "&Format:"
 msgstr "&Format:"
 
-#: record.py:336
-msgid "&Microphone Gain (0-10):"
-msgstr "Gain &Mikrofon (0-10):"
+#: record.py:424
+msgid "&Microphone Volume (%):"
+msgstr "&Volume Mikrofon (%):"
 
-#: record.py:342
+#: record.py:462
 msgid "&Open folder after recording"
 msgstr "&Buka folder setelah merekam"
 
-#: record.py:337
-msgid "&System Gain (0-10):"
-msgstr "Gain &Sistem (0-10):"
+#: record.py:425
+msgid "&System Volume (%):"
+msgstr "&Volume Sistem (%):"
 
-#: convertVideo.py:252
-#: convertVideo.py:257
+#: convertVideo.py:251
+#: convertVideo.py:256
 msgid "..."
 msgstr "..."
 
-#: convertVideo.py:273
-#: convertVideo.py:280
+#: convertVideo.py:272
+#: convertVideo.py:279
 msgid "?"
 msgstr "?"
 
-#: record.py:381
+#: record.py:501
 msgid "AAC Bitrate (kbps):"
 msgstr "Bitrate AAC (kbps):"
 
-#: convertMP3toMP4.py:52
+#: convertAudio.py:76
+msgid "AAC Quality:"
+msgstr "Kualitas AAC:"
+
+#: convertAudio.py:579
 msgid "Add Photo..."
 msgstr "Tambah Foto..."
 
@@ -74,46 +83,115 @@ msgstr "Tambah Foto..."
 msgid "Additional fade-in duration for the beginning of each track (except the first track)"
 msgstr "Durasi fade-in tambahan untuk awal setiap trek (kecuali trek pertama)"
 
-#: convertAudio.py:370
-#: convertAudio.py:371
+#: mp3_mixdown.py:87
+msgid "Adds punchy low-end weight and bright, clear highs."
+msgstr "Menambahkan bobot low-end yang bertenaga serta high yang cerah dan jernih."
+
+#: mp3_mixdown.py:595
+msgid "Adjust Tempo"
+msgstr "Sesuaikan Tempo"
+
+#: mp3_mixdown.py:633
+msgid "Advanced Parametric Equalizer (3-Band)"
+msgstr "Equalizer Parametrik Lanjutan (3-Band)"
+
+#: mp3_mixdown.py:738
+msgid "Advanced Time-Based Panning"
+msgstr "Panning Berbasis Waktu Lanjutan"
+
+#: mp3Gain.py:205
+msgid "Album Analysis"
+msgstr "Analisis Album"
+
+#: mp3Gain.py:522
+msgid "Album analysis complete for {count} folder(s)"
+msgstr "Analisis album selesai untuk {count} folder"
+
+#: convertAudio.py:486
+#: convertAudio.py:487
 msgid "All conversions complete!"
 msgstr "Semua konversi selesai!"
 
-#: convertVideo.py:529
-#: convertVideo.py:530
+#: convertVideo.py:542
+#: convertVideo.py:543
 msgid "All conversions finished"
-msgstr "Semua konversi telah berakhir"
+msgstr "Semua konversi selesai"
 
-#: resizeImage.py:817
+#: resizeImage.py:822
 msgid "All images processed!"
-msgstr "Semua gambar telah diproses!"
+msgstr "Semua gambar diproses!"
 
 #: merge.py:339
 msgid "An error occurred during merge: {}"
-msgstr "Terjadi kesalahan saat penggabungan: {}"
+msgstr "Terjadi kesalahan saat menggabungkan: {}"
 
-#: Trim.py:72
+#: mp3Gain.py:203
+msgid "Analysis"
+msgstr "Analisis"
+
+#: mp3Gain.py:339
+msgid "Analysis cleared"
+msgstr "Analisis dibersihkan"
+
+#: mp3Gain.py:491
+msgid "Analyzing: {}"
+msgstr "Menganalisis: {}"
+
+#: mp3_mixdown.py:913
+msgid "Applies a genre-tuned EQ curve for the selected music style."
+msgstr "Menerapkan kurva EQ yang disesuaikan dengan genre untuk gaya musik yang dipilih."
+
+#: mp3Gain.py:223
+#: mp3_mixdown.py:819
+msgid "Apply"
+msgstr "Terapkan"
+
+#: mp3Gain.py:220
+msgid "Apply Album Gain"
+msgstr "Terapkan Penguatan Album"
+
+#: mp3_mixdown.py:763
+msgid "Apply Compressor"
+msgstr "Terapkan Kompresor"
+
+#: mp3_mixdown.py:796
+msgid "Apply Limiter"
+msgstr "Terapkan Pembatas"
+
+#: mp3Gain.py:219
+msgid "Apply Track Gain"
+msgstr "Terapkan Penguatan Trek"
+
+#: Trim.py:73
 msgid "Audio"
 msgstr "Audio"
 
-#: record.py:355
-msgid "Audio Backend Status: "
-msgstr "Status Backend Audio: "
+#: record.py:434
+msgid "Audio &Processing:"
+msgstr "Audio & Pemrosesan:"
 
-#: Trim.py:174
+#: record.py:475
+msgid "Audio Backend Status: "
+msgstr "Status Backend Audio:"
+
+#: Trim.py:175
 msgid "Audio Channels:"
 msgstr "Saluran Audio:"
 
-#: Trim.py:184
-#: convertVideo.py:215
+#: Trim.py:185
+#: convertVideo.py:214
 msgid "Audio Codec:"
 msgstr "Codec Audio:"
 
-#: Trim.py:89
+#: mp3_mixdown.py:520
+msgid "Audio Files"
+msgstr "Berkas Audio"
+
+#: Trim.py:90
 msgid "Audio Format"
 msgstr "Format Audio"
 
-#: Trim.py:97
+#: Trim.py:98
 msgid "Audio Quality"
 msgstr "Kualitas Audio"
 
@@ -121,40 +199,84 @@ msgstr "Kualitas Audio"
 msgid "Audio Quality:"
 msgstr "Kualitas Audio:"
 
-#: Trim.py:160
-#: convertVideo.py:198
+#: Trim.py:161
+#: convertVideo.py:197
 msgid "Audio Settings"
 msgstr "Pengaturan Audio"
 
 #: splitAudio.py:436
 msgid "Audio file split into {} tracks"
-msgstr "File audio dibagi menjadi {} trek"
+msgstr "Berkas audio dibagi menjadi {} trek"
 
-#: convertMP3toMP4.py:86
+#: convertAudio.py:613
 msgid "Auto crop images to 16:9 aspect ratio"
-msgstr "Potong gambar otomatis ke rasio aspek 16:9"
+msgstr "Potong otomatis gambar ke rasio aspek 16:9"
 
-#: record.py:357
+#: mp3_mixdown.py:712
+msgid "Auto-Pan Loop (Circular, Dance Style)"
+msgstr "Perulangan Geser Otomatis (Melingkar, Gaya Dansa)"
+
+#: mp3_mixdown.py:730
+msgid "Auto-Pan Loop Direction"
+msgstr "Arah Perulangan Geser Otomatis"
+
+#: mp3_mixdown.py:720
+msgid "Auto-Pan Loop Speed"
+msgstr "Kecepatan Perulangan Geser Otomatis"
+
+#: record.py:391
+msgid "Automatic (Default)"
+msgstr "Otomatis (Bawaan)"
+
+#: record.py:367
+msgid "Automatically lowers the system audio whenever the microphone picks up speech, then raises it back once you stop talking. Only applies when Recording Mode is System and Microphone (Merged)."
+msgstr "Secara otomatis menurunkan audio sistem saat mikrofon menangkap suara, lalu menaikkannya kembali setelah Anda berhenti berbicara. Hanya berlaku jika Mode Perekaman adalah Sistem dan Mikrofon (Digabung)."
+
+#: record.py:477
 msgid "Available"
 msgstr "Tersedia"
 
-#: convertMP3toMP4.py:74
+#: convertAudio.py:601
 msgid "Background Color:"
 msgstr "Warna Latar Belakang:"
 
+#: mp3_mixdown.py:86
+msgid "Bass & Treble Boost"
+msgstr "Penguatan Bas & Treble"
+
+#: mp3_mixdown.py:32
+msgid "Bass Boosted Warmth"
+msgstr "Kehangatan Diperkuat Bas"
+
+#: mp3_mixdown.py:619
+msgid "Bass Gain"
+msgstr "Penguatan Bas"
+
+#: mp3_mixdown.py:617
+msgid "Bass Gain (dB):"
+msgstr "Penguatan Bas (dB):"
+
 #: resizeImage.py:210
 #: resizeImage.py:528
-#: resizeImage.py:686
+#: resizeImage.py:691
 msgid "Best (No loss)"
-msgstr "Terbaik (Tanpa kehilangan kualitas)"
+msgstr "Terbaik (Tanpa kehilangan)"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:260
+#: mp3_mixdown.py:662
+msgid "Binaural Audio (3D Headphone Simulation)"
+msgstr "Audio Binaural (Simulasi Headphone 3D)"
+
+#: mp3_mixdown.py:669
+msgid "Binaural Width Intensity"
+msgstr "Intensitas Lebar Binaural"
+
+#: convertAudio.py:604
+#: convertAudio.py:787
 msgid "Black"
 msgstr "Hitam"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:264
+#: convertAudio.py:604
+#: convertAudio.py:791
 msgid "Blue"
 msgstr "Biru"
 
@@ -162,145 +284,233 @@ msgstr "Biru"
 msgid "Bottom (pixels):"
 msgstr "Bawah (piksel):"
 
+#: mp3_mixdown.py:68
+msgid "Broadcast Standard (EBU R128)"
+msgstr "Standar Penyiaran (EBU R128)"
+
+#: mp3Gain.py:165
+#: mp3_mixdown.py:523
+msgid "Browse Files..."
+msgstr "Telusuri Berkas..."
+
+#: mp3Gain.py:168
+#: mp3_mixdown.py:526
+msgid "Browse Folder..."
+msgstr "Telusuri Folder..."
+
 #: resizeImage.py:128
 msgid "Browse..."
 msgstr "Telusuri..."
 
-#: convertAudio.py:161
-#: convertAudio.py:177
+#: convertAudio.py:262
+#: convertAudio.py:288
 #: merge.py:170
 #: resizeImage.py:460
 #: resizeImage.py:490
 msgid "Calculating..."
 msgstr "Menghitung..."
 
-#: Trim.py:230
-#: convertAudio.py:141
-#: convertMP3toMP4.py:104
-#: convertVideo.py:234
+#: Trim.py:231
+#: convertAudio.py:242
+#: convertAudio.py:631
+#: convertVideo.py:233
 #: merge.py:141
 #: resizeImage.py:265
 #: splitAudio.py:112
 msgid "Cancel"
 msgstr "Batal"
 
-#: convertVideo.py:349
+#: convertVideo.py:348
 msgid "Cannot read video resolution"
 msgstr "Tidak dapat membaca resolusi video"
 
-#: convertVideo.py:208
+#: mp3_mixdown.py:451
+msgid "Center"
+msgstr "Tengah"
+
+#: convertVideo.py:207
 msgid "Channels:"
 msgstr "Saluran:"
 
+#: mp3Gain.py:210
+msgid "Check"
+msgstr "Centang"
+
+#: record.py:396
+msgid "Choose a specific microphone if it is not on your system's default recording device, for example when the microphone is on a separate sound card."
+msgstr "Pilih mikrofon tertentu jika tidak ada di perangkat perekam default sistem Anda, misalnya saat mikrofon berada di kartu suara yang terpisah."
+
 #: resizeImage.py:501
 msgid "Choose output folder"
-msgstr "Pilih folder output"
+msgstr "Pilih folder keluaran"
 
-#: resizeImage.py:811
+#: record.py:404
+msgid "Choose which output device's audio to record, for example when speech and music play through different speakers than the system default."
+msgstr "Pilih audio perangkat keluaran mana yang akan direkam, misalnya saat suara dan musik diputar melalui speaker yang berbeda dari default sistem."
+
+#: mp3_mixdown.py:675
+msgid "Chorus"
+msgstr "Paduan suara"
+
+#: mp3_mixdown.py:681
+msgid "Chorus Delay"
+msgstr "Penundaan paduan suara"
+
+#: mp3_mixdown.py:679
+msgid "Chorus Delay (ms):"
+msgstr "Penundaan Chorus (ms):"
+
+#: mp3_mixdown.py:44
+msgid "Cinematic Binaural Space"
+msgstr "Ruang Binaural Sinematik"
+
+#: mp3_mixdown.py:136
+msgid "Classical"
+msgstr "Klasik"
+
+#: mp3_mixdown.py:27
+msgid "Clean audio export with no added filters."
+msgstr "Ekspor audio bersih tanpa filter tambahan."
+
+#: mp3Gain.py:206
+msgid "Clear Analysis"
+msgstr "Hapus Analisis"
+
+#: mp3Gain.py:234
+#: mp3_mixdown.py:822
+msgid "Close"
+msgstr "Tutup"
+
+#: record.py:429
+msgid "Communications"
+msgstr "Komunikasi"
+
+#: record.py:438
+msgid "Communications requests Windows voice-processing features such as noise suppression, echo cancellation, and automatic gain control when supported by the operating system and audio driver."
+msgstr "Komunikasi meminta fitur pemrosesan suara Windows seperti penekanan derau, pembatalan gema, dan kontrol penguatan otomatis jika didukung oleh sistem operasi dan driver audio."
+
+#: resizeImage.py:816
 msgid "Complete!"
 msgstr "Selesai!"
 
-#: resizeImage.py:781
+#: resizeImage.py:786
 msgid "Completed"
 msgstr "Selesai"
 
-#: convertAudio.py:79
-#: convertVideo.py:171
+#: mp3_mixdown.py:769
+msgid "Compressor Threshold"
+msgstr "Ambang Batas Kompresor"
+
+#: mp3_mixdown.py:767
+msgid "Compressor Threshold (dB):"
+msgstr "Ambang Batas Kompresor (dB):"
+
+#: convertAudio.py:179
+#: convertVideo.py:170
 msgid "Conversion Settings"
 msgstr "Pengaturan Konversi"
 
-#: convertAudio.py:365
+#: convertAudio.py:481
 msgid "Conversion complete for {}"
 msgstr "Konversi selesai untuk {}"
 
-#: convertAudio.py:360
-#: convertMP3toMP4.py:375
-#: convertMP3toMP4.py:380
+#: convertAudio.py:476
+#: convertAudio.py:902
+#: convertAudio.py:907
 msgid "Conversion complete!"
 msgstr "Konversi selesai!"
 
-#: convertVideo.py:510
+#: convertVideo.py:523
 msgid "Conversion complete: {}"
 msgstr "Konversi selesai: {}"
 
-#: convertVideo.py:523
+#: convertVideo.py:536
 msgid "Conversion failed"
 msgstr "Konversi gagal"
 
-#: convertVideo.py:513
+#: convertVideo.py:526
 msgid "Conversion failed for {}: {}"
 msgstr "Konversi gagal untuk {}: {}"
 
-#: convertAudio.py:375
-#: convertMP3toMP4.py:386
+#: convertAudio.py:491
+#: convertAudio.py:913
 msgid "Conversion failed."
 msgstr "Konversi gagal."
 
-#: convertAudio.py:376
-#: convertMP3toMP4.py:387
+#: convertAudio.py:492
+#: convertAudio.py:914
 msgid "Conversion failed: {}"
 msgstr "Konversi gagal: {}"
 
-#: convertAudio.py:137
-#: convertAudio.py:368
-#: convertAudio.py:377
-#: convertMP3toMP4.py:100
-#: convertMP3toMP4.py:381
-#: convertMP3toMP4.py:388
-#: convertVideo.py:231
+#: convertAudio.py:238
+#: convertAudio.py:484
+#: convertAudio.py:493
+#: convertAudio.py:627
+#: convertAudio.py:908
+#: convertAudio.py:915
+#: convertVideo.py:230
 msgid "Convert"
 msgstr "Konversi"
 
-#: __init__.py:164
-#: convertAudio.py:21
+#: __init__.py:268
+#: convertAudio.py:121
 msgid "Convert Audio"
 msgstr "Konversi Audio"
 
-#: convertAudio.py:34
+#: convertAudio.py:134
 msgid "Convert Audio: {} files"
-msgstr "Konversi Audio: {} file"
+msgstr "Konversi Audio: {} berkas"
 
-#: __init__.py:166
-#: convertMP3toMP4.py:20
+#: __init__.py:270
+#: convertAudio.py:547
 msgid "Convert MP3 to MP4"
 msgstr "Konversi MP3 ke MP4"
 
-#: convertMP3toMP4.py:31
+#: convertAudio.py:558
 msgid "Convert MP3 to MP4: {}"
 msgstr "Konversi MP3 ke MP4: {}"
 
-#: __init__.py:165
-#: convertVideo.py:99
+#: __init__.py:269
+#: convertVideo.py:98
 msgid "Convert Video"
 msgstr "Konversi Video"
 
-#: convertVideo.py:112
+#: convertVideo.py:111
 msgid "Convert Video: {} files"
-msgstr "Konversi Video: {} file"
+msgstr "Konversi Video: {} berkas"
 
-#: convertVideo.py:419
+#: convertVideo.py:428
 msgid "Converting..."
 msgstr "Mengonversi..."
 
-#: convertAudio.py:356
-#: convertMP3toMP4.py:371
+#: convertAudio.py:472
+#: convertAudio.py:898
 msgid "Converting: {}%"
 msgstr "Mengonversi: {}%"
 
 #: merge.py:112
 msgid "Copy without re-encoding (faster)"
-msgstr "Salin tanpa pengodean ulang (lebih cepat)"
+msgstr "Salin tanpa enkode ulang (lebih cepat)"
 
-#: Trim.py:518
+#: mp3Gain.py:517
+msgid "Could not analyze any of the selected files"
+msgstr "Tidak dapat menganalisis file yang dipilih"
+
+#: mp3Gain.py:402
+#: mp3Gain.py:413
+msgid "Could not analyze {}"
+msgstr "Tidak dapat menganalisis {}"
+
+#: Trim.py:527
 msgid "Could not play preview: {}"
 msgstr "Tidak dapat memutar pratinjau: {}"
 
-#: image.py:186
+#: image.py:185
 #: video.py:153
 msgid "Could not read"
 msgstr "Tidak dapat membaca"
 
-#: image.py:143
+#: image.py:142
 msgid "Could not read image dimensions"
 msgstr "Tidak dapat membaca dimensi gambar"
 
@@ -308,110 +518,209 @@ msgstr "Tidak dapat membaca dimensi gambar"
 msgid "Could not read video dimensions"
 msgstr "Tidak dapat membaca dimensi video"
 
+#: mp3Gain.py:452
+msgid "Created {name} at {target:.1f} dB"
+msgstr "Berhasil membuat {name} pada {target:.1f} dB"
+
+#: mp3_mixdown.py:1168
+msgid "Created {}"
+msgstr "Berhasil membuat {}"
+
 #: resizeImage.py:165
 msgid "Crop Image"
 msgstr "Potong Gambar"
 
 #: merge.py:91
 msgid "Cross-fade Duration (seconds):"
-msgstr "Durasi Cross-fade (detik):"
+msgstr "Durasi Silang-Pudar (detik):"
 
 #: merge.py:83
 msgid "Cross-fade Settings"
-msgstr "Pengaturan Cross-fade"
+msgstr "Pengaturan Silang-pudar"
 
 #: merge.py:184
 msgid "Cross-fade requires re-encoding mode"
-msgstr "Cross-fade memerlukan mode pengodean ulang"
+msgstr "Silang-pudar memerlukan mode penyandian ulang"
 
-#: convertAudio.py:71
-#: convertVideo.py:158
+#: convertAudio.py:171
+#: convertVideo.py:157
 msgid "Current File"
-msgstr "File Saat Ini"
+msgstr "Berkas Saat Ini"
 
 #: resizeImage.py:243
 msgid "Current file:"
-msgstr "File saat ini:"
+msgstr "Berkas saat ini:"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:267
+#: mp3_mixdown.py:543
+msgid "Custom (use effect settings below)"
+msgstr "Kustom (gunakan pengaturan efek di bawah)"
+
+#: mp3_mixdown.py:75
+msgid "Cuts rumble below 80 Hz, lifts vocal presence around 2-4 kHz, gates out background noise between words, and applies a dynamic limiter for clear, consistent speech."
+msgstr "Memotong gemuruh di bawah 80 Hz, mengangkat kehadiran vokal sekitar 2-4 kHz, menyaring kebisingan latar belakang di antara kata-kata, dan menerapkan pembatas dinamis untuk suara yang jernih dan konsisten."
+
+#: convertAudio.py:605
+#: convertAudio.py:794
 msgid "Cyan"
 msgstr "Sian"
+
+#: mp3_mixdown.py:109
+msgid "Dance / EDM"
+msgstr "Dansa / EDM"
+
+#: record.py:428
+msgid "Default"
+msgstr "Bawaan"
+
+#: mp3_mixdown.py:876
+msgid "Delete"
+msgstr "Hapus"
 
 #: resizeImage.py:108
 #: resizeImage.py:294
 msgid "Delete Selected Files"
-msgstr "Hapus File Terpilih"
+msgstr "Hapus Berkas yang Dipilih"
+
+#: mp3Gain.py:192
+msgid "Destination Folder"
+msgstr "Folder Tujuan"
 
 #: resizeImage.py:234
 msgid "Dimensions"
 msgstr "Dimensi"
 
+#: mp3Gain.py:527
+#: mp3_mixdown.py:1184
+msgid "Done"
+msgstr "Selesai"
+
+#: mp3_mixdown.py:50
+msgid "Dreamy Chorus & Wide"
+msgstr "Paduan Suara Impian & Lebar"
+
+#: record.py:376
+msgid "Ducking &Attack Time (ms):"
+msgstr "Waktu Serangan Penurunan & (md):"
+
+#: record.py:372
+msgid "Ducking &Level (dB):"
+msgstr "Level Penurunan & (dB):"
+
+#: record.py:378
+msgid "Ducking &Release Time (ms):"
+msgstr "Waktu Lepas Penurunan & (md):"
+
+#: record.py:374
+msgid "Ducking &Sensitivity Threshold (dB):"
+msgstr "Ambang Batas Sensitivitas Penurunan & (dB):"
+
+#: mp3_mixdown.py:63
+msgid "Dull, muffled ambience as if heard through a wall or in a tiled room."
+msgstr "Suasana redup dan teredam seperti terdengar melalui dinding atau di dalam ruangan berkeramik."
+
 #: merge.py:94
 msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
-msgstr "Durasi dalam detik untuk cross-fade antar trek. Nilai yang disarankan adalah 5 detik."
+msgstr "Durasi dalam detik untuk transisi silang antar trek. Nilai yang disarankan adalah 5 detik."
 
-#: convertVideo.py:161
+#: convertVideo.py:160
 msgid "Duration: ..."
 msgstr "Durasi: ..."
 
-#: convertMP3toMP4.py:42
+#: convertAudio.py:569
 #: splitAudio.py:66
 msgid "Duration: Calculating..."
 msgstr "Durasi: Menghitung..."
 
-#: convertMP3toMP4.py:118
-#: convertVideo.py:273
+#: convertAudio.py:645
+#: convertVideo.py:272
 #: splitAudio.py:220
 msgid "Duration: {}"
 msgstr "Durasi: {}"
 
+#: mp3_mixdown.py:761
+msgid "Dynamics && Limiter"
+msgstr "Dinamika && Pembatas"
+
+#: mp3_mixdown.py:693
+msgid "Echo Delay"
+msgstr "Penundaan Gema"
+
+#: mp3_mixdown.py:691
+msgid "Echo Delay (ms):"
+msgstr "Penundaan Gema (ms):"
+
+#: record.py:365
+msgid "Enable Auto-&Ducking (lower music while you speak)"
+msgstr "Aktifkan &Peredupan Otomatis (kecilkan musik saat Anda berbicara)"
+
+#: mp3_mixdown.py:612
+msgid "Enable Bass / Treble Equalization"
+msgstr "Aktifkan Equalisasi Bass / Treble"
+
 #: merge.py:84
 msgid "Enable Cross-fade between tracks"
-msgstr "Aktifkan Cross-fade antar trek"
+msgstr "Aktifkan transisi silang antar trek"
 
-#: Trim.py:109
+#: Trim.py:110
 msgid "Enable Fade In/Out"
-msgstr "Aktifkan Fade In/Out"
+msgstr "Aktifkan Fade Masuk/Keluar"
 
 #: merge.py:85
 msgid "Enable smooth transitions between tracks by fading out the end of one track and fading in the beginning of the next"
-msgstr "Aktifkan transisi halus antar trek dengan memudarkan (fade out) akhir trek dan memunculkan (fade in) awal trek berikutnya"
+msgstr "Aktifkan transisi mulus antar trek dengan memudarkan akhir satu trek dan memasukkan awal trek berikutnya"
 
-#: Trim.py:120
+#: mp3_mixdown.py:444
+msgid "End Second:"
+msgstr "Detik Akhir:"
+
+#: Trim.py:121
 msgid "End Time (100% volume):"
-msgstr "Waktu Selesai (volume 100%):"
+msgstr "Waktu Akhir (volume 100%):"
 
-#: Trim.py:81
-#: Trim.py:135
+#: Trim.py:82
+#: Trim.py:136
 msgid "End Time:"
-msgstr "Waktu Selesai:"
+msgstr "Waktu Akhir:"
 
-#: Trim.py:427
-#: Trim.py:553
-msgid "End time cannot be greater than file duration"
-msgstr "Waktu selesai tidak boleh lebih besar dari durasi file"
-
-#: Trim.py:317
-#: Trim.py:357
-#: Trim.py:418
-#: Trim.py:424
-#: Trim.py:427
-#: Trim.py:441
-#: Trim.py:445
-#: Trim.py:449
-#: Trim.py:454
-#: Trim.py:518
-#: Trim.py:520
-#: Trim.py:523
-#: Trim.py:525
-#: Trim.py:543
-#: Trim.py:550
-#: Trim.py:553
+#: Trim.py:428
 #: Trim.py:567
-#: Trim.py:571
-#: Trim.py:575
-#: Trim.py:626
+msgid "End time cannot be greater than file duration"
+msgstr "Waktu akhir tidak boleh lebih besar dari durasi file"
+
+#: mp3_mixdown.py:33
+msgid "Enhanced low frequencies with controlled peaks."
+msgstr "Frekuensi rendah yang ditingkatkan dengan puncak terkontrol."
+
+#: mp3_mixdown.py:610
+msgid "Equalization"
+msgstr "Equalisasi"
+
+#: mp3_mixdown.py:543
+msgid "Equalizer (choose a music style)"
+msgstr "Equalizer (pilih gaya musik)"
+
+#: Trim.py:318
+#: Trim.py:358
+#: Trim.py:419
+#: Trim.py:425
+#: Trim.py:428
+#: Trim.py:442
+#: Trim.py:446
+#: Trim.py:450
+#: Trim.py:454
+#: Trim.py:459
+#: Trim.py:527
+#: Trim.py:529
+#: Trim.py:532
+#: Trim.py:534
+#: Trim.py:550
+#: Trim.py:557
+#: Trim.py:564
+#: Trim.py:567
+#: Trim.py:581
+#: Trim.py:585
+#: Trim.py:589
+#: Trim.py:640
 #: splitAudio.py:193
 #: splitAudio.py:227
 #: splitAudio.py:321
@@ -421,123 +730,145 @@ msgstr "Waktu selesai tidak boleh lebih besar dari durasi file"
 #: splitAudio.py:343
 #: splitAudio.py:359
 msgid "Error"
-msgstr "Kesalahan"
+msgstr "Galat"
 
-#: image.py:160
+#: image.py:159
 msgid "Error getting image information"
-msgstr "Kesalahan saat mendapatkan informasi gambar"
+msgstr "Gagal mendapatkan informasi gambar"
 
 #: video.py:133
 msgid "Error getting video information"
-msgstr "Kesalahan saat mendapatkan informasi video"
+msgstr "Gagal mendapatkan informasi video"
 
-#: Trim.py:115
+#: convertAudio.py:69
+msgid "FLAC Compression:"
+msgstr "Kompresi FLAC:"
+
+#: Trim.py:116
 msgid "Fade In"
-msgstr "Fade In"
+msgstr "Masuk Perlahan"
 
-#: Trim.py:130
+#: Trim.py:131
 msgid "Fade Out"
-msgstr "Fade Out"
+msgstr "Keluar Perlahan"
 
-#: Trim.py:105
+#: Trim.py:106
 msgid "Fade Settings"
-msgstr "Pengaturan Fade"
+msgstr "Pengaturan Perlahan"
 
 #: merge.py:100
 msgid "Fade-in for Next Track (seconds):"
-msgstr "Fade-in untuk Trek Berikutnya (detik):"
+msgstr "Masuk perlahan untuk trek berikutnya (detik):"
 
-#: resizeImage.py:797
+#: resizeImage.py:802
 msgid "Failed"
 msgstr "Gagal"
 
-#: convertMP3toMP4.py:235
-msgid "Failed to create file list: {}"
-msgstr "Gagal membuat daftar file: {}"
+#: mp3Gain.py:448
+msgid "Failed to apply gain to {}"
+msgstr "Gagal menerapkan penguatan ke {}"
 
-#: Trim.py:356
+#: convertAudio.py:762
+msgid "Failed to create file list: {}"
+msgstr "Gagal membuat daftar berkas: {}"
+
+#: Trim.py:357
 #: splitAudio.py:226
 msgid "Failed to get file duration: {}"
 msgstr "Gagal mendapatkan durasi file: {}"
 
-#: __init__.py:379
+#: __init__.py:520
 msgid "Failed to get image info: {}"
-msgstr "Gagal mendapatkan info gambar: {}"
+msgstr "Gagal mendapatkan informasi gambar: {}"
 
-#: __init__.py:391
+#: __init__.py:532
 msgid "Failed to get video info: {}"
-msgstr "Gagal mendapatkan info video: {}"
+msgstr "Gagal mendapatkan informasi video: {}"
 
-#: Trim.py:49
+#: Trim.py:50
 #: splitAudio.py:45
 msgid "Failed to load configuration: {}"
 msgstr "Gagal memuat konfigurasi: {}"
 
-#: __init__.py:307
+#: __init__.py:420
 msgid "Failed to open Convert Audio dialog: {}"
 msgstr "Gagal membuka dialog Konversi Audio: {}"
 
-#: __init__.py:352
+#: __init__.py:465
 msgid "Failed to open Convert MP3 to MP4 dialog: {}"
 msgstr "Gagal membuka dialog Konversi MP3 ke MP4: {}"
 
-#: __init__.py:322
+#: __init__.py:435
 msgid "Failed to open Convert Video dialog: {}"
 msgstr "Gagal membuka dialog Konversi Video: {}"
 
-#: __init__.py:292
+#: __init__.py:479
+msgid "Failed to open MP3 Gain dialog: {}"
+msgstr "Gagal membuka dialog Penguatan MP3: {}"
+
+#: __init__.py:493
+msgid "Failed to open MP3 WAV Mixdown dialog: {}"
+msgstr "Gagal membuka dialog Pencampuran MP3 WAV: {}"
+
+#: __init__.py:405
 msgid "Failed to open Merge dialog: {}"
 msgstr "Gagal membuka dialog Penggabungan: {}"
 
-#: __init__.py:410
+#: __init__.py:551
 msgid "Failed to open Record Settings: {}"
-msgstr "Gagal membuka Pengaturan Rekam: {}"
+msgstr "Failed to open Record Settings: {}"
 
-#: __init__.py:337
+#: __init__.py:450
 msgid "Failed to open Resize Image dialog: {}"
-msgstr "Gagal membuka dialog Ubah Ukuran Gambar: {}"
+msgstr "Failed to open Resize Image dialog: {}"
 
-#: __init__.py:367
+#: __init__.py:508
 msgid "Failed to open Split Audio dialog: {}"
-msgstr "Gagal membuka dialog Bagi Audio: {}"
+msgstr "Failed to open Split Audio dialog: {}"
 
-#: __init__.py:277
+#: __init__.py:390
 msgid "Failed to open Trim dialog: {}"
-msgstr "Gagal membuka dialog Potong: {}"
+msgstr "Failed to open Trim dialog: {}"
 
-#: Trim.py:61
+#: mp3Gain.py:387
+#: mp3_mixdown.py:1094
+#: mp3_mixdown.py:1171
+msgid "Failed to process {}"
+msgstr "Failed to process {}"
+
+#: Trim.py:62
 #: splitAudio.py:57
 msgid "Failed to save configuration: {}"
-msgstr "Gagal menyimpan konfigurasi: {}"
+msgstr "Failed to save configuration: {}"
 
 #: splitAudio.py:447
 msgid "Failed to split audio file"
-msgstr "Gagal membagi file audio"
+msgstr "Failed to split audio file"
 
-#: resizeImage.py:802
+#: resizeImage.py:807
 msgid "Failed: {}"
-msgstr "Gagal: {}"
+msgstr "Failed: {}"
 
-#: Trim.py:213
-#: convertAudio.py:74
+#: Trim.py:214
+#: convertAudio.py:174
 msgid "File Duration: Calculating..."
-msgstr "Durasi File: Menghitung..."
+msgstr "File Duration: Calculating..."
 
-#: convertAudio.py:178
-#: convertAudio.py:207
+#: convertAudio.py:289
+#: convertAudio.py:318
 msgid "File Duration: {}"
-msgstr "Durasi File: {}"
+msgstr "File Duration: {}"
 
 #: resizeImage.py:235
 msgid "File Size"
 msgstr "Ukuran File"
 
-#: Trim.py:397
+#: Trim.py:398
 msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
-msgstr "Durasi file: {duration}; Periode potong: {period} detik{fade_info}"
+msgstr "Durasi file: {duration}; Periode pangkas: {period} detik{fade_info}"
 
-#: image.py:137
-#: image.py:186
+#: image.py:136
+#: image.py:185
 #: video.py:111
 #: video.py:153
 msgid "File not found"
@@ -547,8 +878,8 @@ msgstr "File tidak ditemukan"
 msgid "File not found: {}"
 msgstr "File tidak ditemukan: {}"
 
-#: convertAudio.py:65
-#: convertVideo.py:152
+#: convertAudio.py:165
+#: convertVideo.py:151
 msgid "Files to Convert"
 msgstr "File untuk Dikonversi"
 
@@ -556,35 +887,59 @@ msgstr "File untuk Dikonversi"
 msgid "Files to Merge"
 msgstr "File untuk Digabung"
 
+#: mp3_mixdown.py:26
+msgid "Flat / Default"
+msgstr "Datar / Default"
+
+#: mp3_mixdown.py:128
+msgid "Folk / Acoustic"
+msgstr "Folk / Akustik"
+
 #: resizeImage.py:118
 msgid "For single file only"
-msgstr "Hanya untuk file tunggal"
+msgstr "Hanya untuk satu file"
 
 #: resizeImage.py:219
 msgid "Format:"
 msgstr "Format:"
 
-#: convertVideo.py:163
+#: convertVideo.py:162
 msgid "Frame rate: ..."
-msgstr "Frame rate: ..."
+msgstr "Laju bingkai: ..."
 
-#: convertVideo.py:279
+#: convertVideo.py:278
 msgid "Frame rate: {}"
-msgstr "Frame rate: {}"
+msgstr "Laju bingkai: {}"
+
+#: mp3_mixdown.py:451
+msgid "Full Left"
+msgstr "Penuh Kiri"
+
+#: mp3_mixdown.py:451
+msgid "Full Right"
+msgstr "Penuh Kanan"
+
+#: mp3_mixdown.py:581
+msgid "Gate Threshold (dB):"
+msgstr "Ambang Batas Gerbang (dB):"
+
+#: mp3_mixdown.py:1123
+msgid "Generating preview: {}"
+msgstr "Membuat pratinjau: {}"
 
 #: resizeImage.py:210
 #: resizeImage.py:528
-#: resizeImage.py:688
+#: resizeImage.py:693
 msgid "Good"
-msgstr "Bagus"
+msgstr "Baik"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:268
+#: convertAudio.py:605
+#: convertAudio.py:795
 msgid "Gray"
 msgstr "Abu-abu"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:263
+#: convertAudio.py:604
+#: convertAudio.py:790
 msgid "Green"
 msgstr "Hijau"
 
@@ -592,37 +947,65 @@ msgstr "Hijau"
 msgid "Height (pixels):"
 msgstr "Tinggi (piksel):"
 
-#: __init__.py:171
+#: mp3_mixdown.py:650
+msgid "High Gain @ 8 kHz (dB):"
+msgstr "Penguatan Tinggi @ 8 kHz (dB):"
+
+#: mp3_mixdown.py:114
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: record.py:373
+msgid "How much the music is lowered by while you are speaking."
+msgstr "Seberapa besar musik diturunkan saat Anda berbicara."
+
+#: record.py:379
+msgid "How quickly the music fades back up once you stop speaking."
+msgstr "Seberapa cepat musik memudar kembali saat Anda berhenti berbicara."
+
+#: record.py:377
+msgid "How quickly the music fades down once speech is detected."
+msgstr "Seberapa cepat musik meredup saat ucapan terdeteksi."
+
+#: __init__.py:253
 msgid "Image Info"
 msgstr "Info Gambar"
 
-#: convertMP3toMP4.py:121
-msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
-msgstr "File gambar (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+#: __init__.py:258
+msgid "Image Info: {info}"
+msgstr "Info Gambar: {info}"
 
-#: resizeImage.py:825
+#: convertAudio.py:648
+msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+msgstr "Berkas gambar (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+
+#: resizeImage.py:830
 msgid "Image processing complete! Check the output information list for results."
-msgstr "Pemrosesan gambar selesai! Periksa daftar informasi output untuk hasilnya."
+msgstr "Pemrosesan gambar selesai! Periksa daftar informasi keluaran untuk hasil."
+
+#: mp3_mixdown.py:45
+msgid "Immersive 3D headphone experience with real stereo width and warm reverb."
+msgstr "Pengalaman headphone 3D yang imersif dengan lebar stereo nyata dan gema yang hangat."
 
 #: resizeImage.py:98
 msgid "Input Files"
-msgstr "File Input"
+msgstr "Berkas Masukan"
 
-#: Trim.py:441
-#: Trim.py:567
+#: Trim.py:442
+#: Trim.py:581
 msgid "Invalid fade-in range"
 msgstr "Rentang fade-in tidak valid"
 
-#: Trim.py:445
-#: Trim.py:571
+#: Trim.py:446
+#: Trim.py:585
 msgid "Invalid fade-out range"
 msgstr "Rentang fade-out tidak valid"
 
-#: convertMP3toMP4.py:133
+#: convertAudio.py:660
 msgid "Invalid image file: {}"
-msgstr "File gambar tidak valid: {}"
+msgstr "Berkas gambar tidak valid: {}"
 
-#: convertVideo.py:368
+#: convertVideo.py:367
 msgid "Invalid target size"
 msgstr "Ukuran target tidak valid"
 
@@ -630,20 +1013,28 @@ msgstr "Ukuran target tidak valid"
 msgid "Invalid time format for track {:02d}"
 msgstr "Format waktu tidak valid untuk trek {:02d}"
 
-#: Trim.py:418
-#: Trim.py:543
+#: Trim.py:419
+#: Trim.py:557
 #: splitAudio.py:282
 msgid "Invalid time format. Use seconds (e.g., 10), MM:SS (e.g., 1:30), or HH:MM:SS (e.g., 1:30:45)"
-msgstr "Format waktu tidak valid. Gunakan detik (misal, 10), MM:SS (misal, 1:30), atau JJ:MM:SS (misal, 1:30:45)"
+msgstr "Format waktu tidak valid. Gunakan detik (mis., 10), MM:SS (mis., 1:30), atau HH:MM:SS (mis., 1:30:45)"
 
 #: splitAudio.py:332
 msgid "Invalid time value for track {:02d}"
 msgstr "Nilai waktu tidak valid untuk trek {:02d}"
 
-#: Trim.py:449
-#: Trim.py:575
+#: Trim.py:450
+#: Trim.py:589
 msgid "Invalid time values"
 msgstr "Nilai waktu tidak valid"
+
+#: mp3_mixdown.py:121
+msgid "Jazz"
+msgstr "Jazz"
+
+#: mp3Gain.py:187
+msgid "Keep in Same Folder"
+msgstr "Simpan di Folder yang Sama"
 
 #: splitAudio.py:343
 msgid "Last track end time cannot exceed file duration"
@@ -653,25 +1044,134 @@ msgstr "Waktu selesai trek terakhir tidak boleh melebihi durasi file"
 msgid "Left (pixels):"
 msgstr "Kiri (piksel):"
 
+#: mp3_mixdown.py:451
+#: mp3_mixdown.py:727
+msgid "Left to Right"
+msgstr "Kiri ke Kanan"
+
+#: mp3_mixdown.py:800
+msgid "Limit (dB):"
+msgstr "Batas (dB):"
+
+#: mp3_mixdown.py:802
+msgid "Limiter Limit"
+msgstr "Batas Pembatas"
+
 #: resizeImage.py:156
 msgid "Lock Aspect Ratio"
 msgstr "Kunci Rasio Aspek"
 
-#: convertMP3toMP4.py:65
-msgid "Loop Duration (seconds):"
-msgstr "Durasi Loop (detik):"
+#: mp3_mixdown.py:724
+msgid "Loop Direction:"
+msgstr "Arah Perulangan:"
 
-#: record.py:325
-#: record.py:379
+#: convertAudio.py:592
+msgid "Loop Duration (seconds):"
+msgstr "Durasi Perulangan (detik):"
+
+#: mp3_mixdown.py:717
+msgid "Loop Speed (Hz):"
+msgstr "Kecepatan Perulangan (Hz):"
+
+#: convertAudio.py:63
+#: convertAudio.py:64
+msgid "Lossless (16-bit PCM)"
+msgstr "Tanpa Kehilangan (16-bit PCM)"
+
+#: convertAudio.py:108
+#: convertAudio.py:109
+msgid "Lossless (ALAC)"
+msgstr "Tanpa Kehilangan (ALAC)"
+
+#: mp3_mixdown.py:775
+msgid "Loudness Normalization (EBU R128)"
+msgstr "Normalisasi Kenyaringan (EBU R128)"
+
+#: mp3_mixdown.py:782
+msgid "Loudness Normalization Target"
+msgstr "Target Normalisasi Kenyaringan"
+
+#: mp3_mixdown.py:789
+msgid "Loudness Normalization True Peak"
+msgstr "Puncak Sejati Normalisasi Kenyaringan"
+
+#: mp3_mixdown.py:638
+msgid "Low Gain @ 100 Hz (dB):"
+msgstr "Penguatan Rendah @ 100 Hz (dB):"
+
+#: record.py:452
+msgid "Lowers steady background noise picked up between spoken words. Only applies when Audio Processing is set to Default."
+msgstr "Menurunkan kebisingan latar belakang konstan yang tertangkap di antara kata-kata terucap. Hanya berlaku saat Pemrosesan Audio disetel ke Default."
+
+#: convertAudio.py:97
+msgid "M4R Quality:"
+msgstr "Kualitas M4R:"
+
+#: mp3Gain.py:163
+msgid "MP3 Files"
+msgstr "Berkas MP3"
+
+#: __init__.py:271
+#: mp3Gain.py:109
+msgid "MP3 Gain"
+msgstr "Penguatan MP3"
+
+#: mp3Gain.py:331
+msgid "MP3 Gain is already processing files"
+msgstr "MP3 Gain sedang memproses file"
+
+#: mp3Gain.py:532
+msgid "MP3 Gain processing complete"
+msgstr "Pemrosesan MP3 Gain selesai"
+
+#: mp3Gain.py:131
+#: mp3Gain.py:264
+#: mp3Gain.py:279
+msgid "MP3 Gain: {} files"
+msgstr "MP3 Gain: {} file"
+
+#: record.py:413
+#: record.py:499
 msgid "MP3 Quality (kbps):"
 msgstr "Kualitas MP3 (kbps):"
 
-#: convertAudio.py:93
+#: convertAudio.py:55
+#: convertAudio.py:195
 msgid "MP3 Quality:"
 msgstr "Kualitas MP3:"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:266
+#: __init__.py:272
+#: mp3_mixdown.py:378
+msgid "MP3 WAV Mixdown"
+msgstr "Pencampuran WAV MP3"
+
+#: mp3_mixdown.py:884
+#: mp3_mixdown.py:1117
+#: mp3_mixdown.py:1144
+msgid "MP3 WAV Mixdown is already processing files"
+msgstr "Pencampuran WAV MP3 sedang memproses file"
+
+#: mp3_mixdown.py:1189
+msgid "MP3 WAV Mixdown processing complete"
+msgstr "Pemrosesan Pencampuran WAV MP3 selesai"
+
+#: mp3_mixdown.py:392
+#: mp3_mixdown.py:846
+#: mp3_mixdown.py:861
+#: mp3_mixdown.py:896
+msgid "MP3 WAV Mixdown: {} files"
+msgstr "Pencampuran WAV MP3: {} file"
+
+#: mp3Gain.py:256
+msgid "MP3 files (*.mp3)|*.mp3"
+msgstr "File MP3 (*.mp3)|*.mp3"
+
+#: mp3_mixdown.py:838
+msgid "MP3/WAV files (*.mp3;*.wav)|*.mp3;*.wav"
+msgstr "Berkas MP3/WAV (*.mp3;*.wav)|*.mp3;*.wav"
+
+#: convertAudio.py:605
+#: convertAudio.py:793
 msgid "Magenta"
 msgstr "Magenta"
 
@@ -679,12 +1179,12 @@ msgstr "Magenta"
 #: merge.py:445
 #: merge.py:452
 msgid "Merge"
-msgstr "Gabung"
+msgstr "Gabungkan"
 
-#: __init__.py:167
+#: __init__.py:273
 #: merge.py:20
 msgid "Merge MP3"
-msgstr "Gabung MP3"
+msgstr "Gabungkan MP3"
 
 #: merge.py:110
 msgid "Merge Mode"
@@ -705,15 +1205,31 @@ msgstr "Penggabungan gagal: {}"
 
 #: merge.py:333
 msgid "Merge successful. Output saved to: {}"
-msgstr "Penggabungan berhasil. Output disimpan di: {}"
+msgstr "Penggabungan berhasil. Keluaran disimpan ke: {}"
 
 #: merge.py:437
 msgid "Merging: {}%"
 msgstr "Menggabungkan: {}%"
 
-#: record.py:312
+#: mp3_mixdown.py:146
+msgid "Metal"
+msgstr "Logam"
+
+#: record.py:393
+msgid "Microphone &Device:"
+msgstr "Mikrofon &Perangkat:"
+
+#: record.py:356
 msgid "Microphone Only"
 msgstr "Hanya Mikrofon"
+
+#: mp3_mixdown.py:644
+msgid "Mid Gain @ 1 kHz (dB):"
+msgstr "Penguatan Menengah @ 1 kHz (dB):"
+
+#: mp3Gain.py:218
+msgid "Modify Gain"
+msgstr "Ubah Penguatan"
 
 #: merge.py:68
 msgid "Move Down"
@@ -723,163 +1239,298 @@ msgstr "Pindahkan ke Bawah"
 msgid "Move Up"
 msgstr "Pindahkan ke Atas"
 
-#: image.py:166
+#: mp3_mixdown.py:706
+msgid "Muffle Cutoff"
+msgstr "Batas Meredam"
+
+#: mp3_mixdown.py:703
+msgid "Muffle Cutoff (Hz):"
+msgstr "Batas Meredam (Hz):"
+
+#: mp3_mixdown.py:62
+#: mp3_mixdown.py:699
+msgid "Muffled Room (Pub / Bathroom)"
+msgstr "Ruangan Meredam (Pub / Kamar Mandi)"
+
+#: mp3_mixdown.py:80
+msgid "Music Master"
+msgstr "Musik Master"
+
+#: mp3_mixdown.py:552
+msgid "Music Style"
+msgstr "Gaya Musik"
+
+#: mp3_mixdown.py:550
+msgid "Music Style:"
+msgstr "Gaya Musik:"
+
+#: mp3Gain.py:281
+msgid "No MP3 files found in the selected folder."
+msgstr "Tidak ada file MP3 yang ditemukan di folder yang dipilih."
+
+#: mp3_mixdown.py:863
+msgid "No MP3 or WAV files found in the selected folder."
+msgstr "Tidak ada file MP3 atau WAV yang ditemukan di folder yang dipilih."
+
+#: image.py:165
 #: video.py:138
 msgid "No files selected"
-msgstr "Tidak ada file terpilih"
+msgstr "Tidak ada file yang dipilih"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:81
-#: convertMP3toMP4.py:188
+#: mp3_mixdown.py:570
+msgid "Noise Floor Level"
+msgstr "Tingkat Kebisingan Dasar"
+
+#: mp3_mixdown.py:568
+msgid "Noise Floor Level (dB):"
+msgstr "Tingkat Kebisingan Dasar (dB):"
+
+#: mp3_mixdown.py:577
+msgid "Noise Gate (Cut Background Noise Between Words)"
+msgstr "Gerbang Kebisingan (Potong Kebisingan Latar Belakang Antar Kata)"
+
+#: mp3_mixdown.py:583
+msgid "Noise Gate Threshold"
+msgstr "Ambang Batas Gerbang Kebisingan"
+
+#: mp3_mixdown.py:562
+msgid "Noise Reduction"
+msgstr "Pengurangan Derau"
+
+#: mp3_mixdown.py:564
+msgid "Noise Reduction / Suppression (ANR)"
+msgstr "Pengurangan / Penekanan Derau (ANR)"
+
+#: convertAudio.py:604
+#: convertAudio.py:608
+#: convertAudio.py:715
 msgid "None"
-msgstr "Tidak ada"
+msgstr "Tidak Ada"
 
 #: resizeImage.py:210
 #: resizeImage.py:212
 #: resizeImage.py:527
 #: resizeImage.py:528
-#: resizeImage.py:689
-#: resizeImage.py:693
+#: resizeImage.py:694
+#: resizeImage.py:698
 msgid "Normal"
 msgstr "Normal"
 
-#: record.py:359
-msgid "Not available - check tools/recorder_backend.py"
-msgstr "Tidak tersedia - periksa tools/recorder_backend.py"
+#: mp3_mixdown.py:69
+msgid "Normalizes loudness to the international streaming/broadcast standard (-16 LUFS, -1.5 dBTP true peak) so exports sound consistent on YouTube and podcast platforms."
+msgstr "Menormalkan kenyaringan ke standar penyiaran/streaming internasional (-16 LUFS, -1.5 dBTP true peak) sehingga hasil ekspor terdengar konsisten di YouTube dan platform siniar."
 
-#: Trim.py:195
+#: record.py:479
+msgid "Not available - check libs/recorder_backend.py"
+msgstr "Tidak tersedia - periksa libs/recorder_backend.py"
+
+#: Trim.py:196
 msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
-msgstr "Catatan: Pemotongan video menjaga kualitas asli secara default. Tidak ada pengodean ulang yang dilakukan."
+msgstr "Catatan: Pemotongan video mempertahankan kualitas asli secara default. Tidak ada pengodean ulang yang dilakukan."
 
-#: record.py:375
+#: record.py:495
 msgid "Note: WAV format uses uncompressed audio"
 msgstr "Catatan: Format WAV menggunakan audio tanpa kompresi"
 
-#: convertAudio.py:120
+#: convertAudio.py:221
 msgid "Note: You can now convert files to the same format (e.g., MP3 to MP3) to change quality, volume, or sample rate."
-msgstr "Catatan: Anda sekarang dapat mengonversi file ke format yang sama (misal, MP3 ke MP3) untuk mengubah kualitas, volume, atau sample rate."
+msgstr "Catatan: Anda sekarang dapat mengonversi file ke format yang sama (misalnya, MP3 ke MP3) untuk mengubah kualitas, volume, atau laju sampel."
+
+#: mp3_mixdown.py:746
+msgid "Number of Sections"
+msgstr "Jumlah Bagian"
+
+#: mp3_mixdown.py:743
+msgid "Number of Sections:"
+msgstr "Jumlah Bagian:"
 
 #: splitAudio.py:75
 msgid "Number of tracks:"
 msgstr "Jumlah trek:"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:269
+#: convertAudio.py:83
+msgid "OGG Quality:"
+msgstr "Kualitas OGG:"
+
+#: convertAudio.py:90
+msgid "Opus Quality:"
+msgstr "Kualitas Opus:"
+
+#: convertAudio.py:605
+#: convertAudio.py:796
 msgid "Orange"
-msgstr "Oranye"
+msgstr "Jingga"
 
 #: resizeImage.py:115
 msgid "Output Filename Pattern:"
-msgstr "Pola Nama File Output:"
+msgstr "Pola Nama Berkas Keluaran:"
 
-#: Trim.py:205
+#: Trim.py:206
 #: merge.py:76
 msgid "Output Filename:"
-msgstr "Nama File Output:"
+msgstr "Nama Berkas Keluaran:"
 
-#: convertAudio.py:83
-#: convertVideo.py:174
+#: convertAudio.py:183
+#: convertVideo.py:173
 msgid "Output Format:"
-msgstr "Format Output:"
+msgstr "Format Keluaran:"
 
 #: resizeImage.py:231
 msgid "Output Information"
-msgstr "Informasi Output"
+msgstr "Informasi Keluaran"
 
 #: resizeImage.py:233
 msgid "Output Name"
-msgstr "Nama Output"
+msgstr "Nama Keluaran"
 
-#: Trim.py:71
+#: Trim.py:72
 msgid "Output Type"
-msgstr "Tipe Output"
+msgstr "Jenis Keluaran"
 
 #: resizeImage.py:124
 msgid "Output folder:"
-msgstr "Folder output:"
+msgstr "Folder keluaran:"
 
-#: convertAudio.py:222
-#: convertAudio.py:299
-#: convertMP3toMP4.py:173
-#: convertMP3toMP4.py:297
+#: mp3_mixdown.py:462
+msgid "Pan Amount (%):"
+msgstr "Besaran Geseran (%):"
+
+#: mp3_mixdown.py:448
+msgid "Pan Direction:"
+msgstr "Arah Geseran:"
+
+#: mp3_mixdown.py:652
+msgid "Parametric EQ High Gain"
+msgstr "Penguatan Tinggi EQ Parametrik"
+
+#: mp3_mixdown.py:640
+msgid "Parametric EQ Low Gain"
+msgstr "Penguatan Rendah EQ Parametrik"
+
+#: mp3_mixdown.py:646
+msgid "Parametric EQ Mid Gain"
+msgstr "Penguatan Menengah EQ Parametrik"
+
+#: convertAudio.py:333
+#: convertAudio.py:415
+#: convertAudio.py:700
+#: convertAudio.py:824
 #: merge.py:235
 #: merge.py:274
 msgid "Pause"
 msgstr "Jeda"
 
-#: convertAudio.py:228
-#: convertMP3toMP4.py:179
+#: convertAudio.py:339
+#: convertAudio.py:706
 #: merge.py:241
 msgid "Paused."
 msgstr "Dijeda."
 
-#: convertMP3toMP4.py:47
+#: convertAudio.py:574
 msgid "Photo List"
 msgstr "Daftar Foto"
 
+#: mp3_mixdown.py:1131
+msgid "Playing {}-second preview"
+msgstr "Memutar pratinjau {} detik"
+
+#: mp3_mixdown.py:57
+msgid "Plays audio backward at an increased tempo."
+msgstr "Memutar audio secara terbalik dengan tempo yang dipercepat."
+
 #: merge.py:251
 msgid "Please enter an output filename."
-msgstr "Silakan masukkan nama file output."
+msgstr "Masukkan nama file keluaran."
 
 #: splitAudio.py:321
 msgid "Please fill in all time entries"
-msgstr "Silakan isi semua entri waktu"
+msgstr "Harap isi semua entri waktu"
 
-#: __init__.py:341
+#: mp3Gain.py:334
+msgid "Please select MP3 files first, using the Browse button."
+msgstr "Harap pilih file MP3 terlebih dahulu, menggunakan tombol Telusuri."
+
+#: __init__.py:454
 msgid "Please select an MP3 file first."
-msgstr "Silakan pilih file MP3 terlebih dahulu."
+msgstr "Harap pilih file MP3 terlebih dahulu."
 
-#: __init__.py:356
+#: __init__.py:497
 msgid "Please select an audio file first"
-msgstr "Silakan pilih file audio terlebih dahulu"
+msgstr "Harap pilih file audio terlebih dahulu"
 
-#: __init__.py:266
+#: __init__.py:379
 msgid "Please select an audio or video file first"
-msgstr "Silakan pilih file audio atau video terlebih dahulu"
+msgstr "Harap pilih file audio atau video terlebih dahulu"
 
-#: __init__.py:281
+#: __init__.py:394
 msgid "Please select at least 2 MP3 files first."
-msgstr "Silakan pilih setidaknya 2 file MP3 terlebih dahulu."
+msgstr "Harap pilih setidaknya 2 file MP3 terlebih dahulu."
 
 #: merge.py:247
 msgid "Please select at least 2 files"
-msgstr "Silakan pilih setidaknya 2 file"
+msgstr "Harap pilih setidaknya 2 file"
 
-#: convertMP3toMP4.py:189
+#: mp3_mixdown.py:1114
+#: mp3_mixdown.py:1141
+msgid "Please select at least one MP3 or WAV file first."
+msgstr "Silakan pilih setidaknya satu file MP3 atau WAV terlebih dahulu."
+
+#: convertAudio.py:716
 msgid "Please select at least one photo or choose a background color."
 msgstr "Silakan pilih setidaknya satu foto atau pilih warna latar belakang."
 
-#: __init__.py:296
+#: __init__.py:409
 msgid "Please select audio or video files first."
 msgstr "Silakan pilih file audio atau video terlebih dahulu."
 
-#: __init__.py:326
-#: __init__.py:371
+#: __init__.py:439
+#: __init__.py:512
 msgid "Please select image files first."
 msgstr "Silakan pilih file gambar terlebih dahulu."
 
-#: __init__.py:311
-#: __init__.py:383
+#: __init__.py:424
+#: __init__.py:524
 msgid "Please select video files first."
 msgstr "Silakan pilih file video terlebih dahulu."
 
-#: Trim.py:215
+#: mp3_mixdown.py:74
+msgid "Podcast Clarity"
+msgstr "Kejernihan Podcast"
+
+#: mp3_mixdown.py:99
+msgid "Pop"
+msgstr "Pop"
+
+#: mp3_mixdown.py:541
+#: mp3_mixdown.py:545
+msgid "Preset"
+msgstr "Prasetel"
+
+#: Trim.py:216
 msgid "Preview"
 msgstr "Pratinjau"
 
-#: Trim.py:523
+#: mp3_mixdown.py:816
+msgid "Preview (15s)"
+msgstr "Pratinjau (15d)"
+
+#: mp3_mixdown.py:1134
+msgid "Preview created but could not be opened automatically: {}"
+msgstr "Pratinjau berhasil dibuat tetapi tidak dapat dibuka secara otomatis: {}"
+
+#: Trim.py:532
 msgid "Preview failed: {}"
 msgstr "Pratinjau gagal: {}"
 
-#: Trim.py:520
+#: Trim.py:529
 msgid "Preview file was not created or is too small"
-msgstr "File pratinjau tidak dibuat atau terlalu kecil"
+msgstr "Berkas pratinjau tidak dibuat atau terlalu kecil"
 
-#: Trim.py:525
+#: Trim.py:534
 msgid "Preview process failed: {}"
 msgstr "Proses pratinjau gagal: {}"
 
-#: resizeImage.py:789
+#: resizeImage.py:794
 msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
 msgstr "Diproses: {} - Ukuran baru: {}, Dimensi: {} x {}"
 
@@ -887,63 +1538,92 @@ msgstr "Diproses: {} - Ukuran baru: {}, Dimensi: {} x {}"
 msgid "Processing track {} of {}"
 msgstr "Memproses trek {} dari {}"
 
-#: resizeImage.py:713
+#: resizeImage.py:718
 msgid "Processing..."
 msgstr "Memproses..."
 
-#: resizeImage.py:709
+#: mp3Gain.py:376
+#: mp3_mixdown.py:1161
+#: resizeImage.py:714
 msgid "Processing: {}"
 msgstr "Memproses: {}"
 
-#: convertVideo.py:503
+#: convertVideo.py:516
 msgid "Progress: {}%"
 msgstr "Kemajuan: {}%"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:270
+#: convertAudio.py:605
+#: convertAudio.py:797
 msgid "Purple"
 msgstr "Ungu"
 
+#: convertAudio.py:62
+#: convertAudio.py:107
 #: resizeImage.py:208
 msgid "Quality:"
 msgstr "Kualitas:"
 
+#: mp3_mixdown.py:141
+msgid "R&B / Soul"
+msgstr "R&B / Soul"
+
 #: merge.py:111
 msgid "Re-encode with quality (slower)"
-msgstr "Kodekan ulang dengan kualitas (lebih lambat)"
+msgstr "Encode ulang dengan kualitas (lebih lambat)"
 
+#: mp3_mixdown.py:1137
 #: resizeImage.py:256
 #: resizeImage.py:461
 msgid "Ready"
 msgstr "Siap"
 
-#: __init__.py:173
-#: record.py:271
+#: __init__.py:279
+#: record.py:305
 msgid "Record Settings"
-msgstr "Pengaturan Rekam"
+msgstr "Pengaturan Rekaman"
 
-#: __init__.py:441
+#: __init__.py:583
 msgid "Record Settings..."
-msgstr "Pengaturan Rekam..."
+msgstr "Pengaturan Rekaman..."
 
-#: __init__.py:405
+#: __init__.py:546
 msgid "Record settings saved"
-msgstr "Pengaturan rekam disimpan"
+msgstr "Pengaturan rekaman disimpan"
 
-#: record.py:317
+#: record.py:361
 msgid "Recording &Mode:"
-msgstr "&Mode Rekaman:"
+msgstr "Perekaman &Mode:"
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:262
+#: convertAudio.py:604
+#: convertAudio.py:789
 msgid "Red"
 msgstr "Merah"
 
-#: convertMP3toMP4.py:56
+#: record.py:450
+msgid "Reduce background &noise (Noise gate)"
+msgstr "Kurangi l&atar belakang (Noise gate)"
+
+#: record.py:444
+msgid "Reduce low-frequency noise (&High-pass filter)"
+msgstr "Kurangi derau frekuensi rendah (&Filter lolos-tinggi)"
+
+#: convertAudio.py:583
 msgid "Remove Photo"
 msgstr "Hapus Foto"
 
-#: __init__.py:170
+#: mp3_mixdown.py:898
+msgid "Removed {} file(s) from the list"
+msgstr "Menghapus {} berkas dari daftar"
+
+#: mp3_mixdown.py:39
+msgid "Removes background hiss and boosts vocal presence."
+msgstr "Menghilangkan desis latar belakang dan memperjelas suara vokal."
+
+#: record.py:446
+msgid "Removes low-frequency rumble, such as fan or handling noise, from the microphone. Only applies when Audio Processing is set to Default."
+msgstr "Menghilangkan gemuruh frekuensi rendah, seperti derau kipas atau sentuhan, dari mikrofon. Hanya berlaku saat Pemrosesan Audio diatur ke Default."
+
+#: __init__.py:276
 #: resizeImage.py:22
 msgid "Resize Image"
 msgstr "Ubah Ukuran Gambar"
@@ -951,60 +1631,121 @@ msgstr "Ubah Ukuran Gambar"
 #: resizeImage.py:35
 #: resizeImage.py:330
 msgid "Resize Image: {} files"
-msgstr "Ubah Ukuran Gambar: {} file"
+msgstr "Ubah Ukuran Gambar: {} berkas"
 
 #: resizeImage.py:136
 msgid "Resize Settings"
 msgstr "Pengaturan Ukuran"
 
-#: convertVideo.py:162
+#: convertVideo.py:161
 msgid "Resolution: ..."
 msgstr "Resolusi: ..."
 
-#: convertVideo.py:278
+#: convertVideo.py:277
 msgid "Resolution: unknown"
 msgstr "Resolusi: tidak diketahui"
 
-#: convertVideo.py:278
+#: convertVideo.py:277
 msgid "Resolution: {}x{}"
 msgstr "Resolusi: {}x{}"
 
-#: convertAudio.py:227
-#: convertMP3toMP4.py:178
+#: convertAudio.py:338
+#: convertAudio.py:705
 #: merge.py:240
 msgid "Resume"
 msgstr "Lanjutkan"
 
-#: convertAudio.py:223
-#: convertMP3toMP4.py:174
+#: convertAudio.py:334
+#: convertAudio.py:701
 #: merge.py:236
 msgid "Resuming..."
 msgstr "Melanjutkan..."
+
+#: mp3_mixdown.py:687
+msgid "Reverb / Echo"
+msgstr "Gema / Eko"
+
+#: mp3_mixdown.py:592
+msgid "Reverse Audio"
+msgstr "Balikkan Audio"
+
+#: mp3_mixdown.py:56
+msgid "Reversed & Accelerated"
+msgstr "Dibalik & Dipercepat"
 
 #: resizeImage.py:195
 msgid "Right (pixels):"
 msgstr "Kanan (piksel):"
 
-#: Trim.py:164
-#: convertAudio.py:102
-#: convertVideo.py:201
-msgid "Sample Rate:"
-msgstr "Sample Rate:"
+#: mp3_mixdown.py:451
+#: mp3_mixdown.py:727
+msgid "Right to Left"
+msgstr "Kanan ke Kiri"
 
-#: record.py:386
+#: mp3_mixdown.py:104
+msgid "Rock"
+msgstr "Rock"
+
+#: Trim.py:165
+#: convertAudio.py:203
+#: convertVideo.py:200
+msgid "Sample Rate:"
+msgstr "Kecepatan Sampel:"
+
+#: mp3_mixdown.py:437
+msgid "Section {}"
+msgstr "Bagian {}"
+
+#: mp3_mixdown.py:446
+msgid "Section {} End Second"
+msgstr "Akhir Detik Bagian {}"
+
+#: mp3_mixdown.py:465
+msgid "Section {} Pan Amount"
+msgstr "Jumlah Geser Bagian {}"
+
+#: mp3_mixdown.py:454
+msgid "Section {} Pan Direction"
+msgstr "Arah Geser Bagian {}"
+
+#: mp3_mixdown.py:442
+msgid "Section {} Start Second"
+msgstr "Detik Mulai Bagian {}"
+
+#: record.py:538
 msgid "Select Destination Folder"
 msgstr "Pilih Folder Tujuan"
 
-#: convertMP3toMP4.py:122
+#: mp3Gain.py:257
+msgid "Select MP3 files"
+msgstr "Pilih file MP3"
+
+#: mp3_mixdown.py:839
+msgid "Select MP3 or WAV files"
+msgstr "Pilih file MP3 atau WAV"
+
+#: mp3Gain.py:195
+msgid "Select a directory"
+msgstr "Pilih direktori"
+
+#: mp3Gain.py:268
+msgid "Select a folder containing MP3 files"
+msgstr "Pilih folder yang berisi file MP3"
+
+#: mp3_mixdown.py:850
+msgid "Select a folder containing MP3 or WAV files"
+msgstr "Pilih folder yang berisi file MP3 atau WAV"
+
+#: convertAudio.py:649
 msgid "Select photos"
 msgstr "Pilih foto"
 
-#: Trim.py:65
+#: Trim.py:66
 #: splitAudio.py:63
 msgid "Selected File"
 msgstr "File Terpilih"
 
-#: convertMP3toMP4.py:39
+#: convertAudio.py:566
 msgid "Selected MP3 File"
 msgstr "File MP3 Terpilih"
 
@@ -1012,72 +1753,88 @@ msgstr "File MP3 Terpilih"
 msgid "Selected files:"
 msgstr "File terpilih:"
 
-#: convertVideo.py:164
+#: convertVideo.py:163
 msgid "Size: ..."
 msgstr "Ukuran: ..."
 
-#: convertVideo.py:280
+#: convertVideo.py:279
 msgid "Size: {}"
 msgstr "Ukuran: {}"
 
+#: resizeImage.py:590
+msgid "Skipped"
+msgstr "Dilewati"
+
+#: resizeImage.py:591
+msgid "Skipped {}: unsupported or unreadable image format"
+msgstr "Dilewati {}: format gambar tidak didukung atau tidak dapat dibaca"
+
 #: resizeImage.py:210
 #: resizeImage.py:528
-#: resizeImage.py:690
+#: resizeImage.py:695
 msgid "Small"
 msgstr "Kecil"
 
+#: mp3_mixdown.py:660
+msgid "Spatial, Modulation && Panning"
+msgstr "Spasial, Modulasi && Panning"
+
 #: splitAudio.py:109
 msgid "Split"
-msgstr "Bagi"
+msgstr "Pisah"
 
-#: __init__.py:169
+#: __init__.py:275
 msgid "Split Audio"
-msgstr "Bagi Audio"
+msgstr "Pisah Audio"
 
 #: splitAudio.py:21
 msgid "Split Audio File"
-msgstr "Bagi File Audio"
+msgstr "Pisah Berkas Audio"
 
 #: splitAudio.py:32
 msgid "Split Audio: {}"
-msgstr "Bagi Audio: {}"
+msgstr "Pisah Audio: {}"
 
 #: splitAudio.py:71
 msgid "Split Settings"
-msgstr "Pengaturan Bagi"
+msgstr "Pengaturan Pemisahan"
 
 #: splitAudio.py:435
 msgid "Split complete! {} tracks created"
-msgstr "Pembagian selesai! {} trek dibuat"
+msgstr "Pemisahan selesai! {} trek dibuat"
 
 #: splitAudio.py:446
 msgid "Split failed!"
-msgstr "Pembagian gagal!"
+msgstr "Pemisahan gagal!"
 
 #: resizeImage.py:261
 msgid "Start"
 msgstr "Mulai"
 
-#: Trim.py:132
+#: mp3_mixdown.py:440
+msgid "Start Second:"
+msgstr "Detik Mulai:"
+
+#: Trim.py:133
 msgid "Start Time (100% volume):"
 msgstr "Waktu Mulai (volume 100%):"
 
-#: Trim.py:80
-#: Trim.py:117
+#: Trim.py:81
+#: Trim.py:118
 msgid "Start Time:"
 msgstr "Waktu Mulai:"
 
-#: __init__.py:413
+#: __init__.py:554
 msgid "Start recording; press again to pause; press again to continue"
-msgstr "Mulai merekam; tekan lagi untuk jeda; tekan lagi untuk melanjutkan"
+msgstr "Mulai perekaman; tekan lagi untuk menjeda; tekan lagi untuk melanjutkan"
 
-#: Trim.py:424
-#: Trim.py:550
+#: Trim.py:425
+#: Trim.py:564
 msgid "Start time must be less than end time"
 msgstr "Waktu mulai harus lebih kecil dari waktu selesai"
 
-#: convertAudio.py:301
-#: convertMP3toMP4.py:299
+#: convertAudio.py:417
+#: convertAudio.py:826
 msgid "Starting conversion..."
 msgstr "Memulai konversi..."
 
@@ -1087,9 +1844,9 @@ msgstr "Memulai penggabungan..."
 
 #: splitAudio.py:349
 msgid "Starting split operation..."
-msgstr "Memulai operasi pembagian..."
+msgstr "Memulai operasi pemisahan..."
 
-#: Trim.py:631
+#: Trim.py:645
 msgid "Starting trim operation..."
 msgstr "Memulai operasi pemotongan..."
 
@@ -1097,25 +1854,69 @@ msgstr "Memulai operasi pemotongan..."
 msgid "Status"
 msgstr "Status"
 
-#: __init__.py:428
+#: __init__.py:567
 msgid "Stop recording"
-msgstr "Berhenti merekam"
+msgstr "Hentikan perekaman"
 
-#: record.py:311
+#: record.py:401
+msgid "System Audio De&vice:"
+msgstr "Perangkat &Audio Sistem:"
+
+#: record.py:355
 msgid "System Only"
 msgstr "Hanya Sistem"
 
-#: record.py:309
+#: record.py:353
 msgid "System and Microphone (Merged)"
 msgstr "Sistem dan Mikrofon (Digabung)"
 
-#: record.py:310
+#: record.py:354
 msgid "System and Microphone (Separate Files)"
 msgstr "Sistem dan Mikrofon (File Terpisah)"
 
-#: convertVideo.py:181
+#: mp3_mixdown.py:780
+msgid "Target Loudness (LUFS):"
+msgstr "Target Kenyaringan (LUFS):"
+
+#: convertVideo.py:180
 msgid "Target Size:"
 msgstr "Ukuran Target:"
+
+#: mp3_mixdown.py:602
+msgid "Tempo Factor"
+msgstr "Faktor Tempo"
+
+#: mp3_mixdown.py:599
+msgid "Tempo Factor (0.5-2.0):"
+msgstr "Faktor Tempo (0.5-2.0):"
+
+#: record.py:375
+msgid "The microphone loudness, in dB, that starts ducking the music. Lower values duck more easily."
+msgstr "Kenyaringan mikrofon, dalam dB, yang mulai meredam musik. Nilai yang lebih rendah lebih mudah meredam."
+
+#: Trim.py:454
+msgid "The selected file has no video stream and cannot be previewed as video."
+msgstr "File yang dipilih tidak memiliki aliran video dan tidak dapat pratinjau sebagai video."
+
+#: Trim.py:550
+msgid "The selected file has no video stream and cannot be trimmed as video. Choose Audio output instead."
+msgstr "Berkas yang dipilih tidak memiliki stream video dan tidak dapat dipotong sebagai video. Pilih Output audio sebagai gantinya."
+
+#: mp3_mixdown.py:51
+msgid "Thickens sound with chorus, modulation, and extra stereo width."
+msgstr "Menebalkan suara dengan paduan suara (chorus), modulasi, dan lebar stereo ekstra."
+
+#: mp3_mixdown.py:590
+msgid "Time && Pitch"
+msgstr "Waktu && Nada"
+
+#: mp3Gain.py:455
+msgid "Timed out applying gain to {}"
+msgstr "Waktu habis saat menerapkan penguatan (gain) ke {}"
+
+#: mp3_mixdown.py:1101
+msgid "Timed out processing {}"
+msgstr "Waktu habis saat memproses {}"
 
 #: resizeImage.py:174
 msgid "Top (pixels):"
@@ -1125,162 +1926,193 @@ msgstr "Atas (piksel):"
 msgid "Total progress:"
 msgstr "Total kemajuan:"
 
+#: mp3Gain.py:204
+msgid "Track Analysis"
+msgstr "Analisis Trek"
+
 #: splitAudio.py:338
 msgid "Track end times must be in increasing order"
-msgstr "Waktu selesai trek harus dalam urutan meningkat"
+msgstr "Waktu akhir trek harus dalam urutan menaik"
 
 #: splitAudio.py:89
 msgid "Tracks"
 msgstr "Trek"
 
-#: Trim.py:227
+#: mp3_mixdown.py:625
+msgid "Treble Gain"
+msgstr "Penguatan Treble"
+
+#: mp3_mixdown.py:623
+msgid "Treble Gain (dB):"
+msgstr "Penguatan Treble (dB):"
+
+#: Trim.py:228
 msgid "Trim"
 msgstr "Potong"
 
 #: Trim.py:22
-#: __init__.py:168
+#: __init__.py:274
 msgid "Trim Audio/Video File"
-msgstr "Potong File Audio/Video"
+msgstr "Potong Berkas Audio/Video"
 
-#: Trim.py:33
+#: Trim.py:34
 msgid "Trim Audio/Video: {}"
 msgstr "Potong Audio/Video: {}"
 
-#: Trim.py:753
+#: Trim.py:771
 msgid "Trim complete!"
 msgstr "Pemotongan selesai!"
 
-#: Trim.py:779
-#: Trim.py:785
+#: Trim.py:797
+#: Trim.py:803
 msgid "Trim failed!"
 msgstr "Pemotongan gagal!"
 
-#: Trim.py:754
+#: Trim.py:772
 msgid "Trimmed file saved as {}"
-msgstr "File terpotong disimpan sebagai {}"
+msgstr "Berkas yang dipotong disimpan sebagai {}"
 
-#: Trim.py:780
-#: Trim.py:786
+#: Trim.py:798
+#: Trim.py:804
 msgid "Trimming failed: {}"
 msgstr "Pemotongan gagal: {}"
 
-#: resizeImage.py:742
+#: mp3_mixdown.py:786
+msgid "True Peak Limit (dBTP):"
+msgstr "Batas Puncak Sebenarnya (dBTP):"
+
+#: resizeImage.py:747
 msgid "Unknown"
 msgstr "Tidak diketahui"
 
-#: Trim.py:522
-#: Trim.py:777
+#: Trim.py:531
+#: Trim.py:795
 msgid "Unknown error"
-msgstr "Kesalahan tidak dikenal"
+msgstr "Galat tidak diketahui"
 
 #: resizeImage.py:210
 #: resizeImage.py:528
-#: resizeImage.py:687
+#: resizeImage.py:692
 msgid "Very Good"
-msgstr "Sangat Bagus"
+msgstr "Sangat Baik"
 
-#: Trim.py:73
+#: Trim.py:74
 msgid "Video"
 msgstr "Video"
 
-#: Trim.py:152
+#: Trim.py:153
 msgid "Video Format"
 msgstr "Format Video"
 
-#: __init__.py:172
+#: __init__.py:260
 msgid "Video Info"
 msgstr "Info Video"
 
-#: convertAudio.py:111
+#: __init__.py:265
+msgid "Video Info: {info}"
+msgstr "Info Video: {info}"
+
+#: mp3_mixdown.py:38
+msgid "Vocal Clarity & Denoise (ANR)"
+msgstr "Kejernihan Vokal & Redam Derau (ANR)"
+
+#: convertAudio.py:212
 msgid "Volume:"
 msgstr "Volume:"
 
-#: resizeImage.py:611
+#: resizeImage.py:616
 msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
-msgstr "Peringatan: Dimensi potong tidak valid untuk {}. Pemotongan dinonaktifkan untuk gambar ini."
+msgstr "Peringatan: Dimensi pemotongan tidak valid untuk {}. Pemotongan dinonaktifkan untuk gambar ini."
 
-#: convertMP3toMP4.py:77
-#: convertMP3toMP4.py:261
+#: convertAudio.py:604
+#: convertAudio.py:788
 msgid "White"
 msgstr "Putih"
+
+#: mp3_mixdown.py:81
+msgid "Widens the stereo image, applies gentle multi-stage compression, and adds a touch of reverb for a fuller, more polished vocal and music mix."
+msgstr "Memperlebar citra stereo, menerapkan kompresi multi-tahap yang lembut, dan menambahkan sedikit gema (reverb) untuk campuran vokal dan musik yang lebih utuh dan matang."
 
 #: resizeImage.py:142
 msgid "Width (pixels):"
 msgstr "Lebar (piksel):"
 
-#: convertMP3toMP4.py:78
-#: convertMP3toMP4.py:265
+#: mp3_mixdown.py:666
+msgid "Width Intensity:"
+msgstr "Intensitas Lebar:"
+
+#: convertAudio.py:605
+#: convertAudio.py:792
 msgid "Yellow"
 msgstr "Kuning"
 
-#: Trim.py:454
-#: Trim.py:626
-#: convertAudio.py:272
-#: convertMP3toMP4.py:198
-#: convertVideo.py:382
+#: record.py:256
+msgid "continue"
+msgstr "lanjutkan"
+
+#: Trim.py:459
+#: Trim.py:640
+#: convertAudio.py:383
+#: convertAudio.py:725
+#: convertVideo.py:381
 #: merge.py:265
-#: resizeImage.py:655
+#: resizeImage.py:660
 #: splitAudio.py:359
 msgid "ffmpeg.exe not found"
 msgstr "ffmpeg.exe tidak ditemukan"
 
-#: __init__.py:68
-msgid "ffmpeg.exe or ffprobe.exe not found in tools folder"
-msgstr "ffmpeg.exe atau ffprobe.exe tidak ditemukan di folder tools"
+#: __init__.py:93
+msgid "ffmpeg.exe or ffprobe.exe not found in libs folder"
+msgstr "ffmpeg.exe atau ffprobe.exe tidak ditemukan di folder libs"
 
-#: Trim.py:317
+#: Trim.py:318
 #: splitAudio.py:193
 msgid "ffprobe.exe not found"
 msgstr "ffprobe.exe tidak ditemukan"
 
-#: Trim.py:394
+#: Trim.py:395
 msgid "invalid"
 msgstr "tidak valid"
 
-#: Trim.py:373
+#: Trim.py:374
 msgid "invalid (negative)"
 msgstr "tidak valid (negatif)"
 
-#: __init__.py:424
-#: record.py:214
+#: record.py:246
 msgid "paused"
 msgstr "dijeda"
 
-#: __init__.py:421
-msgid "resume"
-msgstr "lanjutkan"
-
-#: record.py:223
-msgid "resumed"
-msgstr "dilanjutkan"
-
-#: __init__.py:418
+#: __init__.py:559
 msgid "start"
 msgstr "mulai"
 
-#: __init__.py:436
+#: __init__.py:578
 msgid "stopped No file saved"
-msgstr "berhenti Tidak ada file disimpan"
+msgstr "dihentikan Tidak ada berkas yang disimpan"
 
-#: __init__.py:434
+#: __init__.py:576
 msgid "stopped Saved to: {}"
-msgstr "berhenti Disimpan ke: {}"
+msgstr "dihentikan Disimpan ke: {}"
 
-#: Trim.py:367
-#: convertVideo.py:277
+#: Trim.py:368
+#: convertVideo.py:276
 msgid "unknown"
 msgstr "tidak diketahui"
 
-#: image.py:191
+#: image.py:190
 #: video.py:156
 msgid "{filename}: {result}"
 msgstr "{filename}: {result}"
+
+#: mp3Gain.py:249
+msgid "{name} ({db:.1f} dB)"
+msgstr "{name} ({db:.1f} dB)"
 
 #: video.py:122
 msgid "{width} by {height} pixels, size {size}"
 msgstr "{width} kali {height} piksel, ukuran {size}"
 
-#: image.py:149
+#: image.py:148
 msgid "{width} by {height} pixels, {dpi} DPI"
 msgstr "{width} kali {height} piksel, {dpi} DPI"
 
@@ -1296,6 +2128,6 @@ msgstr "{} file dihapus"
 msgid "{} percent"
 msgstr "{} persen"
 
-#: convertVideo.py:499
+#: convertVideo.py:512
 msgid "{}%"
 msgstr "{}%"

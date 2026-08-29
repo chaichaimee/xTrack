@@ -1,4 +1,3 @@
-# convertVideo.py
 import wx
 import os
 import subprocess
@@ -56,12 +55,12 @@ def get_video_info(libs_path, file_path):
 						den = float(parts[1])
 						if den > 0:
 							fps = round(num / den, 2)
-					except:
+					except (ValueError, ZeroDivisionError):
 						pass
 			else:
 				try:
 					duration = float(line)
-				except:
+				except ValueError:
 					pass
 		return width, height, fps, duration
 	except Exception as e:
@@ -322,8 +321,8 @@ class ConvertVideoDialog(wx.Dialog):
 		self.save_settings()
 		try:
 			tones.beep(800, 200)
-		except:
-			pass
+		except Exception as beepError:
+			log.debug(f"Beep failed: {beepError}")
 		for path in self.selected_files:
 			self.conversion_queue.put(path)
 		self.is_processing = True
@@ -363,7 +362,7 @@ class ConvertVideoDialog(wx.Dialog):
 					target_w -= 1
 				if target_h % 2 != 0:
 					target_h -= 1
-			except:
+			except (ValueError, IndexError):
 				log.error(f"Invalid target string: {target_str}")
 				self.on_failure(_("Invalid target size"), path)
 				return
@@ -387,11 +386,21 @@ class ConvertVideoDialog(wx.Dialog):
 		if do_resize:
 			cmd.extend(["-vf", f"scale={target_w}:{target_h}:force_original_aspect_ratio=decrease,format=yuv420p,crop=trunc(iw/2)*2:trunc(ih/2)*2"])
 			if out_fmt in ["mp4", "mkv", "mov", "avi"]:
-				cmd.extend(["-c:v", "libx264", "-preset", "medium", "-crf", "23"])
+				# "veryfast" keeps the same -crf quality target as "medium" but
+				# encodes several times quicker; the trade-off is a somewhat
+				# larger file for the same visual quality, not lower quality.
+				cmd.extend(["-c:v", "libx264", "-preset", "veryfast", "-crf", "23"])
 			elif out_fmt == "webm":
 				cmd.extend(["-c:v", "libvpx", "-crf", "10", "-b:v", "1M"])
 		else:
 			cmd.extend(["-c:v", "copy"])
+
+		# Leave one core free for the rest of the system (document editors,
+		# NVDA itself, etc.) instead of letting x264 claim every core.
+		# os.cpu_count() is used instead of the multiprocessing module,
+		# since multiprocessing is not available in NVDA's bundled Python.
+		encoderThreads = max(1, (os.cpu_count() or 4) - 1)
+		cmd.extend(["-threads", str(encoderThreads)])
 
 		sr = self.sample_rate_combo.GetStringSelection()
 		if sr != "Keep Original":
@@ -424,11 +433,15 @@ class ConvertVideoDialog(wx.Dialog):
 
 		def run():
 			# Use threads to read both stdout and stderr to prevent blocking
+			# BELOW_NORMAL_PRIORITY_CLASS lets Windows favor whatever the user
+			# is actively doing (typing, browsing, etc.) over the encode, so a
+			# long conversion no longer makes the rest of the machine feel
+			# sluggish on older PCs.
 			self.ffmpeg_process = subprocess.Popen(
 				cmd,
 				stdout=subprocess.PIPE,
 				stderr=subprocess.PIPE,
-				creationflags=subprocess.CREATE_NO_WINDOW,
+				creationflags=subprocess.CREATE_NO_WINDOW | subprocess.BELOW_NORMAL_PRIORITY_CLASS,
 				text=True,
 				encoding='utf-8',
 				errors='ignore',
@@ -503,8 +516,8 @@ class ConvertVideoDialog(wx.Dialog):
 			ui.message(_("Progress: {}%").format(val))
 			try:
 				tones.beep(800, 50)
-			except:
-				pass
+			except Exception as beepError:
+				log.debug(f"Beep failed: {beepError}")
 
 	def on_success(self, src_path, out_path):
 		ui.message(_("Conversion complete: {}").format(os.path.basename(out_path)))
@@ -518,7 +531,7 @@ class ConvertVideoDialog(wx.Dialog):
 		while not self.conversion_queue.empty():
 			try:
 				self.conversion_queue.get_nowait()
-			except:
+			except queue.Empty:
 				break
 		self.status.SetLabel(_("Conversion failed"))
 		wx.CallAfter(self.EndModal, wx.ID_CANCEL)
@@ -530,8 +543,8 @@ class ConvertVideoDialog(wx.Dialog):
 		ui.message(_("All conversions finished"))
 		try:
 			tones.beep(1000, 200)
-		except:
-			pass
+		except Exception as beepError:
+			log.debug(f"Beep failed: {beepError}")
 		wx.CallAfter(self.EndModal, wx.ID_OK)
 
 	def on_cancel(self, event):
@@ -540,11 +553,12 @@ class ConvertVideoDialog(wx.Dialog):
 		while not self.conversion_queue.empty():
 			try:
 				self.conversion_queue.get_nowait()
-			except:
+			except queue.Empty:
 				break
 		self.is_processing = False
 		self.EndModal(wx.ID_CANCEL)
 
 	def on_close(self, event):
 		self.on_cancel(event)
+
 

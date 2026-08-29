@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: xTrack 2026.8.8\n"
+"Project-Id-Version: xTrack 2026.9.0\n"
 "Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
-"POT-Creation-Date: 2026-08-20 12:05+0700\n"
+"POT-Creation-Date: 2026-08-28 11:38+0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: chaiBot and Malee Yamazaki\n"
 "Language-Team: English\n"
@@ -29,45 +29,45 @@ msgid "\"Normal\" Volume (dB):"
 msgstr "\"Normal\" Volume (dB):"
 
 #: mp3Gain.py:195
-#: record.py:471
+#: record.py:470
 msgid "&Browse..."
 msgstr "&Browse..."
 
-#: record.py:460
+#: record.py:459
 msgid "&Count-in before recording"
 msgstr "&Count-in before recording"
 
-#: record.py:466
+#: record.py:465
 msgid "&Destination Folder:"
 msgstr "&Destination Folder:"
 
-#: record.py:409
+#: record.py:408
 msgid "&Format:"
 msgstr "&Format:"
 
-#: record.py:425
+#: record.py:424
 msgid "&Microphone Volume (%):"
 msgstr "&Microphone Volume (%):"
 
-#: record.py:463
+#: record.py:462
 msgid "&Open folder after recording"
 msgstr "&Open folder after recording"
 
-#: record.py:426
+#: record.py:425
 msgid "&System Volume (%):"
 msgstr "&System Volume (%):"
 
-#: convertVideo.py:252
-#: convertVideo.py:257
+#: convertVideo.py:251
+#: convertVideo.py:256
 msgid "..."
 msgstr "..."
 
-#: convertVideo.py:273
-#: convertVideo.py:280
+#: convertVideo.py:272
+#: convertVideo.py:279
 msgid "?"
 msgstr "?"
 
-#: record.py:502
+#: record.py:501
 msgid "AAC Bitrate (kbps):"
 msgstr "AAC Bitrate (kbps):"
 
@@ -112,12 +112,12 @@ msgstr "Album analysis complete for {count} folder(s)"
 msgid "All conversions complete!"
 msgstr "All conversions complete!"
 
-#: convertVideo.py:529
-#: convertVideo.py:530
+#: convertVideo.py:542
+#: convertVideo.py:543
 msgid "All conversions finished"
 msgstr "All conversions finished"
 
-#: resizeImage.py:823
+#: resizeImage.py:822
 msgid "All images processed!"
 msgstr "All images processed!"
 
@@ -166,11 +166,11 @@ msgstr "Apply Track Gain"
 msgid "Audio"
 msgstr "Audio"
 
-#: record.py:435
+#: record.py:434
 msgid "Audio &Processing:"
 msgstr "Audio &Processing:"
 
-#: record.py:476
+#: record.py:475
 msgid "Audio Backend Status: "
 msgstr "Audio Backend Status: "
 
@@ -179,7 +179,7 @@ msgid "Audio Channels:"
 msgstr "Audio Channels:"
 
 #: Trim.py:185
-#: convertVideo.py:215
+#: convertVideo.py:214
 msgid "Audio Codec:"
 msgstr "Audio Codec:"
 
@@ -200,7 +200,7 @@ msgid "Audio Quality:"
 msgstr "Audio Quality:"
 
 #: Trim.py:161
-#: convertVideo.py:198
+#: convertVideo.py:197
 msgid "Audio Settings"
 msgstr "Audio Settings"
 
@@ -224,15 +224,15 @@ msgstr "Auto-Pan Loop Direction"
 msgid "Auto-Pan Loop Speed"
 msgstr "Auto-Pan Loop Speed"
 
-#: record.py:392
+#: record.py:391
 msgid "Automatic (Default)"
 msgstr "Automatic (Default)"
 
-#: record.py:368
+#: record.py:367
 msgid "Automatically lowers the system audio whenever the microphone picks up speech, then raises it back once you stop talking. Only applies when Recording Mode is System and Microphone (Merged)."
 msgstr "Automatically lowers the system audio whenever the microphone picks up speech, then raises it back once you stop talking. Only applies when Recording Mode is System and Microphone (Merged)."
 
-#: record.py:478
+#: record.py:477
 msgid "Available"
 msgstr "Available"
 
@@ -256,9 +256,9 @@ msgstr "Bass Gain"
 msgid "Bass Gain (dB):"
 msgstr "Bass Gain (dB):"
 
-#: resizeImage.py:211
-#: resizeImage.py:529
-#: resizeImage.py:692
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:691
 msgid "Best (No loss)"
 msgstr "Best (No loss)"
 
@@ -280,7 +280,7 @@ msgstr "Black"
 msgid "Blue"
 msgstr "Blue"
 
-#: resizeImage.py:182
+#: resizeImage.py:181
 msgid "Bottom (pixels):"
 msgstr "Bottom (pixels):"
 
@@ -298,29 +298,29 @@ msgstr "Browse Files..."
 msgid "Browse Folder..."
 msgstr "Browse Folder..."
 
-#: resizeImage.py:129
+#: resizeImage.py:128
 msgid "Browse..."
 msgstr "Browse..."
 
 #: convertAudio.py:262
 #: convertAudio.py:288
 #: merge.py:170
-#: resizeImage.py:461
-#: resizeImage.py:491
+#: resizeImage.py:460
+#: resizeImage.py:490
 msgid "Calculating..."
 msgstr "Calculating..."
 
 #: Trim.py:231
 #: convertAudio.py:242
 #: convertAudio.py:631
-#: convertVideo.py:234
+#: convertVideo.py:233
 #: merge.py:141
-#: resizeImage.py:266
+#: resizeImage.py:265
 #: splitAudio.py:112
 msgid "Cancel"
 msgstr "Cancel"
 
-#: convertVideo.py:349
+#: convertVideo.py:348
 msgid "Cannot read video resolution"
 msgstr "Cannot read video resolution"
 
@@ -328,7 +328,7 @@ msgstr "Cannot read video resolution"
 msgid "Center"
 msgstr "Center"
 
-#: convertVideo.py:208
+#: convertVideo.py:207
 msgid "Channels:"
 msgstr "Channels:"
 
@@ -336,15 +336,15 @@ msgstr "Channels:"
 msgid "Check"
 msgstr "Check"
 
-#: record.py:397
+#: record.py:396
 msgid "Choose a specific microphone if it is not on your system's default recording device, for example when the microphone is on a separate sound card."
 msgstr "Choose a specific microphone if it is not on your system's default recording device, for example when the microphone is on a separate sound card."
 
-#: resizeImage.py:502
+#: resizeImage.py:501
 msgid "Choose output folder"
 msgstr "Choose output folder"
 
-#: record.py:405
+#: record.py:404
 msgid "Choose which output device's audio to record, for example when speech and music play through different speakers than the system default."
 msgstr "Choose which output device's audio to record, for example when speech and music play through different speakers than the system default."
 
@@ -381,19 +381,19 @@ msgstr "Clear Analysis"
 msgid "Close"
 msgstr "Close"
 
-#: record.py:430
+#: record.py:429
 msgid "Communications"
 msgstr "Communications"
 
-#: record.py:439
+#: record.py:438
 msgid "Communications requests Windows voice-processing features such as noise suppression, echo cancellation, and automatic gain control when supported by the operating system and audio driver."
 msgstr "Communications requests Windows voice-processing features such as noise suppression, echo cancellation, and automatic gain control when supported by the operating system and audio driver."
 
-#: resizeImage.py:817
+#: resizeImage.py:816
 msgid "Complete!"
 msgstr "Complete!"
 
-#: resizeImage.py:787
+#: resizeImage.py:786
 msgid "Completed"
 msgstr "Completed"
 
@@ -406,7 +406,7 @@ msgid "Compressor Threshold (dB):"
 msgstr "Compressor Threshold (dB):"
 
 #: convertAudio.py:179
-#: convertVideo.py:171
+#: convertVideo.py:170
 msgid "Conversion Settings"
 msgstr "Conversion Settings"
 
@@ -420,15 +420,15 @@ msgstr "Conversion complete for {}"
 msgid "Conversion complete!"
 msgstr "Conversion complete!"
 
-#: convertVideo.py:510
+#: convertVideo.py:523
 msgid "Conversion complete: {}"
 msgstr "Conversion complete: {}"
 
-#: convertVideo.py:523
+#: convertVideo.py:536
 msgid "Conversion failed"
 msgstr "Conversion failed"
 
-#: convertVideo.py:513
+#: convertVideo.py:526
 msgid "Conversion failed for {}: {}"
 msgstr "Conversion failed for {}: {}"
 
@@ -448,7 +448,7 @@ msgstr "Conversion failed: {}"
 #: convertAudio.py:627
 #: convertAudio.py:908
 #: convertAudio.py:915
-#: convertVideo.py:231
+#: convertVideo.py:230
 msgid "Convert"
 msgstr "Convert"
 
@@ -471,15 +471,15 @@ msgid "Convert MP3 to MP4: {}"
 msgstr "Convert MP3 to MP4: {}"
 
 #: __init__.py:269
-#: convertVideo.py:99
+#: convertVideo.py:98
 msgid "Convert Video"
 msgstr "Convert Video"
 
-#: convertVideo.py:112
+#: convertVideo.py:111
 msgid "Convert Video: {} files"
 msgstr "Convert Video: {} files"
 
-#: convertVideo.py:419
+#: convertVideo.py:428
 msgid "Converting..."
 msgstr "Converting..."
 
@@ -505,12 +505,12 @@ msgstr "Could not analyze {}"
 msgid "Could not play preview: {}"
 msgstr "Could not play preview: {}"
 
-#: image.py:186
+#: image.py:185
 #: video.py:153
 msgid "Could not read"
 msgstr "Could not read"
 
-#: image.py:143
+#: image.py:142
 msgid "Could not read image dimensions"
 msgstr "Could not read image dimensions"
 
@@ -526,7 +526,7 @@ msgstr "Created {name} at {target:.1f} dB"
 msgid "Created {}"
 msgstr "Created {}"
 
-#: resizeImage.py:166
+#: resizeImage.py:165
 msgid "Crop Image"
 msgstr "Crop Image"
 
@@ -543,11 +543,11 @@ msgid "Cross-fade requires re-encoding mode"
 msgstr "Cross-fade requires re-encoding mode"
 
 #: convertAudio.py:171
-#: convertVideo.py:158
+#: convertVideo.py:157
 msgid "Current File"
 msgstr "Current File"
 
-#: resizeImage.py:244
+#: resizeImage.py:243
 msgid "Current file:"
 msgstr "Current file:"
 
@@ -568,7 +568,7 @@ msgstr "Cyan"
 msgid "Dance / EDM"
 msgstr "Dance / EDM"
 
-#: record.py:429
+#: record.py:428
 msgid "Default"
 msgstr "Default"
 
@@ -576,8 +576,8 @@ msgstr "Default"
 msgid "Delete"
 msgstr "Delete"
 
-#: resizeImage.py:109
-#: resizeImage.py:295
+#: resizeImage.py:108
+#: resizeImage.py:294
 msgid "Delete Selected Files"
 msgstr "Delete Selected Files"
 
@@ -585,7 +585,7 @@ msgstr "Delete Selected Files"
 msgid "Destination Folder"
 msgstr "Destination Folder"
 
-#: resizeImage.py:235
+#: resizeImage.py:234
 msgid "Dimensions"
 msgstr "Dimensions"
 
@@ -598,19 +598,19 @@ msgstr "Done"
 msgid "Dreamy Chorus & Wide"
 msgstr "Dreamy Chorus & Wide"
 
-#: record.py:377
+#: record.py:376
 msgid "Ducking &Attack Time (ms):"
 msgstr "Ducking &Attack Time (ms):"
 
-#: record.py:373
+#: record.py:372
 msgid "Ducking &Level (dB):"
 msgstr "Ducking &Level (dB):"
 
-#: record.py:379
+#: record.py:378
 msgid "Ducking &Release Time (ms):"
 msgstr "Ducking &Release Time (ms):"
 
-#: record.py:375
+#: record.py:374
 msgid "Ducking &Sensitivity Threshold (dB):"
 msgstr "Ducking &Sensitivity Threshold (dB):"
 
@@ -622,7 +622,7 @@ msgstr "Dull, muffled ambience as if heard through a wall or in a tiled room."
 msgid "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
 msgstr "Duration in seconds for cross-fading between tracks. Recommended value is 5 seconds."
 
-#: convertVideo.py:161
+#: convertVideo.py:160
 msgid "Duration: ..."
 msgstr "Duration: ..."
 
@@ -632,7 +632,7 @@ msgid "Duration: Calculating..."
 msgstr "Duration: Calculating..."
 
 #: convertAudio.py:645
-#: convertVideo.py:273
+#: convertVideo.py:272
 #: splitAudio.py:220
 msgid "Duration: {}"
 msgstr "Duration: {}"
@@ -649,7 +649,7 @@ msgstr "Echo Delay"
 msgid "Echo Delay (ms):"
 msgstr "Echo Delay (ms):"
 
-#: record.py:366
+#: record.py:365
 msgid "Enable Auto-&Ducking (lower music while you speak)"
 msgstr "Enable Auto-&Ducking (lower music while you speak)"
 
@@ -732,7 +732,7 @@ msgstr "Equalizer (choose a music style)"
 msgid "Error"
 msgstr "Error"
 
-#: image.py:160
+#: image.py:159
 msgid "Error getting image information"
 msgstr "Error getting image information"
 
@@ -760,7 +760,7 @@ msgstr "Fade Settings"
 msgid "Fade-in for Next Track (seconds):"
 msgstr "Fade-in for Next Track (seconds):"
 
-#: resizeImage.py:803
+#: resizeImage.py:802
 msgid "Failed"
 msgstr "Failed"
 
@@ -845,7 +845,7 @@ msgstr "Failed to save configuration: {}"
 msgid "Failed to split audio file"
 msgstr "Failed to split audio file"
 
-#: resizeImage.py:808
+#: resizeImage.py:807
 msgid "Failed: {}"
 msgstr "Failed: {}"
 
@@ -859,7 +859,7 @@ msgstr "File Duration: Calculating..."
 msgid "File Duration: {}"
 msgstr "File Duration: {}"
 
-#: resizeImage.py:236
+#: resizeImage.py:235
 msgid "File Size"
 msgstr "File Size"
 
@@ -867,8 +867,8 @@ msgstr "File Size"
 msgid "File duration: {duration}; Trim period: {period} seconds{fade_info}"
 msgstr "File duration: {duration}; Trim period: {period} seconds{fade_info}"
 
-#: image.py:137
-#: image.py:186
+#: image.py:136
+#: image.py:185
 #: video.py:111
 #: video.py:153
 msgid "File not found"
@@ -879,7 +879,7 @@ msgid "File not found: {}"
 msgstr "File not found: {}"
 
 #: convertAudio.py:165
-#: convertVideo.py:152
+#: convertVideo.py:151
 msgid "Files to Convert"
 msgstr "Files to Convert"
 
@@ -895,19 +895,19 @@ msgstr "Flat / Default"
 msgid "Folk / Acoustic"
 msgstr "Folk / Acoustic"
 
-#: resizeImage.py:119
+#: resizeImage.py:118
 msgid "For single file only"
 msgstr "For single file only"
 
-#: resizeImage.py:220
+#: resizeImage.py:219
 msgid "Format:"
 msgstr "Format:"
 
-#: convertVideo.py:163
+#: convertVideo.py:162
 msgid "Frame rate: ..."
 msgstr "Frame rate: ..."
 
-#: convertVideo.py:279
+#: convertVideo.py:278
 msgid "Frame rate: {}"
 msgstr "Frame rate: {}"
 
@@ -927,9 +927,9 @@ msgstr "Gate Threshold (dB):"
 msgid "Generating preview: {}"
 msgstr "Generating preview: {}"
 
-#: resizeImage.py:211
-#: resizeImage.py:529
-#: resizeImage.py:694
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:693
 msgid "Good"
 msgstr "Good"
 
@@ -943,7 +943,7 @@ msgstr "Gray"
 msgid "Green"
 msgstr "Green"
 
-#: resizeImage.py:150
+#: resizeImage.py:149
 msgid "Height (pixels):"
 msgstr "Height (pixels):"
 
@@ -955,15 +955,15 @@ msgstr "High Gain @ 8 kHz (dB):"
 msgid "Hip-Hop"
 msgstr "Hip-Hop"
 
-#: record.py:374
+#: record.py:373
 msgid "How much the music is lowered by while you are speaking."
 msgstr "How much the music is lowered by while you are speaking."
 
-#: record.py:380
+#: record.py:379
 msgid "How quickly the music fades back up once you stop speaking."
 msgstr "How quickly the music fades back up once you stop speaking."
 
-#: record.py:378
+#: record.py:377
 msgid "How quickly the music fades down once speech is detected."
 msgstr "How quickly the music fades down once speech is detected."
 
@@ -979,7 +979,7 @@ msgstr "Image Info: {info}"
 msgid "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
 msgstr "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
 
-#: resizeImage.py:831
+#: resizeImage.py:830
 msgid "Image processing complete! Check the output information list for results."
 msgstr "Image processing complete! Check the output information list for results."
 
@@ -987,7 +987,7 @@ msgstr "Image processing complete! Check the output information list for results
 msgid "Immersive 3D headphone experience with real stereo width and warm reverb."
 msgstr "Immersive 3D headphone experience with real stereo width and warm reverb."
 
-#: resizeImage.py:99
+#: resizeImage.py:98
 msgid "Input Files"
 msgstr "Input Files"
 
@@ -1005,7 +1005,7 @@ msgstr "Invalid fade-out range"
 msgid "Invalid image file: {}"
 msgstr "Invalid image file: {}"
 
-#: convertVideo.py:368
+#: convertVideo.py:367
 msgid "Invalid target size"
 msgstr "Invalid target size"
 
@@ -1040,7 +1040,7 @@ msgstr "Keep in Same Folder"
 msgid "Last track end time cannot exceed file duration"
 msgstr "Last track end time cannot exceed file duration"
 
-#: resizeImage.py:189
+#: resizeImage.py:188
 msgid "Left (pixels):"
 msgstr "Left (pixels):"
 
@@ -1057,7 +1057,7 @@ msgstr "Limit (dB):"
 msgid "Limiter Limit"
 msgstr "Limiter Limit"
 
-#: resizeImage.py:157
+#: resizeImage.py:156
 msgid "Lock Aspect Ratio"
 msgstr "Lock Aspect Ratio"
 
@@ -1099,7 +1099,7 @@ msgstr "Loudness Normalization True Peak"
 msgid "Low Gain @ 100 Hz (dB):"
 msgstr "Low Gain @ 100 Hz (dB):"
 
-#: record.py:453
+#: record.py:452
 msgid "Lowers steady background noise picked up between spoken words. Only applies when Audio Processing is set to Default."
 msgstr "Lowers steady background noise picked up between spoken words. Only applies when Audio Processing is set to Default."
 
@@ -1130,8 +1130,8 @@ msgstr "MP3 Gain processing complete"
 msgid "MP3 Gain: {} files"
 msgstr "MP3 Gain: {} files"
 
-#: record.py:414
-#: record.py:500
+#: record.py:413
+#: record.py:499
 msgid "MP3 Quality (kbps):"
 msgstr "MP3 Quality (kbps):"
 
@@ -1215,11 +1215,11 @@ msgstr "Merging: {}%"
 msgid "Metal"
 msgstr "Metal"
 
-#: record.py:394
+#: record.py:393
 msgid "Microphone &Device:"
 msgstr "Microphone &Device:"
 
-#: record.py:357
+#: record.py:356
 msgid "Microphone Only"
 msgstr "Microphone Only"
 
@@ -1272,7 +1272,7 @@ msgstr "No MP3 files found in the selected folder."
 msgid "No MP3 or WAV files found in the selected folder."
 msgstr "No MP3 or WAV files found in the selected folder."
 
-#: image.py:166
+#: image.py:165
 #: video.py:138
 msgid "No files selected"
 msgstr "No files selected"
@@ -1307,12 +1307,12 @@ msgstr "Noise Reduction / Suppression (ANR)"
 msgid "None"
 msgstr "None"
 
-#: resizeImage.py:211
-#: resizeImage.py:213
+#: resizeImage.py:210
+#: resizeImage.py:212
+#: resizeImage.py:527
 #: resizeImage.py:528
-#: resizeImage.py:529
-#: resizeImage.py:695
-#: resizeImage.py:699
+#: resizeImage.py:694
+#: resizeImage.py:698
 msgid "Normal"
 msgstr "Normal"
 
@@ -1320,7 +1320,7 @@ msgstr "Normal"
 msgid "Normalizes loudness to the international streaming/broadcast standard (-16 LUFS, -1.5 dBTP true peak) so exports sound consistent on YouTube and podcast platforms."
 msgstr "Normalizes loudness to the international streaming/broadcast standard (-16 LUFS, -1.5 dBTP true peak) so exports sound consistent on YouTube and podcast platforms."
 
-#: record.py:480
+#: record.py:479
 msgid "Not available - check libs/recorder_backend.py"
 msgstr "Not available - check libs/recorder_backend.py"
 
@@ -1328,7 +1328,7 @@ msgstr "Not available - check libs/recorder_backend.py"
 msgid "Note: Video trimming preserves original quality by default. No re-encoding is performed."
 msgstr "Note: Video trimming preserves original quality by default. No re-encoding is performed."
 
-#: record.py:496
+#: record.py:495
 msgid "Note: WAV format uses uncompressed audio"
 msgstr "Note: WAV format uses uncompressed audio"
 
@@ -1361,7 +1361,7 @@ msgstr "Opus Quality:"
 msgid "Orange"
 msgstr "Orange"
 
-#: resizeImage.py:116
+#: resizeImage.py:115
 msgid "Output Filename Pattern:"
 msgstr "Output Filename Pattern:"
 
@@ -1371,15 +1371,15 @@ msgid "Output Filename:"
 msgstr "Output Filename:"
 
 #: convertAudio.py:183
-#: convertVideo.py:174
+#: convertVideo.py:173
 msgid "Output Format:"
 msgstr "Output Format:"
 
-#: resizeImage.py:232
+#: resizeImage.py:231
 msgid "Output Information"
 msgstr "Output Information"
 
-#: resizeImage.py:234
+#: resizeImage.py:233
 msgid "Output Name"
 msgstr "Output Name"
 
@@ -1387,7 +1387,7 @@ msgstr "Output Name"
 msgid "Output Type"
 msgstr "Output Type"
 
-#: resizeImage.py:125
+#: resizeImage.py:124
 msgid "Output folder:"
 msgstr "Output folder:"
 
@@ -1530,7 +1530,7 @@ msgstr "Preview file was not created or is too small"
 msgid "Preview process failed: {}"
 msgstr "Preview process failed: {}"
 
-#: resizeImage.py:795
+#: resizeImage.py:794
 msgid "Processed: {} - New size: {}, Dimensions: {} x {}"
 msgstr "Processed: {} - New size: {}, Dimensions: {} x {}"
 
@@ -1538,17 +1538,17 @@ msgstr "Processed: {} - New size: {}, Dimensions: {} x {}"
 msgid "Processing track {} of {}"
 msgstr "Processing track {} of {}"
 
-#: resizeImage.py:719
+#: resizeImage.py:718
 msgid "Processing..."
 msgstr "Processing..."
 
 #: mp3Gain.py:376
 #: mp3_mixdown.py:1161
-#: resizeImage.py:715
+#: resizeImage.py:714
 msgid "Processing: {}"
 msgstr "Processing: {}"
 
-#: convertVideo.py:503
+#: convertVideo.py:516
 msgid "Progress: {}%"
 msgstr "Progress: {}%"
 
@@ -1559,7 +1559,7 @@ msgstr "Purple"
 
 #: convertAudio.py:62
 #: convertAudio.py:107
-#: resizeImage.py:209
+#: resizeImage.py:208
 msgid "Quality:"
 msgstr "Quality:"
 
@@ -1572,13 +1572,13 @@ msgid "Re-encode with quality (slower)"
 msgstr "Re-encode with quality (slower)"
 
 #: mp3_mixdown.py:1137
-#: resizeImage.py:257
-#: resizeImage.py:462
+#: resizeImage.py:256
+#: resizeImage.py:461
 msgid "Ready"
 msgstr "Ready"
 
 #: __init__.py:279
-#: record.py:306
+#: record.py:305
 msgid "Record Settings"
 msgstr "Record Settings"
 
@@ -1590,7 +1590,7 @@ msgstr "Record Settings..."
 msgid "Record settings saved"
 msgstr "Record settings saved"
 
-#: record.py:362
+#: record.py:361
 msgid "Recording &Mode:"
 msgstr "Recording &Mode:"
 
@@ -1599,11 +1599,11 @@ msgstr "Recording &Mode:"
 msgid "Red"
 msgstr "Red"
 
-#: record.py:451
+#: record.py:450
 msgid "Reduce background &noise (Noise gate)"
 msgstr "Reduce background &noise (Noise gate)"
 
-#: record.py:445
+#: record.py:444
 msgid "Reduce low-frequency noise (&High-pass filter)"
 msgstr "Reduce low-frequency noise (&High-pass filter)"
 
@@ -1619,33 +1619,33 @@ msgstr "Removed {} file(s) from the list"
 msgid "Removes background hiss and boosts vocal presence."
 msgstr "Removes background hiss and boosts vocal presence."
 
-#: record.py:447
+#: record.py:446
 msgid "Removes low-frequency rumble, such as fan or handling noise, from the microphone. Only applies when Audio Processing is set to Default."
 msgstr "Removes low-frequency rumble, such as fan or handling noise, from the microphone. Only applies when Audio Processing is set to Default."
 
 #: __init__.py:276
-#: resizeImage.py:23
+#: resizeImage.py:22
 msgid "Resize Image"
 msgstr "Resize Image"
 
-#: resizeImage.py:36
-#: resizeImage.py:331
+#: resizeImage.py:35
+#: resizeImage.py:330
 msgid "Resize Image: {} files"
 msgstr "Resize Image: {} files"
 
-#: resizeImage.py:137
+#: resizeImage.py:136
 msgid "Resize Settings"
 msgstr "Resize Settings"
 
-#: convertVideo.py:162
+#: convertVideo.py:161
 msgid "Resolution: ..."
 msgstr "Resolution: ..."
 
-#: convertVideo.py:278
+#: convertVideo.py:277
 msgid "Resolution: unknown"
 msgstr "Resolution: unknown"
 
-#: convertVideo.py:278
+#: convertVideo.py:277
 msgid "Resolution: {}x{}"
 msgstr "Resolution: {}x{}"
 
@@ -1673,7 +1673,7 @@ msgstr "Reverse Audio"
 msgid "Reversed & Accelerated"
 msgstr "Reversed & Accelerated"
 
-#: resizeImage.py:196
+#: resizeImage.py:195
 msgid "Right (pixels):"
 msgstr "Right (pixels):"
 
@@ -1688,7 +1688,7 @@ msgstr "Rock"
 
 #: Trim.py:165
 #: convertAudio.py:203
-#: convertVideo.py:201
+#: convertVideo.py:200
 msgid "Sample Rate:"
 msgstr "Sample Rate:"
 
@@ -1712,7 +1712,7 @@ msgstr "Section {} Pan Direction"
 msgid "Section {} Start Second"
 msgstr "Section {} Start Second"
 
-#: record.py:539
+#: record.py:538
 msgid "Select Destination Folder"
 msgstr "Select Destination Folder"
 
@@ -1749,29 +1749,29 @@ msgstr "Selected File"
 msgid "Selected MP3 File"
 msgstr "Selected MP3 File"
 
-#: resizeImage.py:101
+#: resizeImage.py:100
 msgid "Selected files:"
 msgstr "Selected files:"
 
-#: convertVideo.py:164
+#: convertVideo.py:163
 msgid "Size: ..."
 msgstr "Size: ..."
 
-#: convertVideo.py:280
+#: convertVideo.py:279
 msgid "Size: {}"
 msgstr "Size: {}"
 
-#: resizeImage.py:591
+#: resizeImage.py:590
 msgid "Skipped"
 msgstr "Skipped"
 
-#: resizeImage.py:592
+#: resizeImage.py:591
 msgid "Skipped {}: unsupported or unreadable image format"
 msgstr "Skipped {}: unsupported or unreadable image format"
 
-#: resizeImage.py:211
-#: resizeImage.py:529
-#: resizeImage.py:696
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:695
 msgid "Small"
 msgstr "Small"
 
@@ -1807,7 +1807,7 @@ msgstr "Split complete! {} tracks created"
 msgid "Split failed!"
 msgstr "Split failed!"
 
-#: resizeImage.py:262
+#: resizeImage.py:261
 msgid "Start"
 msgstr "Start"
 
@@ -1850,7 +1850,7 @@ msgstr "Starting split operation..."
 msgid "Starting trim operation..."
 msgstr "Starting trim operation..."
 
-#: resizeImage.py:237
+#: resizeImage.py:236
 msgid "Status"
 msgstr "Status"
 
@@ -1858,19 +1858,19 @@ msgstr "Status"
 msgid "Stop recording"
 msgstr "Stop recording"
 
-#: record.py:402
+#: record.py:401
 msgid "System Audio De&vice:"
 msgstr "System Audio De&vice:"
 
-#: record.py:356
+#: record.py:355
 msgid "System Only"
 msgstr "System Only"
 
-#: record.py:354
+#: record.py:353
 msgid "System and Microphone (Merged)"
 msgstr "System and Microphone (Merged)"
 
-#: record.py:355
+#: record.py:354
 msgid "System and Microphone (Separate Files)"
 msgstr "System and Microphone (Separate Files)"
 
@@ -1878,7 +1878,7 @@ msgstr "System and Microphone (Separate Files)"
 msgid "Target Loudness (LUFS):"
 msgstr "Target Loudness (LUFS):"
 
-#: convertVideo.py:181
+#: convertVideo.py:180
 msgid "Target Size:"
 msgstr "Target Size:"
 
@@ -1890,7 +1890,7 @@ msgstr "Tempo Factor"
 msgid "Tempo Factor (0.5-2.0):"
 msgstr "Tempo Factor (0.5-2.0):"
 
-#: record.py:376
+#: record.py:375
 msgid "The microphone loudness, in dB, that starts ducking the music. Lower values duck more easily."
 msgstr "The microphone loudness, in dB, that starts ducking the music. Lower values duck more easily."
 
@@ -1918,11 +1918,11 @@ msgstr "Timed out applying gain to {}"
 msgid "Timed out processing {}"
 msgstr "Timed out processing {}"
 
-#: resizeImage.py:175
+#: resizeImage.py:174
 msgid "Top (pixels):"
 msgstr "Top (pixels):"
 
-#: resizeImage.py:250
+#: resizeImage.py:249
 msgid "Total progress:"
 msgstr "Total progress:"
 
@@ -1981,7 +1981,7 @@ msgstr "Trimming failed: {}"
 msgid "True Peak Limit (dBTP):"
 msgstr "True Peak Limit (dBTP):"
 
-#: resizeImage.py:748
+#: resizeImage.py:747
 msgid "Unknown"
 msgstr "Unknown"
 
@@ -1990,9 +1990,9 @@ msgstr "Unknown"
 msgid "Unknown error"
 msgstr "Unknown error"
 
-#: resizeImage.py:211
-#: resizeImage.py:529
-#: resizeImage.py:693
+#: resizeImage.py:210
+#: resizeImage.py:528
+#: resizeImage.py:692
 msgid "Very Good"
 msgstr "Very Good"
 
@@ -2020,7 +2020,7 @@ msgstr "Vocal Clarity & Denoise (ANR)"
 msgid "Volume:"
 msgstr "Volume:"
 
-#: resizeImage.py:617
+#: resizeImage.py:616
 msgid "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
 msgstr "Warning: Invalid crop dimensions for {}. Crop disabled for this image."
 
@@ -2033,7 +2033,7 @@ msgstr "White"
 msgid "Widens the stereo image, applies gentle multi-stage compression, and adds a touch of reverb for a fuller, more polished vocal and music mix."
 msgstr "Widens the stereo image, applies gentle multi-stage compression, and adds a touch of reverb for a fuller, more polished vocal and music mix."
 
-#: resizeImage.py:143
+#: resizeImage.py:142
 msgid "Width (pixels):"
 msgstr "Width (pixels):"
 
@@ -2046,7 +2046,7 @@ msgstr "Width Intensity:"
 msgid "Yellow"
 msgstr "Yellow"
 
-#: record.py:257
+#: record.py:256
 msgid "continue"
 msgstr "continue"
 
@@ -2054,9 +2054,9 @@ msgstr "continue"
 #: Trim.py:640
 #: convertAudio.py:383
 #: convertAudio.py:725
-#: convertVideo.py:382
+#: convertVideo.py:381
 #: merge.py:265
-#: resizeImage.py:661
+#: resizeImage.py:660
 #: splitAudio.py:359
 msgid "ffmpeg.exe not found"
 msgstr "ffmpeg.exe not found"
@@ -2078,7 +2078,7 @@ msgstr "invalid"
 msgid "invalid (negative)"
 msgstr "invalid (negative)"
 
-#: record.py:247
+#: record.py:246
 msgid "paused"
 msgstr "paused"
 
@@ -2095,11 +2095,11 @@ msgid "stopped Saved to: {}"
 msgstr "stopped Saved to: {}"
 
 #: Trim.py:368
-#: convertVideo.py:277
+#: convertVideo.py:276
 msgid "unknown"
 msgstr "unknown"
 
-#: image.py:191
+#: image.py:190
 #: video.py:156
 msgid "{filename}: {result}"
 msgstr "{filename}: {result}"
@@ -2112,7 +2112,7 @@ msgstr "{name} ({db:.1f} dB)"
 msgid "{width} by {height} pixels, size {size}"
 msgstr "{width} by {height} pixels, size {size}"
 
-#: image.py:149
+#: image.py:148
 msgid "{width} by {height} pixels, {dpi} DPI"
 msgstr "{width} by {height} pixels, {dpi} DPI"
 
@@ -2120,7 +2120,7 @@ msgstr "{width} by {height} pixels, {dpi} DPI"
 msgid "{width} by {height} pixels, {fps} fps, size {size}"
 msgstr "{width} by {height} pixels, {fps} fps, size {size}"
 
-#: resizeImage.py:337
+#: resizeImage.py:336
 msgid "{} files removed"
 msgstr "{} files removed"
 
@@ -2128,6 +2128,6 @@ msgstr "{} files removed"
 msgid "{} percent"
 msgstr "{} percent"
 
-#: convertVideo.py:499
+#: convertVideo.py:512
 msgid "{}%"
 msgstr "{}%"

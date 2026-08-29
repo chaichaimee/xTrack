@@ -1,4 +1,3 @@
-# resizeImage.py
 
 import wx
 import os
@@ -744,7 +743,7 @@ class ResizeImageDialog(wx.Dialog):
 							output_size_str = f"{output_size_bytes/1024:.1f} KB"
 						else:
 							output_size_str = f"{output_size_bytes/(1024*1024):.1f} MB"
-					except:
+					except OSError:
 						output_size_str = _("Unknown")
 					
 					wx.CallAfter(self.on_file_success, file_path, output_path, output_size_str, target_width, target_height)
@@ -861,6 +860,7 @@ class ResizeImageDialog(wx.Dialog):
 				break
 		self.currently_processing = False
 		self.EndModal(wx.ID_CANCEL)
+
 
 
 

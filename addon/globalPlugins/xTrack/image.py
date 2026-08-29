@@ -1,4 +1,3 @@
-# image.py
 
 import subprocess
 import os
@@ -111,7 +110,7 @@ def get_image_dpi_fast(libs_path, file_path):
 						if dpi_value > 0:
 							log.info(f"Found DPI for {file_path}: {dpi_value}")
 							return dpi_value
-					except:
+					except (ValueError, IndexError):
 						pass
 				else:
 					try:
@@ -119,7 +118,7 @@ def get_image_dpi_fast(libs_path, file_path):
 						if dpi_value > 0:
 							log.info(f"Found DPI for {file_path}: {dpi_value}")
 							return dpi_value
-					except:
+					except ValueError:
 						pass
 		except Exception as e:
 			log.error(f"Error in DPI method for {file_path}: {e}")
@@ -199,6 +198,7 @@ def show_image_info(selected_files, libs_path):
 	# Start announcement in a separate thread to avoid blocking
 	thread = threading.Thread(target=announce_results, daemon=True)
 	thread.start()
+
 
 
 
