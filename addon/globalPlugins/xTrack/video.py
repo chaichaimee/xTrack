@@ -1,13 +1,35 @@
 # video.py
+
 import subprocess
 import os
 import ui
 from logHandler import log
 import addonHandler
 import threading
-import re
+from .ffmpegSupport import announceResults
 
 addonHandler.initTranslation()
+
+
+def parse_frame_rate(rawValue):
+	"""fps from ffprobe's "30000/1001" style value; None for 0/0, empty or malformed values."""
+	rawValue = (rawValue or "").strip()
+	if "/" in rawValue:
+		numerator, _separator, denominator = rawValue.partition("/")
+		try:
+			numerator = float(numerator)
+			denominator = float(denominator)
+		except ValueError:
+			return None
+		if numerator > 0 and denominator > 0:
+			return round(numerator / denominator, 2)
+		return None
+	try:
+		value = float(rawValue)
+	except ValueError:
+		return None
+	return round(value, 2) if value > 0 else None
+
 
 def get_video_info_fast(libs_path, file_path):
 	ffprobe_path = os.path.join(libs_path, "ffprobe.exe")
@@ -20,78 +42,49 @@ def get_video_info_fast(libs_path, file_path):
 		"-v", "error",
 		"-select_streams", "v:0",
 		"-show_entries", "stream=width,height,avg_frame_rate",
-		"-of", "default=noprint_wrappers=1:nokey=1",
+		"-of", "default=noprint_wrappers=1",
 		file_path
 	]
-
-	width = height = None
-	fps = None
 
 	try:
 		result = subprocess.run(
 			cmd,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
+			stdin=subprocess.DEVNULL,
 			text=True,
 			creationflags=subprocess.CREATE_NO_WINDOW,
 			encoding='utf-8',
 			errors='ignore',
 			timeout=15
 		)
-
-		if result.returncode != 0:
-			log.error(f"ffprobe failed for {file_path}: {result.stderr}")
-			return None, None, None
-
-		output = result.stdout.strip()
-		if not output:
-			return None, None, None
-
-		lines = output.splitlines()
-		for line in lines:
-			line = line.strip()
-			if not line:
-				continue
-			if line.isdigit():
-				if width is None:
-					width = int(line)
-				else:
-					height = int(line)
-			elif '/' in line:
-				fps_raw = re.sub(r'\s+', '', line)
-				if fps_raw.count('/') > 1:
-					first_num = fps_raw.split('/')[0]
-					if first_num.isdigit():
-						fps = float(first_num)
-				else:
-					parts = fps_raw.split('/')
-					if len(parts) == 2:
-						try:
-							num = float(parts[0])
-							den = float(parts[1])
-							if den > 0:
-								fps = round(num / den, 2)
-						except ValueError:
-							pass
-				if fps is None:
-					numbers = re.findall(r'[\d.]+', fps_raw)
-					if numbers:
-						try:
-							fps = round(float(numbers[0]), 2)
-						except ValueError:
-							pass
-
-		if width is not None and height is not None:
-			log.info(f"Video resolution for {file_path}: {width}x{height}")
-		if fps:
-			log.info(f"Video frame rate for {file_path}: {fps}")
-
 	except subprocess.TimeoutExpired:
 		log.error(f"Timeout getting video info for {file_path}")
-	except Exception as e:
+		return None, None, None
+	except OSError as e:
 		log.error(f"Error getting video info for {file_path}: {e}")
+		return None, None, None
 
+	if result.returncode != 0:
+		log.error(f"ffprobe failed for {file_path}: {result.stderr}")
+		return None, None, None
+
+	# Key=value output, so the result does not depend on the order of the fields.
+	values = {}
+	for line in result.stdout.splitlines():
+		key, separator, value = line.strip().partition("=")
+		if separator:
+			values[key] = value
+
+	try:
+		width = int(values["width"])
+		height = int(values["height"])
+	except (KeyError, ValueError):
+		return None, None, None
+	fps = parse_frame_rate(values.get("avg_frame_rate"))
+	log.info(f"Video {file_path}: {width}x{height}, fps={fps}")
 	return width, height, fps
+
 
 def format_file_size(size_bytes):
 	if size_bytes < 1024:
@@ -103,34 +96,45 @@ def format_file_size(size_bytes):
 	else:
 		return f"{size_bytes / (1024 * 1024 * 1024):.1f} GB"
 
+
 def process_single_video(file_path, libs_path):
+	"""Returns (isError, message)."""
+	log.info(f"Processing video: {file_path}")
+
+	if not os.path.exists(file_path):
+		return True, _("File not found")
+
+	width, height, fps = get_video_info_fast(libs_path, file_path)
+	if width is None or height is None:
+		return True, _("Could not read video dimensions")
+
 	try:
-		log.info(f"Processing video: {file_path}")
+		size_str = format_file_size(os.path.getsize(file_path))
+	except OSError as e:
+		log.error(f"Error reading the size of {file_path}: {e}")
+		return True, _("Error getting video information")
 
-		if not os.path.exists(file_path):
-			return _("File not found")
+	if fps is None:
+		return False, _("{width} by {height} pixels, size {size}").format(width=width, height=height, size=size_str)
+	return False, _("{width} by {height} pixels, {fps} fps, size {size}").format(
+		width=width, height=height, fps=fps, size=size_str
+	)
 
-		width, height, fps = get_video_info_fast(libs_path, file_path)
 
-		if width is None or height is None:
-			return _("Could not read video dimensions")
-
-		file_size_bytes = os.path.getsize(file_path)
-		size_str = format_file_size(file_size_bytes)
-
-		if fps is None:
-			msg = _("{width} by {height} pixels, size {size}").format(
-				width=width, height=height, size=size_str
-			)
+def collect_video_messages(selected_files, libs_path):
+	showNames = len(selected_files) > 1
+	messages = []
+	for file_path in selected_files:
+		isError, text = process_single_video(file_path, libs_path)
+		name = os.path.basename(file_path)
+		# A single result is spoken without the name, because Explorer has just
+		# announced the focused file; several results need it to tell them apart.
+		if isError or showNames:
+			messages.append(_("{filename}: {result}").format(filename=name, result=text))
 		else:
-			msg = _("{width} by {height} pixels, {fps} fps, size {size}").format(
-				width=width, height=height, fps=fps, size=size_str
-			)
-		return msg
+			messages.append(text)
+	return messages
 
-	except Exception as e:
-		log.error(f"Error processing video {file_path}: {e}")
-		return _("Error getting video information")
 
 def show_video_info(selected_files, libs_path):
 	if not selected_files:
@@ -140,24 +144,8 @@ def show_video_info(selected_files, libs_path):
 
 	log.info(f"Starting video info processing for {len(selected_files)} files")
 
-	results = []
-	for file_path in selected_files:
-		result = process_single_video(file_path, libs_path)
-		results.append((os.path.basename(file_path), result))
+	# ffprobe can take seconds per file, so none of this runs on the main thread.
+	def work():
+		announceResults(collect_video_messages(list(selected_files), libs_path))
 
-	def announce_results():
-		import time
-		time.sleep(0.1)
-
-		for filename, result in results:
-			if not result.startswith(_("File not found")) and not result.startswith(_("Could not read")):
-				ui.message(result)
-			else:
-				ui.message(_("{filename}: {result}").format(
-					filename=filename, result=result
-				))
-			time.sleep(0.05)
-
-	thread = threading.Thread(target=announce_results, daemon=True)
-	thread.start()
-
+	threading.Thread(target=work, daemon=True).start()

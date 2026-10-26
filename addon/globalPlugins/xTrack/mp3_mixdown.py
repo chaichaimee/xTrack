@@ -2,20 +2,34 @@
 
 import wx
 import os
+import re
+import shutil
 import subprocess
 import threading
-import queue
 import tempfile
 import ui
 import tones
 from gui import guiHelper
-from .xTrackCore import get_config_path, get_unique_filename, get_file_duration
+from .xTrackCore import (
+	get_config_path, get_unique_filename, get_file_duration, get_addon_data_dir, load_config, save_config,
+)
+from .ffmpegSupport import limitSpokenText, summarizeFfmpegError, removeQuietly, partPathFor, runFfmpeg
+from .floatingMenu import chooseMenuAction
+from .mixdownEngine import (
+	PARAMS, DEFAULT_SETTINGS, PAN_DIRECTION_KEYS, AUTOPAN_DIRECTION_KEYS, MAX_SECTIONS, REVERSE_MAX_SECONDS,
+	MIN_FAST_SPEED_FACTOR, MAX_FAST_SPEED_FACTOR, MixdownPlan, sanitize_settings, normalize_preset_name,
+	build_custom_plan, find_effect_conflicts, find_unavailable_effects, parse_filter_list,
+	parse_loudnorm_measurement, parse_integrated_loudness, two_pass_loudnorm,
+)
 import addonHandler
 from logHandler import log
 
 addonHandler.initTranslation()
 
 AUDIO_EXTENSIONS = (".mp3", ".wav")
+USER_PRESETS_FILE_NAME = "mixdown_presets.json"
+MIN_PREVIEW_SECONDS = 5
+MAX_PREVIEW_SECONDS = 120
 
 # Fixed presets exactly as specified: each is a complete, self-contained
 # filter chain that bypasses the custom effect controls entirely when chosen.
@@ -149,192 +163,58 @@ GENRE_EQ_PRESETS = [
 	},
 ]
 
-# Index 0 is "Custom"; indices 1+ line up with the list above.
-PAN_DIRECTION_KEYS = ["center", "left_to_right", "right_to_left", "full_left", "full_right"]
+# Filter names this ffmpeg build offers, read once per NVDA session.
+FILTER_CACHE = {"names": None}
+FILTER_LIST_TIMEOUT_SECONDS = 20
+
+# Spoken names of the choices of each option, in the same order as the
+# option's choices in mixdownEngine.PARAMS.
+CHOICE_LABELS = {
+	"clickRemoverMode": [_("Clicks and crackle"), _("Clipping (distorted peaks)"), _("Both")],
+	"silenceTrimMode": [_("Start of the file only"), _("Start and silent gaps")],
+	"nightcoreMode": [_("Nightcore (faster and higher)"), _("Slowed (slower and lower)")],
+	"channelTool": [_("Stereo to Mono"), _("Mono to Stereo (same sound in both ears)"), _("Swap Left and Right")],
+	"modulationType": [_("Flanger"), _("Phaser"), _("Tremolo"), _("Vibrato")],
+	"haasDelayedSide": [_("Right"), _("Left")],
+	"roomType": [_("Small Room"), _("Medium Room"), _("Hall"), _("Cathedral")],
+	"autoPanDirection": [_("Left to Right"), _("Right to Left")],
+	"expanderPreset": [_("Night Mode (quiet parts up, loud parts down)"), _("Gentle (lower very quiet noise)"), _("Strong (close to a gate)")],
+	"softClipType": [
+		_("Tanh (smooth)"), _("Arctangent (smooth)"), _("Cubic"), _("Exponential"),
+		_("Algebraic"), _("Quintic"), _("Sine"), _("Error function"),
+	],
+	"telephoneStyle": [_("Telephone"), _("Radio"), _("Walkie-talkie")],
+}
+
+CONFLICT_NAMES = {
+	"binaural": _("Binaural"),
+	"haas": _("Haas Effect"),
+	"vocalCenter": _("Keep voice in the center"),
+}
 
 
-def build_tempo_stages(tempoFactor):
-	"""Break a tempo factor outside ffmpeg's single-filter 0.5-2.0 atempo range into a chain of atempo filters, since atempo cannot exceed that range in one step."""
-	remainingFactor = tempoFactor
-	stages = []
-	while remainingFactor > 2.0:
-		stages.append("atempo=2.0")
-		remainingFactor /= 2.0
-	while remainingFactor < 0.5:
-		stages.append("atempo=0.5")
-		remainingFactor /= 0.5
-	stages.append(f"atempo={remainingFactor:.3f}")
-	return stages
-
-
-def build_pre_panning_stages(effectSettings):
-	"""Everything that runs before the spatial/panning stage: noise reduction, time/pitch, EQ, then binaural/chorus/reverb, in the fixed order required to avoid distorting the signal."""
-	stages = []
-
-	if effectSettings.get("noiseReductionEnabled"):
-		noiseFloorDb = effectSettings.get("noiseReductionLevel", -25)
-		stages.append(f"afftdn=nf={noiseFloorDb}")
-
-	if effectSettings.get("noiseGateEnabled"):
-		gateThresholdDb = effectSettings.get("noiseGateThresholdDb", -40)
-		stages.append(f"agate=threshold={gateThresholdDb}dB:ratio=2:attack=20:release=250")
-
-	if effectSettings.get("reversalEnabled"):
-		stages.append("areverse")
-
-	if effectSettings.get("tempoEnabled"):
-		stages.extend(build_tempo_stages(effectSettings.get("tempoFactor", 1.0)))
-
-	if effectSettings.get("eqEnabled"):
-		bassGain = effectSettings.get("bassGain", 0)
-		trebleGain = effectSettings.get("trebleGain", 0)
-		stages.append(f"bass=g={bassGain}:f=100:w=0.5,treble=g={trebleGain}:f=3000:w=0.5")
-
-	if effectSettings.get("parametricEqEnabled"):
-		lowGainDb = effectSettings.get("parametricEqLowGain", 0)
-		midGainDb = effectSettings.get("parametricEqMidGain", 0)
-		highGainDb = effectSettings.get("parametricEqHighGain", 0)
-		stages.append(f"firequalizer=gain_entry='entry(100\\,{lowGainDb});entry(1000\\,{midGainDb});entry(8000\\,{highGainDb})'")
-
-	if effectSettings.get("binauralEnabled"):
-		# bs2b requires an ffmpeg build compiled with --enable-libbs2b, which
-		# the bundled ffmpeg.exe does not have. crossfeed is a core filter
-		# built for exactly this purpose (headphone crossfeed simulation,
-		# the same concept bs2b implements) and extrastereo widens the image
-		# further -- earwax alone was too subtle to read as "3D".
-		widthIntensity = effectSettings.get("binauralWidth", 2.5)
-		stages.append(f"crossfeed=strength=0.3:range=0.9,extrastereo=m={widthIntensity}:c=disabled")
-
-	if effectSettings.get("chorusEnabled"):
-		chorusDelayMs = effectSettings.get("chorusDelayMs", 50)
-		stages.append(f"chorus=0.5:0.9:{chorusDelayMs}:0.4:0.25:2")
-
-	if effectSettings.get("reverbEnabled"):
-		echoDelayMs = effectSettings.get("echoDelayMs", 150)
-		stages.append(f"aecho=0.8:0.88:{echoDelayMs}:0.4")
-
-	if effectSettings.get("muffledRoomEnabled"):
-		muffleCutoffHz = effectSettings.get("muffleCutoffHz", 1200)
-		stages.append(f"lowpass=f={muffleCutoffHz},bass=g=4:f=150:w=0.6,aecho=0.6:0.7:40|60:0.5|0.3")
-
-	if effectSettings.get("autoPanLoopEnabled"):
-		# apulsator modulates left/right gain 180 degrees out of phase,
-		# giving a continuous circular pan loop across the whole file -- the
-		# auto-pan style heard throughout dance tracks, as opposed to
-		# Advanced Time-Based Panning's one-shot sweep. Swapping which
-		# channel leads (offset_l/offset_r) reverses the perceived direction
-		# of the loop.
-		loopSpeedHz = effectSettings.get("autoPanSpeedHz", 0.5)
-		if effectSettings.get("autoPanDirection", "left_to_right") == "right_to_left":
-			offsetL, offsetR = 0.5, 0
-		else:
-			offsetL, offsetR = 0, 0.5
-		stages.append(f"apulsator=mode=sine:hz={loopSpeedHz}:amount=1:offset_l={offsetL}:offset_r={offsetR}")
-
-	return stages
-
-
-def build_post_panning_stages(effectSettings):
-	"""Dynamics & Limiter, always the final stage."""
-	stages = []
-	if effectSettings.get("compressorEnabled"):
-		thresholdDb = effectSettings.get("compressorThresholdDb", -20)
-		stages.append(f"acompressor=threshold={thresholdDb}dB:ratio=4:attack=5:release=50")
-	if effectSettings.get("loudnormEnabled"):
-		targetLufs = effectSettings.get("loudnormTargetLufs", -16)
-		truePeakDb = effectSettings.get("loudnormTruePeakDb", -1.5)
-		stages.append(f"loudnorm=I={targetLufs}:TP={truePeakDb}:LRA=11")
-	if effectSettings.get("limiterEnabled"):
-		limitDb = effectSettings.get("limiterLimitDb", -1)
-		stages.append(f"alimiter=limit={limitDb}dB")
-	return stages
-
-
-def build_filter_graph(effectSettings):
-	"""Build the plain linear filter chain. Advanced Time-Based Panning is never part of this chain -- any active section always routes through build_pan_multi_filter_complex instead, since even a single section needs the channel-split treatment for a click-free result."""
-	stages = build_pre_panning_stages(effectSettings)
-	stages.extend(build_post_panning_stages(effectSettings))
-	return ",".join(stages)
-
-
-def get_active_pan_sections(panSections):
-	"""Drop sections that are no-ops (Center) or have an invalid/empty time window."""
-	return [s for s in (panSections or []) if s.get("direction") != "center" and s.get("endSec", 0) > s.get("startSec", 0)]
-
-
-def pan_section_end_value(section, side):
-	"""The exact gain a section settles on at its own endSec. For sweeps this doubles as their ramp target; for Full Left/Right (a static, non-ramping bias) it's just the constant value held throughout."""
-	direction = section["direction"]
-	if direction == "left_to_right":
-		return 0.0 if side == "L" else 1.0
-	if direction == "right_to_left":
-		return 1.0 if side == "L" else 0.0
-	scale = max(0.0, min(100.0, section.get("amountPercent", 100))) / 100.0
-	if direction == "full_left":
-		return 1.0 if side == "L" else (1.0 - scale)
-	return (1.0 - scale) if side == "L" else 1.0
-
-
-def build_pan_section_channel_expr(section, side, entryValue):
-	"""The gain expression for one channel ('L' or 'R') within a single section's own time window. Center never reaches here (filtered out by get_active_pan_sections). Sweeps ramp linearly from entryValue -- whatever the channel is actually carrying in, whether that's normal (1.0) before the first section or a value held over from an earlier section -- to this direction's target extreme at endSec, so the ramp is always continuous with whatever precedes it, not just when starting from normal. Full Left/Right jump immediately to their amount-scaled target and hold it for the whole window, since there's no in-between motion to interpolate for a static bias."""
-	direction = section["direction"]
-	startSec = section["startSec"]
-	endSec = section["endSec"]
-	if direction in ("left_to_right", "right_to_left"):
-		targetValue = pan_section_end_value(section, side)
-		if targetValue == entryValue:
-			return str(entryValue)
-		rampProgress = f"(t-{startSec})/({endSec}-{startSec})"
-		delta = targetValue - entryValue
-		return f"{entryValue}+({delta})*{rampProgress}"
-	scale = max(0.0, min(100.0, section.get("amountPercent", 100))) / 100.0
-	if direction == "full_left":
-		return "1" if side == "L" else f"{1 - scale}"
-	return f"{1 - scale}" if side == "L" else "1"
-
-
-def build_pan_multi_channel_expr(activeSections, side):
-	"""Combine every section's own window into one expression for a single channel, as a chronological piecewise step function: before the first section, gain is normal (1.0); during a section, its own ramp/static formula applies (ramping from whatever value the timeline is currently carrying); in a gap between sections (and after the last one), gain holds constant at whatever the previous section ended on -- so the join between sections, and the tail after the last one, never jumps. Commas inside the expression must be escaped, since ffmpeg's graph syntax otherwise reads an unescaped comma as the next chained filter."""
-	sortedSections = sorted(activeSections, key=lambda s: s["startSec"])
-	if not sortedSections:
-		return "1"
-
-	timeSegments = []  # list of (breakpointTime, valueExprBeforeThatBreakpoint), in chronological order
-	cursor = 0.0
-	heldValue = 1.0
-	for section in sortedSections:
-		startSec = section["startSec"]
-		endSec = section["endSec"]
-		if startSec > cursor:
-			timeSegments.append((startSec, str(heldValue)))
-		timeSegments.append((endSec, build_pan_section_channel_expr(section, side, heldValue)))
-		heldValue = pan_section_end_value(section, side)
-		cursor = endSec
-
-	expr = str(heldValue)  # tail: holds the last section's ending value for the rest of the file
-	for breakpoint, valueExpr in reversed(timeSegments):
-		expr = f"if(lt(t\\,{breakpoint})\\,{valueExpr}\\,{expr})"
-	return expr
-
-
-def build_pan_multi_filter_complex(preChainStr, postChainStr, activeSections):
-	"""A true continuously-varying stereo pan needs independent, time-varying gain per channel, which the simple linear -af chain cannot express (volume applies identically to every channel). This splits to mono per channel, applies one combined multi-section volume=eval=frame expression to each, then merges back to stereo -- all within one -filter_complex graph so the rest of the effect chain still runs in the correct order around it."""
-	leftExpr = build_pan_multi_channel_expr(activeSections, "L")
-	rightExpr = build_pan_multi_channel_expr(activeSections, "R")
-	segments = []
-	sourceLabel = "0:a"
-	if preChainStr:
-		segments.append(f"[{sourceLabel}]{preChainStr}[panSrc]")
-		sourceLabel = "panSrc"
-	segments.append(f"[{sourceLabel}]channelsplit=channel_layout=stereo[panL][panR]")
-	segments.append(f"[panL]volume=eval=frame:volume='{leftExpr}'[panLg]")
-	segments.append(f"[panR]volume=eval=frame:volume='{rightExpr}'[panRg]")
-	segments.append("[panLg][panRg]amerge=inputs=2[panMerged]")
-	outputLabel = "panMerged"
-	if postChainStr:
-		segments.append(f"[panMerged]{postChainStr}[panOut]")
-		outputLabel = "panOut"
-	return ";".join(segments), outputLabel
+def describe_conflict(code, details):
+	"""One spoken sentence for a finding of mixdownEngine.find_effect_conflicts."""
+	names = ", ".join(CONFLICT_NAMES.get(name, name) for name in details.get("names", []))
+	if code == "stackedNormalizers":
+		return _("Several loudness normalizers are on together ({names}); they work against each other.").format(names=names)
+	if code == "gainWithLoudnorm":
+		return _("Volume Gain is on together with Loudness Normalization, which will undo the gain.")
+	if code == "gateAndExpander":
+		return _("Noise Gate and Expander both lower quiet sounds, so they may cut them twice.")
+	if code == "doubleReverb":
+		return _("Reverb / Echo and Multi-Room Reverb are both on and will pile up.")
+	if code == "autoPanAndSections":
+		return _("Auto-Pan Loop and Advanced Time-Based Panning are both on; their movements will fight each other.")
+	if code == "stackedSpeed":
+		return _("More than one speed effect is on; together they change the speed {factor:.2f} times.").format(factor=details.get("factor", 1.0))
+	if code == "timelineShifted":
+		return _("Panning sections are counted on the timeline after speed, rewind or silence trimming, not on the original file.")
+	if code == "monoWithStereoEffects":
+		return _("Stereo to Mono is on together with stereo-only effects ({names}), which will then have little or no effect.").format(names=names)
+	if code == "mixAtZero":
+		return _("Effects Mix is 0 percent, so Chorus, Modulation, Haas, Reverb and Room effects will not be heard.")
+	return code
 
 
 def get_audio_bitrate_kbps(ffprobe_path, file_path):
@@ -365,7 +245,7 @@ def get_audio_bitrate_kbps(ffprobe_path, file_path):
 			if bitrateBps > 0:
 				return max(64, round(bitrateBps / 1000))
 	except (subprocess.TimeoutExpired, OSError) as e:
-		log.error(f"MP3 WAV Mixdown failed to read bitrate for {file_path}: {e}")
+		log.error(f"Mixdown failed to read bitrate for {file_path}: {e}")
 	return 192
 
 
@@ -375,23 +255,111 @@ class MP3WavMixdownDialog(wx.Dialog):
 	PREVIEW_SECONDS = 15
 
 	def __init__(self, parent, selected_files, libs_path):
-		super().__init__(parent, title=_("MP3 WAV Mixdown"))
+		super().__init__(parent, title=_("Mixdown"))
 		self.libs_path = libs_path
 		self.ffmpeg_exe = os.path.join(libs_path, "ffmpeg.exe")
 		self.ffprobe_exe = os.path.join(libs_path, "ffprobe.exe")
 		self.config_path = get_config_path()
+		self.user_presets_path = os.path.join(get_addon_data_dir(), USER_PRESETS_FILE_NAME)
 		self.fileImportRoot = {}
 		self.selected_files = self._expand_to_audio_files(selected_files)
-		self.processing_queue = queue.Queue()
 		self.currently_processing = False
-		self.current_processing_plan = ("simple", "")
-		self.current_output_tag = "mixdown"
-		self.processed_count = 0
+		self.is_closed = False
+		self.cancel_event = threading.Event()
+		self.ffmpeg_process = None
+		self.preview_dir = ""
 		self.customEffectControls = []
+		self.effect_pages = []
+		self.setting_controls = {}
+		self.effect_widgets = {}
+		self.effect_labels = {}
+		self.toggle_refreshers = []
+		self.pan_section_widgets = []
+		self.autopan_section_widgets = []
+		self.blocked_widgets = set()
+		self.unsupported_effects = {}
+		self.user_presets = {}
+		self.user_last_settings = None
+		self.load_user_store()
 		self.init_ui()
-		self.SetTitle(_("MP3 WAV Mixdown: {} files").format(len(self.selected_files)))
+		if self.user_last_settings is not None:
+			self.set_effect_settings(self.user_last_settings)
+		self.SetTitle(_("Mixdown: {} files").format(len(self.selected_files)))
 		self.Bind(wx.EVT_CLOSE, self.on_close)
 		wx.CallAfter(self.file_listbox.SetFocus)
+		self.start_filter_detection()
+
+	# ---- which filters this ffmpeg can run
+
+	def start_filter_detection(self):
+		cachedNames = FILTER_CACHE["names"]
+		if cachedNames:
+			self.apply_filter_availability(cachedNames)
+			return
+		threading.Thread(target=self.run_filter_detection, daemon=True).start()
+
+	def run_filter_detection(self):
+		names = set()
+		if os.path.exists(self.ffmpeg_exe):
+			try:
+				result = subprocess.run(
+					[self.ffmpeg_exe, "-hide_banner", "-filters"],
+					stdin=subprocess.DEVNULL,
+					stdout=subprocess.PIPE,
+					stderr=subprocess.PIPE,
+					creationflags=subprocess.CREATE_NO_WINDOW,
+					text=True,
+					encoding="utf-8",
+					errors="ignore",
+					timeout=FILTER_LIST_TIMEOUT_SECONDS,
+				)
+				if result.returncode == 0:
+					names = parse_filter_list(result.stdout)
+			except (OSError, subprocess.SubprocessError) as error:
+				log.error(f"Mixdown could not read the ffmpeg filter list: {error}")
+		if names:
+			FILTER_CACHE["names"] = names
+		self.post(self.apply_filter_availability, names)
+
+	def apply_filter_availability(self, names):
+		"""Turn off, and say so, every effect whose filters this ffmpeg build does not have. An empty list means detection failed, in which case nothing is turned off."""
+		unavailable = find_unavailable_effects(names)
+		if not unavailable:
+			return
+		self.unsupported_effects = unavailable
+		spokenNames = []
+		for key in unavailable:
+			widgets = self.effect_widgets.get(key)
+			if not widgets:
+				continue
+			label = self.effect_labels.get(key, key)
+			spokenNames.append(label)
+			for widget in widgets:
+				self.blocked_widgets.add(widget)
+			entry = self.setting_controls.get(key)
+			if entry:
+				entry["set"](False)
+			checkbox = widgets[0]
+			if isinstance(checkbox, wx.CheckBox):
+				checkbox.SetLabel(label + _(" (not available in this ffmpeg)"))
+		self.refresh_all_toggles()
+		if not self.currently_processing:
+			self.set_custom_controls_enabled(self.preset_combo.GetSelection() == 0)
+		log.info("Mixdown: unavailable in this ffmpeg: " + ", ".join(f"{key} (needs {'/'.join(missing)})" for key, missing in unavailable.items()))
+		if spokenNames:
+			ui.message(limitSpokenText(_("{count} effects are not available in this ffmpeg and were turned off: {names}").format(
+				count=len(spokenNames), names=", ".join(spokenNames))))
+
+	def post(self, handler, *args):
+		wx.CallAfter(self.run_if_open, handler, *args)
+
+	def run_if_open(self, handler, *args):
+		if self.is_closed:
+			return
+		handler(*args)
+
+	def register_process(self, process):
+		self.ffmpeg_process = process
 
 	def _expand_to_audio_files(self, selected_files):
 		"""Expand any selected folders into their contained .mp3/.wav files (recursively, so album subfolders nested inside a main folder are included too) and drop anything else."""
@@ -414,7 +382,7 @@ class MP3WavMixdownDialog(wx.Dialog):
 					if name.lower().endswith(AUDIO_EXTENSIONS):
 						foundFiles.append(os.path.join(root, name))
 		except OSError as e:
-			log.error(f"MP3 WAV Mixdown failed to scan folder {folder_path}: {e}")
+			log.error(f"Mixdown failed to scan folder {folder_path}: {e}")
 		return foundFiles
 
 	def make_stepped_spin(self, parent, minVal, maxVal, initial, increment=5):
@@ -423,14 +391,594 @@ class MP3WavMixdownDialog(wx.Dialog):
 		ctrl.SetDigits(0)
 		return ctrl
 
+	def make_effect_page(self, title):
+		page = wx.ScrolledWindow(self.effects_notebook)
+		page.SetScrollRate(0, 12)
+		pageSizer = wx.BoxSizer(wx.VERTICAL)
+		page.SetSizer(pageSizer)
+		self.effects_notebook.AddPage(page, title)
+		self.effect_pages.append(page)
+		return page, pageSizer
+
+	def relayout(self):
+		"""Re-flow the dialog after something was shown, hidden or added, and refresh each tab's scroll size."""
+		for page in self.effect_pages:
+			page.Layout()
+			page.FitInside()
+		self.Layout()
+
+	def get_file_display_name(self, file_path):
+		importRoot = self.fileImportRoot.get(file_path)
+		return os.path.relpath(file_path, importRoot) if importRoot else os.path.basename(file_path)
+
+	def refresh_file_list(self):
+		self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
+
+	def on_browse(self, event):
+		wildcard = _("MP3/WAV files (*.mp3;*.wav)|*.mp3;*.wav")
+		with wx.FileDialog(self, _("Select MP3 or WAV files"), wildcard=wildcard,
+							style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE) as dlg:
+			if dlg.ShowModal() == wx.ID_OK:
+				for path in dlg.GetPaths():
+					if path not in self.selected_files:
+						self.selected_files.append(path)
+				self.refresh_file_list()
+				self.SetTitle(_("Mixdown: {} files").format(len(self.selected_files)))
+		wx.CallAfter(self.file_listbox.SetFocus)
+
+	def on_browse_folder(self, event):
+		with wx.DirDialog(self, _("Select a folder containing MP3 or WAV files")) as dlg:
+			if dlg.ShowModal() == wx.ID_OK:
+				folderPath = dlg.GetPath()
+				foundFiles = self._scan_folder_for_audio_files(folderPath)
+				addedCount = 0
+				for filePath in foundFiles:
+					if filePath not in self.selected_files:
+						self.selected_files.append(filePath)
+						self.fileImportRoot[filePath] = folderPath
+						addedCount += 1
+				self.refresh_file_list()
+				self.SetTitle(_("Mixdown: {} files").format(len(self.selected_files)))
+				if addedCount == 0:
+					ui.message(_("No MP3 or WAV files found in the selected folder."))
+		wx.CallAfter(self.file_listbox.SetFocus)
+
+	def on_file_list_key_down(self, event):
+		if event.GetKeyCode() in (wx.WXK_DELETE, wx.WXK_NUMPAD_DELETE):
+			self.remove_selected_files()
+		else:
+			event.Skip()
+
+	def on_file_list_context_menu(self, event):
+		if not self.file_listbox.GetSelections():
+			return
+		chooseMenuAction(self, _("Files"), [(_("Delete"), self.remove_selected_files)])
+
+	def remove_selected_files(self):
+		"""Remove the selected entries from the import list only -- this never touches anything on disk, whether the entry came from an individual file pick or was expanded out of a folder import."""
+		if self.currently_processing:
+			ui.message(_("Mixdown is already processing files"))
+			return
+		selectedIndices = list(self.file_listbox.GetSelections())
+		if not selectedIndices:
+			return
+		removedCount = 0
+		for index in sorted(selectedIndices, reverse=True):
+			if 0 <= index < len(self.selected_files):
+				filePath = self.selected_files.pop(index)
+				self.fileImportRoot.pop(filePath, None)
+				removedCount += 1
+		self.refresh_file_list()
+		self.SetTitle(_("Mixdown: {} files").format(len(self.selected_files)))
+		if removedCount:
+			ui.message(_("Removed {} file(s) from the list").format(removedCount))
+		wx.CallAfter(self.file_listbox.SetFocus)
+
+	def _parse_float_field(self, textCtrl, fallbackValue):
+		rawText = textCtrl.GetValue().strip()
+		if not rawText:
+			return fallbackValue
+		try:
+			return float(rawText)
+		except ValueError:
+			log.error(f"Mixdown could not parse '{rawText}' as a number, using {fallbackValue}")
+			return fallbackValue
+
+	def get_preview_source_file(self):
+		selectedIndices = self.file_listbox.GetSelections()
+		if selectedIndices and selectedIndices[0] < len(self.selected_files):
+			return self.selected_files[selectedIndices[0]]
+		return self.selected_files[0]
+
+	def cleanup_preview_dir(self):
+		# A media player may still hold the last preview open; anything that cannot
+		# be removed now stays in the system temp folder, not in the user's music folder.
+		if self.preview_dir:
+			shutil.rmtree(self.preview_dir, ignore_errors=True)
+		self.preview_dir = ""
+
+	def on_batch_complete(self, okCount, failCount):
+		self.currently_processing = False
+		self.set_ui_processing_state(False)
+		self.status_label.SetLabel(_("Done"))
+		if okCount == 0 and failCount > 0:
+			tones.beep(300, 300)
+			ui.message(_("Could not process any of the selected files"))
+			return
+		tones.beep(1000, 200)
+		if failCount:
+			ui.message(_("Mixdown finished: {ok} done, {failed} failed").format(ok=okCount, failed=failCount))
+		else:
+			ui.message(_("Mixdown processing complete"))
+
+	def stop_processing(self):
+		self.is_closed = True
+		self.cancel_event.set()
+		process = self.ffmpeg_process
+		if process and process.poll() is None:
+			try:
+				process.terminate()
+			except OSError as e:
+				log.debugWarning(f"Mixdown could not stop ffmpeg: {e}")
+
+	def on_close(self, event):
+		self.on_cancel(event)
+
+	def init_ui(self):
+		main_sizer = wx.BoxSizer(wx.VERTICAL)
+
+		# MP3/WAV files: Browse buttons and file list
+		file_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Audio Files"))
+		fileBox = file_sizer.GetStaticBox()
+		browse_btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.browse_btn = wx.Button(fileBox, label=_("Browse Files..."))
+		self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
+		browse_btn_sizer.Add(self.browse_btn, 0, wx.ALL, 5)
+		self.browse_folder_btn = wx.Button(fileBox, label=_("Browse Folder..."))
+		self.browse_folder_btn.Bind(wx.EVT_BUTTON, self.on_browse_folder)
+		browse_btn_sizer.Add(self.browse_folder_btn, 0, wx.ALL, 5)
+		file_sizer.Add(browse_btn_sizer, 0, wx.ALL, 0)
+		self.file_listbox = wx.ListBox(fileBox, choices=[self.get_file_display_name(f) for f in self.selected_files], style=wx.LB_EXTENDED)
+		self.file_listbox.Bind(wx.EVT_KEY_DOWN, self.on_file_list_key_down)
+		self.file_listbox.Bind(wx.EVT_CONTEXT_MENU, self.on_file_list_context_menu)
+		self.file_listbox.SetMinSize((-1, 90))
+		file_sizer.Add(self.file_listbox, 1, wx.EXPAND | wx.ALL, 5)
+		main_sizer.Add(file_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+		# Preset selector. Index 0 is "Custom" (use the effect controls
+		# below). Index 1 is "Equalizer", which reveals a genre combo below
+		# and applies a researched genre EQ curve. Indices 2+ map onto
+		# MIXDOWN_PRESETS and use its fixed filter chain verbatim,
+		# overriding the custom controls entirely while selected.
+		preset_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Preset"))
+		presetBox = preset_sizer.GetStaticBox()
+		presetChoices = [_("Custom (use effect settings below)"), _("Equalizer (choose a music style)")] + [preset["name"] for preset in MIXDOWN_PRESETS]
+		self.preset_combo = wx.ComboBox(presetBox, choices=presetChoices, style=wx.CB_READONLY)
+		self.preset_combo.SetName(_("Preset"))
+		self.preset_combo.SetSelection(0)
+		self.preset_combo.Bind(wx.EVT_COMBOBOX, self.on_preset_selected)
+		preset_sizer.Add(self.preset_combo, 0, wx.EXPAND | wx.ALL, 5)
+		self.genre_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.genre_sizer.Add(wx.StaticText(presetBox, label=_("Music Style:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		self.genre_combo = wx.ComboBox(presetBox, choices=[genre["name"] for genre in GENRE_EQ_PRESETS], style=wx.CB_READONLY)
+		self.genre_combo.SetName(_("Music Style"))
+		self.genre_combo.SetSelection(0)
+		self.genre_sizer.Add(self.genre_combo, 0, wx.ALL, 5)
+		preset_sizer.Add(self.genre_sizer, 0, wx.EXPAND)
+		self.genre_sizer.ShowItems(show=False)
+		self.preset_description_label = wx.StaticText(presetBox, label="")
+		preset_sizer.Add(self.preset_description_label, 0, wx.EXPAND | wx.ALL, 5)
+		main_sizer.Add(preset_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+		# One button holds the preset actions (Load, Save, Delete, Reset, Read Summary) so the
+		# window stays short. They only apply while the Custom preset is chosen, so the
+		# button is enabled and disabled with the effect controls.
+		self.actions_btn = wx.Button(presetBox, label=_("Preset &Actions"))
+		self.actions_btn.Bind(wx.EVT_BUTTON, self.on_actions)
+		preset_sizer.Add(self.actions_btn, 0, wx.ALL, 5)
+		self.customEffectControls.append(self.actions_btn)
+
+		# The effect settings sit in tabs (Ctrl+Tab / Ctrl+PageDown changes tab) so every
+		# control stays inside the window instead of running off the bottom of one very
+		# tall dialog; each tab scrolls by itself if it ever needs more room.
+		main_sizer.Add(wx.StaticText(self, label=_("Effect settings (use Ctrl+Tab to change tab):")), 0, wx.LEFT | wx.RIGHT | wx.TOP, 8)
+		self.effects_notebook = wx.Notebook(self)
+		self.effects_notebook.SetName(_("Effect settings"))
+		main_sizer.Add(self.effects_notebook, 1, wx.EXPAND | wx.ALL, 5)
+		noisePage, noisePageSizer = self.make_effect_page(_("Noise"))
+		tempoPage, tempoPageSizer = self.make_effect_page(_("Tempo and Speed"))
+		tonePage, tonePageSizer = self.make_effect_page(_("Equalizer"))
+		spatialPage, spatialPageSizer = self.make_effect_page(_("Spatial and Panning"))
+		dynamicsPage, dynamicsPageSizer = self.make_effect_page(_("Dynamics"))
+		creativePage, creativePageSizer = self.make_effect_page(_("Creative"))
+
+		self.build_noise_page(noisePage, noisePageSizer)
+		self.build_tempo_page(tempoPage, tempoPageSizer)
+		self.build_tone_page(tonePage, tonePageSizer)
+		self.build_spatial_page(spatialPage, spatialPageSizer)
+		self.build_dynamics_page(dynamicsPage, dynamicsPageSizer)
+		self.build_creative_page(creativePage, creativePageSizer)
+
+		self.progress_bar = wx.Gauge(self, range=100, style=wx.GA_HORIZONTAL | wx.GA_SMOOTH)
+		main_sizer.Add(self.progress_bar, 0, wx.EXPAND | wx.ALL, 5)
+		self.status_label = wx.StaticText(self, label="")
+		main_sizer.Add(self.status_label, 0, wx.EXPAND | wx.ALL, 5)
+
+		preview_row = wx.BoxSizer(wx.HORIZONTAL)
+		preview_row.Add(wx.StaticText(self, label=_("Preview start (seconds):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		self.preview_start_ctrl = wx.SpinCtrlDouble(self, min=0, max=36000, initial=0, inc=5)
+		self.preview_start_ctrl.SetDigits(0)
+		self.preview_start_ctrl.SetName(_("Preview start"))
+		preview_row.Add(self.preview_start_ctrl, 0, wx.ALL, 5)
+		preview_row.Add(wx.StaticText(self, label=_("Preview length (seconds):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		self.preview_length_ctrl = wx.SpinCtrlDouble(self, min=MIN_PREVIEW_SECONDS, max=MAX_PREVIEW_SECONDS, initial=self.PREVIEW_SECONDS, inc=5)
+		self.preview_length_ctrl.SetDigits(0)
+		self.preview_length_ctrl.SetName(_("Preview length"))
+		preview_row.Add(self.preview_length_ctrl, 0, wx.ALL, 5)
+		main_sizer.Add(preview_row, 0, wx.ALIGN_CENTER | wx.ALL, 0)
+
+		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.preview_btn = wx.Button(self, label=_("Preview"))
+		self.preview_btn.Bind(wx.EVT_BUTTON, self.on_preview)
+		btn_sizer.Add(self.preview_btn, 0, wx.ALL, 5)
+		self.preview_original_btn = wx.Button(self, label=_("Preview Original (A/B)"))
+		self.preview_original_btn.Bind(wx.EVT_BUTTON, self.on_preview_original)
+		btn_sizer.Add(self.preview_original_btn, 0, wx.ALL, 5)
+		self.apply_btn = wx.Button(self, label=_("Apply"))
+		self.apply_btn.Bind(wx.EVT_BUTTON, self.on_apply)
+		btn_sizer.Add(self.apply_btn, 0, wx.ALL, 5)
+		self.reset_custom_btn = wx.Button(self, label=_("Reset Custom Effect"))
+		self.reset_custom_btn.Bind(wx.EVT_BUTTON, self.on_reset_custom_effect)
+		btn_sizer.Add(self.reset_custom_btn, 0, wx.ALL, 5)
+		self.customEffectControls.append(self.reset_custom_btn)
+		self.close_btn = wx.Button(self, wx.ID_CANCEL, label=_("Close"))
+		self.close_btn.Bind(wx.EVT_BUTTON, self.on_cancel)
+		btn_sizer.Add(self.close_btn, 0, wx.ALL, 5)
+		main_sizer.Add(btn_sizer, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+
+		self.SetSizer(main_sizer)
+		self.SetMinSize((620, 680))
+		self.SetSize((700, 840))
+		self.relayout()
+
+	# ---- settings controls: every option lives in mixdownEngine.PARAMS and is
+	# built, read, saved and restored from the same table.
+
+	def register_control(self, key, widget, getValue, setValue):
+		self.setting_controls[key] = {"widget": widget, "get": getValue, "set": setValue}
+		self.customEffectControls.append(widget)
+
+	def add_row(self, parent, sizer, key, label, name=None):
+		"""One labelled control for the option `key`, built from its definition in PARAMS."""
+		param = PARAMS[key]
+		accessibleName = name or label.rstrip(":").strip()
+		row = wx.BoxSizer(wx.HORIZONTAL)
+		if param.kind != "bool":
+			row.Add(wx.StaticText(parent, label=label), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		if param.kind == "bool":
+			widget = wx.CheckBox(parent, label=label)
+			getValue = widget.GetValue
+			setValue = widget.SetValue
+			widget.SetValue(param.default)
+		elif param.kind == "choice":
+			widget = wx.ComboBox(parent, choices=CHOICE_LABELS[key], style=wx.CB_READONLY)
+			widget.SetName(accessibleName)
+
+			def getValue(widget=widget, param=param):
+				index = widget.GetSelection()
+				return param.choices[index] if 0 <= index < len(param.choices) else param.default
+
+			def setValue(value, widget=widget, param=param):
+				widget.SetSelection(param.choices.index(value) if value in param.choices else 0)
+			setValue(param.default)
+		elif param.kind == "int":
+			widget = self.make_stepped_spin(parent, param.minimum, param.maximum, param.default, param.step)
+			widget.SetName(accessibleName)
+
+			def getValue(widget=widget):
+				return int(round(widget.GetValue()))
+
+			def setValue(value, widget=widget):
+				widget.SetValue(float(value))
+		else:
+			widget = wx.SpinCtrlDouble(parent, min=param.minimum, max=param.maximum, initial=param.default, inc=param.step)
+			widget.SetDigits(param.digits)
+			widget.SetName(accessibleName)
+			getValue = widget.GetValue
+
+			def setValue(value, widget=widget):
+				widget.SetValue(float(value))
+		row.Add(widget, 0, wx.ALL, 5)
+		sizer.Add(row, 0, wx.EXPAND)
+		self.register_control(key, widget, getValue, setValue)
+		return widget
+
+	def add_effect(self, box, boxSizer, enableKey, label, rows):
+		"""A checkbox that switches an effect on, with that effect's own settings shown only while it is checked. Returns the settings sizer so a page can add more to it."""
+		checkbox = wx.CheckBox(box, label=label)
+		boxSizer.Add(checkbox, 0, wx.ALL, 5)
+		self.register_control(enableKey, checkbox, checkbox.GetValue, checkbox.SetValue)
+		settingsSizer = wx.BoxSizer(wx.VERTICAL)
+		widgets = [checkbox]
+		for spec in rows:
+			widgets.append(self.add_row(box, settingsSizer, *spec))
+		boxSizer.Add(settingsSizer, 0, wx.EXPAND)
+		self.effect_widgets[enableKey] = widgets
+		self.effect_labels[enableKey] = label
+		self.bind_effect_toggle(checkbox, settingsSizer)
+		return settingsSizer
+
+	def build_noise_page(self, page, pageSizer):
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Noise Reduction"))
+		box = sizer.GetStaticBox()
+		self.add_effect(box, sizer, "noiseReductionEnabled", _("Noise Reduction / Suppression (ANR)"), [
+			("noiseReductionLevel", _("Noise Floor Level (dB):"), _("Noise Floor Level")),
+		])
+		self.add_effect(box, sizer, "noiseGateEnabled", _("Noise Gate (Cut Background Noise Between Words)"), [
+			("noiseGateThresholdDb", _("Gate Threshold (dB):"), _("Noise Gate Threshold")),
+		])
+		self.add_effect(box, sizer, "rumbleEnabled", _("Rumble Filter (Cut Low Rumble)"), [
+			("rumbleCutoffHz", _("Cut Everything Below (Hz):"), _("Rumble Cutoff")),
+		])
+		self.add_effect(box, sizer, "clickRemoverEnabled", _("Click and Crackle Remover"), [
+			("clickRemoverMode", _("Remove:")),
+			("clickRemoverThreshold", _("Click Detection Threshold (higher finds fewer clicks):"), _("Click Detection Threshold")),
+		])
+		self.add_effect(box, sizer, "deesserEnabled", _("De-esser (Soften Harsh S Sounds)"), [
+			("deesserIntensity", _("De-esser Intensity (%):"), _("De-esser Intensity")),
+			("deesserFrequency", _("De-esser Frequency (0 low to 100 high):"), _("De-esser Frequency")),
+		])
+		self.add_effect(box, sizer, "silenceTrimEnabled", _("Silence Trimmer"), [
+			("silenceTrimMode", _("Trim:")),
+			("silenceTrimThresholdDb", _("Silence Level (dB):"), _("Silence Level")),
+			("silenceTrimMinSeconds", _("Shortest Gap to Remove (seconds):"), _("Shortest Gap to Remove")),
+		])
+		pageSizer.Add(sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+	def build_tempo_page(self, page, pageSizer):
+		# Tempo and Fast Speed: two separate effects, each in its own group.
+		tempo_sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Tempo"))
+		tempoBox = tempo_sizer.GetStaticBox()
+		self.add_effect(tempoBox, tempo_sizer, "tempoEnabled", _("Adjust Tempo"), [
+			("tempoFactor", _("Tempo Factor (0.5-2.0):"), _("Tempo Factor")),
+		])
+		# Always shown (not hidden with the factor), so it is never missing from the tab order.
+		self.add_row(tempoBox, tempo_sizer, "tempoKeepPitch", _("Keep the original pitch (key)"))
+		pageSizer.Add(tempo_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+		fast_sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Fast Speed"))
+		fastBox = fast_sizer.GetStaticBox()
+		direction_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		direction_sizer.Add(wx.StaticText(fastBox, label=_("Direction:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		self.direction_combo = wx.Choice(fastBox, choices=[_("Fast-forward (normal direction)"), _("Rewind (backwards)")])
+		self.direction_combo.SetSelection(0)
+		self.direction_combo.SetName(_("Direction"))
+		direction_sizer.Add(self.direction_combo, 0, wx.ALL, 5)
+		fast_sizer.Add(direction_sizer, 0, wx.EXPAND)
+		self.register_control(
+			"reversalEnabled", self.direction_combo,
+			lambda: self.direction_combo.GetSelection() == 1,
+			lambda value: self.direction_combo.SetSelection(1 if value else 0),
+		)
+		self.effect_labels["reversalEnabled"] = _("Rewind (backwards)")
+		self.effect_widgets["reversalEnabled"] = [self.direction_combo]
+		self.add_effect(fastBox, fast_sizer, "fastSpeedEnabled", _("Fast Speed (fast-forward)"), [
+			("fastSpeedFactor", _("Fast Speed ({low}x to {high}x):").format(
+				low=f"{MIN_FAST_SPEED_FACTOR:g}", high=f"{MAX_FAST_SPEED_FACTOR:g}"), _("Fast Speed")),
+		])
+		pageSizer.Add(fast_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+		night_sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Nightcore and Slowed"))
+		nightBox = night_sizer.GetStaticBox()
+		self.add_effect(nightBox, night_sizer, "nightcoreEnabled", _("Nightcore / Slowed (pitch follows speed)"), [
+			("nightcoreMode", _("Style:")),
+			("nightcoreAmountPercent", _("Amount (%):"), _("Nightcore Amount")),
+		])
+		pageSizer.Add(night_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+	def build_tone_page(self, page, pageSizer):
+		eq_sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Equalization"))
+		eqBox = eq_sizer.GetStaticBox()
+		self.add_effect(eqBox, eq_sizer, "eqEnabled", _("Enable Bass / Treble Equalization"), [
+			("bassGain", _("Bass Gain (dB):"), _("Bass Gain")),
+			("trebleGain", _("Treble Gain (dB):"), _("Treble Gain")),
+		])
+		self.add_effect(eqBox, eq_sizer, "parametricEqEnabled", _("Advanced Parametric Equalizer (3-Band)"), [
+			("parametricEqLowGain", _("Low Gain @ 100 Hz (dB):"), _("Parametric EQ Low Gain")),
+			("parametricEqMidGain", _("Mid Gain @ 1 kHz (dB):"), _("Parametric EQ Mid Gain")),
+			("parametricEqHighGain", _("High Gain @ 8 kHz (dB):"), _("Parametric EQ High Gain")),
+		])
+		self.add_effect(eqBox, eq_sizer, "voiceClarityEnabled", _("Voice Clarity (lift speech presence)"), [
+			("voiceClarityAmount", _("Amount (1-10):"), _("Voice Clarity Amount")),
+		])
+		self.add_effect(eqBox, eq_sizer, "loudnessContourEnabled", _("Loudness Contour (smile curve for quiet listening)"), [
+			("loudnessContourAmount", _("Amount (1-10):"), _("Loudness Contour Amount")),
+		])
+		self.add_effect(eqBox, eq_sizer, "tiltEnabled", _("Tilt EQ (warmer or brighter in one control)"), [
+			("tiltDb", _("Tilt (dB, positive is brighter):"), _("Tilt")),
+		])
+		pageSizer.Add(eq_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+	def build_spatial_page(self, page, pageSizer):
+		spatial_sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Spatial, Modulation && Panning"))
+		spatialBox = spatial_sizer.GetStaticBox()
+		self.spatialBox = spatialBox
+		self.add_effect(spatialBox, spatial_sizer, "channelToolEnabled", _("Channel Tools (mono, stereo, swap sides)"), [
+			("channelTool", _("Tool:")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "binauralEnabled", _("Binaural Audio (3D Headphone Simulation)"), [
+			("binauralWidth", _("Width Intensity:"), _("Binaural Width Intensity")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "chorusEnabled", _("Chorus"), [
+			("chorusDelayMs", _("Chorus Delay (ms):"), _("Chorus Delay")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "modulationEnabled", _("Flanger / Phaser / Tremolo / Vibrato"), [
+			("modulationType", _("Type:")),
+			("modulationRateHz", _("Rate (Hz):"), _("Modulation Rate")),
+			("modulationDepthPercent", _("Depth (%):"), _("Modulation Depth")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "haasEnabled", _("Haas Effect (wide stereo without an echo)"), [
+			("haasDelayMs", _("Delay (ms):"), _("Haas Delay")),
+			("haasDelayedSide", _("Delayed Side:")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "reverbEnabled", _("Reverb / Echo"), [
+			("echoDelayMs", _("Echo Delay (ms):"), _("Echo Delay")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "roomReverbEnabled", _("Multi-Room Reverb"), [
+			("roomType", _("Room:")),
+			("roomReverbAmount", _("Amount (%):"), _("Room Reverb Amount")),
+		])
+		self.add_effect(spatialBox, spatial_sizer, "muffledRoomEnabled", _("Muffled Room (Pub / Bathroom)"), [
+			("muffleCutoffHz", _("Muffle Cutoff (Hz):"), _("Muffle Cutoff")),
+		])
+		self.add_row(spatialBox, spatial_sizer, "effectMixPercent",
+			_("Effects Mix (% of Chorus, Modulation, Haas, Reverb, Room, Muffled, Frequency Shift):"), _("Effects Mix"))
+
+		autopan_settings_sizer = self.add_effect(spatialBox, spatial_sizer, "autoPanLoopEnabled", _("Auto-Pan Loop (Circular, Dance Style)"), [
+			("autoPanSpeedHz", _("Loop Speed (Hz):"), _("Auto-Pan Loop Speed")),
+			("autoPanDirection", _("Loop Direction:"), _("Auto-Pan Loop Direction")),
+			("autoPanKeepVocalCenter", _("Keep the singer's voice in the center (only the music moves)")),
+			("autoPanVocalLowHz", _("Voice Band Low Edge (Hz):"), _("Voice Band Low Edge")),
+			("autoPanVocalHighHz", _("Voice Band High Edge (Hz):"), _("Voice Band High Edge")),
+		])
+		autopan_settings_sizer.Add(wx.StaticText(spatialBox, label=_(
+			"Loop sections change the speed or turn the loop around for a time range. Outside the sections the loop above is used.")),
+			0, wx.ALL, 5)
+		autopan_count_row = wx.BoxSizer(wx.HORIZONTAL)
+		autopan_count_row.Add(wx.StaticText(spatialBox, label=_("Number of Loop Sections (0 = one steady loop):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		self.autopan_section_count_ctrl = wx.SpinCtrlDouble(spatialBox, min=0, max=MAX_SECTIONS, initial=0, inc=1)
+		self.autopan_section_count_ctrl.SetDigits(0)
+		self.autopan_section_count_ctrl.SetName(_("Number of Loop Sections"))
+		self.autopan_section_count_ctrl.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_autopan_section_count_changed)
+		autopan_count_row.Add(self.autopan_section_count_ctrl, 0, wx.ALL, 5)
+		autopan_settings_sizer.Add(autopan_count_row, 0, wx.EXPAND)
+		self.autopan_sections_container = wx.BoxSizer(wx.VERTICAL)
+		autopan_settings_sizer.Add(self.autopan_sections_container, 0, wx.EXPAND)
+		self.customEffectControls.append(self.autopan_section_count_ctrl)
+		self.effect_widgets["autoPanLoopEnabled"].append(self.autopan_section_count_ctrl)
+
+		self.panning_checkbox = wx.CheckBox(spatialBox, label=_("Advanced Time-Based Panning"))
+		spatial_sizer.Add(self.panning_checkbox, 0, wx.ALL, 5)
+		self.register_control("panningEnabled", self.panning_checkbox, self.panning_checkbox.GetValue, self.panning_checkbox.SetValue)
+		panning_settings_sizer = wx.BoxSizer(wx.VERTICAL)
+		section_count_row = wx.BoxSizer(wx.HORIZONTAL)
+		section_count_row.Add(wx.StaticText(spatialBox, label=_("Number of Sections:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
+		self.pan_section_count_ctrl = wx.SpinCtrlDouble(spatialBox, min=1, max=MAX_SECTIONS, initial=1, inc=1)
+		self.pan_section_count_ctrl.SetDigits(0)
+		self.pan_section_count_ctrl.SetName(_("Number of Sections"))
+		self.pan_section_count_ctrl.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_pan_section_count_changed)
+		section_count_row.Add(self.pan_section_count_ctrl, 0, wx.ALL, 5)
+		panning_settings_sizer.Add(section_count_row, 0, wx.EXPAND)
+		self.pan_sections_container = wx.BoxSizer(wx.VERTICAL)
+		panning_settings_sizer.Add(self.pan_sections_container, 0, wx.EXPAND)
+		spatial_sizer.Add(panning_settings_sizer, 0, wx.EXPAND | wx.ALL, 5)
+		pageSizer.Add(spatial_sizer, 0, wx.EXPAND | wx.ALL, 5)
+		self.rebuild_pan_sections(1)
+		self.customEffectControls.append(self.pan_section_count_ctrl)
+		self.effect_widgets["panningEnabled"] = [self.panning_checkbox, self.pan_section_count_ctrl]
+		self.effect_labels["panningEnabled"] = _("Advanced Time-Based Panning")
+		self.bind_effect_toggle(self.panning_checkbox, panning_settings_sizer)
+
+	def build_dynamics_page(self, page, pageSizer):
+		dynamics_sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Dynamics && Limiter"))
+		box = dynamics_sizer.GetStaticBox()
+		self.add_effect(box, dynamics_sizer, "volumeGainEnabled", _("Volume Gain"), [
+			("volumeGainDb", _("Gain (dB):"), _("Volume Gain")),
+		])
+		self.add_effect(box, dynamics_sizer, "expanderEnabled", _("Expander / Compand (Night Mode)"), [
+			("expanderPreset", _("Style:")),
+		])
+		self.add_effect(box, dynamics_sizer, "dynaudnormEnabled", _("Dynamic Normalizer (even out loud and quiet parts)"), [
+			("dynaudnormFrameMs", _("Frame Length (ms):"), _("Dynamic Normalizer Frame Length")),
+			("dynaudnormMaxGain", _("Maximum Gain (times):"), _("Dynamic Normalizer Maximum Gain")),
+		])
+		self.add_effect(box, dynamics_sizer, "speechnormEnabled", _("Speech Normalizer (even out speech)"), [
+			("speechnormPeakPercent", _("Peak Level (%):"), _("Speech Normalizer Peak")),
+			("speechnormExpansion", _("Maximum Expansion (times):"), _("Speech Normalizer Expansion")),
+		])
+		self.add_effect(box, dynamics_sizer, "compressorEnabled", _("Apply Compressor"), [
+			("compressorThresholdDb", _("Compressor Threshold (dB):"), _("Compressor Threshold")),
+			("compressorRatio", _("Ratio (to 1):"), _("Compressor Ratio")),
+			("compressorAttackMs", _("Attack (ms):"), _("Compressor Attack")),
+			("compressorReleaseMs", _("Release (ms):"), _("Compressor Release")),
+			("compressorMakeupDb", _("Makeup Gain (dB):"), _("Compressor Makeup Gain")),
+			("compressorKneeDb", _("Knee Softness (dB, 9 is the default):"), _("Compressor Knee")),
+		])
+		self.add_effect(box, dynamics_sizer, "softClipEnabled", _("Soft Clipper / Saturation (warmth)"), [
+			("softClipType", _("Curve:")),
+			("softClipDriveDb", _("Drive (dB):"), _("Soft Clipper Drive")),
+		])
+		self.add_effect(box, dynamics_sizer, "lofiEnabled", _("Lo-fi / Bitcrusher"), [
+			("lofiBits", _("Bit Depth (bits):"), _("Lo-fi Bit Depth")),
+			("lofiSampleReduction", _("Sample Rate Reduction (times):"), _("Lo-fi Sample Reduction")),
+		])
+		self.add_effect(box, dynamics_sizer, "loudnormEnabled", _("Loudness Normalization (EBU R128)"), [
+			("loudnormTargetLufs", _("Target Loudness (LUFS):"), _("Loudness Normalization Target")),
+			("loudnormTruePeakDb", _("True Peak Limit (dBTP):"), _("Loudness Normalization True Peak")),
+			("loudnormTwoPass", _("Two-pass (measure the file first, lands closer to the target)")),
+		])
+		self.add_effect(box, dynamics_sizer, "limiterEnabled", _("Apply Limiter"), [
+			("limiterLimitDb", _("Limit (dB):"), _("Limiter Limit")),
+		])
+		self.add_row(box, dynamics_sizer, "reportLoudness", _("Report loudness before and after (LUFS) when applying"))
+		pageSizer.Add(dynamics_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+	def build_creative_page(self, page, pageSizer):
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, page, label=_("Creative"))
+		box = sizer.GetStaticBox()
+		self.add_effect(box, sizer, "telephoneEnabled", _("Telephone / Radio Voice"), [
+			("telephoneStyle", _("Style:")),
+		])
+		self.add_effect(box, sizer, "subBoostEnabled", _("Bass Boost (strong sub-bass)"), [
+			("subBoostAmount", _("Boost (1-12):"), _("Bass Boost Amount")),
+			("subBoostCutoffHz", _("Cutoff (Hz):"), _("Bass Boost Cutoff")),
+		])
+		self.add_effect(box, sizer, "enhancerEnabled", _("Audio Enhancer (crisper sound)"), [
+			("enhancerIntensity", _("Intensity:"), _("Audio Enhancer Intensity")),
+		])
+		self.add_effect(box, sizer, "freqShiftEnabled", _("Frequency Shift (robot voice)"), [
+			("freqShiftHz", _("Shift (Hz):"), _("Frequency Shift")),
+		])
+		pageSizer.Add(sizer, 0, wx.EXPAND | wx.ALL, 5)
+
 	def bind_effect_toggle(self, checkbox, settingsSizer):
 		"""Show an effect's settings only once it's checked, so the dialog isn't cluttered with controls for effects that aren't in use."""
-		def _onToggle(event):
+		def refresh():
 			settingsSizer.ShowItems(show=checkbox.GetValue())
-			self.Layout()
+
+		def _onToggle(event):
+			refresh()
+			self.refresh_section_visibility()
+			self.relayout()
 			event.Skip()
 		checkbox.Bind(wx.EVT_CHECKBOX, _onToggle)
-		settingsSizer.ShowItems(show=checkbox.GetValue())
+		self.toggle_refreshers.append(refresh)
+		refresh()
+
+	def refresh_all_toggles(self):
+		for refresh in self.toggle_refreshers:
+			refresh()
+		self.refresh_section_visibility()
+		self.relayout()
+
+	def refresh_section_visibility(self):
+		"""Showing a whole effect group also shows rows inside it that were hidden on purpose, so those rows are hidden again."""
+		for widgets in self.pan_section_widgets:
+			widgets["update_amount"]()
+
+	def _resize_sections(self, widgetsList, container, newCount, createFn, readFn, seed=None):
+		previous = seed if seed is not None else [readFn(widgets) for widgets in widgetsList]
+		for widgets in widgetsList:
+			container.Detach(widgets["sizer"])
+			staticBox = widgets["sizer"].GetStaticBox()
+			widgets["sizer"].Clear(delete_windows=True)
+			staticBox.Destroy()
+		widgetsList.clear()
+		for index in range(newCount):
+			sectionSizer, widgets = createFn(index + 1, previous[index] if index < len(previous) else None)
+			container.Add(sectionSizer, 0, wx.EXPAND | wx.ALL, 5)
+			widgetsList.append(widgets)
+		self.relayout()
 
 	def create_pan_section_widgets(self, sectionNumber, previousValues):
 		"""Build one "Section N" group (Start/End/Direction, plus an Amount row shown only for Full Left/Full Right), optionally seeded from a previous section's values so resizing the section count doesn't lose existing settings."""
@@ -470,7 +1018,7 @@ class MP3WavMixdownDialog(wx.Dialog):
 			directionIndex = directionCombo.GetSelection()
 			directionKey = PAN_DIRECTION_KEYS[directionIndex] if 0 <= directionIndex < len(PAN_DIRECTION_KEYS) else "center"
 			amountSizer.ShowItems(show=directionKey in ("full_left", "full_right"))
-			self.Layout()
+			self.relayout()
 			if event is not None:
 				event.Skip()
 		directionCombo.Bind(wx.EVT_COMBOBOX, update_amount_visibility)
@@ -482,429 +1030,276 @@ class MP3WavMixdownDialog(wx.Dialog):
 			"end_ctrl": endCtrl,
 			"direction_combo": directionCombo,
 			"amount_ctrl": amountCtrl,
+			"update_amount": update_amount_visibility,
 		}
 		return sectionSizer, widgets
 
-	def rebuild_pan_sections(self, newCount):
+	@staticmethod
+	def _read_pan_section(widgets):
+		return {
+			"start": widgets["start_ctrl"].GetValue(),
+			"end": widgets["end_ctrl"].GetValue(),
+			"direction": widgets["direction_combo"].GetSelection(),
+			"amount": widgets["amount_ctrl"].GetValue(),
+		}
+
+	def rebuild_pan_sections(self, newCount, seed=None):
 		"""Resize the number of panning sections, preserving existing sections' values where possible so growing or shrinking the count doesn't discard what's already set up."""
-		previousValues = []
-		for widgets in self.pan_section_widgets:
-			previousValues.append({
-				"start": widgets["start_ctrl"].GetValue(),
-				"end": widgets["end_ctrl"].GetValue(),
-				"direction": widgets["direction_combo"].GetSelection(),
-				"amount": widgets["amount_ctrl"].GetValue(),
-			})
-
-		for widgets in self.pan_section_widgets:
-			self.pan_sections_container.Detach(widgets["sizer"])
-			widgets["sizer"].Clear(delete_windows=True)
-		self.pan_section_widgets = []
-
-		for index in range(newCount):
-			previous = previousValues[index] if index < len(previousValues) else None
-			sectionSizer, widgets = self.create_pan_section_widgets(index + 1, previous)
-			self.pan_sections_container.Add(sectionSizer, 0, wx.EXPAND | wx.ALL, 5)
-			self.pan_section_widgets.append(widgets)
-
-		self.Layout()
+		self._resize_sections(self.pan_section_widgets, self.pan_sections_container, newCount,
+			self.create_pan_section_widgets, self._read_pan_section, seed)
 
 	def on_pan_section_count_changed(self, event):
 		self.rebuild_pan_sections(int(self.pan_section_count_ctrl.GetValue()))
 		event.Skip()
 
-	def init_ui(self):
-		main_sizer = wx.BoxSizer(wx.VERTICAL)
-
-		# MP3/WAV files: Browse buttons and file list
-		file_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Audio Files"))
-		fileBox = file_sizer.GetStaticBox()
-		browse_btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		self.browse_btn = wx.Button(fileBox, label=_("Browse Files..."))
-		self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
-		browse_btn_sizer.Add(self.browse_btn, 0, wx.ALL, 5)
-		self.browse_folder_btn = wx.Button(fileBox, label=_("Browse Folder..."))
-		self.browse_folder_btn.Bind(wx.EVT_BUTTON, self.on_browse_folder)
-		browse_btn_sizer.Add(self.browse_folder_btn, 0, wx.ALL, 5)
-		file_sizer.Add(browse_btn_sizer, 0, wx.ALL, 0)
-		self.file_listbox = wx.ListBox(fileBox, choices=[self.get_file_display_name(f) for f in self.selected_files], style=wx.LB_EXTENDED)
-		self.file_listbox.Bind(wx.EVT_KEY_DOWN, self.on_file_list_key_down)
-		self.file_listbox.Bind(wx.EVT_CONTEXT_MENU, self.on_file_list_context_menu)
-		file_sizer.Add(self.file_listbox, 1, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(file_sizer, 1, wx.EXPAND | wx.ALL, 5)
-
-		# Preset selector. Index 0 is "Custom" (use the effect controls
-		# below). Index 1 is "Equalizer", which reveals a genre combo below
-		# and applies a researched genre EQ curve. Indices 2+ map onto
-		# MIXDOWN_PRESETS and use its fixed filter chain verbatim,
-		# overriding the custom controls entirely while selected.
-		preset_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Preset"))
-		presetBox = preset_sizer.GetStaticBox()
-		presetChoices = [_("Custom (use effect settings below)"), _("Equalizer (choose a music style)")] + [preset["name"] for preset in MIXDOWN_PRESETS]
-		self.preset_combo = wx.ComboBox(presetBox, choices=presetChoices, style=wx.CB_READONLY)
-		self.preset_combo.SetName(_("Preset"))
-		self.preset_combo.SetSelection(0)
-		self.preset_combo.Bind(wx.EVT_COMBOBOX, self.on_preset_selected)
-		preset_sizer.Add(self.preset_combo, 0, wx.EXPAND | wx.ALL, 5)
-		self.genre_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		self.genre_sizer.Add(wx.StaticText(presetBox, label=_("Music Style:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.genre_combo = wx.ComboBox(presetBox, choices=[genre["name"] for genre in GENRE_EQ_PRESETS], style=wx.CB_READONLY)
-		self.genre_combo.SetName(_("Music Style"))
-		self.genre_combo.SetSelection(0)
-		self.genre_sizer.Add(self.genre_combo, 0, wx.ALL, 5)
-		preset_sizer.Add(self.genre_sizer, 0, wx.EXPAND)
-		self.genre_sizer.ShowItems(show=False)
-		self.preset_description_label = wx.StaticText(presetBox, label="")
-		preset_sizer.Add(self.preset_description_label, 0, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(preset_sizer, 0, wx.EXPAND | wx.ALL, 5)
-
-		# 1. Noise Reduction / Suppression
-		noise_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Noise Reduction"))
-		noiseBox = noise_sizer.GetStaticBox()
-		self.noise_reduction_checkbox = wx.CheckBox(noiseBox, label=_("Noise Reduction / Suppression (ANR)"))
-		noise_sizer.Add(self.noise_reduction_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.noise_reduction_checkbox)
-		noise_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		noise_settings_sizer.Add(wx.StaticText(noiseBox, label=_("Noise Floor Level (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.noise_level_ctrl = self.make_stepped_spin(noiseBox, -80, -20, -25)
-		self.noise_level_ctrl.SetName(_("Noise Floor Level"))
-		noise_settings_sizer.Add(self.noise_level_ctrl, 0, wx.ALL, 5)
-		noise_sizer.Add(noise_settings_sizer, 0, wx.EXPAND)
-		main_sizer.Add(noise_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		self.customEffectControls.append(self.noise_level_ctrl)
-		self.bind_effect_toggle(self.noise_reduction_checkbox, noise_settings_sizer)
-
-		self.noise_gate_checkbox = wx.CheckBox(noiseBox, label=_("Noise Gate (Cut Background Noise Between Words)"))
-		noise_sizer.Add(self.noise_gate_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.noise_gate_checkbox)
-		noise_gate_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		noise_gate_settings_sizer.Add(wx.StaticText(noiseBox, label=_("Gate Threshold (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.noise_gate_threshold_ctrl = self.make_stepped_spin(noiseBox, -60, -10, -40)
-		self.noise_gate_threshold_ctrl.SetName(_("Noise Gate Threshold"))
-		noise_gate_settings_sizer.Add(self.noise_gate_threshold_ctrl, 0, wx.ALL, 5)
-		noise_sizer.Add(noise_gate_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.noise_gate_threshold_ctrl)
-		self.bind_effect_toggle(self.noise_gate_checkbox, noise_gate_settings_sizer)
-
-		# 2. Time & Pitch
-		timePitch_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Time && Pitch"))
-		timePitchBox = timePitch_sizer.GetStaticBox()
-		self.reversal_checkbox = wx.CheckBox(timePitchBox, label=_("Reverse Audio"))
-		timePitch_sizer.Add(self.reversal_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.reversal_checkbox)
-		self.tempo_checkbox = wx.CheckBox(timePitchBox, label=_("Adjust Tempo"))
-		timePitch_sizer.Add(self.tempo_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.tempo_checkbox)
-		tempo_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		tempo_settings_sizer.Add(wx.StaticText(timePitchBox, label=_("Tempo Factor (0.5-2.0):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.tempo_ctrl = wx.SpinCtrlDouble(timePitchBox, min=0.5, max=2.0, initial=1.0, inc=0.05)
-		self.tempo_ctrl.SetDigits(2)
-		self.tempo_ctrl.SetName(_("Tempo Factor"))
-		tempo_settings_sizer.Add(self.tempo_ctrl, 0, wx.ALL, 5)
-		timePitch_sizer.Add(tempo_settings_sizer, 0, wx.EXPAND)
-		main_sizer.Add(timePitch_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		self.customEffectControls.append(self.tempo_ctrl)
-		self.bind_effect_toggle(self.tempo_checkbox, tempo_settings_sizer)
-
-		# 3. Equalization & Tone
-		eq_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Equalization"))
-		eqBox = eq_sizer.GetStaticBox()
-		self.eq_checkbox = wx.CheckBox(eqBox, label=_("Enable Bass / Treble Equalization"))
-		eq_sizer.Add(self.eq_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.eq_checkbox)
-		eq_settings_sizer = wx.BoxSizer(wx.VERTICAL)
-		bass_row_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		bass_row_sizer.Add(wx.StaticText(eqBox, label=_("Bass Gain (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.bass_gain_ctrl = self.make_stepped_spin(eqBox, -20, 20, 0)
-		self.bass_gain_ctrl.SetName(_("Bass Gain"))
-		bass_row_sizer.Add(self.bass_gain_ctrl, 0, wx.ALL, 5)
-		eq_settings_sizer.Add(bass_row_sizer, 0, wx.EXPAND)
-		treble_row_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		treble_row_sizer.Add(wx.StaticText(eqBox, label=_("Treble Gain (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.treble_gain_ctrl = self.make_stepped_spin(eqBox, -20, 20, 0)
-		self.treble_gain_ctrl.SetName(_("Treble Gain"))
-		treble_row_sizer.Add(self.treble_gain_ctrl, 0, wx.ALL, 5)
-		eq_settings_sizer.Add(treble_row_sizer, 0, wx.EXPAND)
-		eq_sizer.Add(eq_settings_sizer, 0, wx.EXPAND)
-		main_sizer.Add(eq_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		self.customEffectControls.extend([self.bass_gain_ctrl, self.treble_gain_ctrl])
-		self.bind_effect_toggle(self.eq_checkbox, eq_settings_sizer)
-
-		self.parametric_eq_checkbox = wx.CheckBox(eqBox, label=_("Advanced Parametric Equalizer (3-Band)"))
-		eq_sizer.Add(self.parametric_eq_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.parametric_eq_checkbox)
-		parametric_eq_settings_sizer = wx.BoxSizer(wx.VERTICAL)
-		peq_low_row = wx.BoxSizer(wx.HORIZONTAL)
-		peq_low_row.Add(wx.StaticText(eqBox, label=_("Low Gain @ 100 Hz (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.parametric_eq_low_ctrl = self.make_stepped_spin(eqBox, -20, 20, 0)
-		self.parametric_eq_low_ctrl.SetName(_("Parametric EQ Low Gain"))
-		peq_low_row.Add(self.parametric_eq_low_ctrl, 0, wx.ALL, 5)
-		parametric_eq_settings_sizer.Add(peq_low_row, 0, wx.EXPAND)
-		peq_mid_row = wx.BoxSizer(wx.HORIZONTAL)
-		peq_mid_row.Add(wx.StaticText(eqBox, label=_("Mid Gain @ 1 kHz (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.parametric_eq_mid_ctrl = self.make_stepped_spin(eqBox, -20, 20, 0)
-		self.parametric_eq_mid_ctrl.SetName(_("Parametric EQ Mid Gain"))
-		peq_mid_row.Add(self.parametric_eq_mid_ctrl, 0, wx.ALL, 5)
-		parametric_eq_settings_sizer.Add(peq_mid_row, 0, wx.EXPAND)
-		peq_high_row = wx.BoxSizer(wx.HORIZONTAL)
-		peq_high_row.Add(wx.StaticText(eqBox, label=_("High Gain @ 8 kHz (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.parametric_eq_high_ctrl = self.make_stepped_spin(eqBox, -20, 20, 0)
-		self.parametric_eq_high_ctrl.SetName(_("Parametric EQ High Gain"))
-		peq_high_row.Add(self.parametric_eq_high_ctrl, 0, wx.ALL, 5)
-		parametric_eq_settings_sizer.Add(peq_high_row, 0, wx.EXPAND)
-		eq_sizer.Add(parametric_eq_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.extend([self.parametric_eq_low_ctrl, self.parametric_eq_mid_ctrl, self.parametric_eq_high_ctrl])
-		self.bind_effect_toggle(self.parametric_eq_checkbox, parametric_eq_settings_sizer)
-
-		# 4. Spatial, Modulation & Panning
-		spatial_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Spatial, Modulation && Panning"))
-		spatialBox = spatial_sizer.GetStaticBox()
-		self.binaural_checkbox = wx.CheckBox(spatialBox, label=_("Binaural Audio (3D Headphone Simulation)"))
-		spatial_sizer.Add(self.binaural_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.binaural_checkbox)
-		binaural_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		binaural_settings_sizer.Add(wx.StaticText(spatialBox, label=_("Width Intensity:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.binaural_width_ctrl = wx.SpinCtrlDouble(spatialBox, min=1.0, max=5.0, initial=2.5, inc=0.5)
-		self.binaural_width_ctrl.SetDigits(1)
-		self.binaural_width_ctrl.SetName(_("Binaural Width Intensity"))
-		binaural_settings_sizer.Add(self.binaural_width_ctrl, 0, wx.ALL, 5)
-		spatial_sizer.Add(binaural_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.binaural_width_ctrl)
-		self.bind_effect_toggle(self.binaural_checkbox, binaural_settings_sizer)
-
-		self.chorus_checkbox = wx.CheckBox(spatialBox, label=_("Chorus"))
-		spatial_sizer.Add(self.chorus_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.chorus_checkbox)
-		chorus_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		chorus_settings_sizer.Add(wx.StaticText(spatialBox, label=_("Chorus Delay (ms):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.chorus_delay_ctrl = self.make_stepped_spin(spatialBox, 20, 100, 50)
-		self.chorus_delay_ctrl.SetName(_("Chorus Delay"))
-		chorus_settings_sizer.Add(self.chorus_delay_ctrl, 0, wx.ALL, 5)
-		spatial_sizer.Add(chorus_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.chorus_delay_ctrl)
-		self.bind_effect_toggle(self.chorus_checkbox, chorus_settings_sizer)
-
-		self.reverb_checkbox = wx.CheckBox(spatialBox, label=_("Reverb / Echo"))
-		spatial_sizer.Add(self.reverb_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.reverb_checkbox)
-		echo_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		echo_settings_sizer.Add(wx.StaticText(spatialBox, label=_("Echo Delay (ms):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.echo_delay_ctrl = self.make_stepped_spin(spatialBox, 50, 1000, 150)
-		self.echo_delay_ctrl.SetName(_("Echo Delay"))
-		echo_settings_sizer.Add(self.echo_delay_ctrl, 0, wx.ALL, 5)
-		spatial_sizer.Add(echo_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.echo_delay_ctrl)
-		self.bind_effect_toggle(self.reverb_checkbox, echo_settings_sizer)
-
-		self.muffled_room_checkbox = wx.CheckBox(spatialBox, label=_("Muffled Room (Pub / Bathroom)"))
-		spatial_sizer.Add(self.muffled_room_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.muffled_room_checkbox)
-		muffled_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		muffled_settings_sizer.Add(wx.StaticText(spatialBox, label=_("Muffle Cutoff (Hz):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.muffle_cutoff_ctrl = wx.SpinCtrlDouble(spatialBox, min=200, max=4000, initial=1200, inc=100)
-		self.muffle_cutoff_ctrl.SetDigits(0)
-		self.muffle_cutoff_ctrl.SetName(_("Muffle Cutoff"))
-		muffled_settings_sizer.Add(self.muffle_cutoff_ctrl, 0, wx.ALL, 5)
-		spatial_sizer.Add(muffled_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.muffle_cutoff_ctrl)
-		self.bind_effect_toggle(self.muffled_room_checkbox, muffled_settings_sizer)
-
-		self.autopan_loop_checkbox = wx.CheckBox(spatialBox, label=_("Auto-Pan Loop (Circular, Dance Style)"))
-		spatial_sizer.Add(self.autopan_loop_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.autopan_loop_checkbox)
-		autopan_settings_sizer = wx.BoxSizer(wx.VERTICAL)
-		autopan_speed_row = wx.BoxSizer(wx.HORIZONTAL)
-		autopan_speed_row.Add(wx.StaticText(spatialBox, label=_("Loop Speed (Hz):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.autopan_speed_ctrl = wx.SpinCtrlDouble(spatialBox, min=0.1, max=5.0, initial=0.5, inc=0.1)
-		self.autopan_speed_ctrl.SetDigits(1)
-		self.autopan_speed_ctrl.SetName(_("Auto-Pan Loop Speed"))
-		autopan_speed_row.Add(self.autopan_speed_ctrl, 0, wx.ALL, 5)
-		autopan_settings_sizer.Add(autopan_speed_row, 0, wx.EXPAND)
-		autopan_direction_row = wx.BoxSizer(wx.HORIZONTAL)
-		autopan_direction_row.Add(wx.StaticText(spatialBox, label=_("Loop Direction:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.autopan_direction_combo = wx.ComboBox(
-			spatialBox,
-			choices=[_("Left to Right"), _("Right to Left")],
-			style=wx.CB_READONLY,
+	def create_autopan_section_widgets(self, sectionNumber, previousValues):
+		"""One "Loop Section N" group: a time range in which the Auto-Pan Loop turns the other way and/or runs at its own speed."""
+		sectionSizer = wx.StaticBoxSizer(wx.VERTICAL, self.spatialBox, label=_("Loop Section {}").format(sectionNumber))
+		sectionBox = sectionSizer.GetStaticBox()
+		grid = wx.FlexGridSizer(rows=4, cols=2, gap=(5, 5))
+		grid.Add(wx.StaticText(sectionBox, label=_("Start Second:")), 0, wx.ALIGN_CENTER_VERTICAL)
+		startCtrl = wx.TextCtrl(sectionBox, value=str(previousValues["start"]) if previousValues else "0")
+		startCtrl.SetName(_("Loop Section {} Start Second").format(sectionNumber))
+		grid.Add(startCtrl, 0, wx.EXPAND)
+		grid.Add(wx.StaticText(sectionBox, label=_("End Second:")), 0, wx.ALIGN_CENTER_VERTICAL)
+		endCtrl = wx.TextCtrl(sectionBox, value=str(previousValues["end"]) if previousValues else "0")
+		endCtrl.SetName(_("Loop Section {} End Second").format(sectionNumber))
+		grid.Add(endCtrl, 0, wx.EXPAND)
+		grid.Add(wx.StaticText(sectionBox, label=_("Loop Direction:")), 0, wx.ALIGN_CENTER_VERTICAL)
+		directionCombo = wx.ComboBox(sectionBox, choices=CHOICE_LABELS["autoPanDirection"], style=wx.CB_READONLY)
+		directionCombo.SetName(_("Loop Section {} Direction").format(sectionNumber))
+		directionCombo.SetSelection(previousValues["direction"] if previousValues else 1)
+		grid.Add(directionCombo, 0, wx.EXPAND)
+		grid.Add(wx.StaticText(sectionBox, label=_("Loop Speed (Hz):")), 0, wx.ALIGN_CENTER_VERTICAL)
+		speedParam = PARAMS["autoPanSpeedHz"]
+		speedCtrl = wx.SpinCtrlDouble(
+			sectionBox, min=speedParam.minimum, max=speedParam.maximum,
+			initial=previousValues["speed"] if previousValues else self.setting_controls["autoPanSpeedHz"]["get"](), inc=speedParam.step,
 		)
-		self.autopan_direction_combo.SetName(_("Auto-Pan Loop Direction"))
-		self.autopan_direction_combo.SetSelection(0)
-		autopan_direction_row.Add(self.autopan_direction_combo, 0, wx.ALL, 5)
-		autopan_settings_sizer.Add(autopan_direction_row, 0, wx.EXPAND)
-		spatial_sizer.Add(autopan_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.extend([self.autopan_speed_ctrl, self.autopan_direction_combo])
-		self.bind_effect_toggle(self.autopan_loop_checkbox, autopan_settings_sizer)
+		speedCtrl.SetDigits(speedParam.digits)
+		speedCtrl.SetName(_("Loop Section {} Speed").format(sectionNumber))
+		grid.Add(speedCtrl, 0, wx.EXPAND)
+		sectionSizer.Add(grid, 0, wx.EXPAND | wx.ALL, 5)
+		widgets = {
+			"sizer": sectionSizer,
+			"start_ctrl": startCtrl,
+			"end_ctrl": endCtrl,
+			"direction_combo": directionCombo,
+			"speed_ctrl": speedCtrl,
+		}
+		return sectionSizer, widgets
 
-		self.panning_checkbox = wx.CheckBox(spatialBox, label=_("Advanced Time-Based Panning"))
-		spatial_sizer.Add(self.panning_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.panning_checkbox)
-		panning_settings_sizer = wx.BoxSizer(wx.VERTICAL)
-		section_count_row = wx.BoxSizer(wx.HORIZONTAL)
-		section_count_row.Add(wx.StaticText(spatialBox, label=_("Number of Sections:")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.pan_section_count_ctrl = wx.SpinCtrlDouble(spatialBox, min=1, max=50, initial=1, inc=1)
-		self.pan_section_count_ctrl.SetDigits(0)
-		self.pan_section_count_ctrl.SetName(_("Number of Sections"))
-		self.pan_section_count_ctrl.Bind(wx.EVT_SPINCTRLDOUBLE, self.on_pan_section_count_changed)
-		section_count_row.Add(self.pan_section_count_ctrl, 0, wx.ALL, 5)
-		panning_settings_sizer.Add(section_count_row, 0, wx.EXPAND)
-		self.pan_sections_container = wx.BoxSizer(wx.VERTICAL)
-		panning_settings_sizer.Add(self.pan_sections_container, 0, wx.EXPAND)
-		spatial_sizer.Add(panning_settings_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(spatial_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		self.spatialBox = spatialBox
-		self.pan_section_widgets = []
-		self.rebuild_pan_sections(1)
-		self.customEffectControls.append(self.pan_section_count_ctrl)
-		self.bind_effect_toggle(self.panning_checkbox, panning_settings_sizer)
+	@staticmethod
+	def _read_autopan_section(widgets):
+		return {
+			"start": widgets["start_ctrl"].GetValue(),
+			"end": widgets["end_ctrl"].GetValue(),
+			"direction": widgets["direction_combo"].GetSelection(),
+			"speed": widgets["speed_ctrl"].GetValue(),
+		}
 
-		# 5. Dynamics & Limiter
-		dynamics_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Dynamics && Limiter"))
-		dynamicsBox = dynamics_sizer.GetStaticBox()
-		self.compressor_checkbox = wx.CheckBox(dynamicsBox, label=_("Apply Compressor"))
-		dynamics_sizer.Add(self.compressor_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.compressor_checkbox)
-		compressor_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		compressor_settings_sizer.Add(wx.StaticText(dynamicsBox, label=_("Compressor Threshold (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.compressor_threshold_ctrl = self.make_stepped_spin(dynamicsBox, -40, 0, -20)
-		self.compressor_threshold_ctrl.SetName(_("Compressor Threshold"))
-		compressor_settings_sizer.Add(self.compressor_threshold_ctrl, 0, wx.ALL, 5)
-		dynamics_sizer.Add(compressor_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.compressor_threshold_ctrl)
-		self.bind_effect_toggle(self.compressor_checkbox, compressor_settings_sizer)
+	def rebuild_autopan_sections(self, newCount, seed=None):
+		self._resize_sections(self.autopan_section_widgets, self.autopan_sections_container, newCount,
+			self.create_autopan_section_widgets, self._read_autopan_section, seed)
 
-		self.loudnorm_checkbox = wx.CheckBox(dynamicsBox, label=_("Loudness Normalization (EBU R128)"))
-		dynamics_sizer.Add(self.loudnorm_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.loudnorm_checkbox)
-		loudnorm_settings_sizer = wx.BoxSizer(wx.VERTICAL)
-		loudnorm_target_row = wx.BoxSizer(wx.HORIZONTAL)
-		loudnorm_target_row.Add(wx.StaticText(dynamicsBox, label=_("Target Loudness (LUFS):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.loudnorm_target_ctrl = self.make_stepped_spin(dynamicsBox, -30, -5, -16, increment=1)
-		self.loudnorm_target_ctrl.SetName(_("Loudness Normalization Target"))
-		loudnorm_target_row.Add(self.loudnorm_target_ctrl, 0, wx.ALL, 5)
-		loudnorm_settings_sizer.Add(loudnorm_target_row, 0, wx.EXPAND)
-		loudnorm_peak_row = wx.BoxSizer(wx.HORIZONTAL)
-		loudnorm_peak_row.Add(wx.StaticText(dynamicsBox, label=_("True Peak Limit (dBTP):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.loudnorm_truepeak_ctrl = wx.SpinCtrlDouble(dynamicsBox, min=-3.0, max=0.0, initial=-1.5, inc=0.5)
-		self.loudnorm_truepeak_ctrl.SetDigits(1)
-		self.loudnorm_truepeak_ctrl.SetName(_("Loudness Normalization True Peak"))
-		loudnorm_peak_row.Add(self.loudnorm_truepeak_ctrl, 0, wx.ALL, 5)
-		loudnorm_settings_sizer.Add(loudnorm_peak_row, 0, wx.EXPAND)
-		dynamics_sizer.Add(loudnorm_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.extend([self.loudnorm_target_ctrl, self.loudnorm_truepeak_ctrl])
-		self.bind_effect_toggle(self.loudnorm_checkbox, loudnorm_settings_sizer)
+	def on_autopan_section_count_changed(self, event):
+		self.rebuild_autopan_sections(int(self.autopan_section_count_ctrl.GetValue()))
+		event.Skip()
 
-		self.limiter_checkbox = wx.CheckBox(dynamicsBox, label=_("Apply Limiter"))
-		dynamics_sizer.Add(self.limiter_checkbox, 0, wx.ALL, 5)
-		self.customEffectControls.append(self.limiter_checkbox)
-		limiter_settings_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		limiter_settings_sizer.Add(wx.StaticText(dynamicsBox, label=_("Limit (dB):")), 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.limiter_limit_ctrl = self.make_stepped_spin(dynamicsBox, -20, 0, -1)
-		self.limiter_limit_ctrl.SetName(_("Limiter Limit"))
-		limiter_settings_sizer.Add(self.limiter_limit_ctrl, 0, wx.ALL, 5)
-		dynamics_sizer.Add(limiter_settings_sizer, 0, wx.EXPAND)
-		self.customEffectControls.append(self.limiter_limit_ctrl)
-		self.bind_effect_toggle(self.limiter_checkbox, limiter_settings_sizer)
+	def set_pan_section_widgets_enabled(self, isEnabled):
+		for widgets in self.pan_section_widgets:
+			widgets["start_ctrl"].Enable(isEnabled)
+			widgets["end_ctrl"].Enable(isEnabled)
+			widgets["direction_combo"].Enable(isEnabled)
+			widgets["amount_ctrl"].Enable(isEnabled)
+		for widgets in self.autopan_section_widgets:
+			widgets["start_ctrl"].Enable(isEnabled)
+			widgets["end_ctrl"].Enable(isEnabled)
+			widgets["direction_combo"].Enable(isEnabled)
+			widgets["speed_ctrl"].Enable(isEnabled)
 
-		main_sizer.Add(dynamics_sizer, 0, wx.EXPAND | wx.ALL, 5)
+	def set_custom_controls_enabled(self, isEnabled):
+		for ctrl in self.customEffectControls:
+			ctrl.Enable(isEnabled and ctrl not in self.blocked_widgets)
+		self.set_pan_section_widgets_enabled(isEnabled)
 
-		self.progress_bar = wx.Gauge(self, range=100, style=wx.GA_HORIZONTAL | wx.GA_SMOOTH)
-		main_sizer.Add(self.progress_bar, 0, wx.EXPAND | wx.ALL, 5)
-		self.status_label = wx.StaticText(self, label="")
-		main_sizer.Add(self.status_label, 0, wx.EXPAND | wx.ALL, 5)
+	# ---- reading and restoring all settings
 
-		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		self.preview_btn = wx.Button(self, label=_("Preview (15s)"))
-		self.preview_btn.Bind(wx.EVT_BUTTON, self.on_preview)
-		btn_sizer.Add(self.preview_btn, 0, wx.ALL, 5)
-		self.apply_btn = wx.Button(self, label=_("Apply"))
-		self.apply_btn.Bind(wx.EVT_BUTTON, self.on_apply)
-		btn_sizer.Add(self.apply_btn, 0, wx.ALL, 5)
-		self.close_btn = wx.Button(self, wx.ID_CANCEL, label=_("Close"))
-		self.close_btn.Bind(wx.EVT_BUTTON, self.on_cancel)
-		btn_sizer.Add(self.close_btn, 0, wx.ALL, 5)
-		main_sizer.Add(btn_sizer, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+	def get_effect_settings(self):
+		rawSettings = {key: entry["get"]() for key, entry in self.setting_controls.items()}
+		rawSettings["panSections"] = [
+			{
+				"startSec": self._parse_float_field(widgets["start_ctrl"], 0.0),
+				"endSec": self._parse_float_field(widgets["end_ctrl"], 0.0),
+				"direction": PAN_DIRECTION_KEYS[widgets["direction_combo"].GetSelection()] if 0 <= widgets["direction_combo"].GetSelection() < len(PAN_DIRECTION_KEYS) else "center",
+				"amountPercent": int(widgets["amount_ctrl"].GetValue()),
+			}
+			for widgets in self.pan_section_widgets
+		]
+		rawSettings["autoPanSections"] = [
+			{
+				"startSec": self._parse_float_field(widgets["start_ctrl"], 0.0),
+				"endSec": self._parse_float_field(widgets["end_ctrl"], 0.0),
+				"direction": AUTOPAN_DIRECTION_KEYS[widgets["direction_combo"].GetSelection()] if 0 <= widgets["direction_combo"].GetSelection() < len(AUTOPAN_DIRECTION_KEYS) else "left_to_right",
+				"speedHz": widgets["speed_ctrl"].GetValue(),
+			}
+			for widgets in self.autopan_section_widgets
+		]
+		return sanitize_settings(rawSettings)
 
-		self.SetSizer(main_sizer)
-		self.SetSize((650, 820))
-
-	def get_file_display_name(self, file_path):
-		importRoot = self.fileImportRoot.get(file_path)
-		return os.path.relpath(file_path, importRoot) if importRoot else os.path.basename(file_path)
-
-	def refresh_file_list(self):
-		self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
-
-	def on_browse(self, event):
-		wildcard = _("MP3/WAV files (*.mp3;*.wav)|*.mp3;*.wav")
-		with wx.FileDialog(self, _("Select MP3 or WAV files"), wildcard=wildcard,
-							style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE) as dlg:
-			if dlg.ShowModal() == wx.ID_OK:
-				for path in dlg.GetPaths():
-					if path not in self.selected_files:
-						self.selected_files.append(path)
-				self.refresh_file_list()
-				self.SetTitle(_("MP3 WAV Mixdown: {} files").format(len(self.selected_files)))
-		wx.CallAfter(self.file_listbox.SetFocus)
-
-	def on_browse_folder(self, event):
-		with wx.DirDialog(self, _("Select a folder containing MP3 or WAV files")) as dlg:
-			if dlg.ShowModal() == wx.ID_OK:
-				folderPath = dlg.GetPath()
-				foundFiles = self._scan_folder_for_audio_files(folderPath)
-				addedCount = 0
-				for filePath in foundFiles:
-					if filePath not in self.selected_files:
-						self.selected_files.append(filePath)
-						self.fileImportRoot[filePath] = folderPath
-						addedCount += 1
-				self.refresh_file_list()
-				self.SetTitle(_("MP3 WAV Mixdown: {} files").format(len(self.selected_files)))
-				if addedCount == 0:
-					ui.message(_("No MP3 or WAV files found in the selected folder."))
-		wx.CallAfter(self.file_listbox.SetFocus)
-
-	def on_file_list_key_down(self, event):
-		if event.GetKeyCode() in (wx.WXK_DELETE, wx.WXK_NUMPAD_DELETE):
-			self.remove_selected_files()
+	def set_effect_settings(self, rawSettings):
+		settings = sanitize_settings(rawSettings)
+		for key, entry in self.setting_controls.items():
+			value = settings[key]
+			if key in self.unsupported_effects:
+				value = False
+			entry["set"](value)
+		self.rebuild_pan_sections(max(1, len(settings["panSections"])), [
+			{
+				"start": f"{section['startSec']:g}",
+				"end": f"{section['endSec']:g}",
+				"direction": PAN_DIRECTION_KEYS.index(section["direction"]),
+				"amount": section["amountPercent"],
+			}
+			for section in settings["panSections"]
+		] or [None])
+		self.pan_section_count_ctrl.SetValue(float(max(1, len(settings["panSections"]))))
+		self.rebuild_autopan_sections(len(settings["autoPanSections"]), [
+			{
+				"start": f"{section['startSec']:g}",
+				"end": f"{section['endSec']:g}",
+				"direction": AUTOPAN_DIRECTION_KEYS.index(section["direction"]),
+				"speed": section["speedHz"],
+			}
+			for section in settings["autoPanSections"]
+		])
+		self.autopan_section_count_ctrl.SetValue(float(len(settings["autoPanSections"])))
+		self.refresh_all_toggles()
+		if self.preset_combo.GetSelection() != 0:
+			self.set_custom_controls_enabled(False)
 		else:
-			event.Skip()
+			self.set_custom_controls_enabled(True)
 
-	def on_file_list_context_menu(self, event):
-		if not self.file_listbox.GetSelections():
-			return
-		menu = wx.Menu()
-		deleteItem = menu.Append(wx.ID_ANY, _("Delete"))
-		self.Bind(wx.EVT_MENU, lambda e: self.remove_selected_files(), deleteItem)
-		self.file_listbox.PopupMenu(menu)
-		menu.Destroy()
+	# ---- my presets and the remembered last settings
 
-	def remove_selected_files(self):
-		"""Remove the selected entries from the import list only -- this never touches anything on disk, whether the entry came from an individual file pick or was expanded out of a folder import."""
-		if self.currently_processing:
-			ui.message(_("MP3 WAV Mixdown is already processing files"))
+	def load_user_store(self):
+		data = load_config(self.user_presets_path)
+		rawPresets = data.get("presets")
+		self.user_presets = {}
+		if isinstance(rawPresets, dict):
+			for rawName, rawSettings in rawPresets.items():
+				name = normalize_preset_name(rawName)
+				if name and isinstance(rawSettings, dict):
+					self.user_presets[name] = sanitize_settings(rawSettings)
+		lastSettings = data.get("last")
+		self.user_last_settings = lastSettings if isinstance(lastSettings, dict) else None
+
+	def save_user_store(self):
+		data = {"version": 1, "presets": self.user_presets}
+		if self.user_last_settings is not None:
+			data["last"] = self.user_last_settings
+		return save_config(self.user_presets_path, data)
+
+	def remember_last_settings(self, settings=None):
+		"""Keep the Custom settings that were last used, so they are back the next time the dialog opens."""
+		if self.preset_combo.GetSelection() != 0:
 			return
-		selectedIndices = list(self.file_listbox.GetSelections())
-		if not selectedIndices:
+		self.user_last_settings = settings if settings is not None else self.get_effect_settings()
+		if not self.save_user_store():
+			ui.message(_("Your last settings could not be saved."))
+
+	@staticmethod
+	def menu_text(text):
+		return text.replace("&", "&&")
+
+	def on_actions(self, event):
+		"""The single Actions menu: every item that used to be a button of its own."""
+		names = sorted(self.user_presets, key=str.casefold)
+		entries = []
+		if names:
+			loadEntries = [(self.menu_text(name), lambda name=name: self.load_user_preset(name)) for name in names]
+			entries.append((_("Load Preset"), loadEntries))
+		else:
+			entries.append((_("Load Preset (none saved)"), lambda: ui.message(_("There is no saved preset to load."))))
+		entries.append((_("Save Current Settings..."), lambda: self.on_save_user_preset(None)))
+		if names:
+			deleteEntries = [(self.menu_text(name), lambda name=name: self.delete_user_preset(name)) for name in names]
+			entries.append((_("Delete Preset"), deleteEntries))
+		else:
+			entries.append((_("Delete Preset (none saved)"), lambda: ui.message(_("There is no saved preset to delete."))))
+		entries.append((_("Reset All Effects"), lambda: self.on_reset_effects(None)))
+		entries.append((_("Read Effect Summary"), lambda: self.on_read_summary(None)))
+		chooseMenuAction(self, _("Preset Actions"), entries)
+
+	def load_user_preset(self, name):
+		if name not in self.user_presets:
+			ui.message(_("There is no saved preset to load."))
 			return
-		removedCount = 0
-		for index in sorted(selectedIndices, reverse=True):
-			if 0 <= index < len(self.selected_files):
-				filePath = self.selected_files.pop(index)
-				self.fileImportRoot.pop(filePath, None)
-				removedCount += 1
-		self.refresh_file_list()
-		self.SetTitle(_("MP3 WAV Mixdown: {} files").format(len(self.selected_files)))
-		if removedCount:
-			ui.message(_("Removed {} file(s) from the list").format(removedCount))
-		wx.CallAfter(self.file_listbox.SetFocus)
+		self.set_effect_settings(self.user_presets[name])
+		ui.message(limitSpokenText(_("Loaded preset {}").format(name)))
+
+	def on_save_user_preset(self, event):
+		with wx.TextEntryDialog(self, _("Name for this preset:"), _("Save My Preset")) as dialog:
+			if dialog.ShowModal() != wx.ID_OK:
+				return
+			name = normalize_preset_name(dialog.GetValue())
+		if not name:
+			ui.message(_("A preset needs a name."))
+			return
+		if name in self.user_presets:
+			with wx.MessageDialog(self, _("A preset named {} already exists. Replace it?").format(name),
+									_("Save My Preset"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) as confirm:
+				if confirm.ShowModal() != wx.ID_YES:
+					return
+		self.user_presets[name] = self.get_effect_settings()
+		savedToDisk = self.save_user_store()
+		if savedToDisk:
+			ui.message(limitSpokenText(_("Preset {} saved").format(name)))
+		else:
+			ui.message(limitSpokenText(_("Preset {} could not be written to disk and is only kept until this window closes").format(name)))
+
+	def delete_user_preset(self, name):
+		if name not in self.user_presets:
+			ui.message(_("There is no saved preset to delete."))
+			return
+		with wx.MessageDialog(self, _("Delete the preset {}?").format(name), _("Delete My Preset"),
+								wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION) as confirm:
+			if confirm.ShowModal() != wx.ID_YES:
+				return
+		self.user_presets.pop(name, None)
+		self.save_user_store()
+		ui.message(limitSpokenText(_("Preset {} deleted").format(name)))
+
+	def on_reset_effects(self, event):
+		self.set_effect_settings(DEFAULT_SETTINGS)
+		ui.message(_("All effects were reset to their defaults"))
+
+	def on_reset_custom_effect(self, event):
+		self.set_effect_settings(DEFAULT_SETTINGS)
+		self.remember_last_settings()
+		ui.message(_("Custom effect settings were reset"))
+		wx.CallAfter(self.reset_custom_btn.SetFocus)
+
+	def on_read_summary(self, event):
+		settings = self.get_effect_settings()
+		lines = []
+		for key, label in self.effect_labels.items():
+			if settings.get(key):
+				lines.append(label)
+		if not lines:
+			text = _("No effects are switched on.")
+		else:
+			text = _("{count} effects are switched on:").format(count=len(lines)) + "\n" + "\n".join(lines)
+		for code, details in find_effect_conflicts(settings):
+			text += "\n" + _("Warning: ") + describe_conflict(code, details)
+		with wx.MessageDialog(self, text, _("Effect summary"), wx.OK) as summary:
+			summary.ShowModal()
 
 	def on_preset_selected(self, event):
 		presetIndex = self.preset_combo.GetSelection()
 		isCustom = presetIndex == 0
 		isEqualizer = presetIndex == 1
-		for ctrl in self.customEffectControls:
-			ctrl.Enable(isCustom)
-		self.set_pan_section_widgets_enabled(isCustom)
+		self.set_custom_controls_enabled(isCustom)
 		self.genre_combo.Enable(isEqualizer)
 		self.genre_sizer.ShowItems(show=isEqualizer)
 		if isCustom:
@@ -913,33 +1308,35 @@ class MP3WavMixdownDialog(wx.Dialog):
 			self.preset_description_label.SetLabel(_("Applies a genre-tuned EQ curve for the selected music style."))
 		else:
 			self.preset_description_label.SetLabel(MIXDOWN_PRESETS[presetIndex - 2]["description"])
-		self.Layout()
+		self.relayout()
 		event.Skip()
 
 	def resolve_processing_plan(self, effectSettings):
-		"""Return either ("simple", filterGraphString) for the plain -af chain, or ("pan_multi", preChainStr, postChainStr, activeSections) when at least one panning section needs the -filter_complex graph."""
+		"""The MixdownPlan for the chosen preset: a fixed filter chain for the named presets and genre curves, or the plan built from the effect settings for Custom (a plain -af chain, or a -filter_complex graph when an effect needs several streams)."""
 		presetIndex = self.preset_combo.GetSelection()
 		if presetIndex == 1:
 			genreIndex = self.genre_combo.GetSelection()
 			if 0 <= genreIndex < len(GENRE_EQ_PRESETS):
-				return ("simple", GENRE_EQ_PRESETS[genreIndex]["filterChain"])
-			return ("simple", "")
+				return MixdownPlan.fromChain(GENRE_EQ_PRESETS[genreIndex]["filterChain"])
+			return MixdownPlan.fromChain("")
 		if presetIndex > 1:
-			return ("simple", MIXDOWN_PRESETS[presetIndex - 2]["filterChain"])
+			return MixdownPlan.fromChain(MIXDOWN_PRESETS[presetIndex - 2]["filterChain"])
+		return build_custom_plan(effectSettings)
 
-		activeSections = get_active_pan_sections(effectSettings.get("panSections")) if effectSettings.get("panningEnabled") else []
-		if activeSections:
-			preChainStr = ",".join(build_pre_panning_stages(effectSettings))
-			postChainStr = ",".join(build_post_panning_stages(effectSettings))
-			return ("pan_multi", preChainStr, postChainStr, activeSections)
-
-		return ("simple", build_filter_graph(effectSettings))
-
-	def resolve_output_tag(self):
+	def resolve_output_tag(self, effectSettings=None):
 		"""Short tag naming the output file after whatever processing was actually used (e.g. "_pop", "_binaural"), instead of a generic "_mixdown" that collides across different presets applied to the same source file."""
 		presetIndex = self.preset_combo.GetSelection()
 		if presetIndex == 0:
-			return "custom"
+			tags = []
+			if effectSettings and effectSettings.get("reversalEnabled"):
+				tags.append("rewind")
+			if effectSettings and effectSettings.get("tempoEnabled") and abs(effectSettings.get("tempoFactor", 1.0) - 1.0) > 0.001:
+				tags.append(f"tempo{effectSettings['tempoFactor']:g}" + ("" if effectSettings.get("tempoKeepPitch", True) else "_tape"))
+			if effectSettings and effectSettings.get("fastSpeedEnabled") and effectSettings.get("fastSpeedFactor", 1.0) > 1.001:
+				tags.append(f"x{effectSettings['fastSpeedFactor']:g}")
+			if effectSettings and effectSettings.get("nightcoreEnabled"):
+				tags.append(effectSettings.get("nightcoreMode", "nightcore"))
+			return "_".join(["custom"] + tags)
 		if presetIndex == 1:
 			genreIndex = self.genre_combo.GetSelection()
 			if 0 <= genreIndex < len(GENRE_EQ_PRESETS):
@@ -950,118 +1347,64 @@ class MP3WavMixdownDialog(wx.Dialog):
 			return MIXDOWN_PRESETS[mixdownIndex]["shortTag"]
 		return "mixdown"
 
-	def get_effect_settings(self):
-		panSections = []
-		for widgets in self.pan_section_widgets:
-			directionIndex = widgets["direction_combo"].GetSelection()
-			panSections.append({
-				"startSec": self._parse_float_field(widgets["start_ctrl"], 0.0),
-				"endSec": self._parse_float_field(widgets["end_ctrl"], 0.0),
-				"direction": PAN_DIRECTION_KEYS[directionIndex] if 0 <= directionIndex < len(PAN_DIRECTION_KEYS) else "center",
-				"amountPercent": int(widgets["amount_ctrl"].GetValue()),
-			})
-		return {
-			"noiseReductionEnabled": self.noise_reduction_checkbox.GetValue(),
-			"noiseReductionLevel": int(self.noise_level_ctrl.GetValue()),
-			"noiseGateEnabled": self.noise_gate_checkbox.GetValue(),
-			"noiseGateThresholdDb": int(self.noise_gate_threshold_ctrl.GetValue()),
-			"reversalEnabled": self.reversal_checkbox.GetValue(),
-			"tempoEnabled": self.tempo_checkbox.GetValue(),
-			"tempoFactor": self.tempo_ctrl.GetValue(),
-			"eqEnabled": self.eq_checkbox.GetValue(),
-			"bassGain": int(self.bass_gain_ctrl.GetValue()),
-			"trebleGain": int(self.treble_gain_ctrl.GetValue()),
-			"parametricEqEnabled": self.parametric_eq_checkbox.GetValue(),
-			"parametricEqLowGain": int(self.parametric_eq_low_ctrl.GetValue()),
-			"parametricEqMidGain": int(self.parametric_eq_mid_ctrl.GetValue()),
-			"parametricEqHighGain": int(self.parametric_eq_high_ctrl.GetValue()),
-			"binauralEnabled": self.binaural_checkbox.GetValue(),
-			"binauralWidth": self.binaural_width_ctrl.GetValue(),
-			"chorusEnabled": self.chorus_checkbox.GetValue(),
-			"chorusDelayMs": int(self.chorus_delay_ctrl.GetValue()),
-			"reverbEnabled": self.reverb_checkbox.GetValue(),
-			"echoDelayMs": int(self.echo_delay_ctrl.GetValue()),
-			"muffledRoomEnabled": self.muffled_room_checkbox.GetValue(),
-			"muffleCutoffHz": int(self.muffle_cutoff_ctrl.GetValue()),
-			"autoPanLoopEnabled": self.autopan_loop_checkbox.GetValue(),
-			"autoPanSpeedHz": self.autopan_speed_ctrl.GetValue(),
-			"autoPanDirection": "right_to_left" if self.autopan_direction_combo.GetSelection() == 1 else "left_to_right",
-			"panningEnabled": self.panning_checkbox.GetValue(),
-			"panSections": panSections,
-			"compressorEnabled": self.compressor_checkbox.GetValue(),
-			"compressorThresholdDb": int(self.compressor_threshold_ctrl.GetValue()),
-			"loudnormEnabled": self.loudnorm_checkbox.GetValue(),
-			"loudnormTargetLufs": int(self.loudnorm_target_ctrl.GetValue()),
-			"loudnormTruePeakDb": self.loudnorm_truepeak_ctrl.GetValue(),
-			"limiterEnabled": self.limiter_checkbox.GetValue(),
-			"limiterLimitDb": int(self.limiter_limit_ctrl.GetValue()),
-		}
-
-	def set_pan_section_widgets_enabled(self, isEnabled):
-		for widgets in self.pan_section_widgets:
-			widgets["start_ctrl"].Enable(isEnabled)
-			widgets["end_ctrl"].Enable(isEnabled)
-			widgets["direction_combo"].Enable(isEnabled)
-			widgets["amount_ctrl"].Enable(isEnabled)
-
-	def _parse_float_field(self, textCtrl, fallbackValue):
-		rawText = textCtrl.GetValue().strip()
-		if not rawText:
-			return fallbackValue
-		try:
-			return float(rawText)
-		except ValueError:
-			log.error(f"MP3 WAV Mixdown could not parse '{rawText}' as a number, using {fallbackValue}")
-			return fallbackValue
-
 	def set_ui_processing_state(self, isProcessing):
-		self.browse_btn.Enable(not isProcessing)
-		self.browse_folder_btn.Enable(not isProcessing)
-		self.preset_combo.Enable(not isProcessing)
-		self.preview_btn.Enable(not isProcessing)
-		self.apply_btn.Enable(not isProcessing)
+		for ctrl in (
+			self.browse_btn, self.browse_folder_btn, self.preset_combo, self.preview_btn, self.preview_original_btn,
+			self.apply_btn, self.preview_start_ctrl, self.preview_length_ctrl,
+		):
+			ctrl.Enable(not isProcessing)
 		if isProcessing:
-			for ctrl in self.customEffectControls:
-				ctrl.Enable(False)
+			self.set_custom_controls_enabled(False)
 			self.genre_combo.Enable(False)
-			self.set_pan_section_widgets_enabled(False)
 		else:
 			presetIndex = self.preset_combo.GetSelection()
 			if presetIndex == 0:
-				for ctrl in self.customEffectControls:
-					ctrl.Enable(True)
-				self.set_pan_section_widgets_enabled(True)
+				self.set_custom_controls_enabled(True)
 			self.genre_combo.Enable(presetIndex == 1)
 		self.progress_bar.SetValue(0)
 
-	def do_process_file(self, file_path, plan, outputTag="mixdown", isPreview=False):
-		"""Run ffmpeg with the resolved plan. A plain filter chain (or none at all) uses -af / stream copy as before; a pan sweep needs -filter_complex with an explicit -map. Output always matches the source's own extension (.mp3 stays .mp3, .wav stays .wav) so a no-filter stream copy is always valid, and a filtered re-encode uses the matching codec for that container."""
+	def confirm_settings_before_run(self, effectSettings, askToContinue):
+		"""For Custom: refuse effects this ffmpeg lacks, and tell about effects that fight each other. Returns False when the run should not start."""
+		if self.preset_combo.GetSelection() != 0:
+			return True
+		missing = [self.effect_labels.get(key, key) for key in self.unsupported_effects if effectSettings.get(key)]
+		if missing:
+			ui.message(limitSpokenText(_("These effects are not available in this ffmpeg: {}").format(", ".join(missing))))
+			return False
+		conflicts = find_effect_conflicts(effectSettings)
+		if not conflicts:
+			return True
+		sentences = [describe_conflict(code, details) for code, details in conflicts]
+		if not askToContinue:
+			ui.message(limitSpokenText(sentences[0] + (" " + _("{} more warnings.").format(len(sentences) - 1) if len(sentences) > 1 else "")))
+			return True
+		tones.beep(500, 150)
+		text = "\n".join(sentences) + "\n\n" + _("Continue anyway?")
+		with wx.MessageDialog(self, text, _("Effects that conflict"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING) as confirm:
+			return confirm.ShowModal() == wx.ID_YES
+
+	def build_mixdown_command(self, file_path, plan, outputPath, isPreview, previewStart=0, previewLength=15, loudnormStage=None):
+		"""Run in the worker thread: reading the source bitrate needs ffprobe, which must not run on the main thread."""
 		sourceExt = os.path.splitext(file_path)[1].lower()
-		if isPreview:
-			outputPath = os.path.join(tempfile.gettempdir(), f"xtrack_mp3_wav_mixdown_preview{sourceExt}")
-		else:
-			outputDir = os.path.dirname(file_path)
-			baseName = f"{os.path.splitext(os.path.basename(file_path))[0]}_{outputTag}"
-			outputPath = os.path.join(outputDir, get_unique_filename(outputDir, baseName, sourceExt.lstrip(".")))
+		cmd = [self.ffmpeg_exe, "-hide_banner"]
+		usesReverse = plan.usesReverse()
+		if isPreview and usesReverse:
+			# Rewinding needs the whole input in memory, so the preview rewinds
+			# only the first stretch of the file (long enough for the chosen speed).
+			if previewStart > 0:
+				cmd += ["-ss", f"{previewStart:.3f}"]
+			cmd += ["-t", f"{previewLength * plan.speedFactor():.3f}"]
+		cmd += ["-i", file_path]
+		if isPreview and not usesReverse:
+			# Seeking on the output side keeps panning sections on the same
+			# timeline as the whole file.
+			if previewStart > 0:
+				cmd += ["-ss", f"{previewStart:.3f}"]
+			cmd += ["-t", str(previewLength)]
 
-		cmd = [self.ffmpeg_exe, "-i", file_path]
-		if isPreview:
-			cmd += ["-t", str(self.PREVIEW_SECONDS)]
-
-		planType = plan[0]
-		hasFilters = False
-		if planType == "pan_multi":
-			_planType, preChainStr, postChainStr, activeSections = plan
-			filterComplexStr, outputLabel = build_pan_multi_filter_complex(preChainStr, postChainStr, activeSections)
-			hasFilters = True
-			cmd += ["-filter_complex", filterComplexStr, "-map", f"[{outputLabel}]"]
-		else:
-			filterGraph = plan[1]
-			if filterGraph:
-				hasFilters = True
-				cmd += ["-af", filterGraph]
-
-		if hasFilters:
+		filterArgs = plan.filterArgs(loudnormStage)
+		cmd += filterArgs
+		if filterArgs:
 			if sourceExt == ".wav":
 				cmd += ["-c:a", "pcm_s16le"]
 			else:
@@ -1069,133 +1412,250 @@ class MP3WavMixdownDialog(wx.Dialog):
 				cmd += ["-c:a", "libmp3lame", "-b:a", f"{bitrateKbps}k"]
 		else:
 			cmd += ["-c:a", "copy"]
+		cmd += ["-progress", "pipe:1", "-nostats", "-y", outputPath]
+		return cmd
 
-		cmd += ["-y", outputPath]
+	def build_analysis_command(self, file_path, plan):
+		"""The first pass of a two-pass loudness normalization: the whole chain runs, loudnorm only measures, and nothing is written."""
+		cmd = [self.ffmpeg_exe, "-hide_banner", "-i", file_path]
+		cmd += plan.filterArgs(plan.analysisStage())
+		cmd += ["-progress", "pipe:1", "-nostats", "-f", "null", "-"]
+		return cmd
 
+	def measure_for_two_pass(self, file_path, plan, durationSeconds, onProgress):
+		"""Run the measuring pass and return the second-pass loudnorm stage, or None when the measurement is unusable (the single pass is used then)."""
+		name = os.path.basename(file_path)
+		self.post(self.status_label.SetLabel, _("Measuring loudness: {}").format(name))
+		try:
+			exitCode, stderrLines = runFfmpeg(
+				self.build_analysis_command(file_path, plan), os.path.dirname(file_path), durationSeconds,
+				lambda percent: onProgress(percent // 2), self.register_process,
+			)
+		except OSError as e:
+			log.error(f"Mixdown could not run the loudness measurement for {file_path}: {e}")
+			return None
+		if self.cancel_event.is_set():
+			return None
+		measured = parse_loudnorm_measurement(stderrLines) if exitCode == 0 else None
+		if measured is None:
+			log.info(f"Mixdown: two-pass loudness measurement gave no usable numbers for {file_path}; using one pass")
+			self.post(ui.message, limitSpokenText(_("Two-pass loudness could not measure {}, so one pass is used").format(name)))
+			return None
+		return two_pass_loudnorm(plan.loudnormStage, measured)
+
+	def do_process_file(self, file_path, plan, outputTag="mixdown", isPreview=False, onProgress=None, previewStart=0, previewLength=15):
+		"""Run ffmpeg with the resolved plan. A plain filter chain (or none at all) uses -af / stream copy as before; a plan with several streams uses -filter_complex with an explicit -map. Output always matches the source's own extension (.mp3 stays .mp3, .wav stays .wav) so a no-filter stream copy is always valid, and a filtered re-encode uses the matching codec for that container. Returns the output path, or None after reporting the failure."""
+		sourceExt = os.path.splitext(file_path)[1].lower()
+		progressCallback = onProgress or (lambda percent: None)
+		name = os.path.basename(file_path)
 		if isPreview:
-			timeoutSeconds = 60
+			finalPath = os.path.join(self.preview_dir, f"preview{sourceExt}")
+			partPath = finalPath
+			durationSeconds = previewLength
+			if previewStart > 0:
+				fileDuration, fileDurationLabel = get_file_duration(self.libs_path, file_path)
+				if fileDuration > 0 and previewStart >= fileDuration - 0.5:
+					self.post(ui.message, limitSpokenText(
+						_("The preview start is past the end of {name}, which is {length} long").format(name=name, length=fileDurationLabel)
+					))
+					return None
 		else:
+			outputDir = os.path.dirname(file_path)
+			baseName = f"{os.path.splitext(os.path.basename(file_path))[0]}_{outputTag}"
+			finalPath = os.path.join(outputDir, get_unique_filename(outputDir, baseName, sourceExt.lstrip(".")))
+			partPath = partPathFor(finalPath)
 			durationSeconds, _durationLabel = get_file_duration(self.libs_path, file_path)
-			timeoutSeconds = max(180, int(durationSeconds * 3) + 60) if durationSeconds else 300
+			if plan.usesReverse() and durationSeconds > REVERSE_MAX_SECONDS:
+				self.post(ui.message, limitSpokenText(
+					_("Rewind is limited to files up to {minutes} minutes: {name}").format(
+						minutes=REVERSE_MAX_SECONDS // 60, name=name)
+				))
+				return None
+			# The output is shorter or longer than the source by the speed factor.
+			durationSeconds = durationSeconds / plan.speedFactor()
+
+		loudnormStage = None
+		encodeProgress = progressCallback
+		if plan.twoPassLoudnorm and not isPreview:
+			loudnormStage = self.measure_for_two_pass(file_path, plan, durationSeconds, progressCallback)
+			if self.cancel_event.is_set():
+				return None
+			if loudnormStage is not None:
+				def encodeProgress(percent):
+					progressCallback(50 + percent // 2)
+				self.post(self.status_label.SetLabel, _("Processing: {}").format(name))
 
 		try:
-			result = subprocess.run(
-				cmd,
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
-				creationflags=subprocess.CREATE_NO_WINDOW,
-				text=True,
-				encoding='utf-8',
-				errors='ignore',
-				timeout=timeoutSeconds,
+			command = self.build_mixdown_command(file_path, plan, partPath, isPreview, previewStart, previewLength, loudnormStage)
+			exitCode, stderrLines = runFfmpeg(
+				command, os.path.dirname(partPath), durationSeconds, encodeProgress, self.register_process,
 			)
-			if result.returncode != 0 or not os.path.exists(outputPath):
-				log.error(f"MP3 WAV Mixdown ffmpeg failed for {file_path}: {result.stderr}")
-				wx.CallAfter(ui.message, _("Failed to process {}").format(os.path.basename(file_path)))
-				if os.path.exists(outputPath):
-					os.remove(outputPath)
-				return None
-			return outputPath
-		except subprocess.TimeoutExpired:
-			log.error(f"MP3 WAV Mixdown ffmpeg timed out for {file_path}")
-			wx.CallAfter(ui.message, _("Timed out processing {}").format(os.path.basename(file_path)))
-			if os.path.exists(outputPath):
-				os.remove(outputPath)
+		except OSError as e:
+			log.error(f"Mixdown could not run ffmpeg for {file_path}: {e}")
+			removeQuietly(partPath)
+			self.post(ui.message, limitSpokenText(_("Failed to process {}").format(name)))
 			return None
 
-	def get_preview_source_file(self):
-		selectedIndices = self.file_listbox.GetSelections()
-		if selectedIndices:
-			return self.selected_files[selectedIndices[0]]
-		return self.selected_files[0]
+		if self.cancel_event.is_set():
+			removeQuietly(partPath)
+			return None
+		if exitCode != 0 or not os.path.exists(partPath):
+			log.error(f"Mixdown ffmpeg failed for {file_path}: " + " | ".join(line.strip() for line in stderrLines))
+			removeQuietly(partPath)
+			self.post(ui.message, limitSpokenText(
+				_("Failed to process {name}: {reason}").format(name=name, reason=summarizeFfmpegError(stderrLines))
+			))
+			return None
+		if partPath != finalPath:
+			try:
+				os.replace(partPath, finalPath)
+			except OSError as e:
+				log.error(f"Mixdown could not move {partPath} to {finalPath}: {e}")
+				removeQuietly(partPath)
+				self.post(ui.message, limitSpokenText(_("Failed to process {}").format(name)))
+				return None
+		return finalPath
+
+	def measure_integrated_loudness(self, filePath):
+		"""Integrated loudness of a file in LUFS, or None when it cannot be measured."""
+		command = [self.ffmpeg_exe, "-hide_banner", "-nostats", "-i", filePath, "-vn", "-af", "ebur128=framelog=quiet", "-f", "null", "-"]
+		try:
+			exitCode, stderrLines = runFfmpeg(command, os.path.dirname(filePath), 0, lambda percent: None, self.register_process)
+		except OSError as e:
+			log.error(f"Mixdown could not measure loudness of {filePath}: {e}")
+			return None
+		if exitCode != 0 or self.cancel_event.is_set():
+			return None
+		return parse_integrated_loudness(stderrLines)
+
+	def report_loudness(self, sourcePath, outputPath):
+		self.post(self.status_label.SetLabel, _("Measuring loudness: {}").format(os.path.basename(outputPath)))
+		beforeLufs = self.measure_integrated_loudness(sourcePath)
+		afterLufs = self.measure_integrated_loudness(outputPath)
+		if self.cancel_event.is_set():
+			return
+		if beforeLufs is None and afterLufs is None:
+			log.info(f"Mixdown: no loudness could be measured for {outputPath}")
+			return
+		unknown = _("unknown")
+		self.post(ui.message, limitSpokenText(_("Loudness of {name}: before {before}, after {after} LUFS").format(
+			name=os.path.basename(outputPath),
+			before=f"{beforeLufs:.1f}" if beforeLufs is not None else unknown,
+			after=f"{afterLufs:.1f}" if afterLufs is not None else unknown,
+		)))
 
 	def on_preview(self, event):
+		self.start_preview(useOriginal=False)
+
+	def on_preview_original(self, event):
+		self.start_preview(useOriginal=True)
+
+	def start_preview(self, useOriginal):
 		if not self.selected_files:
 			ui.message(_("Please select at least one MP3 or WAV file first."))
 			return
 		if self.currently_processing:
-			ui.message(_("MP3 WAV Mixdown is already processing files"))
+			ui.message(_("Mixdown is already processing files"))
+			return
+		if not os.path.exists(self.ffmpeg_exe):
+			ui.message(_("ffmpeg.exe not found"))
 			return
 		previewSourceFile = self.get_preview_source_file()
-		plan = self.resolve_processing_plan(self.get_effect_settings())
+		effectSettings = self.get_effect_settings()
+		if not useOriginal:
+			if not self.confirm_settings_before_run(effectSettings, askToContinue=False):
+				return
+			plan = self.resolve_processing_plan(effectSettings)
+			self.remember_last_settings(effectSettings)
+		else:
+			plan = MixdownPlan.fromChain("")
+		previewStart = int(self.preview_start_ctrl.GetValue())
+		previewLength = int(self.preview_length_ctrl.GetValue())
+		self.cleanup_preview_dir()
+		self.preview_dir = tempfile.mkdtemp(prefix="xtrack_mixdown_preview_")
+		self.cancel_event.clear()
 		self.currently_processing = True
 		self.set_ui_processing_state(True)
 		self.status_label.SetLabel(_("Generating preview: {}").format(os.path.basename(previewSourceFile)))
-		threading.Thread(target=self.run_preview_job, args=(previewSourceFile, plan), daemon=True).start()
+		threading.Thread(
+			target=self.run_preview_job, args=(previewSourceFile, plan, previewStart, previewLength, useOriginal), daemon=True,
+		).start()
 
-	def run_preview_job(self, file_path, plan):
-		outputPath = self.do_process_file(file_path, plan, isPreview=True)
-		if outputPath:
-			try:
-				os.startfile(outputPath)
-				wx.CallAfter(ui.message, _("Playing {}-second preview").format(self.PREVIEW_SECONDS))
-			except OSError as e:
-				log.error(f"MP3 WAV Mixdown failed to launch preview player: {e}")
-				wx.CallAfter(ui.message, _("Preview created but could not be opened automatically: {}").format(outputPath))
+	def run_preview_job(self, file_path, plan, previewStart, previewLength, useOriginal):
+		outputPath = self.do_process_file(file_path, plan, isPreview=True, previewStart=previewStart, previewLength=previewLength)
+		if not self.cancel_event.is_set():
+			self.post(self.on_preview_finished, outputPath, previewLength, useOriginal)
+
+	def on_preview_finished(self, outputPath, previewLength, useOriginal):
 		self.currently_processing = False
-		wx.CallAfter(self.set_ui_processing_state, False)
-		wx.CallAfter(self.status_label.SetLabel, _("Ready"))
+		self.set_ui_processing_state(False)
+		self.status_label.SetLabel(_("Ready"))
+		if not outputPath:
+			return
+		try:
+			os.startfile(outputPath)
+		except OSError as e:
+			log.error(f"Mixdown failed to launch preview player: {e}")
+			ui.message(_("Preview created but could not be opened automatically"))
+			return
+		if useOriginal:
+			ui.message(_("Playing {}-second preview of the original").format(previewLength))
+		else:
+			ui.message(_("Playing {}-second preview").format(previewLength))
 
 	def on_apply(self, event):
 		if not self.selected_files:
 			ui.message(_("Please select at least one MP3 or WAV file first."))
 			return
 		if self.currently_processing:
-			ui.message(_("MP3 WAV Mixdown is already processing files"))
+			ui.message(_("Mixdown is already processing files"))
 			return
-		self.current_processing_plan = self.resolve_processing_plan(self.get_effect_settings())
-		self.current_output_tag = self.resolve_output_tag()
-		self.processed_count = 0
-		for file_path in self.selected_files:
-			self.processing_queue.put(file_path)
+		if not os.path.exists(self.ffmpeg_exe):
+			ui.message(_("ffmpeg.exe not found"))
+			return
+		effectSettings = self.get_effect_settings()
+		if not self.confirm_settings_before_run(effectSettings, askToContinue=True):
+			return
+		plan = self.resolve_processing_plan(effectSettings)
+		outputTag = self.resolve_output_tag(effectSettings)
+		self.remember_last_settings(effectSettings)
+		shouldReportLoudness = self.preset_combo.GetSelection() == 0 and effectSettings.get("reportLoudness", False)
+		self.cancel_event.clear()
 		self.currently_processing = True
 		self.set_ui_processing_state(True)
-		self.process_next_file()
+		threading.Thread(
+			target=self.run_apply_job, args=(list(self.selected_files), plan, outputTag, shouldReportLoudness), daemon=True,
+		).start()
 
-	def process_next_file(self):
-		if self.processing_queue.empty():
-			self.currently_processing = False
-			wx.CallAfter(self.on_batch_complete)
-			return
-		file_path = self.processing_queue.get()
-		wx.CallAfter(self.status_label.SetLabel, _("Processing: {}").format(os.path.basename(file_path)))
-		threading.Thread(target=self.run_single_file_job, args=(file_path,), daemon=True).start()
+	def run_apply_job(self, files, plan, outputTag, shouldReportLoudness):
+		okCount = failCount = 0
+		total = len(files)
+		for index, file_path in enumerate(files):
+			if self.cancel_event.is_set():
+				return
+			self.post(self.status_label.SetLabel, _("Processing: {}").format(os.path.basename(file_path)))
 
-	def run_single_file_job(self, file_path):
-		try:
-			outputPath = self.do_process_file(file_path, self.current_processing_plan, outputTag=self.current_output_tag, isPreview=False)
+			def reportProgress(percent, index=index):
+				self.post(self.progress_bar.SetValue, min(int(((index + percent / 100) / total) * 100), 100))
+
+			outputPath = self.do_process_file(file_path, plan, outputTag=outputTag, isPreview=False, onProgress=reportProgress)
+			if self.cancel_event.is_set():
+				return
 			if outputPath:
-				wx.CallAfter(ui.message, _("Created {}").format(os.path.basename(outputPath)))
-		except (OSError, subprocess.SubprocessError) as e:
-			log.error(f"MP3 WAV Mixdown error processing {file_path}: {e}")
-			wx.CallAfter(ui.message, _("Failed to process {}").format(os.path.basename(file_path)))
-		finally:
-			wx.CallAfter(self.advance_after_file)
-
-	def advance_after_file(self):
-		self.processed_count += 1
-		total = max(len(self.selected_files), 1)
-		progress = int((self.processed_count / total) * 100)
-		self.progress_bar.SetValue(min(progress, 100))
-		self.process_next_file()
-
-	def on_batch_complete(self):
-		self.set_ui_processing_state(False)
-		self.status_label.SetLabel(_("Done"))
-		try:
-			tones.beep(1000, 200)
-		except Exception:
-			pass
-		ui.message(_("MP3 WAV Mixdown processing complete"))
+				okCount += 1
+				self.post(ui.message, limitSpokenText(_("Created {}").format(os.path.basename(outputPath))))
+				if shouldReportLoudness:
+					self.report_loudness(file_path, outputPath)
+					if self.cancel_event.is_set():
+						return
+			else:
+				failCount += 1
+			self.post(self.progress_bar.SetValue, min(int(((index + 1) / total) * 100), 100))
+		self.post(self.on_batch_complete, okCount, failCount)
 
 	def on_cancel(self, event):
-		while not self.processing_queue.empty():
-			try:
-				self.processing_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.currently_processing = False
+		if not self.currently_processing:
+			self.remember_last_settings()
+		self.stop_processing()
+		self.cleanup_preview_dir()
 		self.EndModal(wx.ID_CANCEL)
-
-	def on_close(self, event):
-		self.on_cancel(event)

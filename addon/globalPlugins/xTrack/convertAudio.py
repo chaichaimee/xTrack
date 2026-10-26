@@ -2,18 +2,26 @@
 
 import wx
 import os
-import subprocess
 import threading
+import collections
 import ui
 import tones
-import json
-import queue
-import time
-from gui import guiHelper
+from logHandler import log
 from .xTrackCore import load_config, save_config, get_file_duration, get_config_path
+from .ffmpegSupport import (
+	limitSpokenText, summarizeFfmpegError, setProcessSuspended, removeQuietly, partPathFor, runFfmpeg,
+)
 import addonHandler
 
 addonHandler.initTranslation()
+
+SAMPLE_RATE_HZ = {"44.1 kHz": "44100", "48 kHz": "48000", "96 kHz": "96000"}
+# Folder, next to the originals, that holds the converted files when the user asks for a separate one.
+OUTPUT_SUBFOLDER_NAME = "Converted"
+
+ConversionJob = collections.namedtuple(
+	"ConversionJob", ("source_path", "final_path", "part_path", "command", "list_index")
+)
 
 # Per-format conversion presets. Each format has its own quality control
 # label/choices/default and a "codecArgs" callable that turns the selected
@@ -115,6 +123,7 @@ AUDIO_FORMAT_PRESETS = {
 	},
 }
 
+
 class ConvertAudioDialog(wx.Dialog):
 	"""Dialog for converting various audio/video formats to MP3 or WAV, including same-format re-encoding."""
 	def __init__(self, parent, selected_files, libs_path):
@@ -122,26 +131,39 @@ class ConvertAudioDialog(wx.Dialog):
 		self.selected_files = selected_files
 		self.libs_path = libs_path
 		self.current_file_index = 0
-		self.file_duration_seconds = 0
 		self.output_path = os.path.dirname(self.selected_files[0]) if self.selected_files else os.getcwd()
 		self.config_path = get_config_path()
 		self.ffmpeg_process = None
 		self.is_paused = False
-		self.conversion_queue = queue.Queue()
-		self.currently_processing = False
+		self.is_running = False
+		self.is_closed = False
+		self.cancel_event = threading.Event()
 		self.file_durations = {}
+		self.file_duration_seconds = {}
+		self.used_subfolder = False
 		self.init_ui()
 		self.SetTitle(_("Convert Audio: {} files").format(len(self.selected_files)))
 		self.load_settings()
 		self.Bind(wx.EVT_CLOSE, self.on_close)
 		threading.Thread(target=self.load_file_durations, daemon=True).start()
 
+	def post(self, handler, *args):
+		wx.CallAfter(self.run_if_open, handler, *args)
+
+	def run_if_open(self, handler, *args):
+		if self.is_closed:
+			return
+		handler(*args)
+
 	def load_file_durations(self):
 		"""Load durations for all selected files."""
 		for file_path in self.selected_files:
-			duration_sec, duration_str = get_file_duration(self.libs_path, file_path)
-			self.file_durations[file_path] = self.format_duration(duration_sec)
-		wx.CallAfter(self.update_file_listbox)
+			if self.is_closed:
+				return
+			durationSeconds, _label = get_file_duration(self.libs_path, file_path)
+			self.file_duration_seconds[file_path] = durationSeconds
+			self.file_durations[file_path] = self.format_duration(durationSeconds)
+		self.post(self.update_file_listbox)
 
 	def format_duration(self, seconds):
 		"""Format duration in seconds to HhMMminSSsec format."""
@@ -226,6 +248,12 @@ class ConvertAudioDialog(wx.Dialog):
 		main_sizer.Add(settings_sizer, 0, wx.EXPAND | wx.ALL, 5)
 		
 		# Progress bar
+		# Unchecked by default: the converted files are saved next to the originals.
+		self.subfolder_checkbox = wx.CheckBox(self, label=_("Save converted files in a separate subfolder"))
+		self.subfolder_checkbox.SetValue(False)
+		self.subfolder_checkbox.SetToolTip(_("Unchecked: the converted files are saved together with the originals. Checked: they are saved in a subfolder named {}.").format(OUTPUT_SUBFOLDER_NAME))
+		main_sizer.Add(self.subfolder_checkbox, 0, wx.ALL, 5)
+
 		self.progress_bar = wx.Gauge(self, range=100, style=wx.GA_HORIZONTAL | wx.GA_SMOOTH)
 		main_sizer.Add(self.progress_bar, 0, wx.EXPAND | wx.ALL, 5)
 		
@@ -254,7 +282,7 @@ class ConvertAudioDialog(wx.Dialog):
 		
 		# Update current file info
 		if self.selected_files:
-			self.update_current_file_info(0)
+			self.update_current_file_info(0, select=False)
 
 	def get_file_display_name(self, file_path):
 		"""Get display name with duration for listbox."""
@@ -264,7 +292,11 @@ class ConvertAudioDialog(wx.Dialog):
 
 	def update_file_listbox(self):
 		"""Update file listbox with names and durations."""
+		selection = self.file_listbox.GetSelection()
 		self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
+		if selection != wx.NOT_FOUND:
+			self.file_listbox.SetSelection(selection)
+		self.update_current_file_info(self.current_file_index, select=False)
 
 	def on_format_change(self, event=None):
 		"""Repopulate the quality control to match the selected output format's preset."""
@@ -280,27 +312,24 @@ class ConvertAudioDialog(wx.Dialog):
 			self.quality_ctrl.SetStringSelection(preset["default"])
 		self.quality_ctrl.Enable(preset["enableQualityControl"])
 
-	def update_current_file_info(self, index):
-		if index < len(self.selected_files):
-			self.current_file_index = index
-			self.current_file_label.SetLabel(os.path.basename(self.selected_files[index]))
+	def update_current_file_info(self, index, select=True):
+		if index >= len(self.selected_files):
+			return
+		self.current_file_index = index
+		filePath = self.selected_files[index]
+		self.current_file_label.SetLabel(os.path.basename(filePath))
+		if select:
 			self.file_listbox.SetSelection(index)
-			duration = self.file_durations.get(self.selected_files[index], _("Calculating..."))
-			self.duration_label.SetLabel(_("File Duration: {}").format(duration))
-			self.file_duration_seconds = self.get_duration_seconds(self.selected_files[index])
-
-	def get_duration_seconds(self, file_path):
-		"""Get duration in seconds for a file."""
-		duration_sec, _ = get_file_duration(self.libs_path, file_path)
-		return duration_sec
+		duration = self.file_durations.get(filePath, _("Calculating..."))
+		self.duration_label.SetLabel(_("File Duration: {}").format(duration))
 
 	def load_settings(self):
 		config_data = load_config(self.config_path)
 		self.format_ctrl.SetStringSelection(config_data.get("ConvertAudioFormat", "MP3"))
-		self.quality_ctrl.SetStringSelection(config_data.get("ConvertAudioQuality", "320 kbps"))
+		self.on_format_change(None)
+		self.quality_ctrl.SetStringSelection(config_data.get("ConvertAudioQuality", ""))
 		self.samplerate_ctrl.SetStringSelection(config_data.get("ConvertAudioSampleRate", "48 kHz"))
 		self.volume_ctrl.SetStringSelection(config_data.get("ConvertAudioVolume", "100%"))
-		self.on_format_change(None)
 
 	def save_settings(self):
 		config_data = load_config(self.config_path)
@@ -310,630 +339,226 @@ class ConvertAudioDialog(wx.Dialog):
 		config_data["ConvertAudioVolume"] = self.volume_ctrl.GetStringSelection()
 		save_config(self.config_path, config_data)
 
-	def get_file_duration(self):
-		if self.current_file_index < len(self.selected_files):
-			current_file = self.selected_files[self.current_file_index]
-			duration_sec, duration_str = get_file_duration(self.libs_path, current_file)
-			self.file_duration_seconds = duration_sec
-			wx.CallAfter(self.duration_label.SetLabel, _("File Duration: {}").format(self.format_duration(duration_sec)))
-
 	def on_convert_or_pause(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
+		if self.is_running:
 			self.toggle_pause()
 		else:
 			self.on_convert(event)
 
 	def toggle_pause(self):
-		if not self.ffmpeg_process:
+		process = self.ffmpeg_process
+		if not process or process.poll() is not None:
 			return
-		
-		if self.is_paused:
-			self.ffmpeg_process.send_signal(subprocess.signal.SIGCONT)
-			self.is_paused = False
-			self.convert_btn.SetLabel(_("Pause"))
-			self.status_label.SetLabel(_("Resuming..."))
-		else:
-			self.ffmpeg_process.send_signal(subprocess.signal.SIGSTOP)
-			self.is_paused = True
+		suspend = not self.is_paused
+		try:
+			changed = setProcessSuspended(process, suspend)
+		except (OSError, AttributeError) as error:
+			log.error("xTrack: pause/resume failed: %s", error)
+			changed = False
+		if not changed:
+			ui.message(_("Pause is not available for this conversion"))
+			return
+		self.is_paused = suspend
+		if suspend:
 			self.convert_btn.SetLabel(_("Resume"))
 			self.status_label.SetLabel(_("Paused."))
-		
+		else:
+			self.convert_btn.SetLabel(_("Pause"))
+			self.status_label.SetLabel(_("Resuming..."))
 		ui.message(self.status_label.GetLabel())
 
-	def on_convert(self, event):
-		self.save_settings()
-		
-		# Add all files to queue (including those with same format)
-		for file_path in self.selected_files:
-			self.conversion_queue.put(file_path)
-		
-		# Start processing
-		self.currently_processing = True
-		self.process_next_file()
+	def get_volume_fraction(self):
+		try:
+			return int(self.volume_ctrl.GetStringSelection().replace("%", "")) / 100
+		except ValueError:
+			return 1.0
 
-	def process_next_file(self):
-		if self.conversion_queue.empty():
-			self.currently_processing = False
-			wx.CallAfter(self.on_all_conversions_complete)
-			return
-			
-		file_path = self.conversion_queue.get()
-		self.update_current_file_info(self.selected_files.index(file_path))
-		
-		output_format = self.format_ctrl.GetStringSelection().lower()
-		quality_selection = self.quality_ctrl.GetStringSelection()
-		samplerate_str = self.samplerate_ctrl.GetStringSelection().replace(' kHz', '000')
-		volume_percent = int(self.volume_ctrl.GetStringSelection().replace('%', '')) / 100
-		
-		base_name = os.path.splitext(os.path.basename(file_path))[0]
-		input_ext = os.path.splitext(file_path)[1].lower()
-		input_format = input_ext[1:] if input_ext else ""  # Remove the dot
-		
-		# Create output filename based on input format and output format
-		# If input format is same as output format, append "_converted" to avoid overwriting
-		if input_format == output_format:
-			output_file = f"{base_name}_converted.{output_format}"
-		else:
-			output_file = f"{base_name}.{output_format}"
-		
-		output_path = os.path.join(self.output_path, output_file)
-		
-		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
-		if not os.path.exists(ffmpeg_path):
+	def build_jobs(self):
+		ffmpegPath = os.path.join(self.libs_path, "ffmpeg.exe")
+		if not os.path.exists(ffmpegPath):
 			ui.message(_("ffmpeg.exe not found"))
-			return
-		
+			return []
+
+		outputFormat = self.format_ctrl.GetStringSelection().lower() or "mp3"
+		preset = AUDIO_FORMAT_PRESETS.get(outputFormat, AUDIO_FORMAT_PRESETS["mp3"])
+		qualitySelection = self.quality_ctrl.GetStringSelection() or preset["default"]
+		sampleRate = SAMPLE_RATE_HZ.get(self.samplerate_ctrl.GetStringSelection(), "48000")
+		volumeFraction = self.get_volume_fraction()
+
 		# Volume boosts above 100% can push the signal past 0 dBFS, so an
 		# alimiter is chained on afterwards to catch the peaks and prevent
 		# clipping. Unboosted or reduced volume never needs limiting.
-		audioFilterChain = f"volume={volume_percent}"
-		if volume_percent > 1.0:
+		audioFilterChain = f"volume={volumeFraction:.2f}"
+		if volumeFraction > 1.0:
 			audioFilterChain += ",alimiter=level_in=1:level_out=1:limit=0.99"
-		
-		# Build command based on format
-		cmd = [
-			ffmpeg_path,
-			"-i", file_path,
-			"-vn",  # No video
-			"-ar", samplerate_str,
-			"-af", audioFilterChain,
-			"-progress", "pipe:1",
-			"-nostats",
-			"-y",  # Overwrite output file if exists
-		]
-		
-		preset = AUDIO_FORMAT_PRESETS.get(output_format, AUDIO_FORMAT_PRESETS["mp3"])
-		cmd.extend(preset["codecArgs"](quality_selection))
-		
-		# Some formats (M4R, ALAC) are not recognized by ffmpeg's
-		# extension-based muxer lookup, so the container must be forced.
-		if "container" in preset:
-			cmd.extend(["-f", preset["container"]])
-		
-		cmd.append(output_path)
-		
-		wx.CallAfter(self.convert_btn.SetLabel, _("Pause"))
-		wx.CallAfter(self.cancel_btn.Enable, False)
-		wx.CallAfter(self.status_label.SetLabel, _("Starting conversion..."))
-		wx.CallAfter(self.progress_bar.SetValue, 0)
-		
-		def run_conversion():
-			self.ffmpeg_process = None
-			try:
-				self.ffmpeg_process = subprocess.Popen(
-					cmd,
-					stdout=subprocess.PIPE,
-					stderr=subprocess.PIPE,
-					creationflags=subprocess.CREATE_NO_WINDOW,
-					cwd=self.output_path,
-					text=True,
-					encoding='utf-8',
-					errors='ignore'
-				)
-				
-				while True:
-					line = self.ffmpeg_process.stdout.readline()
-					if not line:
-						break
-					if "out_time_ms=" in line:
-						try:
-							time_ms = int(line.split("=")[1])
-							current_time_seconds = time_ms / 1000000
-							if self.file_duration_seconds > 0:
-								progress = int((current_time_seconds / self.file_duration_seconds) * 100)
-								if progress >= 0 and progress <= 100:
-									wx.CallAfter(self.update_progress, progress)
-						except (ValueError, IndexError):
-							continue
-				
-				self.ffmpeg_process.wait()
-				
-				if self.ffmpeg_process.returncode == 0:
-					wx.CallAfter(self.on_success)
-				else:
-					stderr_output = self.ffmpeg_process.stderr.read()
-					wx.CallAfter(self.on_failure, stderr_output)
-					
-			except Exception as e:
-				wx.CallAfter(self.on_failure, str(e))
-			finally:
-				if self.ffmpeg_process:
-					self.ffmpeg_process.stdout.close()
-					self.ffmpeg_process.stderr.close()
-				self.ffmpeg_process = None
-				# Process next file
-				if self.currently_processing:
-					self.process_next_file()
-		
-		threading.Thread(target=run_conversion, daemon=True).start()
 
-	def update_progress(self, progress):
-		self.progress_bar.SetValue(progress)
-		self.status_label.SetLabel(_("Converting: {}%").format(progress))
+		useSubfolder = self.subfolder_checkbox.GetValue()
+		outputDir = os.path.join(self.output_path, OUTPUT_SUBFOLDER_NAME) if useSubfolder else self.output_path
+		self.used_subfolder = useSubfolder
 
-	def on_success(self):
-		self.progress_bar.SetValue(100)
-		self.status_label.SetLabel(_("Conversion complete!"))
-		try:
-			tones.beep(1000, 300)  # High tone for success
-		except Exception:
-			pass
-		ui.message(_("Conversion complete for {}").format(os.path.basename(self.selected_files[self.current_file_index])))
+		jobs = []
+		for listIndex, filePath in enumerate(self.selected_files):
+			baseName = os.path.splitext(os.path.basename(filePath))[0]
+			inputFormat = os.path.splitext(filePath)[1].lower().lstrip(".")
+			# Same-format re-encodes next to the source get a "_converted" suffix so the source is never
+			# overwritten; in a separate subfolder the original name can be kept.
+			if inputFormat == outputFormat and not useSubfolder:
+				finalName = f"{baseName}_converted.{outputFormat}"
+			else:
+				finalName = f"{baseName}.{outputFormat}"
+			finalPath = os.path.join(outputDir, finalName)
+			# ffmpeg writes to a side file first, so a failed or cancelled run
+			# never leaves a broken file (or clobbers a good one) at finalPath.
+			partPath = partPathFor(finalPath)
 
-	def on_all_conversions_complete(self):
-		self.convert_btn.SetLabel(_("Convert"))
-		self.cancel_btn.Enable(True)
-		self.status_label.SetLabel(_("All conversions complete!"))
-		ui.message(_("All conversions complete!"))
-		self.EndModal(wx.ID_OK)
-
-	def on_failure(self, error_message):
-		self.status_label.SetLabel(_("Conversion failed."))
-		ui.message(_("Conversion failed: {}").format(error_message))
-		self.convert_btn.SetLabel(_("Convert"))
-		self.cancel_btn.Enable(True)
-		# Stop processing further files
-		self.currently_processing = False
-
-	def on_cancel(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			try:
-				self.ffmpeg_process.terminate()
-			except Exception:
-				pass
-		# Clear queue
-		while not self.conversion_queue.empty():
-			try:
-				self.conversion_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.currently_processing = False
-		self.EndModal(wx.ID_CANCEL)
-
-	def on_close(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			try:
-				self.ffmpeg_process.terminate()
-			except Exception:
-				pass
-		# Clear queue
-		while not self.conversion_queue.empty():
-			try:
-				self.conversion_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.currently_processing = False
-		self.EndModal(wx.ID_CANCEL)
-
-# convertMP3toMP4.py
-
-import wx
-import os
-import subprocess
-import threading
-import ui
-import tones
-import tempfile
-import queue
-from gui import guiHelper
-from .xTrackCore import get_file_duration
-import addonHandler
-
-addonHandler.initTranslation()
-
-class ConvertMP3toMP4Dialog(wx.Dialog):
-	"""Dialog for converting an MP3 file and a photo to an MP4 video."""
-	def __init__(self, parent, selected_file, libs_path):
-		super().__init__(parent, title=_("Convert MP3 to MP4"))
-		self.selected_mp3 = selected_file
-		self.libs_path = libs_path
-		self.selected_photos = []
-		self.output_path = os.path.dirname(self.selected_mp3)
-		self.mp3_duration_seconds = 0
-		self.ffmpeg_process = None
-		self.is_paused = False
-		self.loop_duration = 5  # Default loop duration in seconds
-		self.stderr_queue = queue.Queue()
-		self.init_ui()
-		self.SetTitle(_("Convert MP3 to MP4: {}").format(os.path.basename(self.selected_mp3)))
-		threading.Thread(target=self.get_mp3_duration, daemon=True).start()
-		self.Bind(wx.EVT_CLOSE, self.on_close)
-
-	def init_ui(self):
-		main_sizer = wx.BoxSizer(wx.VERTICAL)
-		
-		# MP3 file info
-		mp3_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Selected MP3 File"))
-		self.mp3_label = wx.StaticText(self, label=os.path.basename(self.selected_mp3))
-		mp3_sizer.Add(self.mp3_label, 0, wx.EXPAND | wx.ALL, 5)
-		self.mp3_duration_label = wx.StaticText(self, label=_("Duration: Calculating..."))
-		mp3_sizer.Add(self.mp3_duration_label, 0, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(mp3_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		
-		# Photo selection
-		photo_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Photo List"))
-		self.photo_listbox = wx.ListBox(self, style=wx.LB_SINGLE)
-		photo_sizer.Add(self.photo_listbox, 1, wx.EXPAND | wx.ALL, 5)
-		
-		photo_btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		self.add_photo_btn = wx.Button(self, label=_("Add Photo..."))
-		self.add_photo_btn.Bind(wx.EVT_BUTTON, self.on_add_photo)
-		photo_btn_sizer.Add(self.add_photo_btn, 1, wx.EXPAND | wx.ALL, 5)
-		
-		self.remove_photo_btn = wx.Button(self, label=_("Remove Photo"))
-		self.remove_photo_btn.Bind(wx.EVT_BUTTON, self.on_remove_photo)
-		photo_btn_sizer.Add(self.remove_photo_btn, 1, wx.EXPAND | wx.ALL, 5)
-		
-		photo_sizer.Add(photo_btn_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(photo_sizer, 1, wx.EXPAND | wx.ALL, 5)
-		
-		# Loop duration setting (initially hidden)
-		self.loop_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		self.loop_label = wx.StaticText(self, label=_("Loop Duration (seconds):"))
-		self.loop_sizer.Add(self.loop_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		self.loop_duration_ctrl = wx.SpinCtrl(self, min=1, max=3600, initial=5)
-		self.loop_sizer.Add(self.loop_duration_ctrl, 1, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(self.loop_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		self.loop_sizer.ShowItems(False)  # Hide initially
-		
-		# Background color setting with 12 colors
-		color_sizer = wx.BoxSizer(wx.HORIZONTAL)
-		color_label = wx.StaticText(self, label=_("Background Color:"))
-		color_sizer.Add(color_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALL, 5)
-		color_choices = [
-			_("None"), _("Black"), _("White"), _("Red"), _("Green"), _("Blue"),
-			_("Yellow"), _("Magenta"), _("Cyan"), _("Gray"), _("Orange"), _("Purple")
-		]
-		self.color_ctrl = wx.ComboBox(self, choices=color_choices, style=wx.CB_READONLY)
-		self.color_ctrl.SetStringSelection(_("None"))
-		color_sizer.Add(self.color_ctrl, 1, wx.EXPAND | wx.ALL, 5)
-		main_sizer.Add(color_sizer, 0, wx.EXPAND | wx.ALL, 5)
-		
-		# Auto crop setting
-		self.crop_checkbox = wx.CheckBox(self, label=_("Auto crop images to 16:9 aspect ratio"))
-		self.crop_checkbox.SetValue(True)
-		main_sizer.Add(self.crop_checkbox, 0, wx.EXPAND | wx.ALL, 5)
-		
-		# Progress bar
-		self.progress_bar = wx.Gauge(self, range=100, style=wx.GA_HORIZONTAL | wx.GA_SMOOTH)
-		main_sizer.Add(self.progress_bar, 0, wx.EXPAND | wx.ALL, 5)
-		
-		# Status label
-		self.status_label = wx.StaticText(self, label="")
-		main_sizer.Add(self.status_label, 0, wx.EXPAND | wx.ALL, 5)
-		
-		# Buttons
-		btn_sizer = wx.StdDialogButtonSizer()
-		self.convert_btn = wx.Button(self, wx.ID_OK, label=_("Convert"))
-		self.convert_btn.Bind(wx.EVT_BUTTON, self.on_convert_or_pause)
-		btn_sizer.AddButton(self.convert_btn)
-		
-		self.cancel_btn = wx.Button(self, wx.ID_CANCEL, label=_("Cancel"))
-		self.cancel_btn.Bind(wx.EVT_BUTTON, self.on_cancel)
-		btn_sizer.AddButton(self.cancel_btn)
-		
-		btn_sizer.Realize()
-		main_sizer.Add(btn_sizer, 0, wx.ALIGN_CENTER | wx.ALL, 5)
-		
-		self.SetSizer(main_sizer)
-		self.Fit()
-		self.CentreOnParent()
-
-	def get_mp3_duration(self):
-		duration_sec, duration_str = get_file_duration(self.libs_path, self.selected_mp3)
-		self.mp3_duration_seconds = duration_sec
-		wx.CallAfter(self.mp3_duration_label.SetLabel, _("Duration: {}").format(duration_str))
-
-	def on_add_photo(self, event):
-		wildcard = _("Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp")
-		with wx.FileDialog(self, _("Select photos"), wildcard=wildcard, 
-						  style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE) as dlg:
-			if dlg.ShowModal() == wx.ID_OK:
-				paths = dlg.GetPaths()
-				for path in paths:
-					if path not in self.selected_photos and os.path.exists(path):
-						try:
-							with open(path, 'rb') as f:
-								f.read(1)  # Test if file is accessible
-							self.selected_photos.append(path)
-						except Exception as e:
-							ui.message(_("Invalid image file: {}").format(path))
-				self.update_photo_listbox()
-				# Show/hide loop duration based on number of photos
-				self.update_loop_duration_visibility()
-
-	def on_remove_photo(self, event):
-		selection = self.photo_listbox.GetSelection()
-		if selection != wx.NOT_FOUND:
-			self.selected_photos.pop(selection)
-			self.update_photo_listbox()
-			# Show/hide loop duration based on number of photos
-			self.update_loop_duration_visibility()
-
-	def update_photo_listbox(self):
-		self.photo_listbox.Clear()
-		for photo in self.selected_photos:
-			self.photo_listbox.Append(os.path.basename(photo))
-
-	def update_loop_duration_visibility(self):
-		"""Show loop duration control only when there are multiple photos."""
-		if len(self.selected_photos) > 1:
-			self.loop_sizer.ShowItems(True)
-		else:
-			self.loop_sizer.ShowItems(False)
-		self.Layout()
-		self.Fit()
-
-	def on_convert_or_pause(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			self.toggle_pause()
-		else:
-			self.on_convert(event)
-
-	def toggle_pause(self):
-		if not self.ffmpeg_process:
-			return
-		
-		if self.is_paused:
-			self.ffmpeg_process.send_signal(subprocess.signal.SIGCONT)
-			self.is_paused = False
-			self.convert_btn.SetLabel(_("Pause"))
-			self.status_label.SetLabel(_("Resuming..."))
-		else:
-			self.ffmpeg_process.send_signal(subprocess.signal.SIGSTOP)
-			self.is_paused = True
-			self.convert_btn.SetLabel(_("Resume"))
-			self.status_label.SetLabel(_("Paused."))
-		
-		ui.message(self.status_label.GetLabel())
+			command = [
+				ffmpegPath,
+				"-hide_banner",
+				"-i", filePath,
+				"-vn",
+				"-ar", sampleRate,
+				"-af", audioFilterChain,
+				"-progress", "pipe:1",
+				"-nostats",
+				"-y",
+			]
+			command.extend(preset["codecArgs"](qualitySelection))
+			# Some formats (M4R, ALAC) are not recognized by ffmpeg's
+			# extension-based muxer lookup, so the container must be forced.
+			if "container" in preset:
+				command.extend(["-f", preset["container"]])
+			command.append(partPath)
+			jobs.append(ConversionJob(filePath, finalPath, partPath, command, listIndex))
+		return jobs
 
 	def on_convert(self, event):
-		self.loop_duration = self.loop_duration_ctrl.GetValue()
-		selected_color = self.color_ctrl.GetStringSelection()
-		
-		# If no photos selected but a background color is chosen, use color background
-		if not self.selected_photos and selected_color == _("None"):
-			ui.message(_("Please select at least one photo or choose a background color."))
+		if self.is_running:
 			return
-		
-		base_name = os.path.splitext(os.path.basename(self.selected_mp3))[0]
-		output_file = f"{base_name}.mp4"
-		output_path = os.path.join(self.output_path, output_file)
-		
-		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
-		if not os.path.exists(ffmpeg_path):
-			ui.message(_("ffmpeg.exe not found"))
+		jobs = self.build_jobs()
+		if not jobs:
 			return
-		
-		# Build FFmpeg command based on whether we have photos or just a background color
-		if self.selected_photos:
-			# For single photo, use it for the entire duration with proper video encoding
-			if len(self.selected_photos) == 1:
-				photo = self.selected_photos[0]
-				cmd = [
-					ffmpeg_path,
-					"-loop", "1",
-					"-i", photo,
-					"-i", self.selected_mp3,
-					"-c:v", "libx264",
-					"-preset", "medium",
-					"-tune", "stillimage",
-					"-c:a", "aac",
-					"-b:a", "192k",
-					"-pix_fmt", "yuv420p",
-					"-shortest",
-					"-movflags", "+faststart"
-				]
-				
-				# Add crop filter if enabled
-				if self.crop_checkbox.GetValue():
-					cmd.extend(["-vf", "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2"])
-			else:
-				# For multiple photos, use proper concat with image2 demuxer
-				temp_dir = tempfile.gettempdir()
-				concat_file = os.path.join(temp_dir, f"xtrack_concat_{id(self)}.txt")
-				try:
-					with open(concat_file, 'w', encoding='utf-8') as f:
-						for photo in self.selected_photos:
-							escaped_photo = photo.replace("'", "'\\''")
-							f.write(f"file '{escaped_photo}'\n")
-							f.write(f"duration {self.loop_duration}\n")
-				except Exception as e:
-					ui.message(_("Failed to create file list: {}").format(str(e)))
-					return
-				
-				cmd = [
-					ffmpeg_path,
-					"-f", "concat",
-					"-safe", "0",
-					"-protocol_whitelist", "file,pipe,crypto,data",
-					"-i", concat_file,
-					"-i", self.selected_mp3,
-					"-c:v", "libx264",
-					"-preset", "medium",
-					"-c:a", "aac",
-					"-b:a", "192k",
-					"-pix_fmt", "yuv420p",
-					"-shortest",
-					"-movflags", "+faststart"
-				]
-				
-				# Add crop filter if enabled
-				if self.crop_checkbox.GetValue():
-					cmd.extend(["-vf", "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2"])
-		else:
-			# Use color background
-			color_map = {
-				_("Black"): "000000",
-				_("White"): "FFFFFF",
-				_("Red"): "FF0000",
-				_("Green"): "00FF00",
-				_("Blue"): "0000FF",
-				_("Yellow"): "FFFF00",
-				_("Magenta"): "FF00FF",
-				_("Cyan"): "00FFFF",
-				_("Gray"): "808080",
-				_("Orange"): "FFA500",
-				_("Purple"): "800080"
-			}
-			
-			color_hex = color_map.get(selected_color, "000000")
-			duration = self.mp3_duration_seconds
-			
-			cmd = [
-				ffmpeg_path,
-				"-f", "lavfi",
-				"-i", f"color=c={color_hex}:s=1920x1080:d={duration}",
-				"-i", self.selected_mp3,
-				"-c:v", "libx264",
-				"-preset", "medium",
-				"-c:a", "aac",
-				"-b:a", "192k",
-				"-shortest",
-				"-movflags", "+faststart"
-			]
-		
-		# Add common parameters
-		cmd.extend([
-			"-progress", "pipe:1",
-			"-nostats",
-			"-y",
-			output_path
-		])
-		
-		wx.CallAfter(self.convert_btn.SetLabel, _("Pause"))
-		wx.CallAfter(self.cancel_btn.Enable, False)
-		wx.CallAfter(self.status_label.SetLabel, _("Starting conversion..."))
-		wx.CallAfter(self.progress_bar.SetValue, 0)
-		
-		def run_conversion():
-			self.ffmpeg_process = None
+		self.save_settings()
+		self.is_running = True
+		self.is_paused = False
+		self.cancel_event.clear()
+		self.convert_btn.SetLabel(_("Pause"))
+		self.cancel_btn.Enable(False)
+		self.status_label.SetLabel(_("Starting conversion..."))
+		self.progress_bar.SetValue(0)
+		threading.Thread(target=self.run_queue, args=(jobs,), daemon=True).start()
+
+	def run_queue(self, jobs):
+		failure = None
+		for job in jobs:
+			if self.cancel_event.is_set():
+				break
+			self.post(self.on_job_started, job.list_index)
+			succeeded, reason = self.run_job(job)
+			if self.cancel_event.is_set():
+				break
+			if not succeeded:
+				failure = (job.source_path, reason)
+				break
+			self.post(self.on_success, job.source_path)
+		if not self.cancel_event.is_set():
+			self.post(self.on_queue_finished, failure)
+
+	def run_job(self, job):
+		try:
+			os.makedirs(os.path.dirname(job.final_path), exist_ok=True)
+		except OSError as error:
+			log.error("xTrack: could not create the folder for %s: %s", job.final_path, error)
+			return False, _("the folder for the converted files could not be created")
+
+		durationSeconds = self.file_duration_seconds.get(job.source_path)
+		if durationSeconds is None:
+			durationSeconds, _label = get_file_duration(self.libs_path, job.source_path)
+
+		def registerProcess(process):
+			self.ffmpeg_process = process
+
+		try:
+			exitCode, stderrLines = runFfmpeg(
+				job.command, self.output_path, durationSeconds,
+				lambda progress: self.post(self.update_progress, progress), registerProcess,
+			)
+		except OSError as error:
+			log.error("xTrack: could not run ffmpeg for %s: %s", job.source_path, error)
+			removeQuietly(job.part_path)
+			return False, _("ffmpeg could not be started")
+
+		if self.cancel_event.is_set():
+			removeQuietly(job.part_path)
+			return False, ""
+
+		if exitCode == 0:
 			try:
-				self.ffmpeg_process = subprocess.Popen(
-					cmd,
-					stdout=subprocess.PIPE,
-					stderr=subprocess.PIPE,
-					creationflags=subprocess.CREATE_NO_WINDOW,
-					cwd=self.output_path,
-					text=True,
-					encoding='utf-8',
-					errors='ignore'
-				)
-				
-				# Start thread to read stderr to prevent buffer overflow
-				def read_stderr():
-					for line in iter(self.ffmpeg_process.stderr.readline, ''):
-						self.stderr_queue.put(line)
-				
-				stderr_thread = threading.Thread(target=read_stderr, daemon=True)
-				stderr_thread.start()
-				
-				while True:
-					line = self.ffmpeg_process.stdout.readline()
-					if not line:
-						break
-					if "out_time_ms=" in line:
-						try:
-							time_ms = int(line.split("=")[1])
-							current_time_seconds = time_ms / 1000000
-							if self.mp3_duration_seconds > 0:
-								progress = int((current_time_seconds / self.mp3_duration_seconds) * 100)
-								if progress >= 0 and progress <= 100:
-									wx.CallAfter(self.update_progress, progress)
-						except (ValueError, IndexError):
-							continue
-				
-				self.ffmpeg_process.wait()
-				
-				# Join stderr thread
-				stderr_thread.join(timeout=5)
-				stderr_output = ''.join(list(self.stderr_queue.queue))
-				
-				# Clean up temporary file if it exists
-				if self.selected_photos and len(self.selected_photos) > 1:
-					try:
-						concat_file = os.path.join(tempfile.gettempdir(), f"xtrack_concat_{id(self)}.txt")
-						if os.path.exists(concat_file):
-							os.remove(concat_file)
-					except Exception:
-						pass
-				
-				if self.ffmpeg_process.returncode == 0:
-					wx.CallAfter(self.on_success)
-				else:
-					wx.CallAfter(self.on_failure, stderr_output)
-					
-			except Exception as e:
-				wx.CallAfter(self.on_failure, str(e))
-			finally:
-				if self.ffmpeg_process:
-					self.ffmpeg_process.stdout.close()
-					self.ffmpeg_process.stderr.close()
-				self.ffmpeg_process = None
-		
-		threading.Thread(target=run_conversion, daemon=True).start()
+				os.replace(job.part_path, job.final_path)
+			except OSError as error:
+				log.error("xTrack: could not move %s to %s: %s", job.part_path, job.final_path, error)
+				removeQuietly(job.part_path)
+				return False, _("the output file could not be written")
+			return True, ""
+
+		log.error(
+			"xTrack: ffmpeg failed for %s (exit code %s): %s",
+			job.source_path, exitCode, " | ".join(line.strip() for line in stderrLines),
+		)
+		removeQuietly(job.part_path)
+		return False, summarizeFfmpegError(stderrLines)
+
+	def on_job_started(self, listIndex):
+		self.update_current_file_info(listIndex)
+		self.progress_bar.SetValue(0)
+		self.status_label.SetLabel(_("Starting conversion..."))
 
 	def update_progress(self, progress):
 		self.progress_bar.SetValue(progress)
 		self.status_label.SetLabel(_("Converting: {}%").format(progress))
 
-	def on_success(self):
+	def on_success(self, sourcePath):
 		self.progress_bar.SetValue(100)
 		self.status_label.SetLabel(_("Conversion complete!"))
-		try:
-			tones.beep(1000, 300)  # High tone for success
-		except Exception:
-			pass
-		ui.message(_("Conversion complete!"))
-		self.convert_btn.SetLabel(_("Convert"))
-		self.cancel_btn.Enable(True)
-		wx.CallAfter(self.EndModal, wx.ID_OK)
+		tones.beep(1000, 300)
+		ui.message(limitSpokenText(_("Conversion complete for {}").format(os.path.basename(sourcePath))))
 
-	def on_failure(self, error_message):
-		self.status_label.SetLabel(_("Conversion failed."))
-		ui.message(_("Conversion failed: {}").format(error_message))
+	def on_queue_finished(self, failure):
+		self.is_running = False
+		self.is_paused = False
 		self.convert_btn.SetLabel(_("Convert"))
 		self.cancel_btn.Enable(True)
+		if failure:
+			sourcePath, reason = failure
+			self.status_label.SetLabel(_("Conversion failed."))
+			tones.beep(300, 300)
+			ui.message(limitSpokenText(
+				_("Conversion failed for {name}: {reason}").format(name=os.path.basename(sourcePath), reason=reason)
+			))
+			return
+		self.status_label.SetLabel(_("All conversions complete!"))
+		message = _("All conversions complete!")
+		if self.used_subfolder:
+			message += " " + _("Saved in the folder {}").format(OUTPUT_SUBFOLDER_NAME)
+		ui.message(limitSpokenText(message))
+		self.EndModal(wx.ID_OK)
+
+	def stop_conversion(self):
+		self.is_closed = True
+		self.cancel_event.set()
+		process = self.ffmpeg_process
+		if not process or process.poll() is not None:
+			return
+		try:
+			if self.is_paused:
+				setProcessSuspended(process, False)
+			process.terminate()
+		except (OSError, AttributeError) as error:
+			log.debugWarning("xTrack: could not stop ffmpeg: %s", error)
 
 	def on_cancel(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			try:
-				self.ffmpeg_process.terminate()
-			except Exception:
-				pass
+		self.stop_conversion()
 		self.EndModal(wx.ID_CANCEL)
 
 	def on_close(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			try:
-				self.ffmpeg_process.terminate()
-			except Exception:
-				pass
+		self.stop_conversion()
 		self.EndModal(wx.ID_CANCEL)
-
-
-
-
-
-
-

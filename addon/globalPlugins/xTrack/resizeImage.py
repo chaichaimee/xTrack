@@ -1,3 +1,4 @@
+# resizeImage.py
 
 import wx
 import os
@@ -5,64 +6,101 @@ import subprocess
 import threading
 import ui
 import tones
-import json
-import queue
-import math
 from gui import guiHelper
 from .xTrackCore import load_config, save_config, get_file_size, get_config_path
+from .ffmpegSupport import limitSpokenText, summarizeFfmpegError, removeQuietly, partPathFor, runFfmpeg
+from .floatingMenu import chooseMenuAction
 import addonHandler
-import core
 from logHandler import log
 
 addonHandler.initTranslation()
+
+INVALID_FILENAME_CHARS = '<>:"/\\|?*'
+QUALITY_KEYS = ("Best (No loss)", "Very Good", "Good", "Normal", "Small")
+QUALITY_VALUES = {
+	"Best (No loss)": {"jpeg": 2, "webp": 100, "png": 0, "tiff": 0, "bmp": 0, "gif": 0},
+	"Very Good": {"jpeg": 5, "webp": 90, "png": 2, "tiff": 2, "bmp": 0, "gif": 0},
+	"Good": {"jpeg": 10, "webp": 80, "png": 4, "tiff": 4, "bmp": 0, "gif": 0},
+	"Normal": {"jpeg": 15, "webp": 70, "png": 6, "tiff": 6, "bmp": 0, "gif": 0},
+	"Small": {"jpeg": 20, "webp": 60, "png": 9, "tiff": 9, "bmp": 0, "gif": 0},
+}
+
+
+def formatByteSize(sizeBytes):
+	if sizeBytes < 1024:
+		return f"{sizeBytes} B"
+	if sizeBytes < 1024 * 1024:
+		return f"{sizeBytes / 1024:.1f} KB"
+	return f"{sizeBytes / (1024 * 1024):.1f} MB"
+
+
+def fitDimensions(baseWidth, baseHeight, targetWidth, targetHeight, keepAspect):
+	"""Final pixel size; never below 1x1, which ffmpeg's scale filter rejects."""
+	if keepAspect:
+		baseAspect = baseWidth / baseHeight
+		if targetWidth / targetHeight > baseAspect:
+			targetWidth = int(targetHeight * baseAspect)
+		else:
+			targetHeight = int(targetWidth / baseAspect)
+	return max(1, targetWidth), max(1, targetHeight)
+
 
 class ResizeImageDialog(wx.Dialog):
 	"""Dialog for resizing images with width and height in pixels."""
 	def __init__(self, parent, selected_files, libs_path):
 		super().__init__(parent, title=_("Resize Image"))
-		self.selected_files = selected_files
+		self.selected_files = list(selected_files)
 		self.libs_path = libs_path
 		self.output_path = os.path.dirname(self.selected_files[0]) if self.selected_files else os.getcwd()
 		self.config_path = get_config_path()
 		self.ffmpeg_process = None
-		self.is_paused = False
-		self.resize_queue = queue.Queue()
 		self.currently_processing = False
+		self.is_closed = False
+		self.cancel_event = threading.Event()
 		self.file_sizes = {}
 		self.image_dimensions = {}
+		# Per-file results shown in the output list; kept here so that a refresh
+		# of the list never wipes out what has already been processed.
+		self.file_results = {}
 		self.current_file_index = 0
 		self.init_ui()
 		self.SetTitle(_("Resize Image: {} files").format(len(self.selected_files)))
 		self.load_settings()
 		self.Bind(wx.EVT_CLOSE, self.on_close)
 		# Pre-load file info in background
-		threading.Thread(target=self.load_file_info, daemon=True).start()
-		
+		threading.Thread(target=self.load_file_info, args=(list(self.selected_files),), daemon=True).start()
+
 		# Set focus to file listbox after UI is shown
 		wx.CallAfter(self.file_listbox.SetFocus)
 
-	def load_file_info(self):
+	def post(self, handler, *args):
+		wx.CallAfter(self.run_if_open, handler, *args)
+
+	def run_if_open(self, handler, *args):
+		if self.is_closed:
+			return
+		handler(*args)
+
+	def load_file_info(self, files):
 		"""Load sizes and dimensions for all selected files quickly."""
-		for file_path in self.selected_files:
+		for file_path in files:
+			if self.is_closed:
+				return
 			try:
 				size_bytes, size_str = get_file_size(file_path)
 				self.file_sizes[file_path] = size_str
-				width, height = self.get_image_dimensions_fast(file_path)
-				self.image_dimensions[file_path] = (width, height)
-			except Exception as e:
-				self.file_sizes[file_path] = "Error"
-				self.image_dimensions[file_path] = (0, 0)
-		
-		wx.CallAfter(self.update_file_listbox)
-		if self.selected_files:
-			wx.CallAfter(self.update_output_info)
+			except OSError:
+				self.file_sizes[file_path] = _("Error")
+			self.image_dimensions[file_path] = self.get_image_dimensions_fast(file_path)
+		self.post(self.update_file_listbox)
+		self.post(self.update_output_info)
 
 	def get_image_dimensions_fast(self, file_path):
 		"""Get image dimensions quickly using ffprobe."""
 		ffprobe_path = os.path.join(self.libs_path, "ffprobe.exe")
 		if not os.path.exists(ffprobe_path):
 			return 0, 0
-		
+
 		cmd = [
 			ffprobe_path,
 			"-v", "quiet",
@@ -71,24 +109,25 @@ class ResizeImageDialog(wx.Dialog):
 			"-of", "csv=p=0",
 			file_path,
 		]
-		
+
 		try:
 			result = subprocess.run(
 				cmd,
 				stdout=subprocess.PIPE,
 				stderr=subprocess.PIPE,
+				stdin=subprocess.DEVNULL,
 				text=True,
 				creationflags=subprocess.CREATE_NO_WINDOW,
 				encoding='utf-8',
 				errors='ignore',
-				timeout=5
+				timeout=10
 			)
 			if result.returncode == 0 and result.stdout.strip():
-				dimensions = result.stdout.strip().split(',')
+				dimensions = result.stdout.strip().splitlines()[0].split(',')
 				if len(dimensions) == 2:
 					return int(dimensions[0]), int(dimensions[1])
-		except Exception:
-			pass
+		except (OSError, subprocess.SubprocessError, ValueError) as e:
+			log.debugWarning("xTrack: could not read the size of %s: %s", file_path, e)
 		return 0, 0
 
 	def init_ui(self):
@@ -98,7 +137,7 @@ class ResizeImageDialog(wx.Dialog):
 		file_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Input Files"))
 		file_list_sizer = wx.BoxSizer(wx.VERTICAL)
 		file_list_sizer.Add(wx.StaticText(self, label=_("Selected files:")), 0, wx.EXPAND | wx.ALL, 5)
-		self.file_listbox = wx.ListBox(self, choices=[self.get_file_display_name(f) for f in self.selected_files], style=wx.LB_EXTENDED)
+		self.file_listbox = wx.ListBox(self, choices=[self.get_file_display_name(f) for f in self.selected_files], style=wx.LB_MULTIPLE)
 		self.file_listbox.Bind(wx.EVT_LISTBOX, self.on_file_selection_change)
 		self.file_listbox.Bind(wx.EVT_CONTEXT_MENU, self.on_context_menu)
 		self.file_listbox.Bind(wx.EVT_KEY_DOWN, self.on_key_down)
@@ -290,16 +329,7 @@ class ResizeImageDialog(wx.Dialog):
 
 	def on_context_menu(self, event):
 		"""Show context menu for file listbox."""
-		menu = wx.Menu()
-		delete_item = menu.Append(wx.ID_ANY, _("Delete Selected Files"))
-		# Use deferred execution for translation scope
-		core.callLater(0, self._bind_context_menu, menu, delete_item)
-		self.PopupMenu(menu)
-		menu.Destroy()
-
-	def _bind_context_menu(self, menu, delete_item):
-		"""Bind context menu event with proper translation scope."""
-		self.Bind(wx.EVT_MENU, self.on_delete_selected, delete_item)
+		chooseMenuAction(self, _("Files"), [(_("Delete Selected Files"), lambda: self.on_delete_selected(None))])
 
 	def on_key_down(self, event):
 		"""Handle key events in file listbox."""
@@ -310,29 +340,26 @@ class ResizeImageDialog(wx.Dialog):
 
 	def on_delete_selected(self, event):
 		"""Delete selected files from the list."""
+		if self.currently_processing:
+			ui.message(_("Resize Image is already processing files"))
+			return
 		selections = self.file_listbox.GetSelections()
 		if not selections:
 			return
-		
+
 		# Remove files in reverse order to maintain indices
 		for idx in sorted(selections, reverse=True):
 			if idx < len(self.selected_files):
+				self.file_results.pop(self.selected_files[idx], None)
 				del self.selected_files[idx]
-		
-		# Update listbox
+
+		self.current_file_index = min(self.current_file_index, max(len(self.selected_files) - 1, 0))
 		self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
-		
-		# Update info list and output filename state
 		self.update_info_list()
 		self.update_output_filename_state()
-		
-		# Update dialog title
 		self.SetTitle(_("Resize Image: {} files").format(len(self.selected_files)))
-		
-		# Disable start button if no files
 		if not self.selected_files:
 			self.start_btn.Enable(False)
-		
 		ui.message(_("{} files removed").format(len(selections)))
 
 	def on_crop_toggle(self, event):
@@ -369,95 +396,74 @@ class ResizeImageDialog(wx.Dialog):
 		"""Update output information based on current settings."""
 		if not self.selected_files:
 			return
-			
+		self.current_file_index = min(self.current_file_index, len(self.selected_files) - 1)
 		file_path = self.selected_files[self.current_file_index]
-		
+
 		# Set default output filename for single file
 		if len(self.selected_files) == 1 and not self.output_filename_text.GetValue().strip():
 			base_name = os.path.splitext(os.path.basename(file_path))[0]
 			self.output_filename_text.SetValue(f"{base_name}_resized")
-		
+
 		# Set width and height to current image dimensions
 		width, height = self.image_dimensions.get(file_path, (0, 0))
 		if width > 0 and height > 0:
 			self.width_spin.SetValue(width)
 			self.height_spin.SetValue(height)
-		
+
 		self.update_info_list()
+
+	def get_crop_box(self, orig_width, orig_height):
+		"""(width, height, left, top) of the crop; the whole image when crop is off or leaves nothing."""
+		if not self.crop_checkbox.GetValue():
+			return orig_width, orig_height, 0, 0
+		crop_left = self.crop_left_spin.GetValue()
+		crop_top = self.crop_top_spin.GetValue()
+		crop_width = orig_width - (crop_left + self.crop_right_spin.GetValue())
+		crop_height = orig_height - (crop_top + self.crop_bottom_spin.GetValue())
+		if crop_width <= 0 or crop_height <= 0:
+			return orig_width, orig_height, 0, 0
+		return crop_width, crop_height, crop_left, crop_top
 
 	def calculate_final_dimensions(self, orig_width, orig_height):
 		"""Calculate final dimensions after crop and resize with aspect ratio lock."""
-		# Calculate crop dimensions if enabled
-		crop_width = orig_width
-		crop_height = orig_height
-		
-		if self.crop_checkbox.GetValue():
-			crop_top = self.crop_top_spin.GetValue()
-			crop_bottom = self.crop_bottom_spin.GetValue()
-			crop_left = self.crop_left_spin.GetValue()
-			crop_right = self.crop_right_spin.GetValue()
-			
-			# Calculate crop width and height
-			crop_width = orig_width - (crop_left + crop_right)
-			crop_height = orig_height - (crop_top + crop_bottom)
-			
-			# Validate crop dimensions
-			if crop_width <= 0 or crop_height <= 0:
-				# Invalid crop dimensions, use original
-				crop_width = orig_width
-				crop_height = orig_height
-		
-		# Calculate target dimensions with aspect ratio lock
-		base_width = crop_width
-		base_height = crop_height
-		
-		target_width = self.width_spin.GetValue()
-		target_height = self.height_spin.GetValue()
-		
-		if self.aspect_lock_btn.GetValue():
-			orig_aspect = base_width / base_height
-			target_aspect = target_width / target_height
-			
-			if target_aspect > orig_aspect:
-				# Height is limiting factor
-				target_width = int(target_height * orig_aspect)
-			else:
-				# Width is limiting factor
-				target_height = int(target_width / orig_aspect)
-		
-		return target_width, target_height
+		crop_width, crop_height, _left, _top = self.get_crop_box(orig_width, orig_height)
+		return fitDimensions(
+			crop_width, crop_height, self.width_spin.GetValue(), self.height_spin.GetValue(),
+			self.aspect_lock_btn.GetValue(),
+		)
+
+	def output_base_name(self, file_path):
+		if len(self.selected_files) > 1:
+			return f"{os.path.splitext(os.path.basename(file_path))[0]}_resized"
+		custom_name = self.output_filename_text.GetValue().strip()
+		return custom_name or f"{os.path.splitext(os.path.basename(file_path))[0]}_resized"
 
 	def update_info_list(self):
 		"""Update the output information list."""
 		self.info_list.DeleteAllItems()
-		
 		format_name = self.format_select.GetStringSelection().lower()
-		
+		extension = "jpg" if format_name == "jpeg" else format_name
+
 		for i, file_path in enumerate(self.selected_files):
-			base_name = os.path.splitext(os.path.basename(file_path))[0]
-			
-			# Determine output filename
-			if len(self.selected_files) > 1:
-				output_filename = f"{base_name}_resized.{format_name}"
-			else:
-				custom_name = self.output_filename_text.GetValue().strip()
-				if custom_name:
-					output_filename = f"{custom_name}.{format_name}"
-				else:
-					output_filename = f"{base_name}_resized.{format_name}"
-			
-			# Calculate final dimensions
+			result = self.file_results.get(file_path)
+			if result:
+				index = self.info_list.InsertItem(i, result["name"])
+				self.info_list.SetItem(index, 1, result["dimensions"])
+				self.info_list.SetItem(index, 2, result["size"])
+				self.info_list.SetItem(index, 3, result["status"])
+				continue
+
+			output_filename = f"{self.output_base_name(file_path)}.{extension}"
 			orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
 			if orig_width > 0 and orig_height > 0:
 				final_width, final_height = self.calculate_final_dimensions(orig_width, orig_height)
 				dimensions_str = f"{final_width} x {final_height}"
 			else:
 				dimensions_str = f"{self.width_spin.GetValue()} x {self.height_spin.GetValue()}"
-			
-			# Insert item
+
 			index = self.info_list.InsertItem(i, output_filename)
 			self.info_list.SetItem(index, 1, dimensions_str)
-			self.info_list.SetItem(index, 2, _("Calculating..."))
+			self.info_list.SetItem(index, 2, self.file_sizes.get(file_path, _("Calculating...")))
 			self.info_list.SetItem(index, 3, _("Ready"))
 
 	def on_setting_change(self, event):
@@ -465,12 +471,13 @@ class ResizeImageDialog(wx.Dialog):
 		# Handle aspect ratio lock
 		if self.aspect_lock_btn.GetValue() and self.selected_files:
 			obj = event.GetEventObject()
+			self.current_file_index = min(self.current_file_index, len(self.selected_files) - 1)
 			file_path = self.selected_files[self.current_file_index]
 			orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
-			
+
 			if orig_width > 0 and orig_height > 0:
 				aspect_ratio = orig_width / orig_height
-				
+
 				if obj == self.width_spin:
 					# Adjust height based on new width
 					new_height = int(self.width_spin.GetValue() / aspect_ratio)
@@ -479,9 +486,11 @@ class ResizeImageDialog(wx.Dialog):
 					# Adjust width based on new height
 					new_width = int(self.height_spin.GetValue() * aspect_ratio)
 					self.width_spin.SetValue(new_width)
-		
-		# Update UI with slight delay
-		wx.CallLater(100, self.update_info_list)
+
+		# Settings changed after a run: results shown so far no longer describe the next run.
+		if not self.currently_processing:
+			self.file_results.clear()
+		wx.CallLater(100, self.run_if_open, self.update_info_list)
 
 	def get_file_display_name(self, file_path):
 		"""Get display name with dimensions and size for listbox."""
@@ -494,7 +503,11 @@ class ResizeImageDialog(wx.Dialog):
 
 	def update_file_listbox(self):
 		"""Update file listbox with names, dimensions and sizes."""
+		selections = self.file_listbox.GetSelections()
 		self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
+		for index in selections:
+			if index < len(self.selected_files):
+				self.file_listbox.SetSelection(index)
 
 	def on_browse_output(self, event):
 		"""Browse for output folder."""
@@ -549,318 +562,243 @@ class ResizeImageDialog(wx.Dialog):
 		config_data["ResizeFormat"] = self.format_select.GetStringSelection()
 		save_config(self.config_path, config_data)
 
-	def on_start(self, event):
-		"""Start the resize process."""
-		self.save_settings()
-		self.output_path = self.output_path_ctrl.GetValue()
-		
-		if not os.path.exists(self.output_path):
-			os.makedirs(self.output_path)
-		
-		# Set focus to output information list
-		self.info_list.SetFocus()
-		
-		# Add all files to queue
-		for file_path in self.selected_files:
-			self.resize_queue.put(file_path)
-		
-		# Start processing
-		self.currently_processing = True
-		self.total_files = len(self.selected_files)
-		self.processed_files = 0
-		self.process_next_file()
-
-	def process_next_file(self):
-		"""Process next file in the queue."""
-		if self.resize_queue.empty():
-			self.currently_processing = False
-			wx.CallAfter(self.on_all_processing_complete)
-			return
-			
-		file_path = self.resize_queue.get()
-		self.current_file_index = self.selected_files.index(file_path)
-		
-		# Get original dimensions
-		orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
-		if orig_width <= 0 or orig_height <= 0:
-			# Skip files whose dimensions could not be read, for example an
-			# image codec the bundled ffprobe build cannot decode, and tell
-			# the user explicitly instead of dropping the file silently.
-			log.error(f"Skipping resize for {file_path}: unreadable dimensions")
-			wx.CallAfter(self.update_processing_status, file_path, _("Skipped"))
-			ui.message(_("Skipped {}: unsupported or unreadable image format").format(os.path.basename(file_path)))
-			self.processed_files += 1
-			wx.CallAfter(self.update_progress)
-			self.process_next_file()
-			return
-		
-		# Calculate crop dimensions if enabled
-		crop_width = orig_width
-		crop_height = orig_height
-		crop_top = 0
-		crop_left = 0
-		
-		if self.crop_checkbox.GetValue():
-			crop_top = self.crop_top_spin.GetValue()
-			crop_bottom = self.crop_bottom_spin.GetValue()
-			crop_left = self.crop_left_spin.GetValue()
-			crop_right = self.crop_right_spin.GetValue()
-			
-			# Calculate crop width and height
-			crop_width = orig_width - (crop_left + crop_right)
-			crop_height = orig_height - (crop_top + crop_bottom)
-			
-			# Validate crop dimensions
-			if crop_width <= 0 or crop_height <= 0:
-				# Invalid crop dimensions, skip crop
-				ui.message(_("Warning: Invalid crop dimensions for {}. Crop disabled for this image.").format(os.path.basename(file_path)))
-				crop_width = orig_width
-				crop_height = orig_height
-				crop_top = 0
-				crop_left = 0
-		
-		# Calculate target dimensions with aspect ratio lock
-		# We need to use the cropped dimensions as base if crop is enabled
-		base_width = crop_width
-		base_height = crop_height
-		
-		target_width = self.width_spin.GetValue()
-		target_height = self.height_spin.GetValue()
-		
-		if self.aspect_lock_btn.GetValue():
-			orig_aspect = base_width / base_height
-			target_aspect = target_width / target_height
-			
-			if target_aspect > orig_aspect:
-				# Height is limiting factor
-				target_width = int(target_height * orig_aspect)
-			else:
-				# Width is limiting factor
-				target_height = int(target_width / orig_aspect)
-		
-		# Prepare output file
+	def build_jobs(self):
+		"""Everything read from the dialog's controls happens here, on the main thread; returns (jobs, skippedPaths)."""
+		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
 		format_name = self.format_select.GetStringSelection().lower()
 		ext = "jpg" if format_name == "jpeg" else format_name
-		
-		if len(self.selected_files) > 1:
-			base_name = os.path.splitext(os.path.basename(file_path))[0]
-			output_filename = f"{base_name}_resized.{ext}"
-		else:
-			custom_name = self.output_filename_text.GetValue().strip()
-			if custom_name:
-				output_filename = f"{custom_name}.{ext}"
-			else:
-				base_name = os.path.splitext(os.path.basename(file_path))[0]
-				output_filename = f"{base_name}_resized.{ext}"
-		
-		output_path = self.get_unique_file_path(os.path.join(self.output_path, output_filename))
-		
-		ffmpeg_path = os.path.join(self.libs_path, "ffmpeg.exe")
-		if not os.path.exists(ffmpeg_path):
+		quality_key = next((key for key in QUALITY_KEYS if _(key) == self.quality_select.GetStringSelection()), "Normal")
+		quality_value = QUALITY_VALUES[quality_key].get(format_name, 0)
+
+		jobs = []
+		skipped = []
+		reservedNames = set()
+		for file_path in self.selected_files:
+			orig_width, orig_height = self.image_dimensions.get(file_path, (0, 0))
+			if orig_width <= 0 or orig_height <= 0:
+				# Files whose dimensions could not be read, for example an image
+				# codec the bundled ffprobe build cannot decode, are skipped and
+				# reported instead of being dropped silently.
+				log.error("xTrack: skipping resize for %s: unreadable dimensions", file_path)
+				skipped.append(file_path)
+				continue
+
+			crop_width, crop_height, crop_left, crop_top = self.get_crop_box(orig_width, orig_height)
+			if self.crop_checkbox.GetValue() and (crop_width, crop_height) == (orig_width, orig_height) and (
+				self.crop_left_spin.GetValue() or self.crop_right_spin.GetValue()
+				or self.crop_top_spin.GetValue() or self.crop_bottom_spin.GetValue()
+			):
+				ui.message(limitSpokenText(
+					_("Warning: Invalid crop dimensions for {}. Crop disabled for this image.").format(os.path.basename(file_path))
+				))
+			target_width, target_height = fitDimensions(
+				crop_width, crop_height, self.width_spin.GetValue(), self.height_spin.GetValue(),
+				self.aspect_lock_btn.GetValue(),
+			)
+
+			base_name = self.output_base_name(file_path)
+			output_filename = f"{base_name}.{ext}"
+			output_path = self.get_unique_file_path(os.path.join(self.output_path, output_filename))
+			counter = 1
+			while output_path.lower() in reservedNames:
+				output_path = self.get_unique_file_path(os.path.join(self.output_path, f"{base_name}_{counter}.{ext}"))
+				counter += 1
+			reservedNames.add(output_path.lower())
+
+			filter_chain = []
+			if (crop_width, crop_height) != (orig_width, orig_height):
+				filter_chain.append(f"crop={crop_width}:{crop_height}:{crop_left}:{crop_top}")
+			filter_chain.append(f"scale={target_width}:{target_height}")
+
+			# -frames:v 1: a video or animated source would otherwise keep
+			# writing frames to the same still-image file and fail in the muxer.
+			cmd = [ffmpeg_path, "-hide_banner", "-i", file_path, "-vf", ",".join(filter_chain), "-frames:v", "1", "-y"]
+			if format_name == "jpeg":
+				cmd.extend(["-q:v", str(quality_value)])
+			elif format_name == "webp":
+				cmd.extend(["-quality", str(quality_value)])
+			elif format_name == "png":
+				cmd.extend(["-compression_level", str(quality_value)])
+			elif format_name == "tiff":
+				cmd.extend(["-compression", "lzw"])
+			partPath = partPathFor(output_path)
+			cmd.append(partPath)
+			jobs.append({
+				"source": file_path, "output": output_path, "part": partPath, "command": cmd,
+				"width": target_width, "height": target_height,
+			})
+		return jobs, skipped
+
+	def on_start(self, event):
+		"""Start the resize process."""
+		if self.currently_processing:
+			return
+		if not self.selected_files:
+			ui.message(_("There are no files to resize"))
+			return
+		if not os.path.exists(os.path.join(self.libs_path, "ffmpeg.exe")):
 			ui.message(_("ffmpeg.exe not found"))
 			return
-		
-		# Build ffmpeg command
-		cmd = [
-			ffmpeg_path,
-			"-i", file_path,
-		]
-		
-		# Add crop filter if enabled
-		filter_chain = []
-		
-		if self.crop_checkbox.GetValue() and (crop_width != orig_width or crop_height != orig_height):
-			crop_filter = f"crop={crop_width}:{crop_height}:{crop_left}:{crop_top}"
-			filter_chain.append(crop_filter)
-		
-		# Always add scale filter
-		scale_filter = f"scale={target_width}:{target_height}"
-		filter_chain.append(scale_filter)
-		
-		# Combine filters
-		if filter_chain:
-			cmd.extend(["-vf", ",".join(filter_chain)])
-		
-		cmd.append("-y")
-		
-		# Add format-specific options
-		quality_selection = self.quality_select.GetStringSelection()
-		
-		# Quality mapping for different formats
-		quality_map = {
-			_("Best (No loss)"): {"jpeg": 2, "webp": 100, "png": 0, "tiff": 0, "bmp": 0, "gif": 0},
-			_("Very Good"): {"jpeg": 5, "webp": 90, "png": 2, "tiff": 2, "bmp": 0, "gif": 0},
-			_("Good"): {"jpeg": 10, "webp": 80, "png": 4, "tiff": 4, "bmp": 0, "gif": 0},
-			_("Normal"): {"jpeg": 15, "webp": 70, "png": 6, "tiff": 6, "bmp": 0, "gif": 0},
-			_("Small"): {"jpeg": 20, "webp": 60, "png": 9, "tiff": 9, "bmp": 0, "gif": 0},
-		}
-		
-		quality_value = quality_map.get(quality_selection, quality_map[_("Normal")]).get(format_name, 0)
-		
-		if format_name == "jpeg" and quality_value is not None:
-			cmd.extend(["-q:v", str(quality_value)])
-		elif format_name == "webp" and quality_value is not None:
-			cmd.extend(["-quality", str(quality_value)])
-		elif format_name == "png" and quality_value is not None:
-			cmd.extend(["-compression_level", str(quality_value)])
-		elif format_name == "tiff":
-			cmd.extend(["-compression", "lzw"])
-		
-		cmd.append(output_path)
-		
-		wx.CallAfter(self.start_btn.Enable, False)
-		wx.CallAfter(self.cancel_btn.Enable, False)
-		wx.CallAfter(self.status_label.SetLabel, 
-					_("Processing: {}").format(os.path.basename(file_path)))
-		wx.CallAfter(self.current_progress.SetValue, 0)
-		
-		# Update status in info list
-		wx.CallAfter(self.update_processing_status, file_path, _("Processing..."))
-		
-		def run_resize():
-			self.ffmpeg_process = None
+
+		outputFolder = self.output_path_ctrl.GetValue().strip()
+		if not outputFolder:
+			ui.message(_("Please enter an output folder"))
+			return
+		if len(self.selected_files) == 1:
+			customName = self.output_filename_text.GetValue().strip()
+			if any(char in INVALID_FILENAME_CHARS for char in customName):
+				ui.message(_("The output filename contains characters that are not allowed."))
+				return
+		try:
+			os.makedirs(outputFolder, exist_ok=True)
+		except OSError as error:
+			log.error("xTrack: could not create the output folder %s: %s", outputFolder, error)
+			ui.message(_("The output folder could not be created"))
+			return
+		self.output_path = outputFolder
+		self.save_settings()
+
+		jobs, skipped = self.build_jobs()
+		self.file_results.clear()
+		for skippedPath in skipped:
+			self.file_results[skippedPath] = {
+				"name": os.path.basename(skippedPath), "dimensions": "-", "size": "-", "status": _("Skipped"),
+			}
+		if skipped:
+			ui.message(limitSpokenText(_("Skipped {count} file(s): unsupported or unreadable image format").format(count=len(skipped))))
+		if not jobs:
+			self.update_info_list()
+			return
+
+		for job in jobs:
+			self.file_results[job["source"]] = {
+				"name": os.path.basename(job["output"]), "dimensions": f"{job['width']} x {job['height']}",
+				"size": "-", "status": _("Ready"),
+			}
+		self.update_info_list()
+
+		# Set focus to output information list
+		self.info_list.SetFocus()
+		self.currently_processing = True
+		self.cancel_event.clear()
+		self.total_files = len(jobs) + len(skipped)
+		self.processed_files = len(skipped)
+		self.update_progress()
+		self.start_btn.Enable(False)
+		self.cancel_btn.Enable(False)
+		threading.Thread(target=self.run_jobs, args=(jobs,), daemon=True).start()
+
+	def run_jobs(self, jobs):
+		def registerProcess(process):
+			self.ffmpeg_process = process
+
+		failures = 0
+		for job in jobs:
+			if self.cancel_event.is_set():
+				return
+			self.post(self.on_job_started, job["source"])
 			try:
-				self.ffmpeg_process = subprocess.Popen(
-					cmd,
-					stdout=subprocess.PIPE,
-					stderr=subprocess.PIPE,
-					creationflags=subprocess.CREATE_NO_WINDOW,
-					text=True,
-					encoding='utf-8',
-					errors='ignore'
-				)
-				
-				# Monitor progress
-				self.ffmpeg_process.wait()
-				
-				if self.ffmpeg_process.returncode == 0:
-					# Get actual output file size
-					try:
-						output_size_bytes = os.path.getsize(output_path)
-						if output_size_bytes < 1024:
-							output_size_str = f"{output_size_bytes} B"
-						elif output_size_bytes < 1024 * 1024:
-							output_size_str = f"{output_size_bytes/1024:.1f} KB"
-						else:
-							output_size_str = f"{output_size_bytes/(1024*1024):.1f} MB"
-					except OSError:
-						output_size_str = _("Unknown")
-					
-					wx.CallAfter(self.on_file_success, file_path, output_path, output_size_str, target_width, target_height)
-				else:
-					stderr_output = self.ffmpeg_process.stderr.read()
-					wx.CallAfter(self.on_file_failure, file_path, stderr_output)
-					
-			except Exception as e:
-				wx.CallAfter(self.on_file_failure, file_path, str(e))
-			finally:
-				if self.ffmpeg_process:
-					self.ffmpeg_process.stdout.close()
-					self.ffmpeg_process.stderr.close()
-				self.ffmpeg_process = None
-				# Process next file
-				if self.currently_processing:
-					self.process_next_file()
-		
-		threading.Thread(target=run_resize, daemon=True).start()
+				exitCode, stderrLines = runFfmpeg(job["command"], self.output_path, 0, lambda percent: None, registerProcess)
+			except OSError as error:
+				log.error("xTrack: could not run ffmpeg for %s: %s", job["source"], error)
+				removeQuietly(job["part"])
+				failures += 1
+				self.post(self.on_file_failure, job["source"], _("ffmpeg could not be started"))
+				continue
+			if self.cancel_event.is_set():
+				removeQuietly(job["part"])
+				return
+			if exitCode != 0:
+				log.error("xTrack: resize failed for %s (exit code %s): %s",
+					job["source"], exitCode, " | ".join(line.strip() for line in stderrLines))
+				removeQuietly(job["part"])
+				failures += 1
+				self.post(self.on_file_failure, job["source"], summarizeFfmpegError(stderrLines))
+				continue
+			try:
+				os.replace(job["part"], job["output"])
+				output_size_str = formatByteSize(os.path.getsize(job["output"]))
+			except OSError as error:
+				log.error("xTrack: could not finish %s: %s", job["output"], error)
+				removeQuietly(job["part"])
+				failures += 1
+				self.post(self.on_file_failure, job["source"], _("the output file could not be written"))
+				continue
+			self.post(self.on_file_success, job, output_size_str)
+		self.post(self.on_all_processing_complete, failures)
 
-	def update_processing_status(self, file_path, status):
-		"""Update processing status in info list."""
-		for i in range(self.info_list.GetItemCount()):
-			item_text = self.info_list.GetItemText(i)
-			if os.path.basename(file_path) in item_text:
-				self.info_list.SetItem(i, 3, status)
-				break
+	def set_result(self, file_path, status, size=None, dimensions=None):
+		result = self.file_results.get(file_path)
+		if result is None:
+			return
+		result["status"] = status
+		if size is not None:
+			result["size"] = size
+		if dimensions is not None:
+			result["dimensions"] = dimensions
+		if file_path in self.selected_files:
+			row = self.selected_files.index(file_path)
+			if row < self.info_list.GetItemCount():
+				self.info_list.SetItem(row, 1, result["dimensions"])
+				self.info_list.SetItem(row, 2, result["size"])
+				self.info_list.SetItem(row, 3, result["status"])
 
-	def on_file_success(self, file_path, output_path, output_size_str, new_width, new_height):
+	def on_job_started(self, file_path):
+		self.current_progress.SetValue(0)
+		self.status_label.SetLabel(_("Processing: {}").format(os.path.basename(file_path)))
+		self.set_result(file_path, _("Processing..."))
+
+	def on_file_success(self, job, output_size_str):
 		"""Handle successful file processing."""
 		self.processed_files += 1
-		wx.CallAfter(self.current_progress.SetValue, 100)
-		
-		# Update info list with final results
-		for i in range(self.info_list.GetItemCount()):
-			item_text = self.info_list.GetItemText(i)
-			if os.path.basename(file_path) in item_text:
-				self.info_list.SetItem(i, 1, f"{new_width} x {new_height}")
-				self.info_list.SetItem(i, 2, output_size_str)
-				self.info_list.SetItem(i, 3, _("Completed"))
-				break
-		
-		# Update progress
-		wx.CallAfter(self.update_progress)
-		
-		# Announce progress and set focus to info list
-		wx.CallAfter(self.info_list.SetFocus)
-		ui.message(_("Processed: {} - New size: {}, Dimensions: {} x {}").format(
-			os.path.basename(file_path), output_size_str, new_width, new_height))
+		self.current_progress.SetValue(100)
+		self.set_result(job["source"], _("Completed"), output_size_str, f"{job['width']} x {job['height']}")
+		self.update_progress()
+		ui.message(limitSpokenText(_("Processed: {} - New size: {}, Dimensions: {} x {}").format(
+			os.path.basename(job["output"]), output_size_str, job["width"], job["height"])))
 
-	def on_file_failure(self, file_path, error_message):
-		"""Handle file processing failure."""
+	def on_file_failure(self, file_path, reason):
 		self.processed_files += 1
-		
-		# Update status in info list
-		wx.CallAfter(self.update_processing_status, file_path, _("Failed"))
-		
-		# Update progress
-		wx.CallAfter(self.update_progress)
-		
-		ui.message(_("Failed: {}").format(os.path.basename(file_path)))
+		self.set_result(file_path, _("Failed"))
+		self.update_progress()
+		ui.message(limitSpokenText(_("Failed: {name} ({reason})").format(name=os.path.basename(file_path), reason=reason)))
 
 	def update_progress(self):
 		"""Update progress bars."""
 		if self.total_files > 0:
-			total_progress = int((self.processed_files / self.total_files) * 100)
-			self.total_progress.SetValue(total_progress)
-			
-			if self.processed_files == self.total_files:
-				self.status_label.SetLabel(_("Complete!"))
+			self.total_progress.SetValue(int((self.processed_files / self.total_files) * 100))
 
-	def on_all_processing_complete(self):
+	def on_all_processing_complete(self, failures):
 		"""Handle completion of all file processing."""
+		self.currently_processing = False
 		self.start_btn.Enable(True)
 		self.cancel_btn.Enable(True)
-		self.status_label.SetLabel(_("All images processed!"))
-		try:
-			tones.beep(1000, 300)
-		except Exception:
-			pass
-		
-		# Set focus to output information list and announce completion
 		self.info_list.SetFocus()
+		if failures:
+			self.status_label.SetLabel(_("Finished with errors"))
+			tones.beep(300, 300)
+			ui.message(_("Image processing finished, {count} file(s) failed. Check the output information list for results.").format(count=failures))
+			return
+		self.status_label.SetLabel(_("All images processed!"))
+		tones.beep(1000, 300)
 		ui.message(_("Image processing complete! Check the output information list for results."))
+
+	def stop_processing(self):
+		self.is_closed = True
+		self.cancel_event.set()
+		process = self.ffmpeg_process
+		if process and process.poll() is None:
+			try:
+				process.terminate()
+			except OSError as error:
+				log.debugWarning("xTrack: could not stop ffmpeg: %s", error)
 
 	def on_cancel(self, event):
 		"""Handle cancel button."""
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			try:
-				self.ffmpeg_process.terminate()
-			except Exception:
-				pass
-		# Clear queue
-		while not self.resize_queue.empty():
-			try:
-				self.resize_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.currently_processing = False
+		self.stop_processing()
 		self.EndModal(wx.ID_CANCEL)
 
 	def on_close(self, event):
 		"""Handle dialog close."""
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			try:
-				self.ffmpeg_process.terminate()
-			except Exception:
-				pass
-		# Clear queue
-		while not self.resize_queue.empty():
-			try:
-				self.resize_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.currently_processing = False
+		self.stop_processing()
 		self.EndModal(wx.ID_CANCEL)
-
-
-
-

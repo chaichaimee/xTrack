@@ -5,15 +5,20 @@ import os
 import re
 import subprocess
 import threading
-import queue
 import ui
 import tones
 from gui import guiHelper
 from .xTrackCore import get_config_path, get_unique_filename, load_config, save_config
+from .ffmpegSupport import limitSpokenText, summarizeFfmpegError, removeQuietly, partPathFor, runFfmpeg
 import addonHandler
 from logHandler import log
 
 addonHandler.initTranslation()
+
+# MP3 Gain also accepts WAV source files: WAV output is re-encoded as PCM
+# rather than forced through libmp3lame, so the format the user selected is
+# the format they get back at the new gain.
+SUPPORTED_GAIN_EXTENSIONS = (".mp3", ".wav")
 
 DEFAULT_TARGET_VOLUME_DB = 89.0
 # Classic mp3gain expresses loudness on an "89 dB" reference scale rather
@@ -23,35 +28,30 @@ DEFAULT_TARGET_VOLUME_DB = 89.0
 # It is an approximation, not the exact ReplayGain psychoacoustic algorithm.
 LOUDNESS_REFERENCE_OFFSET_DB = 103.0
 
+MEAN_VOLUME_PATTERN = re.compile(r"mean_volume:\s*(-?\d+(?:\.\d+)?)\s*dB")
 
-def measure_mean_volume(ffmpeg_path, file_path):
+
+def measure_mean_volume(ffmpeg_path, file_path, registerProcess=None):
 	"""Run ffmpeg's volumedetect filter and return the measured mean volume in dBFS, or None if it could not be determined."""
 	if not os.path.exists(ffmpeg_path):
 		return None
 	nullOutput = "NUL" if os.name == "nt" else "/dev/null"
-	cmd = [
-		ffmpeg_path,
+	command = [
+		ffmpeg_path, "-hide_banner",
 		"-i", file_path,
+		"-vn",
 		"-af", "volumedetect",
 		"-f", "null", nullOutput,
 	]
 	try:
-		result = subprocess.run(
-			cmd,
-			stdout=subprocess.PIPE,
-			stderr=subprocess.PIPE,
-			creationflags=subprocess.CREATE_NO_WINDOW,
-			text=True,
-			encoding='utf-8',
-			errors='ignore',
-			timeout=60,
+		_exitCode, stderrLines = runFfmpeg(
+			command, None, 0, lambda percent: None, registerProcess or (lambda process: None),
 		)
-		match = re.search(r"mean_volume:\s*(-?\d+(?:\.\d+)?)\s*dB", result.stderr)
-		if match:
-			return float(match.group(1))
-	except (subprocess.TimeoutExpired, OSError) as e:
+	except OSError as e:
 		log.error(f"MP3 Gain failed to measure volume for {file_path}: {e}")
-	return None
+		return None
+	match = MEAN_VOLUME_PATTERN.search("\n".join(stderrLines))
+	return float(match.group(1)) if match else None
 
 
 def get_audio_bitrate_kbps(ffprobe_path, file_path):
@@ -87,7 +87,7 @@ def get_audio_bitrate_kbps(ffprobe_path, file_path):
 
 
 class MP3GainDialog(wx.Dialog):
-	"""Dialog for analyzing and normalizing MP3 loudness (mp3gain-style) using ffmpeg.
+	"""Dialog for analyzing and normalizing MP3/WAV loudness (mp3gain-style) using ffmpeg.
 
 	Analysis and Modify Gain are deliberately independent: Analysis only ever
 	reads files and reports their loudness in the list, while Modify Gain is
@@ -116,13 +116,14 @@ class MP3GainDialog(wx.Dialog):
 		# album subfolder in the list and to replicate that subfolder under a
 		# custom destination folder.
 		self.fileImportRoot = {}
-		self.selected_files = self._expand_to_mp3_files(selected_files)
+		self.selected_files = self._expand_to_gain_files(selected_files)
 		self.analysisResults = {}
-		self.processing_queue = queue.Queue()
 		self.currently_processing = False
+		self.is_closed = False
+		self.cancel_event = threading.Event()
+		self.ffmpeg_process = None
 		self.current_action = None
 		self.target_volume_db = DEFAULT_TARGET_VOLUME_DB
-		self.processed_count = 0
 		self.destination_folder = ""
 		self.output_keep_same_folder = True
 		self.output_destination_folder = ""
@@ -132,25 +133,36 @@ class MP3GainDialog(wx.Dialog):
 		self.Bind(wx.EVT_CLOSE, self.on_close)
 		wx.CallAfter(self.file_listbox.SetFocus)
 
-	def _expand_to_mp3_files(self, selected_files):
-		"""Expand any selected folders into their contained .mp3 files (recursively, so album subfolders nested inside a main folder are included too) and drop non-mp3 entries, since MP3 Gain only operates on MP3 audio."""
+	def post(self, handler, *args):
+		wx.CallAfter(self.run_if_open, handler, *args)
+
+	def run_if_open(self, handler, *args):
+		if self.is_closed:
+			return
+		handler(*args)
+
+	def register_process(self, process):
+		self.ffmpeg_process = process
+
+	def _expand_to_gain_files(self, selected_files):
+		"""Expand any selected folders into their contained .mp3/.wav files (recursively, so album subfolders nested inside a main folder are included too) and drop unsupported entries, since MP3 Gain only operates on MP3 and WAV audio."""
 		expandedFiles = []
 		for path in selected_files or []:
 			if os.path.isdir(path):
-				for filePath in self._scan_folder_for_mp3s(path):
+				for filePath in self._scan_folder_for_gain_files(path):
 					expandedFiles.append(filePath)
 					self.fileImportRoot[filePath] = path
-			elif path.lower().endswith(".mp3"):
+			elif path.lower().endswith(SUPPORTED_GAIN_EXTENSIONS):
 				expandedFiles.append(path)
 		return expandedFiles
 
-	def _scan_folder_for_mp3s(self, folder_path):
-		"""Walk a folder tree and return every .mp3 file found, including ones nested inside album subfolders."""
+	def _scan_folder_for_gain_files(self, folder_path):
+		"""Walk a folder tree and return every .mp3/.wav file found, including ones nested inside album subfolders."""
 		foundFiles = []
 		try:
 			for root, dirs, files in os.walk(folder_path):
 				for name in sorted(files):
-					if name.lower().endswith(".mp3"):
+					if name.lower().endswith(SUPPORTED_GAIN_EXTENSIONS):
 						foundFiles.append(os.path.join(root, name))
 		except OSError as e:
 			log.error(f"MP3 Gain failed to scan folder {folder_path}: {e}")
@@ -160,7 +172,7 @@ class MP3GainDialog(wx.Dialog):
 		main_sizer = wx.BoxSizer(wx.VERTICAL)
 
 		# Title 1 + 2: Browse buttons and file list
-		file_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("MP3 Files"))
+		file_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("MP3/WAV Files"))
 		browse_btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.browse_btn = wx.Button(self, label=_("Browse Files..."))
 		self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
@@ -253,8 +265,8 @@ class MP3GainDialog(wx.Dialog):
 		self.file_listbox.Set([self.get_file_display_name(f) for f in self.selected_files])
 
 	def on_browse(self, event):
-		wildcard = _("MP3 files (*.mp3)|*.mp3")
-		with wx.FileDialog(self, _("Select MP3 files"), wildcard=wildcard,
+		wildcard = _("Audio files (*.mp3;*.wav)|*.mp3;*.wav")
+		with wx.FileDialog(self, _("Select MP3/WAV files"), wildcard=wildcard,
 							style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE) as dlg:
 			if dlg.ShowModal() == wx.ID_OK:
 				for path in dlg.GetPaths():
@@ -265,10 +277,10 @@ class MP3GainDialog(wx.Dialog):
 		wx.CallAfter(self.file_listbox.SetFocus)
 
 	def on_browse_folder(self, event):
-		with wx.DirDialog(self, _("Select a folder containing MP3 files")) as dlg:
+		with wx.DirDialog(self, _("Select a folder containing MP3/WAV files")) as dlg:
 			if dlg.ShowModal() == wx.ID_OK:
 				folderPath = dlg.GetPath()
-				foundFiles = self._scan_folder_for_mp3s(folderPath)
+				foundFiles = self._scan_folder_for_gain_files(folderPath)
 				addedCount = 0
 				for filePath in foundFiles:
 					if filePath not in self.selected_files:
@@ -278,7 +290,7 @@ class MP3GainDialog(wx.Dialog):
 				self.refresh_file_list()
 				self.SetTitle(_("MP3 Gain: {} files").format(len(self.selected_files)))
 				if addedCount == 0:
-					ui.message(_("No MP3 files found in the selected folder."))
+					ui.message(_("No MP3 or WAV files found in the selected folder."))
 		wx.CallAfter(self.file_listbox.SetFocus)
 
 	def on_toggle_keep_same_folder(self, event):
@@ -286,8 +298,8 @@ class MP3GainDialog(wx.Dialog):
 		self.save_settings()
 
 	def on_destination_text_changed(self, event):
+		# Only remembered here; it is written to disk when the folder is used or the dialog closes.
 		self.destination_folder = self.dest_folder_ctrl.GetValue()
-		self.save_settings()
 		event.Skip()
 
 	def update_destination_visibility(self):
@@ -331,34 +343,35 @@ class MP3GainDialog(wx.Dialog):
 			ui.message(_("MP3 Gain is already processing files"))
 			return
 		if not self.selected_files and action != self.ACTION_CLEAR_ANALYSIS:
-			ui.message(_("Please select MP3 files first, using the Browse button."))
+			ui.message(_("Please select MP3 or WAV files first, using the Browse button."))
 			return
 		if action == self.ACTION_CLEAR_ANALYSIS:
 			self.analysisResults.clear()
 			self.refresh_file_list()
 			ui.message(_("Analysis cleared"))
 			return
+		if not os.path.exists(self.ffmpeg_exe):
+			ui.message(_("ffmpeg.exe not found"))
+			return
+
+		writesAudio = action in (self.ACTION_APPLY_TRACK, self.ACTION_APPLY_ALBUM)
+		keepSameFolder = self.keep_same_folder_checkbox.GetValue()
+		self.destination_folder = self.dest_folder_ctrl.GetValue().strip()
+		# A destination that was asked for is never silently swapped for the source folder.
+		if writesAudio and not keepSameFolder and not self.destination_folder:
+			ui.message(_("Please choose a destination folder, or turn on Keep in Same Folder."))
+			return
 
 		self.current_action = action
 		self.target_volume_db = self.target_volume_ctrl.GetValue()
-		self.output_keep_same_folder = self.keep_same_folder_checkbox.GetValue()
+		self.output_keep_same_folder = keepSameFolder
 		self.output_destination_folder = self.destination_folder
-		self.processed_count = 0
+		self.save_settings()
 
-		if action in (self.ACTION_ALBUM_ANALYSIS, self.ACTION_APPLY_ALBUM):
-			# Album-level actions need every file's loudness measured together
-			# before any per-file gain can be computed, so they run as one
-			# background job rather than through the per-file queue below.
-			self.set_ui_processing_state(True)
-			self.currently_processing = True
-			threading.Thread(target=self.run_album_job, args=(action,), daemon=True).start()
-			return
-
-		for file_path in self.selected_files:
-			self.processing_queue.put(file_path)
+		self.cancel_event.clear()
 		self.currently_processing = True
 		self.set_ui_processing_state(True)
-		self.process_next_file()
+		threading.Thread(target=self.run_action, args=(action,), daemon=True).start()
 
 	def set_ui_processing_state(self, isProcessing):
 		self.check_btn.Enable(not isProcessing)
@@ -367,135 +380,165 @@ class MP3GainDialog(wx.Dialog):
 		self.browse_folder_btn.Enable(not isProcessing)
 		self.progress_bar.SetValue(0)
 
-	def process_next_file(self):
-		if self.processing_queue.empty():
-			self.currently_processing = False
-			wx.CallAfter(self.on_batch_complete)
-			return
-		file_path = self.processing_queue.get()
-		wx.CallAfter(self.status_label.SetLabel, _("Processing: {}").format(os.path.basename(file_path)))
-		threading.Thread(target=self.run_single_file_job, args=(file_path, self.current_action), daemon=True).start()
-
-	def run_single_file_job(self, file_path, action):
+	def run_action(self, action):
+		okCount = failCount = 0
 		try:
-			if action == self.ACTION_TRACK_ANALYSIS:
-				self.do_track_analysis(file_path)
-			elif action == self.ACTION_APPLY_TRACK:
-				self.do_apply_gain(file_path, isAlbumMode=False)
-		except (OSError, subprocess.SubprocessError) as e:
-			log.error(f"MP3 Gain error processing {file_path}: {e}")
-			wx.CallAfter(ui.message, _("Failed to process {}").format(os.path.basename(file_path)))
-		finally:
-			wx.CallAfter(self.advance_after_file)
+			if action in (self.ACTION_ALBUM_ANALYSIS, self.ACTION_APPLY_ALBUM):
+				okCount, failCount = self.run_album_job(action)
+			else:
+				okCount, failCount = self.run_track_job(action)
+		except OSError as e:
+			log.error(f"MP3 Gain error: {e}")
+			failCount += 1
+		if not self.cancel_event.is_set():
+			self.post(self.on_batch_complete, okCount, failCount)
 
-	def advance_after_file(self):
-		self.processed_count += 1
-		total = max(len(self.selected_files), 1)
-		progress = int((self.processed_count / total) * 100)
-		self.progress_bar.SetValue(min(progress, 100))
-		self.process_next_file()
+	def run_track_job(self, action):
+		files = list(self.selected_files)
+		okCount = failCount = 0
+		for index, file_path in enumerate(files):
+			if self.cancel_event.is_set():
+				break
+			self.post(self.status_label.SetLabel, _("Processing: {}").format(os.path.basename(file_path)))
+			if action == self.ACTION_TRACK_ANALYSIS:
+				succeeded = self.do_track_analysis(file_path)
+			else:
+				succeeded = self.do_apply_gain(file_path, isAlbumMode=False)
+			if succeeded:
+				okCount += 1
+			else:
+				failCount += 1
+			self.post(self.progress_bar.SetValue, min(int(((index + 1) / len(files)) * 100), 100))
+		return okCount, failCount
 
 	def do_track_analysis(self, file_path):
-		measuredDb = measure_mean_volume(self.ffmpeg_exe, file_path)
+		measuredDb = measure_mean_volume(self.ffmpeg_exe, file_path, self.register_process)
+		if self.cancel_event.is_set():
+			return False
 		if measuredDb is None:
 			log.error(f"MP3 Gain could not measure volume for {file_path}")
-			wx.CallAfter(ui.message, _("Could not analyze {}").format(os.path.basename(file_path)))
-			return
-		trackDb = measuredDb + LOUDNESS_REFERENCE_OFFSET_DB
-		self.analysisResults[file_path] = trackDb
-		wx.CallAfter(self.refresh_file_list)
+			self.post(ui.message, limitSpokenText(_("Could not analyze {}").format(os.path.basename(file_path))))
+			return False
+		self.analysisResults[file_path] = measuredDb + LOUDNESS_REFERENCE_OFFSET_DB
+		self.post(self.refresh_file_list)
+		return True
 
 	def do_apply_gain(self, file_path, isAlbumMode, albumTrackDb=None):
 		trackDb = albumTrackDb if isAlbumMode else self.analysisResults.get(file_path)
 		if trackDb is None:
-			measuredDb = measure_mean_volume(self.ffmpeg_exe, file_path)
+			measuredDb = measure_mean_volume(self.ffmpeg_exe, file_path, self.register_process)
+			if self.cancel_event.is_set():
+				return False
 			if measuredDb is None:
-				wx.CallAfter(ui.message, _("Could not analyze {}").format(os.path.basename(file_path)))
-				return
+				self.post(ui.message, limitSpokenText(_("Could not analyze {}").format(os.path.basename(file_path))))
+				return False
 			trackDb = measuredDb + LOUDNESS_REFERENCE_OFFSET_DB
 			self.analysisResults[file_path] = trackDb
 
 		gainDb = self.target_volume_db - trackDb
-		bitrateKbps = get_audio_bitrate_kbps(self.ffprobe_exe, file_path)
+		# Preserve the source format on output: an MP3 in stays MP3 (at its
+		# detected source bitrate), a WAV in stays WAV (PCM), rather than
+		# forcing every result through the MP3 encoder.
+		sourceExtension = os.path.splitext(file_path)[1].lower().lstrip(".")
+		if sourceExtension == "wav":
+			codecArgs = ["-c:a", "pcm_s16le"]
+		else:
+			bitrateKbps = get_audio_bitrate_kbps(self.ffprobe_exe, file_path)
+			codecArgs = ["-c:a", "libmp3lame", "-b:a", f"{bitrateKbps}k"]
+
+		# A positive gain can push peaks past 0 dBFS, which would clip audibly,
+		# so a limiter is chained on after the volume change.
+		audioFilter = f"volume={gainDb:.2f}dB"
+		if gainDb > 0:
+			audioFilter += ",alimiter=level_in=1:level_out=1:limit=0.99"
 
 		outputDir = self.get_output_directory(file_path)
+		if outputDir is None:
+			self.post(ui.message, limitSpokenText(_("Could not create the destination folder for {}").format(os.path.basename(file_path))))
+			return False
 		baseName = "{}_gain_{}dB".format(os.path.splitext(os.path.basename(file_path))[0], round(self.target_volume_db))
-		outputFileName = get_unique_filename(outputDir, baseName, "mp3")
-		outputPath = os.path.join(outputDir, outputFileName)
+		outputPath = os.path.join(outputDir, get_unique_filename(outputDir, baseName, sourceExtension))
+		partPath = partPathFor(outputPath)
 
-		cmd = [
-			self.ffmpeg_exe,
-			"-i", file_path,
-			"-af", f"volume={gainDb}dB",
-			"-c:a", "libmp3lame",
-			"-b:a", f"{bitrateKbps}k",
-			"-y",
-			outputPath,
-		]
+		command = [self.ffmpeg_exe, "-hide_banner", "-i", file_path, "-af", audioFilter] + codecArgs + ["-y", partPath]
 		try:
-			result = subprocess.run(
-				cmd,
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
-				creationflags=subprocess.CREATE_NO_WINDOW,
-				text=True,
-				encoding='utf-8',
-				errors='ignore',
-				timeout=120,
-			)
-			if result.returncode != 0 or not os.path.exists(outputPath):
-				log.error(f"MP3 Gain ffmpeg failed for {file_path}: {result.stderr}")
-				wx.CallAfter(ui.message, _("Failed to apply gain to {}").format(os.path.basename(file_path)))
-				if os.path.exists(outputPath):
-					os.remove(outputPath)
-				return
-			wx.CallAfter(ui.message, _("Created {name} at {target:.1f} dB").format(name=os.path.basename(outputPath), target=self.target_volume_db))
-		except subprocess.TimeoutExpired:
-			log.error(f"MP3 Gain ffmpeg timed out for {file_path}")
-			wx.CallAfter(ui.message, _("Timed out applying gain to {}").format(os.path.basename(file_path)))
-			if os.path.exists(outputPath):
-				os.remove(outputPath)
+			exitCode, stderrLines = runFfmpeg(command, outputDir, 0, lambda percent: None, self.register_process)
+		except OSError as e:
+			log.error(f"MP3 Gain could not run ffmpeg for {file_path}: {e}")
+			removeQuietly(partPath)
+			self.post(ui.message, limitSpokenText(_("Failed to apply gain to {}").format(os.path.basename(file_path))))
+			return False
+
+		if self.cancel_event.is_set():
+			removeQuietly(partPath)
+			return False
+		if exitCode != 0 or not os.path.exists(partPath):
+			log.error(f"MP3 Gain ffmpeg failed for {file_path}: " + " | ".join(line.strip() for line in stderrLines))
+			removeQuietly(partPath)
+			self.post(ui.message, limitSpokenText(
+				_("Failed to apply gain to {name}: {reason}").format(
+					name=os.path.basename(file_path), reason=summarizeFfmpegError(stderrLines))
+			))
+			return False
+		try:
+			os.replace(partPath, outputPath)
+		except OSError as e:
+			log.error(f"MP3 Gain could not move {partPath} to {outputPath}: {e}")
+			removeQuietly(partPath)
+			self.post(ui.message, limitSpokenText(_("Failed to apply gain to {}").format(os.path.basename(file_path))))
+			return False
+		self.post(ui.message, limitSpokenText(
+			_("Created {name} at {target:.1f} dB").format(name=os.path.basename(outputPath), target=self.target_volume_db)
+		))
+		return True
 
 	def get_output_directory(self, file_path):
-		"""Resolve where Apply should write its output, falling back to the source folder if a configured destination is missing or unusable. When the file came from a folder import, its relative album subfolder (e.g. b\\ or c\\) is replicated under a custom destination so albums stay separated there too, instead of being dumped together flat."""
+		"""Resolve where Apply should write its output, or None if a requested destination cannot be created. When the file came from a folder import, its relative album subfolder (e.g. b\\ or c\\) is replicated under a custom destination so albums stay separated there too, instead of being dumped together flat."""
 		if self.output_keep_same_folder:
 			return os.path.dirname(file_path)
-		if self.output_destination_folder:
-			targetDir = self.output_destination_folder
-			importRoot = self.fileImportRoot.get(file_path)
-			if importRoot:
-				relSubdir = os.path.relpath(os.path.dirname(file_path), importRoot)
-				if relSubdir != ".":
-					targetDir = os.path.join(targetDir, relSubdir)
-			try:
-				os.makedirs(targetDir, exist_ok=True)
-				return targetDir
-			except OSError as e:
-				log.error(f"MP3 Gain failed to create destination folder {targetDir}: {e}")
-		return os.path.dirname(file_path)
+		targetDir = self.output_destination_folder
+		importRoot = self.fileImportRoot.get(file_path)
+		if importRoot:
+			relSubdir = os.path.relpath(os.path.dirname(file_path), importRoot)
+			if relSubdir != ".":
+				targetDir = os.path.join(targetDir, relSubdir)
+		try:
+			os.makedirs(targetDir, exist_ok=True)
+		except OSError as e:
+			log.error(f"MP3 Gain failed to create destination folder {targetDir}: {e}")
+			return None
+		return targetDir
 
 	def run_album_job(self, action):
 		"""Group selected files by their containing folder -- mirroring mp3gain's own semantics, where importing a parent folder full of album subfolders treats each subfolder as its own album -- then measure and apply one uniform gain per group, rather than blending unrelated albums together into a single average."""
 		filesByAlbumFolder = {}
-		for file_path in self.selected_files:
-			albumFolder = os.path.dirname(file_path)
-			filesByAlbumFolder.setdefault(albumFolder, []).append(file_path)
+		for file_path in list(self.selected_files):
+			filesByAlbumFolder.setdefault(os.path.dirname(file_path), []).append(file_path)
 
 		albumCount = len(filesByAlbumFolder)
 		processedAlbums = 0
 		analyzedAlbumCount = 0
+		okCount = failCount = 0
 
 		for albumFolder, albumFiles in filesByAlbumFolder.items():
+			if self.cancel_event.is_set():
+				break
 			measuredVolumes = {}
 			for file_path in albumFiles:
-				wx.CallAfter(self.status_label.SetLabel, _("Analyzing: {}").format(os.path.basename(file_path)))
-				measuredDb = measure_mean_volume(self.ffmpeg_exe, file_path)
+				if self.cancel_event.is_set():
+					break
+				self.post(self.status_label.SetLabel, _("Analyzing: {}").format(os.path.basename(file_path)))
+				measuredDb = measure_mean_volume(self.ffmpeg_exe, file_path, self.register_process)
 				if measuredDb is not None:
 					measuredVolumes[file_path] = measuredDb
+				else:
+					failCount += 1
+			if self.cancel_event.is_set():
+				break
 
+			processedAlbums += 1
 			if not measuredVolumes:
 				log.error(f"MP3 Gain could not analyze any files in album folder {albumFolder}")
-				processedAlbums += 1
 				continue
 
 			albumMeasuredDb = sum(measuredVolumes.values()) / len(measuredVolumes)
@@ -503,41 +546,52 @@ class MP3GainDialog(wx.Dialog):
 			for file_path in measuredVolumes:
 				self.analysisResults[file_path] = albumTrackDb
 			analyzedAlbumCount += 1
-			wx.CallAfter(self.refresh_file_list)
+			self.post(self.refresh_file_list)
 
 			if action == self.ACTION_APPLY_ALBUM:
 				for file_path in measuredVolumes:
-					self.do_apply_gain(file_path, isAlbumMode=True, albumTrackDb=albumTrackDb)
+					if self.cancel_event.is_set():
+						break
+					if self.do_apply_gain(file_path, isAlbumMode=True, albumTrackDb=albumTrackDb):
+						okCount += 1
+					else:
+						failCount += 1
+			else:
+				okCount += len(measuredVolumes)
+			self.post(self.progress_bar.SetValue, min(int((processedAlbums / albumCount) * 100), 100))
 
-			processedAlbums += 1
-			progressValue = int((processedAlbums / albumCount) * 100)
-			wx.CallAfter(self.progress_bar.SetValue, min(progressValue, 100))
+		if analyzedAlbumCount and action == self.ACTION_ALBUM_ANALYSIS:
+			self.post(ui.message, _("Album analysis complete for {count} folder(s)").format(count=analyzedAlbumCount))
+		return okCount, failCount
 
-		if analyzedAlbumCount == 0:
-			wx.CallAfter(ui.message, _("Could not analyze any of the selected files"))
-			wx.CallAfter(self.on_batch_complete)
-			return
-
-		if action == self.ACTION_ALBUM_ANALYSIS:
-			wx.CallAfter(ui.message, _("Album analysis complete for {count} folder(s)").format(count=analyzedAlbumCount))
-		wx.CallAfter(self.on_batch_complete)
-
-	def on_batch_complete(self):
+	def on_batch_complete(self, okCount, failCount):
+		self.currently_processing = False
 		self.set_ui_processing_state(False)
+		if okCount == 0 and failCount > 0:
+			self.status_label.SetLabel(_("Done"))
+			tones.beep(300, 300)
+			ui.message(_("Could not process any of the selected files"))
+			return
 		self.status_label.SetLabel(_("Done"))
-		try:
-			tones.beep(1000, 200)
-		except Exception:
-			pass
-		ui.message(_("MP3 Gain processing complete"))
+		tones.beep(1000, 200)
+		if failCount:
+			ui.message(_("MP3 Gain finished: {ok} done, {failed} failed").format(ok=okCount, failed=failCount))
+		else:
+			ui.message(_("MP3 Gain processing complete"))
+
+	def stop_processing(self):
+		self.is_closed = True
+		self.cancel_event.set()
+		process = self.ffmpeg_process
+		if process and process.poll() is None:
+			try:
+				process.terminate()
+			except OSError as e:
+				log.debugWarning(f"MP3 Gain could not stop ffmpeg: {e}")
 
 	def on_cancel(self, event):
-		while not self.processing_queue.empty():
-			try:
-				self.processing_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.currently_processing = False
+		self.stop_processing()
+		self.save_settings()
 		self.EndModal(wx.ID_CANCEL)
 
 	def on_close(self, event):

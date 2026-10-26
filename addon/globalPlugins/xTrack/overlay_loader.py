@@ -1,6 +1,4 @@
 # overlay_loader.py
-# Copyright (C) 2026 Chai Chaimee
-# Licensed under GNU General Public License. See COPYING.txt for details.
 
 import os
 import sys
@@ -36,6 +34,15 @@ def _logWarning(message):
 	except ImportError:
 		import builtins
 		builtins.print("[overlay_loader] WARNING: %s" % message)
+
+
+def _logInfo(message):
+	try:
+		from logHandler import log
+		log.info("[overlay_loader] %s" % message)
+	except ImportError:
+		import builtins
+		builtins.print("[overlay_loader] %s" % message)
 
 
 def overlayBinaries():
@@ -105,11 +112,10 @@ def overlayBinaries():
 
 	try:
 		import pyaudiowpatch  # noqa: F401
-		_logWarning("Successfully loaded pyaudiowpatch for %s" % runtimeArch)
-	except ImportError as e:
+		_logInfo("Successfully loaded pyaudiowpatch for %s" % runtimeArch)
+	except (ImportError, OSError) as e:
+		# A missing or mismatched .pyd/DLL surfaces as ImportError or OSError.
 		_logWarning("pyaudiowpatch import failed: %s" % e)
-	except Exception as e:
-		_logWarning("Unexpected error during import: %s" % e)
 
 
 overlayBinaries()

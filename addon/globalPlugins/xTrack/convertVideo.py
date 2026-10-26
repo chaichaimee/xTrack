@@ -1,16 +1,18 @@
+# convertVideo.py
+
 import wx
 import os
 import subprocess
 import threading
 import ui
 import tones
-import queue
 from logHandler import log
 import addonHandler
 
 addonHandler.initTranslation()
 
-from .xTrackCore import load_config, save_config, get_config_path, get_unique_filename
+from .xTrackCore import load_config, save_config, get_config_path
+from .ffmpegSupport import limitSpokenText, summarizeFfmpegError, removeQuietly, partPathFor, runFfmpeg
 
 def get_video_info(libs_path, file_path):
 	ffprobe = os.path.join(libs_path, "ffprobe.exe")
@@ -63,7 +65,7 @@ def get_video_info(libs_path, file_path):
 				except ValueError:
 					pass
 		return width, height, fps, duration
-	except Exception as e:
+	except (OSError, subprocess.SubprocessError, ValueError) as e:
 		log.error(f"get_video_info error: {e}")
 		return 0, 0, None, 0
 
@@ -93,26 +95,42 @@ def format_size(bytes):
 	else:
 		return f"{bytes/(1024*1024*1024):.1f} GB"
 
+# Folder, next to the originals, that holds the converted files when the user asks for a separate one.
+OUTPUT_SUBFOLDER_NAME = "Converted"
+
+
 class ConvertVideoDialog(wx.Dialog):
 	def __init__(self, parent, selected_files, libs_path):
 		super().__init__(parent, title=_("Convert Video"))
-		self.selected_files = selected_files
+		self.selected_files = list(selected_files)
 		self.libs_path = libs_path
 		self.output_path = os.path.dirname(self.selected_files[0]) if self.selected_files else os.getcwd()
 		self.config_path = get_config_path()
 		self.ffmpeg_process = None
-		self.conversion_queue = queue.Queue()
-		self.is_processing = False
+		self.is_running = False
+		self.is_closed = False
+		self.info_ready = False
+		self.cancel_event = threading.Event()
 		self.file_info = {}
 		self.current_index = 0
 		self.user_selected_target = None
-		self.last_announced_progress = -10  # Store last announced percentage to avoid repeats
+		self.last_announced_progress = -10
+		self.used_subfolder = False
 		self.init_ui()
 		self.SetTitle(_("Convert Video: {} files").format(len(self.selected_files)))
 		self.load_settings()
 		self.Bind(wx.EVT_CLOSE, self.on_close)
 		self.Bind(wx.EVT_CHAR_HOOK, self.on_key)
-		self._load_all_info()
+		self.status.SetLabel(_("Reading file information..."))
+		threading.Thread(target=self._load_all_info, daemon=True).start()
+
+	def post(self, handler, *args):
+		wx.CallAfter(self.run_if_open, handler, *args)
+
+	def run_if_open(self, handler, *args):
+		if self.is_closed:
+			return
+		handler(*args)
 
 	def on_key(self, event):
 		if event.GetKeyCode() == wx.WXK_ESCAPE:
@@ -121,29 +139,35 @@ class ConvertVideoDialog(wx.Dialog):
 			event.Skip()
 
 	def _load_all_info(self):
-		wx.BeginBusyCursor()
-		try:
-			for path in self.selected_files:
-				w, h, fps, dur_sec = get_video_info(self.libs_path, path)
-				size_bytes = os.path.getsize(path) if os.path.exists(path) else 0
-				size_str = format_size(size_bytes)
-				dur_str = format_duration(dur_sec)
-				fps_str = f"{fps:.2f}fps" if fps else "?"
-				self.file_info[path] = {
-					'duration': dur_str,
-					'size': size_str,
-					'width': w,
-					'height': h,
-					'fps': fps,
-					'duration_sec': dur_sec
-				}
-				log.info(f"Loaded {os.path.basename(path)}: {w}x{h}, {fps_str}, dur={dur_sec}")
-		finally:
-			wx.EndBusyCursor()
+		for path in self.selected_files:
+			if self.is_closed:
+				return
+			w, h, fps, dur_sec = get_video_info(self.libs_path, path)
+			try:
+				size_bytes = os.path.getsize(path)
+			except OSError:
+				size_bytes = 0
+			self.file_info[path] = {
+				'duration': format_duration(dur_sec),
+				'size': format_size(size_bytes),
+				'width': w,
+				'height': h,
+				'fps': fps,
+				'duration_sec': dur_sec,
+			}
+			log.info(f"Loaded {os.path.basename(path)}: {w}x{h}, fps={fps}, dur={dur_sec}")
+		self.info_ready = True
+		self.post(self._on_info_loaded)
+
+	def _on_info_loaded(self):
+		self.status.SetLabel("")
+		selection = self.file_list.GetSelection()
 		self.update_file_listbox()
-		if self.selected_files:
-			self.update_current_info(0)
-			self.file_list.SetSelection(0)
+		if not self.selected_files:
+			return
+		index = selection if selection != wx.NOT_FOUND else 0
+		self.update_current_info(index)
+		self.file_list.SetSelection(index)
 
 	def init_ui(self):
 		main_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -220,6 +244,12 @@ class ConvertVideoDialog(wx.Dialog):
 		settings_sizer.Add(audio_sizer, 0, wx.EXPAND | wx.ALL, 5)
 
 		main_sizer.Add(settings_sizer, 0, wx.EXPAND | wx.ALL, 5)
+
+		# Unchecked by default: the converted files are saved next to the originals.
+		self.subfolder_checkbox = wx.CheckBox(self, label=_("Save converted files in a separate subfolder"))
+		self.subfolder_checkbox.SetValue(False)
+		self.subfolder_checkbox.SetToolTip(_("Unchecked: the converted files are saved together with the originals. Checked: they are saved in a subfolder named {}.").format(OUTPUT_SUBFOLDER_NAME))
+		main_sizer.Add(self.subfolder_checkbox, 0, wx.ALL, 5)
 
 		self.progress = wx.Gauge(self, range=100, style=wx.GA_HORIZONTAL)
 		main_sizer.Add(self.progress, 0, wx.EXPAND | wx.ALL, 5)
@@ -317,248 +347,248 @@ class ConvertVideoDialog(wx.Dialog):
 		cfg["ConvertVideoCodec"] = self.codec_combo.GetStringSelection()
 		save_config(self.config_path, cfg)
 
-	def on_convert(self, event):
-		self.save_settings()
-		try:
-			tones.beep(800, 200)
-		except Exception as beepError:
-			log.debug(f"Beep failed: {beepError}")
-		for path in self.selected_files:
-			self.conversion_queue.put(path)
-		self.is_processing = True
-		self.convert_btn.Enable(False)
-		self.cancel_btn.Enable(False)
-		self.process_next()
+	def audio_args_for(self, outFormat, codecChoice, sampleRate, channels):
+		args = []
+		if sampleRate != "Keep Original":
+			args.extend(["-ar", sampleRate.replace(" Hz", "")])
+		if channels == "Stereo (2)":
+			args.extend(["-ac", "2"])
+		elif channels == "Mono (1)":
+			args.extend(["-ac", "1"])
 
-	def process_next(self):
-		if self.conversion_queue.empty():
-			self.is_processing = False
-			wx.CallAfter(self.on_all_done)
-			return
+		# Containers only accept certain audio codecs: WebM needs Vorbis (a
+		# copied or AAC stream is rejected) and MP4/MOV cannot hold Vorbis.
+		if outFormat == "webm":
+			codecChoice = "Vorbis"
+		elif outFormat in ("mp4", "mov") and codecChoice == "Vorbis":
+			codecChoice = "AAC (Recommended)"
 
-		path = self.conversion_queue.get()
-		idx = self.selected_files.index(path)
-		self.update_current_info(idx)
-
-		info = self.file_info.get(path, {})
-		src_w = info.get('width', 0)
-		src_h = info.get('height', 0)
-		if src_w == 0 or src_h == 0:
-			log.error(f"Cannot get resolution for {path}")
-			self.on_failure(_("Cannot read video resolution"), path)
-			return
-
-		target_str = self.target_combo.GetStringSelection()
-		log.info(f"Target string from combo: {target_str}")
-
-		if target_str == "Keep Original (No resize)":
-			target_w, target_h = src_w, src_h
-			do_resize = False
+		if codecChoice == "AAC (Recommended)":
+			args.extend(["-c:a", "aac", "-b:a", "192k"])
+		elif codecChoice == "MP3":
+			args.extend(["-c:a", "libmp3lame", "-b:a", "192k"])
+		elif codecChoice == "Vorbis":
+			args.extend(["-c:a", "libvorbis", "-b:a", "192k"])
 		else:
-			try:
-				dim_part = target_str.split()[0]
-				target_w, target_h = map(int, dim_part.split('x'))
-				if target_w % 2 != 0:
-					target_w -= 1
-				if target_h % 2 != 0:
-					target_h -= 1
-			except (ValueError, IndexError):
-				log.error(f"Invalid target string: {target_str}")
-				self.on_failure(_("Invalid target size"), path)
-				return
-			do_resize = (src_w > target_w or src_h > target_h)
+			args.extend(["-c:a", "copy"])
+		return args
 
-		out_fmt = self.format_combo.GetStringSelection().lower()
-		ext_map = {"mp4":"mp4", "mkv":"mkv", "mov":"mov", "avi":"avi", "webm":"webm"}
-		out_ext = ext_map.get(out_fmt, "mp4")
+	def build_jobs(self):
+		ffmpegPath = os.path.join(self.libs_path, "ffmpeg.exe")
+		if not os.path.exists(ffmpegPath):
+			ui.message(_("ffmpeg.exe not found"))
+			return []
 
-		base = os.path.splitext(os.path.basename(path))[0]
-		out_name = get_unique_filename(self.output_path, base, out_ext)
-		out_path = os.path.join(self.output_path, out_name)
-
-		ffmpeg = os.path.join(self.libs_path, "ffmpeg.exe")
-		if not os.path.exists(ffmpeg):
-			self.on_failure(_("ffmpeg.exe not found"), path)
-			return
-
-		cmd = [ffmpeg, "-i", path, "-progress", "pipe:1", "-nostats", "-y"]
-
-		if do_resize:
-			cmd.extend(["-vf", f"scale={target_w}:{target_h}:force_original_aspect_ratio=decrease,format=yuv420p,crop=trunc(iw/2)*2:trunc(ih/2)*2"])
-			if out_fmt in ["mp4", "mkv", "mov", "avi"]:
-				# "veryfast" keeps the same -crf quality target as "medium" but
-				# encodes several times quicker; the trade-off is a somewhat
-				# larger file for the same visual quality, not lower quality.
-				cmd.extend(["-c:v", "libx264", "-preset", "veryfast", "-crf", "23"])
-			elif out_fmt == "webm":
-				cmd.extend(["-c:v", "libvpx", "-crf", "10", "-b:v", "1M"])
-		else:
-			cmd.extend(["-c:v", "copy"])
-
+		targetString = self.target_combo.GetStringSelection()
+		outFormat = self.format_combo.GetStringSelection().lower()
+		if outFormat not in ("mp4", "mkv", "mov", "avi", "webm"):
+			outFormat = "mp4"
+		audioArgs = self.audio_args_for(
+			outFormat,
+			self.codec_combo.GetStringSelection(),
+			self.sample_rate_combo.GetStringSelection(),
+			self.channels_combo.GetStringSelection(),
+		)
 		# Leave one core free for the rest of the system (document editors,
 		# NVDA itself, etc.) instead of letting x264 claim every core.
 		# os.cpu_count() is used instead of the multiprocessing module,
 		# since multiprocessing is not available in NVDA's bundled Python.
 		encoderThreads = max(1, (os.cpu_count() or 4) - 1)
-		cmd.extend(["-threads", str(encoderThreads)])
 
-		sr = self.sample_rate_combo.GetStringSelection()
-		if sr != "Keep Original":
-			cmd.extend(["-ar", sr.replace(" Hz", "")])
-		ch = self.channels_combo.GetStringSelection()
-		if ch == "Stereo (2)":
-			cmd.extend(["-ac", "2"])
-		elif ch == "Mono (1)":
-			cmd.extend(["-ac", "1"])
-		codec = self.codec_combo.GetStringSelection()
-		if codec == "AAC (Recommended)":
-			cmd.extend(["-c:a", "aac", "-b:a", "192k"])
-		elif codec == "MP3":
-			cmd.extend(["-c:a", "libmp3lame", "-b:a", "192k"])
-		elif codec == "Vorbis":
-			cmd.extend(["-c:a", "libvorbis", "-b:a", "192k"])
-		else:
-			cmd.extend(["-c:a", "copy"])
+		useSubfolder = self.subfolder_checkbox.GetValue()
+		outputDir = os.path.join(self.output_path, OUTPUT_SUBFOLDER_NAME) if useSubfolder else self.output_path
+		self.used_subfolder = useSubfolder
 
-		cmd.append(out_path)
+		jobs = []
+		reservedNames = set()
+		for listIndex, path in enumerate(self.selected_files):
+			info = self.file_info.get(path, {})
+			srcWidth = info.get('width', 0)
+			srcHeight = info.get('height', 0)
 
-		log.info(f"FFmpeg cmd: {' '.join(cmd)}")
-		log.info(f"Resize: {do_resize}, src={src_w}x{src_h}, target={target_w}x{target_h}")
+			doResize = False
+			targetWidth = targetHeight = 0
+			if targetString != "Keep Original (No resize)":
+				try:
+					targetWidth, targetHeight = map(int, targetString.split()[0].split('x'))
+				except (ValueError, IndexError):
+					log.error(f"Invalid target string: {targetString}")
+					ui.message(_("Invalid target size"))
+					return []
+				targetWidth -= targetWidth % 2
+				targetHeight -= targetHeight % 2
+				if srcWidth == 0 or srcHeight == 0:
+					ui.message(limitSpokenText(
+						_("Cannot read the video size of {}").format(os.path.basename(path))
+					))
+					return []
+				doResize = srcWidth > targetWidth or srcHeight > targetHeight
 
-		wx.CallAfter(self.status.SetLabel, _("Converting..."))
-		wx.CallAfter(self.progress.SetValue, 0)
-		self.last_announced_progress = -10  # Reset for each new file
+			baseName = os.path.splitext(os.path.basename(path))[0]
+			finalName = f"{baseName}.{outFormat}"
+			counter = 1
+			while os.path.join(outputDir, finalName).lower() in reservedNames or os.path.exists(os.path.join(outputDir, finalName)):
+				finalName = f"{baseName}_{counter}.{outFormat}"
+				counter += 1
+			reservedNames.add(os.path.join(outputDir, finalName).lower())
+			finalPath = os.path.join(outputDir, finalName)
+			partPath = partPathFor(finalPath)
 
-		dur_sec = info.get('duration_sec', 0)
+			# Only the first video stream and the audio streams are kept;
+			# subtitle streams are dropped because several containers reject them.
+			command = [ffmpegPath, "-hide_banner", "-i", path, "-map", "0:v:0", "-map", "0:a?", "-sn"]
+			command.extend(["-progress", "pipe:1", "-nostats", "-y"])
 
-		def run():
-			# Use threads to read both stdout and stderr to prevent blocking
-			# BELOW_NORMAL_PRIORITY_CLASS lets Windows favor whatever the user
-			# is actively doing (typing, browsing, etc.) over the encode, so a
-			# long conversion no longer makes the rest of the machine feel
-			# sluggish on older PCs.
-			self.ffmpeg_process = subprocess.Popen(
-				cmd,
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
-				creationflags=subprocess.CREATE_NO_WINDOW | subprocess.BELOW_NORMAL_PRIORITY_CLASS,
-				text=True,
-				encoding='utf-8',
-				errors='ignore',
-				bufsize=1
-			)
-
-			stdout_queue = queue.Queue()
-			stderr_queue = queue.Queue()
-
-			def reader(pipe, q):
-				for line in iter(pipe.readline, ''):
-					q.put(line)
-				pipe.close()
-
-			t_out = threading.Thread(target=reader, args=(self.ffmpeg_process.stdout, stdout_queue), daemon=True)
-			t_err = threading.Thread(target=reader, args=(self.ffmpeg_process.stderr, stderr_queue), daemon=True)
-			t_out.start()
-			t_err.start()
-
-			error_lines = []
-			while self.ffmpeg_process.poll() is None:
-				# Process stdout for progress
-				while not stdout_queue.empty():
-					line = stdout_queue.get_nowait()
-					if "out_time_ms=" in line:
-						try:
-							t_ms = int(line.split('=')[1])
-							cur_sec = t_ms / 1_000_000.0
-							if dur_sec > 0:
-								prog = int((cur_sec / dur_sec) * 100)
-								prog = min(100, max(0, prog))
-								wx.CallAfter(self.update_progress, prog)
-						except Exception as e:
-							log.debug(f"Progress parse error: {e}")
-
-				# Process stderr for errors (non-blocking)
-				while not stderr_queue.empty():
-					err_line = stderr_queue.get_nowait().strip()
-					if err_line:
-						log.debug(f"FFmpeg stderr: {err_line}")
-						error_lines.append(err_line)
-						# If fatal error detected, abort early
-						if "error" in err_line.lower() or "moov atom" in err_line.lower():
-							self.ffmpeg_process.terminate()
-							break
-
-				threading.Event().wait(0.1)
-
-			# Collect remaining stderr after process ends
-			while not stderr_queue.empty():
-				err_line = stderr_queue.get_nowait().strip()
-				if err_line:
-					error_lines.append(err_line)
-
-			retcode = self.ffmpeg_process.returncode
-			if retcode == 0:
-				wx.CallAfter(self.on_success, path, out_path)
-				wx.CallAfter(self.process_next)
+			if doResize:
+				command.extend(["-vf", f"scale={targetWidth}:{targetHeight}:force_original_aspect_ratio=decrease,format=yuv420p,crop=trunc(iw/2)*2:trunc(ih/2)*2"])
+				if outFormat == "webm":
+					command.extend(["-c:v", "libvpx", "-crf", "10", "-b:v", "1M"])
+				else:
+					# "veryfast" keeps the same -crf quality target as "medium" but
+					# encodes several times quicker; the trade-off is a somewhat
+					# larger file for the same visual quality, not lower quality.
+					command.extend(["-c:v", "libx264", "-preset", "veryfast", "-crf", "23"])
+			elif outFormat == "webm":
+				# A copied stream is almost never WebM-compatible.
+				command.extend(["-c:v", "libvpx", "-crf", "10", "-b:v", "1M"])
 			else:
-				error_msg = "\n".join(error_lines) if error_lines else "Unknown error"
-				wx.CallAfter(self.on_failure, error_msg, path)
-			self.ffmpeg_process = None
+				command.extend(["-c:v", "copy"])
 
-		threading.Thread(target=run, daemon=True).start()
+			command.extend(["-threads", str(encoderThreads)])
+			command.extend(audioArgs)
+			command.append(partPath)
+			log.info(f"FFmpeg cmd: {' '.join(command)}")
+			jobs.append((path, finalPath, partPath, command, listIndex, info.get('duration_sec', 0)))
+		return jobs
+
+	def on_convert(self, event):
+		if self.is_running:
+			return
+		if not self.info_ready:
+			ui.message(_("Still reading file information, please try again in a moment."))
+			return
+		jobs = self.build_jobs()
+		if not jobs:
+			return
+		self.save_settings()
+		tones.beep(800, 200)
+		self.is_running = True
+		self.cancel_event.clear()
+		self.convert_btn.Enable(False)
+		self.cancel_btn.Enable(False)
+		threading.Thread(target=self.run_queue, args=(jobs,), daemon=True).start()
+
+	def run_queue(self, jobs):
+		failure = None
+		for job in jobs:
+			if self.cancel_event.is_set():
+				break
+			sourcePath, finalPath, partPath, command, listIndex, durationSeconds = job
+			self.post(self.on_job_started, listIndex)
+			succeeded, reason = self.run_job(sourcePath, partPath, finalPath, command, durationSeconds)
+			if self.cancel_event.is_set():
+				break
+			if not succeeded:
+				failure = (sourcePath, reason)
+				break
+			self.post(self.on_success, sourcePath, finalPath)
+		if not self.cancel_event.is_set():
+			self.post(self.on_queue_finished, failure)
+
+	def run_job(self, sourcePath, partPath, finalPath, command, durationSeconds):
+		def registerProcess(process):
+			self.ffmpeg_process = process
+
+		try:
+			os.makedirs(os.path.dirname(finalPath), exist_ok=True)
+		except OSError as error:
+			log.error(f"xTrack: could not create the folder for {finalPath}: {error}")
+			return False, _("the folder for the converted files could not be created")
+
+		try:
+			# BELOW_NORMAL_PRIORITY_CLASS lets Windows favor whatever the user
+			# is actively doing over the encode, so a long conversion does not
+			# make the rest of the machine feel sluggish on older PCs.
+			exitCode, stderrLines = runFfmpeg(
+				command, self.output_path, durationSeconds,
+				lambda progress: self.post(self.update_progress, progress), registerProcess,
+				lowPriority=True,
+			)
+		except OSError as error:
+			log.error(f"xTrack: could not run ffmpeg for {sourcePath}: {error}")
+			removeQuietly(partPath)
+			return False, _("ffmpeg could not be started")
+
+		if self.cancel_event.is_set():
+			removeQuietly(partPath)
+			return False, ""
+		if exitCode == 0:
+			try:
+				os.replace(partPath, finalPath)
+			except OSError as error:
+				log.error(f"xTrack: could not move {partPath} to {finalPath}: {error}")
+				removeQuietly(partPath)
+				return False, _("the output file could not be written")
+			return True, ""
+		log.error(
+			f"Conversion failed for {sourcePath} (exit code {exitCode}): "
+			+ " | ".join(line.strip() for line in stderrLines)
+		)
+		removeQuietly(partPath)
+		return False, summarizeFfmpegError(stderrLines)
+
+	def on_job_started(self, listIndex):
+		self.update_current_info(listIndex)
+		self.file_list.SetSelection(listIndex)
+		self.last_announced_progress = -10
+		self.progress.SetValue(0)
+		self.status.SetLabel(_("Converting..."))
 
 	def update_progress(self, val):
 		self.progress.SetValue(val)
 		self.status.SetLabel(_("{}%").format(val))
-		# Check if value is multiple of 10 and not already announced
 		if val % 10 == 0 and val > 0 and val != self.last_announced_progress:
 			self.last_announced_progress = val
 			ui.message(_("Progress: {}%").format(val))
-			try:
-				tones.beep(800, 50)
-			except Exception as beepError:
-				log.debug(f"Beep failed: {beepError}")
+			tones.beep(800, 50)
 
-	def on_success(self, src_path, out_path):
-		ui.message(_("Conversion complete: {}").format(os.path.basename(out_path)))
+	def on_success(self, sourcePath, outPath):
+		ui.message(limitSpokenText(_("Conversion complete: {}").format(os.path.basename(outPath))))
 
-	def on_failure(self, error_msg, file_path):
-		ui.message(_("Conversion failed for {}: {}").format(os.path.basename(file_path), error_msg[:150]))
-		log.error(f"Conversion failed for {file_path}: {error_msg}")
+	def on_queue_finished(self, failure):
+		self.is_running = False
 		self.convert_btn.Enable(True)
 		self.cancel_btn.Enable(True)
-		self.is_processing = False
-		while not self.conversion_queue.empty():
-			try:
-				self.conversion_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.status.SetLabel(_("Conversion failed"))
-		wx.CallAfter(self.EndModal, wx.ID_CANCEL)
-
-	def on_all_done(self):
-		self.convert_btn.Enable(True)
-		self.cancel_btn.Enable(True)
+		if failure:
+			sourcePath, reason = failure
+			self.status.SetLabel(_("Conversion failed"))
+			tones.beep(300, 300)
+			ui.message(limitSpokenText(
+				_("Conversion failed for {name}: {reason}").format(name=os.path.basename(sourcePath), reason=reason)
+			))
+			return
 		self.status.SetLabel(_("All conversions finished"))
-		ui.message(_("All conversions finished"))
-		try:
-			tones.beep(1000, 200)
-		except Exception as beepError:
-			log.debug(f"Beep failed: {beepError}")
-		wx.CallAfter(self.EndModal, wx.ID_OK)
+		message = _("All conversions finished")
+		if self.used_subfolder:
+			message += ". " + _("Saved in the folder {}").format(OUTPUT_SUBFOLDER_NAME)
+		ui.message(limitSpokenText(message))
+		tones.beep(1000, 200)
+		self.EndModal(wx.ID_OK)
+
+	def stop_conversion(self):
+		self.is_closed = True
+		self.cancel_event.set()
+		process = self.ffmpeg_process
+		if process and process.poll() is None:
+			try:
+				process.terminate()
+			except OSError as error:
+				log.debugWarning(f"xTrack: could not stop ffmpeg: {error}")
 
 	def on_cancel(self, event):
-		if self.ffmpeg_process and self.ffmpeg_process.poll() is None:
-			self.ffmpeg_process.terminate()
-		while not self.conversion_queue.empty():
-			try:
-				self.conversion_queue.get_nowait()
-			except queue.Empty:
-				break
-		self.is_processing = False
+		self.stop_conversion()
 		self.EndModal(wx.ID_CANCEL)
 
 	def on_close(self, event):
-		self.on_cancel(event)
-
-
+		self.stop_conversion()
+		self.EndModal(wx.ID_CANCEL)

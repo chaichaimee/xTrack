@@ -1,3 +1,6 @@
+# recorder_backend.py
+# Copyright (C) 2026 Chai Chaimee
+# Licensed under GNU General Public License. See COPYING.txt for details.
 
 import os
 import wave
@@ -5,9 +8,11 @@ import threading
 import queue
 from datetime import datetime
 import struct
+import math
 import subprocess
 import time
 import ctypes
+import functools
 
 try:
 	import pyaudiowpatch as pyaudio
@@ -338,6 +343,104 @@ def list_audio_devices():
 	return {"microphones": microphones, "systemDevices": systemDevices}
 
 
+class MicLevelProcessor:
+	"""Adaptive noise gate and automatic level for one microphone stream.
+
+	Inexpensive microphones often deliver speech at only a few hundred units
+	of a 16-bit range, which records as very quiet audio. A gate with a
+	fixed threshold cannot tell such quiet speech from noise and silences
+	it, so this processor works relative to the noise it actually measures.
+	It never switches the sound off completely, and it only raises the
+	level while speech is present, so room noise between words is not
+	pumped up.
+	"""
+	TARGET_RMS = 3000.0
+	MAX_GAIN = 20.0
+	MIN_GAIN = 1.0
+	GATE_OPEN_RATIO = 2.0
+	GATE_CLOSED_GAIN = 0.3
+	MIN_NOISE_FLOOR = 3.0
+	MIN_SPEECH_RMS = 8.0
+	FLOOR_RISE_SECONDS = 30.0
+	WARMUP_SECONDS = 0.6
+	GATE_HOLD_SECONDS = 0.3
+	GATE_ATTACK_SECONDS = 0.005
+	GATE_RELEASE_SECONDS = 0.12
+	GAIN_ATTACK_SECONDS = 0.04
+	GAIN_RELEASE_SECONDS = 1.2
+	PEAK_LIMIT = 32000.0
+
+	def __init__(self, rate, channels, gate_enabled, auto_level_enabled):
+		self.rate = float(rate or 44100)
+		self.channels = max(1, int(channels or 1))
+		self.gate_enabled = bool(gate_enabled)
+		self.auto_level_enabled = bool(auto_level_enabled)
+		self.noise_floor = None
+		self.gate_gain = 1.0
+		self.level_gain = 1.0
+		self.elapsed = 0.0
+		self.gate_open_until = 0.0
+
+	@staticmethod
+	def _smooth(current, target, blockSeconds, timeConstant):
+		return target + (current - target) * math.exp(-blockSeconds / timeConstant)
+
+	def process(self, data):
+		if not data or len(data) < 2:
+			return data
+		sampleCount = len(data) // 2
+		samples = struct.unpack(f'<{sampleCount}h', data[:sampleCount * 2])
+		frames = sampleCount // self.channels
+		if frames == 0:
+			return data
+		blockSeconds = frames / self.rate
+		rms = (sum(s * s for s in samples) / sampleCount) ** 0.5
+		peak = max(max(samples), -min(samples))
+
+		warmingUp = self.elapsed < self.WARMUP_SECONDS
+		if self.noise_floor is None:
+			self.noise_floor = max(self.MIN_NOISE_FLOOR, rms)
+		elif rms < self.noise_floor:
+			self.noise_floor = max(self.MIN_NOISE_FLOOR, 0.7 * self.noise_floor + 0.3 * rms)
+		elif not warmingUp:
+			self.noise_floor += (rms - self.noise_floor) * min(1.0, blockSeconds / self.FLOOR_RISE_SECONDS)
+		self.elapsed += blockSeconds
+
+		speechPresent = rms > max(self.MIN_SPEECH_RMS, self.noise_floor * self.GATE_OPEN_RATIO)
+		if speechPresent or warmingUp:
+			self.gate_open_until = self.elapsed + self.GATE_HOLD_SECONDS
+		gateIsOpen = self.elapsed <= self.gate_open_until
+
+		startGain = self.gate_gain * self.level_gain
+		if self.gate_enabled:
+			gateTarget = 1.0 if gateIsOpen else self.GATE_CLOSED_GAIN
+			timeConstant = self.GATE_ATTACK_SECONDS if gateTarget > self.gate_gain else self.GATE_RELEASE_SECONDS
+			self.gate_gain = self._smooth(self.gate_gain, gateTarget, blockSeconds, timeConstant)
+
+		if self.auto_level_enabled and speechPresent and rms > 0:
+			desired = min(self.MAX_GAIN, max(self.MIN_GAIN, self.TARGET_RMS / rms))
+			timeConstant = self.GAIN_ATTACK_SECONDS if desired < self.level_gain else self.GAIN_RELEASE_SECONDS
+			self.level_gain = self._smooth(self.level_gain, desired, blockSeconds, timeConstant)
+
+		endGain = self.gate_gain * self.level_gain
+		if peak > 0:
+			# Never let the boosted block exceed the 16-bit range: reduce the gain instead of clipping.
+			ceiling = self.PEAK_LIMIT / peak
+			if endGain > ceiling:
+				self.level_gain = max(0.01, self.level_gain * ceiling / endGain)
+				endGain = self.gate_gain * self.level_gain
+			startGain = min(startGain, ceiling)
+		if abs(endGain - 1.0) < 0.001 and abs(startGain - 1.0) < 0.001:
+			return data
+		step = (endGain - startGain) / frames
+		channels = self.channels
+		output = [
+			max(-32768, min(32767, int(sample * (startGain + step * (index // channels)))))
+			for index, sample in enumerate(samples)
+		]
+		return struct.pack(f'<{len(output)}h', *output)
+
+
 class WasapiSoundRecorder:
 	def __init__(self, recording_format="wav",
 				 recording_folder=os.path.join(os.environ['USERPROFILE'], "Documents", "Easy Sound Recorder"),
@@ -349,33 +452,40 @@ class WasapiSoundRecorder:
 				 high_pass_filter=False,
 				 noise_gate=False,
 				 microphone_device_name="",
+				 microphone_device_names=None,
 				 system_device_name="",
-				 auto_ducking=False,
-				 ducking_level_db=-18,
-				 ducking_threshold_db=-30,
-				 ducking_attack_ms=5,
-				 ducking_release_ms=250):
+				 audio_bitrate_kbps=192,
+				 microphone_auto_level=False):
 		self.recording_format = recording_format.strip().lower()
 		self.recording_folder = recording_folder.strip()
 		self.recording_mode = recording_mode.strip().lower()
 		self.ffmpeg_path = ffmpeg_path.strip()
+		try:
+			self.audio_bitrate_kbps = max(64, min(320, int(audio_bitrate_kbps)))
+		except (TypeError, ValueError):
+			self.audio_bitrate_kbps = 192
 		self.system_volume = max(0, min(300, system_volume))
 		self.microphone_volume = max(0, min(300, microphone_volume))
 		self.audio_processing = (audio_processing or "default").strip().lower()
 		self.microphone_device_name = (microphone_device_name or "").strip()
+		# microphone_device_names (plural) is the multi-mic entry point: a list
+		# of configured device names to capture simultaneously. The singular
+		# microphone_device_name is kept only for backward compatibility with
+		# older saved configs and is folded into the list when the list itself
+		# is empty, so existing single-device setups behave identically.
+		self.microphone_device_names = [n.strip() for n in (microphone_device_names or []) if n and n.strip()]
+		if not self.microphone_device_names and self.microphone_device_name:
+			self.microphone_device_names = [self.microphone_device_name]
 		self.system_device_name = (system_device_name or "").strip()
 		# High-pass filter and noise gate are only meaningful for the Default
 		# audio-processing path; Communications already runs its own OS-level
 		# voice-processing chain, so these are ignored in that mode.
 		self.high_pass_filter = bool(high_pass_filter) and self.audio_processing == "default"
 		self.noise_gate = bool(noise_gate) and self.audio_processing == "default"
-		# Auto-ducking only applies to the merged system+microphone mode,
-		# since it needs both a music bed and a speech sidechain trigger.
-		self.auto_ducking = bool(auto_ducking) and self.recording_mode == "system audio and microphone"
-		self.ducking_level_db = ducking_level_db
-		self.ducking_threshold_db = ducking_threshold_db
-		self.ducking_attack_ms = max(1, ducking_attack_ms)
-		self.ducking_release_ms = max(1, ducking_release_ms)
+		# Automatic level raises quiet microphones (see MicLevelProcessor).
+		# Like the two options above it only applies to the Default path.
+		self.auto_level = bool(microphone_auto_level) and self.audio_processing == "default"
+		self._micLevel = None
 		self._highPassPrevX = None
 		self._highPassPrevY = None
 		self.mic_channels = 2
@@ -393,6 +503,22 @@ class WasapiSoundRecorder:
 		self.stream_system = None
 		self.default_mic = None
 		self.default_speakers = None
+		# mic_devices[0] is always what stream_mic/mic_queue/_mic_callback
+		# capture (the pre-existing single-microphone pipeline, untouched).
+		# mic_devices[1:], if any, are additional simultaneously-recorded
+		# microphones, each with its own stream/queue/writer/temp file below.
+		self.mic_devices = []
+		self.extra_mic_streams = []
+		self.extra_mic_queues = []
+		self.extra_mic_temp_paths = []
+		self.extra_mic_outfiles = []
+		self.extra_mic_writer_threads = []
+		self.extra_mic_highpass_state = []
+		self.should_merge_mics_only = False
+		self.should_merge_separate_mic_files = False
+		self._separateMicFinalPath = None
+		self._micOnlyTempPaths = []
+		self._separateMicTempPaths = []
 
 		self.recording = 0
 		self.pause_event = threading.Event()
@@ -414,6 +540,15 @@ class WasapiSoundRecorder:
 		self.ffmpeg_process_mic = None
 
 		self.libs_path = os.path.dirname(os.path.dirname(__file__))
+		# The actual file path(s) written by the current/last recording.
+		# record.py reads this directly instead of guessing which file is
+		# ours from a folder listing, which was unreliable for short or
+		# quiet recordings (see stop_recording()).
+		self.output_paths = []
+		# Set when the final merge/mix could not be completed and the raw
+		# recordings were kept instead; record.py tells the user about it.
+		self.merge_warning = ""
+		self.init_error = ""
 
 		self._init_audio()
 
@@ -423,18 +558,68 @@ class WasapiSoundRecorder:
 			wasapi_info = self.audio_interface.get_host_api_info_by_type(pyaudio.paWASAPI)
 
 			if self.recording_mode in ["microphone only", "system audio and microphone", "system audio and microphone (separate files)"]:
-				self.default_mic = self._get_microphone_device()
-				log.info(f"Microphone device: {self.default_mic['name']}")
+				self.mic_devices = self._get_microphone_devices()
+				self.default_mic = self.mic_devices[0]
+				if len(self.mic_devices) > 1:
+					log.info(f"Recording from {len(self.mic_devices)} microphones: {', '.join(self._describe_device(d) for d in self.mic_devices)}")
+				else:
+					log.info(f"Microphone device: {self._describe_device(self.default_mic)}")
 
 			if self.recording_mode in ["system audio only", "system audio and microphone", "system audio and microphone (separate files)"]:
 				self.default_speakers = self._get_loopback_device()
 				log.info(f"System audio device: {self.default_speakers['name']}")
 
 		except Exception as e:
+			self.init_error = str(e)
 			log.error(f"Audio init error: {e}")
 			if self.audio_interface:
 				self.audio_interface.terminate()
 			raise
+
+	def _describe_device(self, dev):
+		try:
+			hostName = self.audio_interface.get_host_api_info_by_index(dev["hostApi"])["name"]
+		except (OSError, IOError, KeyError, TypeError) as hostError:
+			log.debug(f"Host API of {dev.get('name')} is not available: {hostError}")
+			hostName = "unknown"
+		return f"{dev['name']} (index {dev['index']}, host API {hostName}, {dev.get('maxInputChannels', 0)} input channels)"
+
+	def _get_microphone_devices(self):
+		"""
+		Resolves the configured list of microphone device names into actual
+		device dicts, for simultaneous multi-microphone recording. Falls back
+		to the single automatic-default-microphone selection (unchanged, see
+		_get_microphone_device() below) whenever no explicit devices are
+		configured or none of the configured names could be matched, so
+		"Automatic" and existing single-device setups behave exactly as
+		before. Communications audio processing only supports one physical
+		device at a time, so a multi-device selection is trimmed to just the
+		first device in that mode.
+		"""
+		resolved = []
+		seenIndices = set()
+		for configuredName in self.microphone_device_names:
+			matched = None
+			for i in range(self.audio_interface.get_device_count()):
+				dev = self.audio_interface.get_device_info_by_index(i)
+				if dev.get('maxInputChannels', 0) > 0 and configuredName.lower() in dev['name'].lower():
+					matched = dev
+					break
+			if matched and matched['index'] not in seenIndices:
+				resolved.append(matched)
+				seenIndices.add(matched['index'])
+				log.info(f"Selected configured microphone: {matched['name']}")
+			else:
+				log.error(f"Configured microphone '{configuredName}' not found; skipping")
+
+		if not resolved:
+			resolved = [self._get_microphone_device()]
+
+		if len(resolved) > 1 and self.audio_processing == "communications":
+			log.error("Multiple microphones were selected, but Communications audio processing only supports one device at a time; recording from the first selected microphone only.")
+			resolved = resolved[:1]
+
+		return resolved
 
 	def _get_microphone_device(self):
 		if self.microphone_device_name:
@@ -503,6 +688,17 @@ class WasapiSoundRecorder:
 		log.info(f"Using first available loopback: {selected['name']}")
 		return selected
 
+	def _encoder_settings(self):
+		"""(ffmpeg muxer name, codec arguments) for the chosen recording format and bitrate."""
+		bitrate = f"{self.audio_bitrate_kbps}k"
+		format_map = {
+			"mp3": ("mp3", ["-c:a", "libmp3lame", "-b:a", bitrate]),
+			"flac": ("flac", ["-c:a", "flac"]),
+			"m4a": ("ipod", ["-c:a", "aac", "-b:a", bitrate]),
+			"wav": ("wav", [])
+		}
+		return format_map.get(self.recording_format, ("wav", []))
+
 	def create_wave_file(self, path, channels, rate):
 		wf = wave.open(path, "wb")
 		wf.setnchannels(channels)
@@ -515,13 +711,7 @@ class WasapiSoundRecorder:
 		if not os.path.isfile(ffmpeg_exe):
 			raise RuntimeError(f"ffmpeg.exe not found: {ffmpeg_exe}")
 
-		format_map = {
-			"mp3": ("mp3", ["-c:a", "libmp3lame", "-b:a", "192k"]),
-			"flac": ("flac", ["-c:a", "flac"]),
-			"m4a": ("ipod", ["-c:a", "aac", "-b:a", "192k"]),
-			"wav": ("wav", [])
-		}
-		format_arg, extra_args = format_map.get(self.recording_format, ("wav", []))
+		format_arg, extra_args = self._encoder_settings()
 
 		cmd = [
 			ffmpeg_exe, "-y", "-f", "s16le", "-ar", str(rate), "-ac", str(channels), "-i", "-"
@@ -552,6 +742,8 @@ class WasapiSoundRecorder:
 		self.mic_rate = int(dev["defaultSampleRate"])
 		self._highPassPrevX = [0.0] * self.mic_channels
 		self._highPassPrevY = [0.0] * self.mic_channels
+		if self.noise_gate or self.auto_level:
+			self._micLevel = MicLevelProcessor(self.mic_rate, self.mic_channels, self.noise_gate, self.auto_level)
 
 		if self.audio_processing == "communications":
 			if WASAPI_COM_AVAILABLE:
@@ -581,6 +773,27 @@ class WasapiSoundRecorder:
 		)
 		return stream
 
+	def open_extra_mic_stream(self, writerIndex, dev):
+		"""
+		Opens one of the additional simultaneous microphone streams beyond
+		the first (see mic_devices in __init__). Always uses the Default
+		audio-processing path: Communications mode is restricted to a single
+		device by _get_microphone_devices(), so this is never reached with
+		more than one configured microphone in that mode.
+		"""
+		channels = min(2, dev["maxInputChannels"])
+		rate = int(dev["defaultSampleRate"])
+		stream = self.audio_interface.open(
+			format=pyaudio.paInt16,
+			channels=channels,
+			rate=rate,
+			input=True,
+			input_device_index=dev["index"],
+			frames_per_buffer=1024,
+			stream_callback=functools.partial(self._extra_mic_callback, writerIndex)
+		)
+		return stream
+
 	def _apply_volume(self, data, volume_percent):
 		if volume_percent == 100:
 			return data
@@ -589,23 +802,26 @@ class WasapiSoundRecorder:
 		scaled = [max(-32768, min(32767, int(s * multiplier))) for s in samples]
 		return struct.pack(f'<{len(scaled)}h', *scaled)
 
-	def _apply_high_pass_filter(self, data):
-		# Single-pole IIR high-pass filter, ~150 Hz cutoff, to remove
+	def _run_high_pass_filter(self, data, channels, rate, prevX, prevY):
+		# Single-pole IIR high-pass filter, ~100 Hz cutoff, to remove
 		# low-frequency rumble such as fan or handling noise while leaving
-		# speech frequencies untouched. Filter state persists per channel
-		# across callbacks so there is no audible reset click.
+		# speech frequencies untouched. (150 Hz cut into the fundamental of a
+		# low voice, which made quiet microphones sound thinner and weaker.) Filter state (prevX/prevY) persists
+		# per channel across callbacks so there is no audible reset click.
+		# Shared by the primary microphone and any additional simultaneous
+		# microphones, each of which keeps its own independent state.
 		if not data:
-			return data
-		channels = max(1, self.mic_channels)
-		cutoffHz = 150.0
+			return data, prevX, prevY
+		channels = max(1, channels)
+		cutoffHz = 100.0
 		samples = struct.unpack(f'<{len(data)//2}h', data)
 		numFrames = len(samples) // channels
 		if numFrames == 0:
-			return data
-		if not self._highPassPrevX or len(self._highPassPrevX) != channels:
-			self._highPassPrevX = [0.0] * channels
-			self._highPassPrevY = [0.0] * channels
-		dt = 1.0 / float(self.mic_rate or 44100)
+			return data, prevX, prevY
+		if not prevX or len(prevX) != channels:
+			prevX = [0.0] * channels
+			prevY = [0.0] * channels
+		dt = 1.0 / float(rate or 44100)
 		rc = 1.0 / (2 * 3.14159265358979 * cutoffHz)
 		alpha = rc / (rc + dt)
 		output = list(samples)
@@ -613,28 +829,24 @@ class WasapiSoundRecorder:
 			for channelIndex in range(channels):
 				sampleIndex = frameIndex * channels + channelIndex
 				x = float(samples[sampleIndex])
-				y = alpha * (self._highPassPrevY[channelIndex] + x - self._highPassPrevX[channelIndex])
-				self._highPassPrevX[channelIndex] = x
-				self._highPassPrevY[channelIndex] = y
+				y = alpha * (prevY[channelIndex] + x - prevX[channelIndex])
+				prevX[channelIndex] = x
+				prevY[channelIndex] = y
 				output[sampleIndex] = max(-32768, min(32767, int(y)))
-		return struct.pack(f'<{len(output)}h', *output)
+		return struct.pack(f'<{len(output)}h', *output), prevX, prevY
 
-	def _apply_noise_gate(self, data):
-		# Attenuates (rather than hard-mutes, to avoid clicking) buffers
-		# whose RMS level falls below a fixed noise-floor threshold, cutting
-		# steady background noise picked up between spoken words.
-		if not data:
-			return data
-		threshold = 500
-		attenuation = 0.15
-		samples = struct.unpack(f'<{len(data)//2}h', data)
-		if not samples:
-			return data
-		rms = (sum(s * s for s in samples) / len(samples)) ** 0.5
-		if rms >= threshold:
-			return data
-		gated = [int(s * attenuation) for s in samples]
-		return struct.pack(f'<{len(gated)}h', *gated)
+	def _apply_high_pass_filter(self, data):
+		output, self._highPassPrevX, self._highPassPrevY = self._run_high_pass_filter(
+			data, self.mic_channels, self.mic_rate, self._highPassPrevX, self._highPassPrevY
+		)
+		return output
+
+	def _apply_high_pass_filter_for(self, data, writerIndex):
+		state = self.extra_mic_highpass_state[writerIndex]
+		output, state["prevX"], state["prevY"] = self._run_high_pass_filter(
+			data, state["channels"], state["rate"], state["prevX"], state["prevY"]
+		)
+		return output
 
 	def mute_system_audio(self, duration_seconds=1.5):
 		"""
@@ -670,8 +882,8 @@ class WasapiSoundRecorder:
 		try:
 			if in_data and self.high_pass_filter:
 				in_data = self._apply_high_pass_filter(in_data)
-			if in_data and self.noise_gate:
-				in_data = self._apply_noise_gate(in_data)
+			if in_data and self._micLevel:
+				in_data = self._micLevel.process(in_data)
 			if in_data and self.microphone_volume != 100:
 				in_data = self._apply_volume(in_data, self.microphone_volume)
 			self.mic_queue.put(in_data)
@@ -680,6 +892,78 @@ class WasapiSoundRecorder:
 			log.error(f"Mic callback error: {e}")
 		return (in_data, pyaudio.paContinue)
 
+	def _extra_mic_callback(self, writerIndex, in_data, frame_count, time_info, status):
+		# Sibling of _mic_callback() for the second and subsequent
+		# simultaneously-recorded microphones. writerIndex is bound ahead of
+		# time via functools.partial in open_extra_mic_stream() and indexes
+		# into the extra_mic_* lists set up by _setup_extra_mic_writers().
+		if self.recording != 1:
+			return (in_data, pyaudio.paAbort)
+		if "microphone" not in self.recording_mode:
+			return (in_data, pyaudio.paContinue)
+		try:
+			if in_data and self.high_pass_filter:
+				in_data = self._apply_high_pass_filter_for(in_data, writerIndex)
+			levelProcessor = self.extra_mic_highpass_state[writerIndex].get("level")
+			if in_data and levelProcessor:
+				in_data = levelProcessor.process(in_data)
+			if in_data and self.microphone_volume != 100:
+				in_data = self._apply_volume(in_data, self.microphone_volume)
+			self.extra_mic_queues[writerIndex].put(in_data)
+		except Exception as e:
+			log.error(f"Additional microphone {writerIndex} callback error: {e}")
+		return (in_data, pyaudio.paContinue)
+
+	def _extra_mic_writer(self, writerIndex):
+		while self.recording == 1:
+			self.pause_event.wait()
+			try:
+				data = self.extra_mic_queues[writerIndex].get(timeout=0.1)
+				if data and len(data) > 0:
+					self.extra_mic_outfiles[writerIndex].writeframes(data)
+			except queue.Empty:
+				continue
+			except Exception as e:
+				if self.recording == 1:
+					log.error(f"Additional microphone {writerIndex} writer error: {e}")
+
+	def _setup_extra_mic_writers(self, timestamp):
+		"""
+		Starts capture for every configured microphone beyond the first
+		(mic_devices[1:]), each to its own temporary WAV file. Called from
+		start_recording() whenever more than one microphone is configured;
+		the resulting temp files are mixed into the recording's real output
+		by _merge_temp_files_to_final(), _merge_mic_only_files_to_final(), or
+		_merge_separate_mic_files_to_final() once recording stops, for the
+		same clock-drift reasons the existing system+microphone merge
+		already uses temp files instead of live sample-level mixing.
+		"""
+		self.extra_mic_streams = []
+		self.extra_mic_queues = []
+		self.extra_mic_temp_paths = []
+		self.extra_mic_outfiles = []
+		self.extra_mic_writer_threads = []
+		self.extra_mic_highpass_state = []
+		for writerIndex, dev in enumerate(self.mic_devices[1:]):
+			channels = min(2, dev["maxInputChannels"])
+			rate = int(dev["defaultSampleRate"])
+			tempPath = os.path.join(self.recording_folder, f"_xtrack_temp_mic_extra{writerIndex}_{timestamp}.wav")
+			self.extra_mic_temp_paths.append(tempPath)
+			self.extra_mic_outfiles.append(self.create_wave_file(tempPath, channels, rate))
+			self.extra_mic_queues.append(queue.Queue())
+			self.extra_mic_highpass_state.append({
+				"channels": channels, "rate": rate,
+				"prevX": [0.0] * channels, "prevY": [0.0] * channels,
+				# Each microphone measures its own noise floor and level.
+				"level": MicLevelProcessor(rate, channels, self.noise_gate, self.auto_level) if (self.noise_gate or self.auto_level) else None
+			})
+			writerThread = threading.Thread(target=self._extra_mic_writer, args=(writerIndex,), daemon=True)
+			self.extra_mic_writer_threads.append(writerThread)
+			writerThread.start()
+			stream = self.open_extra_mic_stream(writerIndex, dev)
+			stream.start_stream()
+			self.extra_mic_streams.append(stream)
+			log.info(f"Additional microphone stream started: {dev['name']}")
 
 	def prewarm_microphone(self):
 		"""
@@ -711,9 +995,16 @@ class WasapiSoundRecorder:
 			if not os.path.exists(self.recording_folder):
 				os.makedirs(self.recording_folder)
 
+			mode = self.recording_mode
+			needsMic = "microphone" in mode
+			needsSystem = mode.startswith("system audio")
+			if (needsMic and not self.default_mic) or (needsSystem and not self.default_speakers):
+				raise RuntimeError(self.init_error or "No audio device is available for this recording mode")
+
 			self.recording = 1
 			self.pause_event.set()
 			timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+			self.output_paths = []
 
 			mode = self.recording_mode
 			fmt = self.recording_format
@@ -722,12 +1013,30 @@ class WasapiSoundRecorder:
 				rate = int(self.default_mic["defaultSampleRate"])
 				channels = min(2, self.default_mic["maxInputChannels"])
 				out = os.path.join(self.recording_folder, f"recording_{timestamp}.{fmt}")
-				if fmt == "wav":
-					self.outfile = self.create_wave_file(out, channels, rate)
+				self.output_paths = [out]
+
+				if len(self.mic_devices) <= 1:
+					if fmt == "wav":
+						self.outfile = self.create_wave_file(out, channels, rate)
+					else:
+						self.ffmpeg_process = self.create_ffmpeg_process(out, rate, channels)
+					self.writer_thread = threading.Thread(target=self._mic_only_writer, daemon=True)
+					self.writer_thread.start()
 				else:
-					self.ffmpeg_process = self.create_ffmpeg_process(out, rate, channels)
-				self.writer_thread = threading.Thread(target=self._mic_only_writer, daemon=True)
-				self.writer_thread.start()
+					# Multiple microphones: mic_devices[0] also goes to a temp
+					# WAV file (like mic_devices[1:], see
+					# _setup_extra_mic_writers) instead of the real output, so
+					# every microphone can be mixed together by ffmpeg once
+					# recording stops (see _merge_mic_only_files_to_final).
+					mic0TempPath = os.path.join(self.recording_folder, f"_xtrack_temp_mic0_{timestamp}.wav")
+					self.outfile_mic = self.create_wave_file(mic0TempPath, channels, rate)
+					self.writer_thread_mic = threading.Thread(target=self._mic_separate_writer, daemon=True)
+					self.writer_thread_mic.start()
+					self._setup_extra_mic_writers(timestamp)
+					self._micOnlyTempPaths = [mic0TempPath] + self.extra_mic_temp_paths
+					self._mergeFinalOutputPath = out
+					self.should_merge_mics_only = True
+
 				if self.stream_mic is None:
 					self.stream_mic = self.open_mic_stream()
 					self.stream_mic.start_stream()
@@ -736,6 +1045,7 @@ class WasapiSoundRecorder:
 				rate = int(self.default_speakers["defaultSampleRate"])
 				channels = min(2, self.default_speakers["maxInputChannels"])
 				out = os.path.join(self.recording_folder, f"recording_{timestamp}.{fmt}")
+				self.output_paths = [out]
 				if fmt == "wav":
 					self.outfile = self.create_wave_file(out, channels, rate)
 				else:
@@ -762,6 +1072,7 @@ class WasapiSoundRecorder:
 				self._mergeSystemTempPath = os.path.join(self.recording_folder, f"_xtrack_temp_system_{timestamp}.wav")
 				self._mergeMicTempPath = os.path.join(self.recording_folder, f"_xtrack_temp_mic_{timestamp}.wav")
 				self._mergeFinalOutputPath = os.path.join(self.recording_folder, f"recording_{timestamp}.{fmt}")
+				self.output_paths = [self._mergeFinalOutputPath]
 
 				self.outfile_system = self.create_wave_file(self._mergeSystemTempPath, ch_sys, rate_sys)
 				self.outfile_mic = self.create_wave_file(self._mergeMicTempPath, ch_mic, rate_mic)
@@ -769,6 +1080,9 @@ class WasapiSoundRecorder:
 				self.writer_thread_mic = threading.Thread(target=self._mic_separate_writer, daemon=True)
 				self.writer_thread_system.start()
 				self.writer_thread_mic.start()
+
+				if len(self.mic_devices) > 1:
+					self._setup_extra_mic_writers(timestamp)
 
 				self.stream_system = self.open_system_audio_stream()
 				self.stream_system.start_stream()
@@ -781,12 +1095,34 @@ class WasapiSoundRecorder:
 			elif mode == "system audio and microphone (separate files)":
 				out_sys = os.path.join(self.recording_folder, f"recording_system_{timestamp}.{fmt}")
 				out_mic = os.path.join(self.recording_folder, f"recording_mic_{timestamp}.{fmt}")
+				self.output_paths = [out_sys, out_mic]
 				rate_sys = int(self.default_speakers["defaultSampleRate"])
 				ch_sys = min(2, self.default_speakers["maxInputChannels"])
 				rate_mic = int(self.default_mic["defaultSampleRate"])
 				ch_mic = min(2, self.default_mic["maxInputChannels"])
 
-				if fmt == "wav":
+				if len(self.mic_devices) > 1:
+					# Always route the mic side through temp-WAV-then-ffmpeg-mix
+					# when there is more than one microphone, regardless of the
+					# chosen output format, mirroring the merged-mode approach
+					# above (see _merge_separate_mic_files_to_final).
+					mic0TempPath = os.path.join(self.recording_folder, f"_xtrack_temp_mic0_{timestamp}.wav")
+					self.outfile_mic = self.create_wave_file(mic0TempPath, ch_mic, rate_mic)
+					self.writer_thread_mic = threading.Thread(target=self._mic_separate_writer, daemon=True)
+					self.writer_thread_mic.start()
+					self._setup_extra_mic_writers(timestamp)
+					self._separateMicTempPaths = [mic0TempPath] + self.extra_mic_temp_paths
+					self._separateMicFinalPath = out_mic
+					self.should_merge_separate_mic_files = True
+
+					if fmt == "wav":
+						self.outfile_system = self.create_wave_file(out_sys, ch_sys, rate_sys)
+						self.writer_thread_system = threading.Thread(target=self._system_separate_writer, daemon=True)
+					else:
+						self.ffmpeg_process_system = self.create_ffmpeg_process(out_sys, rate_sys, ch_sys)
+						self.writer_thread_system = threading.Thread(target=self._system_ffmpeg_separate_writer, daemon=True)
+					self.writer_thread_system.start()
+				elif fmt == "wav":
 					self.outfile_system = self.create_wave_file(out_sys, ch_sys, rate_sys)
 					self.outfile_mic = self.create_wave_file(out_mic, ch_mic, rate_mic)
 					self.writer_thread_system = threading.Thread(target=self._system_separate_writer, daemon=True)
@@ -922,6 +1258,16 @@ class WasapiSoundRecorder:
 			except queue.Empty:
 				break
 
+		pendingExtraMics = []
+		for extraQueue in self.extra_mic_queues:
+			pending = []
+			while not extraQueue.empty():
+				try:
+					pending.append(extraQueue.get_nowait())
+				except queue.Empty:
+					break
+			pendingExtraMics.append(pending)
+
 		try:
 			if self.recording_mode in ("system audio and microphone", "system audio and microphone (separate files)"):
 				for data in pendingSystem:
@@ -942,10 +1288,22 @@ class WasapiSoundRecorder:
 						self.ffmpeg_process.stdin.write(data)
 			elif self.recording_mode == "microphone only":
 				for data in pendingMic:
-					if self.outfile:
+					if self.outfile_mic:
+						# Multiple microphones: mic_devices[0] writes to its
+						# own temp file (see start_recording), just like the
+						# system+microphone merge above.
+						self.outfile_mic.writeframes(data)
+					elif self.outfile:
 						self.outfile.writeframes(data)
 					elif self.ffmpeg_process:
 						self.ffmpeg_process.stdin.write(data)
+
+			for writerIndex, pending in enumerate(pendingExtraMics):
+				outfile = self.extra_mic_outfiles[writerIndex] if writerIndex < len(self.extra_mic_outfiles) else None
+				if not outfile:
+					continue
+				for data in pending:
+					outfile.writeframes(data)
 		except Exception as flushError:
 			log.error(f"Failed to flush pending audio queues: {flushError}")
 
@@ -962,7 +1320,7 @@ class WasapiSoundRecorder:
 			# already discarded by _mic_callback's self.recording guard.
 			keepMicStreamAlive = isinstance(self.stream_mic, CommunicationsCaptureStream)
 
-			streamsToClose = [self.stream_system]
+			streamsToClose = [self.stream_system] + self.extra_mic_streams
 			if not keepMicStreamAlive:
 				streamsToClose.append(self.stream_mic)
 
@@ -995,6 +1353,7 @@ class WasapiSoundRecorder:
 			self.stream_system = None
 			if not keepMicStreamAlive:
 				self.stream_mic = None
+			self.extra_mic_streams = []
 
 			self.last_speaker_data = None
 			self.last_mic_data = None
@@ -1022,9 +1381,24 @@ class WasapiSoundRecorder:
 				else:
 					log.info("Reusing microphone stream that was kept warm through pause")
 
+				# Additional microphones (beyond mic_devices[0]) are always
+				# plain Default-processing streams, so they are simply
+				# reopened here; their queues/temp files/highpass state were
+				# already set up by _setup_extra_mic_writers() and persist
+				# across the pause.
+				self.extra_mic_streams = []
+				for writerIndex, dev in enumerate(self.mic_devices[1:]):
+					stream = self.open_extra_mic_stream(writerIndex, dev)
+					stream.start_stream()
+					self.extra_mic_streams.append(stream)
+
 			if self.recording_mode == "microphone only":
-				self.writer_thread = threading.Thread(target=self._mic_only_writer, daemon=True)
-				self.writer_thread.start()
+				if len(self.mic_devices) > 1:
+					self.writer_thread_mic = threading.Thread(target=self._mic_separate_writer, daemon=True)
+					self.writer_thread_mic.start()
+				else:
+					self.writer_thread = threading.Thread(target=self._mic_only_writer, daemon=True)
+					self.writer_thread.start()
 			elif self.recording_mode == "system audio only":
 				self.writer_thread = threading.Thread(target=self._system_only_writer, daemon=True)
 				self.writer_thread.start()
@@ -1039,6 +1413,13 @@ class WasapiSoundRecorder:
 				self.writer_thread_system.start()
 				self.writer_thread_mic.start()
 
+			if len(self.mic_devices) > 1 and "microphone" in self.recording_mode:
+				self.extra_mic_writer_threads = []
+				for writerIndex in range(len(self.mic_devices) - 1):
+					writerThread = threading.Thread(target=self._extra_mic_writer, args=(writerIndex,), daemon=True)
+					self.extra_mic_writer_threads.append(writerThread)
+					writerThread.start()
+
 			log.info("Recording resumed")
 		except Exception as e:
 			log.error(f"Resume error: {e}")
@@ -1050,7 +1431,7 @@ class WasapiSoundRecorder:
 			self.recording = 0
 			self.pause_event.set()
 
-			for stream in [self.stream_mic, self.stream_system]:
+			for stream in [self.stream_mic, self.stream_system] + self.extra_mic_streams:
 				if stream:
 					try:
 						stream.stop_stream()
@@ -1064,7 +1445,7 @@ class WasapiSoundRecorder:
 
 			time.sleep(0.1)
 
-			for wf in [self.outfile, self.outfile_system, self.outfile_mic]:
+			for wf in [self.outfile, self.outfile_system, self.outfile_mic] + self.extra_mic_outfiles:
 				if wf:
 					try:
 						wf.close()
@@ -1075,9 +1456,11 @@ class WasapiSoundRecorder:
 				if proc:
 					try:
 						proc.stdin.close()
-						proc.wait(timeout=3)
+						# An m4a/mp3 file is only complete once ffmpeg has written its
+						# trailer, so a long recording is given time to finish.
+						proc.wait(timeout=20)
 					except (OSError, subprocess.TimeoutExpired) as ffmpegWaitError:
-						log.debug(f"ffmpeg process did not exit cleanly, terminating: {ffmpegWaitError}")
+						log.error(f"ffmpeg process did not exit cleanly, terminating: {ffmpegWaitError}")
 						try:
 							proc.terminate()
 						except OSError as terminateError:
@@ -1085,14 +1468,88 @@ class WasapiSoundRecorder:
 
 			if self.should_merge_to_single_file:
 				self._merge_temp_files_to_final()
+			if self.should_merge_mics_only:
+				self._merge_mic_only_files_to_final()
+			if self.should_merge_separate_mic_files:
+				self._merge_separate_mic_files_to_final()
 
-			if self.audio_interface:
-				self.audio_interface.terminate()
+			for writtenPath in self.output_paths:
+				actualSize = os.path.getsize(writtenPath) if os.path.exists(writtenPath) else -1
+				log.info(f"Recording output: {writtenPath} (size={actualSize} bytes)")
 
 			log.info("Recording stopped")
+			return list(self.output_paths)
 		except Exception as e:
 			log.error(f"Stop error: {e}")
 			raise
+		finally:
+			if self.audio_interface:
+				try:
+					self.audio_interface.terminate()
+				except OSError as terminateError:
+					log.debug(f"Error releasing the audio interface: {terminateError}")
+				self.audio_interface = None
+
+	def _merge_timeout_seconds(self, inputPaths):
+		"""Generous limit based on the amount of recorded audio, so a long recording is not cut off."""
+		totalBytes = sum(os.path.getsize(p) for p in inputPaths if p and os.path.isfile(p))
+		# 16-bit stereo at 44.1 kHz is about 176 KB per second of audio.
+		recordedSeconds = totalBytes / 176400.0
+		return max(300, int(recordedSeconds * 2) + 120)
+
+	def _run_merge_command(self, cmd, inputPaths):
+		"""Run one ffmpeg merge; returns True only when it finished successfully."""
+		creationflags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+		try:
+			result = subprocess.run(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+									creationflags=creationflags, timeout=self._merge_timeout_seconds(inputPaths))
+		except subprocess.TimeoutExpired:
+			log.error("ffmpeg merge timed out")
+			return False
+		except OSError as runError:
+			log.error(f"ffmpeg merge could not be started: {runError}")
+			return False
+		if result.returncode != 0:
+			stderrTail = result.stderr.decode("utf-8", errors="ignore").strip().splitlines()[-6:]
+			log.error(f"ffmpeg merge exited with code {result.returncode}: {' | '.join(stderrTail)}")
+			return False
+		return True
+
+	def _preserve_unmerged_temp_files(self, tempPaths, labels, finalPath):
+		"""A failed merge must never cost the user the recording itself.
+
+		The raw temp WAV files are renamed next to the intended output and
+		offered as the result instead of being deleted.
+		"""
+		base = os.path.splitext(finalPath)[0]
+		preserved = []
+		for tempPath, label in zip(tempPaths, labels):
+			try:
+				if not tempPath or not os.path.isfile(tempPath):
+					continue
+				if os.path.getsize(tempPath) <= 44:
+					os.remove(tempPath)
+					continue
+				keptPath = f"{base}_unmerged_{label}.wav"
+				os.replace(tempPath, keptPath)
+				preserved.append(keptPath)
+			except OSError as keepError:
+				log.error(f"Could not keep the unmerged recording {tempPath}: {keepError}")
+				if tempPath and os.path.isfile(tempPath):
+					preserved.append(tempPath)
+		if preserved:
+			self.output_paths = [p for p in self.output_paths if p != finalPath and os.path.exists(p)] + preserved
+			self.merge_warning = "merge_failed"
+			log.error(f"Merge failed; the raw recordings were kept: {preserved}")
+		return preserved
+
+	def _remove_temp_files(self, tempPaths):
+		for tempPath in tempPaths:
+			try:
+				if tempPath and os.path.isfile(tempPath):
+					os.remove(tempPath)
+			except OSError as cleanupError:
+				log.error(f"Failed to remove temp file {tempPath}: {cleanupError}")
 
 	def _merge_temp_files_to_final(self):
 		"""
@@ -1103,96 +1560,139 @@ class WasapiSoundRecorder:
 		microphone and system audio device can be on physically different
 		sound cards with different native sample rates.
 		"""
+		allMicTempPaths = [self._mergeMicTempPath] + self.extra_mic_temp_paths
+		keepTemps = True
 		try:
-			if not self._mergeSystemTempPath or not self._mergeMicTempPath or not self._mergeFinalOutputPath:
+			if not self._mergeSystemTempPath or not any(allMicTempPaths) or not self._mergeFinalOutputPath:
 				log.error("Merge skipped: temp file paths were not set")
+				keepTemps = False
 				return
 
 			systemExists = os.path.isfile(self._mergeSystemTempPath) and os.path.getsize(self._mergeSystemTempPath) > 44
-			micExists = os.path.isfile(self._mergeMicTempPath) and os.path.getsize(self._mergeMicTempPath) > 44
+			existingMicPaths = [p for p in allMicTempPaths if p and os.path.isfile(p) and os.path.getsize(p) > 44]
+			micExists = len(existingMicPaths) > 0
 
 			ffmpeg_exe = self.ffmpeg_path or os.path.join(self.libs_path, "ffmpeg.exe")
 			if not os.path.isfile(ffmpeg_exe):
 				raise RuntimeError(f"ffmpeg.exe not found: {ffmpeg_exe}")
 
-			format_map = {
-				"mp3": ("mp3", ["-c:a", "libmp3lame", "-b:a", "192k"]),
-				"flac": ("flac", ["-c:a", "flac"]),
-				"m4a": ("ipod", ["-c:a", "aac", "-b:a", "192k"]),
-				"wav": ("wav", [])
-			}
-			format_arg, extra_args = format_map.get(self.recording_format, ("wav", []))
+			format_arg, extra_args = self._encoder_settings()
 			targetRate = self.system_rate or self.mic_rate or 44100
-			creationflags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
 
 			if systemExists and micExists:
-				if self.auto_ducking:
-					# Sidechaincompress needs a linear amplitude threshold
-					# (0-1), not dB, so the user-facing dB sensitivity is
-					# converted here. Ratio is derived from the requested
-					# ducking depth: sidechaincompress has no direct
-					# "target dB reduction" parameter, so a deeper requested
-					# duck is approximated with a steeper ratio (capped at
-					# the filter's own maximum of 20).
-					thresholdLinear = 10 ** (self.ducking_threshold_db / 20.0)
-					duckRatio = min(20.0, max(2.0, abs(self.ducking_level_db) / 1.2))
-					filterComplex = (
-						f"[0:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a0];"
-						# The microphone stream is needed twice further down: once as
-						# the sidechain trigger for sidechaincompress, and again as the
-						# actual voice track mixed into the final output. A filtergraph
-						# link label can only feed one filter input, so without this
-						# asplit the second reference resolved to nothing and the
-						# microphone was silently dropped from the merged recording
-						# whenever auto-ducking was enabled.
-						f"[1:a]aformat=sample_rates={targetRate}:channel_layouts=stereo,asplit=2[a1sc][a1mix];"
-						f"[a0][a1sc]sidechaincompress=threshold={thresholdLinear:.5f}:ratio={duckRatio:.2f}:"
-						f"attack={self.ducking_attack_ms}:release={self.ducking_release_ms}:makeup=1[ducked];"
-						# Microphone speech sits much quieter than system audio at
-						# unity gain, so without a mic-side makeup weight here the
-						# voice track stayed buried under the system audio in the
-						# final mix regardless of whether ducking triggered.
-						f"[ducked][a1mix]amix=inputs=2:duration=longest:dropout_transition=0:weights=1 1.4,volume=2[aout]"
-					)
-					log.info(f"Merging with auto-ducking enabled (threshold={thresholdLinear:.5f}, ratio={duckRatio:.2f})")
-				else:
-					filterComplex = (
-						f"[0:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a0];"
-						f"[1:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a1];"
-						f"[a0][a1]amix=inputs=2:duration=longest:dropout_transition=0:weights=1 1.4,volume=2[aout]"
-					)
+				micInputArgs, micChain, micMixLabel = self._build_mic_mix_filter(existingMicPaths, targetRate, inputStartIndex=1)
+				aformatChain = f"[0:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[a0];" + micChain
+				inputArgs = ["-i", self._mergeSystemTempPath] + micInputArgs
+
+				filterComplex = (
+					aformatChain +
+					f"[a0][{micMixLabel}]amix=inputs=2:duration=longest:dropout_transition=0:weights=1 1.4,volume=2[aout]"
+				)
 				cmd = [
-					ffmpeg_exe, "-y",
-					"-i", self._mergeSystemTempPath,
-					"-i", self._mergeMicTempPath,
+					ffmpeg_exe, "-y"
+				] + inputArgs + [
 					"-filter_complex", filterComplex,
 					"-map", "[aout]"
 				] + extra_args + ["-f", format_arg, self._mergeFinalOutputPath]
 			elif systemExists:
 				cmd = [ffmpeg_exe, "-y", "-i", self._mergeSystemTempPath] + extra_args + ["-f", format_arg, self._mergeFinalOutputPath]
 			elif micExists:
-				cmd = [ffmpeg_exe, "-y", "-i", self._mergeMicTempPath] + extra_args + ["-f", format_arg, self._mergeFinalOutputPath]
+				if len(existingMicPaths) == 1:
+					cmd = [ffmpeg_exe, "-y", "-i", existingMicPaths[0]] + extra_args + ["-f", format_arg, self._mergeFinalOutputPath]
+				else:
+					inputArgs, chain, mixLabel = self._build_mic_mix_filter(existingMicPaths, targetRate, inputStartIndex=0)
+					cmd = [ffmpeg_exe, "-y"] + inputArgs + ["-filter_complex", chain, "-map", f"[{mixLabel}]"] + extra_args + ["-f", format_arg, self._mergeFinalOutputPath]
 			else:
 				log.error("Merge skipped: neither temp file has usable audio")
+				keepTemps = False
 				return
 
-			result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-									creationflags=creationflags, timeout=60)
-			if result.returncode != 0:
-				log.error(f"ffmpeg merge exited with code {result.returncode}")
-			else:
+			mergeInputs = ([self._mergeSystemTempPath] if systemExists else []) + existingMicPaths
+			if self._run_merge_command(cmd, mergeInputs):
+				keepTemps = False
 				log.info(f"Merged system audio and microphone into: {self._mergeFinalOutputPath}")
-		except Exception as mergeError:
+		except (RuntimeError, OSError, ValueError) as mergeError:
 			log.error(f"Failed to merge system and microphone recordings: {mergeError}")
 		finally:
-			for tempPath in [self._mergeSystemTempPath, self._mergeMicTempPath]:
-				try:
-					if tempPath and os.path.isfile(tempPath):
-						os.remove(tempPath)
-				except Exception as cleanupError:
-					log.error(f"Failed to remove temp file {tempPath}: {cleanupError}")
+			allTempPaths = [self._mergeSystemTempPath] + allMicTempPaths
+			if keepTemps:
+				labels = ["system"] + ["mic"] + [f"mic{index + 2}" for index in range(len(self.extra_mic_temp_paths))]
+				self._preserve_unmerged_temp_files(allTempPaths, labels, self._mergeFinalOutputPath)
+			else:
+				self._remove_temp_files(allTempPaths)
 
+	def _build_mic_mix_filter(self, micTempPaths, targetRate, inputStartIndex):
+		"""
+		Builds the ffmpeg -i arguments and filter_complex fragment that
+		decodes each of micTempPaths (resampling/reformatting to
+		targetRate/stereo) and, if there is more than one, mixes them
+		together into a single labeled stream. inputStartIndex is the
+		ffmpeg -i index of the first mic file (0 when the mics are the only
+		inputs, 1 when a system-audio file already occupies -i index 0).
+		Shared by the system+microphone merge above and the
+		microphone-only/separate-files mixes below, so all three multi-mic
+		mixing paths stay consistent.
+		"""
+		inputArgs = []
+		labels = []
+		chain = ""
+		for offset, micPath in enumerate(micTempPaths):
+			inputArgs += ["-i", micPath]
+			inputIdx = inputStartIndex + offset
+			label = f"m{offset}"
+			chain += f"[{inputIdx}:a]aformat=sample_rates={targetRate}:channel_layouts=stereo[{label}];"
+			labels.append(label)
+		if len(labels) > 1:
+			mixInputs = "".join(f"[{l}]" for l in labels)
+			chain += f"{mixInputs}amix=inputs={len(labels)}:duration=longest:dropout_transition=0,volume={len(labels)}[micmix];"
+			outputLabel = "micmix"
+		else:
+			outputLabel = labels[0]
+		return inputArgs, chain, outputLabel
 
+	def _mix_mic_temp_files(self, tempPaths, finalPath, logNoun):
+		"""
+		Shared implementation for mixing N recorded-microphone temp WAV
+		files into a single final output, with no system audio involved. Used for "microphone only" mode (final path is the
+		recording's actual output) and the microphone side of "system and
+		microphone (separate files)" mode (final path is that mode's
+		separate mic output file).
+		"""
+		keepTemps = True
+		try:
+			existingPaths = [p for p in tempPaths if p and os.path.isfile(p) and os.path.getsize(p) > 44]
+			if not existingPaths or not finalPath:
+				log.error(f"{logNoun} mix skipped: no usable microphone temp files")
+				keepTemps = False
+				return
 
+			ffmpeg_exe = self.ffmpeg_path or os.path.join(self.libs_path, "ffmpeg.exe")
+			if not os.path.isfile(ffmpeg_exe):
+				raise RuntimeError(f"ffmpeg.exe not found: {ffmpeg_exe}")
 
+			format_arg, extra_args = self._encoder_settings()
+			targetRate = self.mic_rate or 44100
 
+			if len(existingPaths) == 1:
+				cmd = [ffmpeg_exe, "-y", "-i", existingPaths[0]] + extra_args + ["-f", format_arg, finalPath]
+			else:
+				inputArgs, chain, mixLabel = self._build_mic_mix_filter(existingPaths, targetRate, inputStartIndex=0)
+				cmd = [ffmpeg_exe, "-y"] + inputArgs + ["-filter_complex", chain, "-map", f"[{mixLabel}]"] + extra_args + ["-f", format_arg, finalPath]
+
+			if self._run_merge_command(cmd, existingPaths):
+				keepTemps = False
+				log.info(f"Mixed {len(existingPaths)} microphone(s) into: {finalPath}")
+		except (RuntimeError, OSError, ValueError) as mergeError:
+			log.error(f"Failed to mix microphone recordings: {mergeError}")
+		finally:
+			if keepTemps and finalPath:
+				labels = ["mic"] + [f"mic{index + 2}" for index in range(len(tempPaths) - 1)]
+				self._preserve_unmerged_temp_files(tempPaths, labels, finalPath)
+			else:
+				self._remove_temp_files(tempPaths)
+
+	def _merge_mic_only_files_to_final(self):
+		self._mix_mic_temp_files(self._micOnlyTempPaths, self._mergeFinalOutputPath, "Microphone")
+
+	def _merge_separate_mic_files_to_final(self):
+		self._mix_mic_temp_files(self._separateMicTempPaths, self._separateMicFinalPath, "Microphone")
