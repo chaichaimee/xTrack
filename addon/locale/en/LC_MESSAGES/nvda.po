@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xTrack 2026.11.0\n"
 "Report-Msgid-Bugs-To: chaicm75@gmail.com\n"
-"POT-Creation-Date: 2026-10-26 09:32+0700\n"
+"POT-Creation-Date: 2026-11-14 09:27+0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: chaiBot and Malee Yamazaki\n"
 "Language-Team: English\n"
@@ -28,16 +28,15 @@ msgstr " | Fade In: {} to {}"
 msgid " | Fade Out: {} to {}"
 msgstr " | Fade Out: {} to {}"
 
-#: mp3Gain.py:190
+#: mp3Gain.py:193
 msgid "\"Normal\" Volume (dB):"
 msgstr "\"Normal\" Volume (dB):"
 
 #: splitAlbumByTracks.py:432
-#: splitTrackBySilent.py:213
 msgid "&Analyze again"
 msgstr "&Analyze again"
 
-#: mp3Gain.py:207
+#: mp3Gain.py:215
 #: record.py:552
 msgid "&Browse..."
 msgstr "&Browse..."
@@ -90,16 +89,16 @@ msgstr "&Preview 15 seconds"
 msgid "&Preview Section"
 msgstr "&Preview Section"
 
-#: splitTrackBySilent.py:233
+#: splitTrackBySilent.py:265
+msgid "&Preview beginning"
+msgstr "&Preview beginning"
+
+#: splitTrackBySilent.py:255
 msgid "&Remove original track (sent to the Recycle Bin)"
 msgstr "&Remove original track (sent to the Recycle Bin)"
 
-#: splitTrackBySilent.py:192
-msgid "&Shortest silence to trim (seconds):"
-msgstr "&Shortest silence to trim (seconds):"
-
 #: splitAlbumByTracks.py:465
-#: splitTrackBySilent.py:249
+#: splitTrackBySilent.py:271
 msgid "&Split"
 msgstr "&Split"
 
@@ -122,6 +121,10 @@ msgstr "&Update now"
 #: ffmpegSupport.py:49
 msgid "(truncated)"
 msgstr "(truncated)"
+
+#: splitTrackBySilent.py:485
+msgid ", added {head} seconds of silence at the start and {tail} seconds at the end"
+msgstr ", added {head} seconds of silence at the start and {tail} seconds at the end"
 
 #: merge.py:531
 msgid ", fade in {fadeIn} seconds, fade out {fadeOut} seconds"
@@ -198,11 +201,11 @@ msgstr "Advanced Parametric Equalizer (3-Band)"
 msgid "Advanced Time-Based Panning"
 msgstr "Advanced Time-Based Panning"
 
-#: mp3Gain.py:217
+#: mp3Gain.py:225
 msgid "Album Analysis"
 msgstr "Album Analysis"
 
-#: mp3Gain.py:564
+#: mp3Gain.py:591
 msgid "Album analysis complete for {count} folder(s)"
 msgstr "Album analysis complete for {count} folder(s)"
 
@@ -246,11 +249,15 @@ msgstr "Amount (%):"
 msgid "Amount (1-10):"
 msgstr "Amount (1-10):"
 
-#: mp3Gain.py:215
+#: splitTrackBySilent.py:235
+msgid "Analy&ze again"
+msgstr "Analy&ze again"
+
+#: mp3Gain.py:223
 msgid "Analysis"
 msgstr "Analysis"
 
-#: mp3Gain.py:351
+#: mp3Gain.py:361
 msgid "Analysis cleared"
 msgstr "Analysis cleared"
 
@@ -258,7 +265,7 @@ msgstr "Analysis cleared"
 msgid "Analysis failed"
 msgstr "Analysis failed"
 
-#: splitTrackBySilent.py:320
+#: splitTrackBySilent.py:372
 msgid "Analyzing the file for silence at the start and end"
 msgstr "Analyzing the file for silence at the start and end"
 
@@ -266,20 +273,20 @@ msgstr "Analyzing the file for silence at the start and end"
 msgid "Analyzing the file for silent gaps"
 msgstr "Analyzing the file for silent gaps"
 
-#: splitTrackBySilent.py:320
+#: splitTrackBySilent.py:372
 msgid "Analyzing {} files for silence at the start and end"
 msgstr "Analyzing {} files for silence at the start and end"
 
-#: splitTrackBySilent.py:328
+#: splitTrackBySilent.py:380
 msgid "Analyzing {} of {}: {}"
 msgstr "Analyzing {} of {}: {}"
 
 #: splitAlbumByTracks.py:564
-#: splitTrackBySilent.py:319
+#: splitTrackBySilent.py:371
 msgid "Analyzing..."
 msgstr "Analyzing..."
 
-#: mp3Gain.py:530
+#: mp3Gain.py:557
 msgid "Analyzing: {}"
 msgstr "Analyzing: {}"
 
@@ -291,12 +298,12 @@ msgstr "Appl&y"
 msgid "Applies a genre-tuned EQ curve for the selected music style."
 msgstr "Applies a genre-tuned EQ curve for the selected music style."
 
-#: mp3Gain.py:235
+#: mp3Gain.py:243
 #: mp3_mixdown.py:627
 msgid "Apply"
 msgstr "Apply"
 
-#: mp3Gain.py:232
+#: mp3Gain.py:240
 msgid "Apply Album Gain"
 msgstr "Apply Album Gain"
 
@@ -308,7 +315,7 @@ msgstr "Apply Compressor"
 msgid "Apply Limiter"
 msgstr "Apply Limiter"
 
-#: mp3Gain.py:231
+#: mp3Gain.py:239
 msgid "Apply Track Gain"
 msgstr "Apply Track Gain"
 
@@ -382,7 +389,7 @@ msgstr "Audio file split into {} tracks"
 msgid "Audio files"
 msgstr "Audio files"
 
-#: mp3Gain.py:268
+#: mp3Gain.py:276
 msgid "Audio files (*.mp3;*.wav)|*.mp3;*.wav"
 msgstr "Audio files (*.mp3;*.wav)|*.mp3;*.wav"
 
@@ -491,12 +498,12 @@ msgstr "Bottom (pixels):"
 msgid "Broadcast Standard (EBU R128)"
 msgstr "Broadcast Standard (EBU R128)"
 
-#: mp3Gain.py:177
+#: mp3Gain.py:180
 #: mp3_mixdown.py:534
 msgid "Browse Files..."
 msgstr "Browse Files..."
 
-#: mp3Gain.py:180
+#: mp3Gain.py:183
 #: mp3_mixdown.py:537
 msgid "Browse Folder..."
 msgstr "Browse Folder..."
@@ -547,7 +554,7 @@ msgstr "Channel Tools (mono, stereo, swap sides)"
 msgid "Channels:"
 msgstr "Channels:"
 
-#: mp3Gain.py:222
+#: mp3Gain.py:230
 msgid "Check"
 msgstr "Check"
 
@@ -591,7 +598,7 @@ msgstr "Classical"
 msgid "Clean audio export with no added filters."
 msgstr "Clean audio export with no added filters."
 
-#: mp3Gain.py:218
+#: mp3Gain.py:226
 msgid "Clear Analysis"
 msgstr "Clear Analysis"
 
@@ -615,10 +622,10 @@ msgstr "Clicks and crackle"
 msgid "Clipping (distorted peaks)"
 msgstr "Clipping (distorted peaks)"
 
-#: mp3Gain.py:246
+#: mp3Gain.py:254
 #: mp3_mixdown.py:634
 #: splitAlbumByTracks.py:468
-#: splitTrackBySilent.py:252
+#: splitTrackBySilent.py:274
 msgid "Close"
 msgstr "Close"
 
@@ -758,12 +765,12 @@ msgstr "Copy without re-encoding (faster)"
 msgid "Could not analyze the file: {}"
 msgstr "Could not analyze the file: {}"
 
-#: mp3Gain.py:420
-#: mp3Gain.py:433
+#: mp3Gain.py:431
+#: mp3Gain.py:444
 msgid "Could not analyze {}"
 msgstr "Could not analyze {}"
 
-#: mp3Gain.py:457
+#: mp3Gain.py:470
 msgid "Could not create the destination folder for {}"
 msgstr "Could not create the destination folder for {}"
 
@@ -775,7 +782,7 @@ msgstr "Could not download the update. Opening the releases page."
 msgid "Could not play preview: {}"
 msgstr "Could not play preview: {}"
 
-#: mp3Gain.py:573
+#: mp3Gain.py:600
 #: mp3_mixdown.py:506
 msgid "Could not process any of the selected files"
 msgstr "Could not process any of the selected files"
@@ -788,7 +795,7 @@ msgstr "Could not read image dimensions"
 msgid "Could not read video dimensions"
 msgstr "Could not read video dimensions"
 
-#: mp3Gain.py:491
+#: mp3Gain.py:505
 msgid "Created {name} at {target:.1f} dB"
 msgstr "Created {name} at {target:.1f} dB"
 
@@ -927,12 +934,12 @@ msgstr "Delete the preset {}?"
 msgid "Depth (%):"
 msgstr "Depth (%):"
 
-#: mp3Gain.py:204
+#: mp3Gain.py:212
 msgid "Destination Folder"
 msgstr "Destination Folder"
 
 #: splitAlbumByTracks.py:406
-#: splitTrackBySilent.py:189
+#: splitTrackBySilent.py:212
 msgid "Detection"
 msgstr "Detection"
 
@@ -948,8 +955,8 @@ msgstr "Direction"
 msgid "Direction:"
 msgstr "Direction:"
 
-#: mp3Gain.py:571
-#: mp3Gain.py:575
+#: mp3Gain.py:598
+#: mp3Gain.py:602
 #: mp3_mixdown.py:503
 msgid "Done"
 msgstr "Done"
@@ -1164,12 +1171,12 @@ msgstr "Fade-in for Next Track (seconds):"
 msgid "Failed"
 msgstr "Failed"
 
-#: mp3Gain.py:479
+#: mp3Gain.py:493
 msgid "Failed to apply gain to {name}: {reason}"
 msgstr "Failed to apply gain to {name}: {reason}"
 
-#: mp3Gain.py:469
-#: mp3Gain.py:488
+#: mp3Gain.py:483
+#: mp3Gain.py:502
 msgid "Failed to apply gain to {}"
 msgstr "Failed to apply gain to {}"
 
@@ -1207,7 +1214,7 @@ msgstr "Failed to split audio file"
 msgid "Failed to split the audio file"
 msgstr "Failed to split the audio file"
 
-#: splitTrackBySilent.py:652
+#: splitTrackBySilent.py:790
 msgid "Failed to trim the audio files"
 msgstr "Failed to trim the audio files"
 
@@ -1467,9 +1474,13 @@ msgstr "Invalid time values"
 msgid "Jazz"
 msgstr "Jazz"
 
-#: mp3Gain.py:199
+#: mp3Gain.py:202
 msgid "Keep in Same Folder"
 msgstr "Keep in Same Folder"
+
+#: mp3Gain.py:208
+msgid "Keep the original &file names (save in a Gain subfolder)"
+msgstr "Keep the original &file names (save in a Gain subfolder)"
 
 #: mp3_mixdown.py:746
 msgid "Keep the original pitch (key)"
@@ -1504,11 +1515,8 @@ msgstr "Left (pixels):"
 msgid "Left to Right"
 msgstr "Left to Right"
 
-#: splitTrackBySilent.py:199
-msgid "Level of complete silence at the e&nd of a song (dB, lower keeps more of a fade out):"
-msgstr "Level of complete silence at the e&nd of a song (dB, lower keeps more of a fade out):"
-
 #: splitAlbumByTracks.py:419
+#: splitTrackBySilent.py:223
 msgid "Level of complete silence at the e&nd of a track (dB, lower keeps more of a fade out):"
 msgstr "Level of complete silence at the e&nd of a track (dB, lower keeps more of a fade out):"
 
@@ -1642,25 +1650,25 @@ msgstr "M4R Quality:"
 
 #: addonCore.py:281
 #: addonCore.py:490
-#: mp3Gain.py:109
+#: mp3Gain.py:111
 msgid "MP3 Gain"
 msgstr "MP3 Gain"
 
-#: mp3Gain.py:578
+#: mp3Gain.py:605
 msgid "MP3 Gain finished: {ok} done, {failed} failed"
 msgstr "MP3 Gain finished: {ok} done, {failed} failed"
 
-#: mp3Gain.py:343
+#: mp3Gain.py:353
 msgid "MP3 Gain is already processing files"
 msgstr "MP3 Gain is already processing files"
 
-#: mp3Gain.py:580
+#: mp3Gain.py:607
 msgid "MP3 Gain processing complete"
 msgstr "MP3 Gain processing complete"
 
-#: mp3Gain.py:132
-#: mp3Gain.py:276
-#: mp3Gain.py:291
+#: mp3Gain.py:135
+#: mp3Gain.py:284
+#: mp3Gain.py:299
 msgid "MP3 Gain: {} files"
 msgstr "MP3 Gain: {} files"
 
@@ -1674,7 +1682,7 @@ msgstr "MP3 Quality (kbps):"
 msgid "MP3 Quality:"
 msgstr "MP3 Quality:"
 
-#: mp3Gain.py:175
+#: mp3Gain.py:178
 msgid "MP3/WAV Files"
 msgstr "MP3/WAV Files"
 
@@ -1822,7 +1830,7 @@ msgstr "Mixdown: {} files"
 msgid "Mode"
 msgstr "Mode"
 
-#: mp3Gain.py:230
+#: mp3Gain.py:238
 msgid "Modify Gain"
 msgstr "Modify Gain"
 
@@ -1911,7 +1919,7 @@ msgstr "Nightcore Amount"
 msgid "Nightcore and Slowed"
 msgstr "Nightcore and Slowed"
 
-#: mp3Gain.py:293
+#: mp3Gain.py:301
 #: mp3_mixdown.py:443
 msgid "No MP3 or WAV files found in the selected folder."
 msgstr "No MP3 or WAV files found in the selected folder."
@@ -1933,7 +1941,7 @@ msgstr "No file saved"
 msgid "No files selected"
 msgstr "No files selected"
 
-#: splitTrackBySilent.py:410
+#: splitTrackBySilent.py:471
 msgid "No silence to trim was found with these settings."
 msgstr "No silence to trim was found with these settings."
 
@@ -1945,7 +1953,7 @@ msgstr "No silent gaps found"
 msgid "No silent gaps were found in this file. Try a higher silence level, or set the minimum silence to 0.5."
 msgstr "No silent gaps were found in this file. Try a higher silence level, or set the minimum silence to 0.5."
 
-#: splitTrackBySilent.py:528
+#: splitTrackBySilent.py:610
 msgid "No track has silence to trim."
 msgstr "No track has silence to trim."
 
@@ -2168,11 +2176,11 @@ msgstr "Photo List"
 msgid "Playing a {} second preview"
 msgstr "Playing a {} second preview"
 
-#: splitTrackBySilent.py:515
+#: splitTrackBySilent.py:591
 msgid "Playing the beginning of the track"
 msgstr "Playing the beginning of the track"
 
-#: splitTrackBySilent.py:515
+#: splitTrackBySilent.py:591
 msgid "Playing the end of the track"
 msgstr "Playing the end of the track"
 
@@ -2196,7 +2204,7 @@ msgstr "Playing {}-second preview of the original"
 msgid "Plays audio backward at an increased tempo."
 msgstr "Plays audio backward at an increased tempo."
 
-#: mp3Gain.py:362
+#: mp3Gain.py:372
 msgid "Please choose a destination folder, or turn on Keep in Same Folder."
 msgstr "Please choose a destination folder, or turn on Keep in Same Folder."
 
@@ -2216,7 +2224,7 @@ msgstr "Please enter the full path of the destination folder."
 msgid "Please fill in all time entries"
 msgstr "Please fill in all time entries"
 
-#: mp3Gain.py:346
+#: mp3Gain.py:356
 msgid "Please select MP3 or WAV files first, using the Browse button."
 msgstr "Please select MP3 or WAV files first, using the Browse button."
 
@@ -2284,7 +2292,7 @@ msgstr "Pop"
 #: Trim.py:834
 #: merge.py:686
 #: splitAlbumByTracks.py:820
-#: splitTrackBySilent.py:485
+#: splitTrackBySilent.py:561
 msgid "Preparing preview..."
 msgstr "Preparing preview..."
 
@@ -2317,9 +2325,9 @@ msgstr "Preset {} saved"
 msgid "Preview"
 msgstr "Preview"
 
-#: splitTrackBySilent.py:243
-msgid "Preview &beginning"
-msgstr "Preview &beginning"
+#: splitTrackBySilent.py:268
+msgid "Preview &ending"
+msgstr "Preview &ending"
 
 #: Trim.py:468
 msgid "Preview (end {} seconds)"
@@ -2337,10 +2345,6 @@ msgstr "Preview Original (A/B)"
 msgid "Preview created but could not be opened automatically"
 msgstr "Preview created but could not be opened automatically"
 
-#: splitTrackBySilent.py:246
-msgid "Preview e&nding"
-msgstr "Preview e&nding"
-
 #: Trim.py:873
 msgid "Preview failed"
 msgstr "Preview failed"
@@ -2348,7 +2352,7 @@ msgstr "Preview failed"
 #: Trim.py:875
 #: merge.py:712
 #: splitAlbumByTracks.py:842
-#: splitTrackBySilent.py:507
+#: splitTrackBySilent.py:583
 msgid "Preview failed: {}"
 msgstr "Preview failed: {}"
 
@@ -2377,7 +2381,7 @@ msgstr "Processed: {} - New size: {}, Dimensions: {} x {}"
 msgid "Processing track {} of {}"
 msgstr "Processing track {} of {}"
 
-#: splitTrackBySilent.py:586
+#: splitTrackBySilent.py:694
 msgid "Processing {} of {}: {}"
 msgstr "Processing {} of {}: {}"
 
@@ -2385,7 +2389,7 @@ msgstr "Processing {} of {}: {}"
 msgid "Processing..."
 msgstr "Processing..."
 
-#: mp3Gain.py:402
+#: mp3Gain.py:413
 #: mp3_mixdown.py:1486
 #: mp3_mixdown.py:1636
 #: resizeImage.py:748
@@ -2532,7 +2536,7 @@ msgstr "Release (ms):"
 msgid "Remove Photo"
 msgstr "Remove Photo"
 
-#: splitTrackBySilent.py:537
+#: splitTrackBySilent.py:619
 msgid "Remove original track"
 msgstr "Remove original track"
 
@@ -2715,7 +2719,7 @@ msgstr "Save trimmed files in a separate subfolder"
 msgid "Saved in the folder {}"
 msgstr "Saved in the folder {}"
 
-#: splitTrackBySilent.py:661
+#: splitTrackBySilent.py:806
 msgid "Saved in the folder {} next to the originals"
 msgstr "Saved in the folder {} next to the originals"
 
@@ -2771,7 +2775,7 @@ msgstr "Select Destination Folder"
 msgid "Select MP3 or WAV files"
 msgstr "Select MP3 or WAV files"
 
-#: mp3Gain.py:269
+#: mp3Gain.py:277
 msgid "Select MP3/WAV files"
 msgstr "Select MP3/WAV files"
 
@@ -2779,7 +2783,7 @@ msgstr "Select MP3/WAV files"
 msgid "Select a CUE sheet"
 msgstr "Select a CUE sheet"
 
-#: mp3Gain.py:207
+#: mp3Gain.py:215
 msgid "Select a directory"
 msgstr "Select a directory"
 
@@ -2787,7 +2791,7 @@ msgstr "Select a directory"
 msgid "Select a folder containing MP3 or WAV files"
 msgstr "Select a folder containing MP3 or WAV files"
 
-#: mp3Gain.py:280
+#: mp3Gain.py:288
 msgid "Select a folder containing MP3/WAV files"
 msgstr "Select a folder containing MP3/WAV files"
 
@@ -2797,7 +2801,7 @@ msgstr "Select a folder with audio files"
 
 #: merge.py:650
 #: splitAlbumByTracks.py:802
-#: splitTrackBySilent.py:468
+#: splitTrackBySilent.py:534
 msgid "Select a track in the list first."
 msgstr "Select a track in the list first."
 
@@ -2823,6 +2827,10 @@ msgstr "Selected files:"
 msgid "Several loudness normalizers are on together ({names}); they work against each other."
 msgstr "Several loudness normalizers are on together ({names}); they work against each other."
 
+#: splitTrackBySilent.py:217
+msgid "Sh&ortest silence to trim (seconds):"
+msgstr "Sh&ortest silence to trim (seconds):"
+
 #: mp3_mixdown.py:940
 msgid "Shift (Hz):"
 msgstr "Shift (Hz):"
@@ -2840,18 +2848,17 @@ msgid "Shortest Gap to Remove (seconds):"
 msgstr "Shortest Gap to Remove (seconds):"
 
 #: splitAlbumByTracks.py:425
+#: splitTrackBySilent.py:230
 msgid "Silence &after each track (seconds, 0 = none):"
 msgstr "Silence &after each track (seconds, 0 = none):"
 
 #: splitAlbumByTracks.py:422
+#: splitTrackBySilent.py:226
 msgid "Silence &before each track (seconds, 0 = none):"
 msgstr "Silence &before each track (seconds, 0 = none):"
 
-#: splitTrackBySilent.py:196
-msgid "Silence &level (dB, higher counts quieter sound as silence):"
-msgstr "Silence &level (dB, higher counts quieter sound as silence):"
-
 #: splitAlbumByTracks.py:416
+#: splitTrackBySilent.py:220
 msgid "Silence &level (dB, higher finds quieter gaps less):"
 msgstr "Silence &level (dB, higher finds quieter gaps less):"
 
@@ -2878,14 +2885,6 @@ msgstr "Silence between tracks"
 #: merge.py:360
 msgid "Silence between tracks (seconds):"
 msgstr "Silence between tracks (seconds):"
-
-#: splitTrackBySilent.py:207
-msgid "Silence to keep at the &end (seconds):"
-msgstr "Silence to keep at the &end (seconds):"
-
-#: splitTrackBySilent.py:202
-msgid "Silence to keep at the s&tart (seconds):"
-msgstr "Silence to keep at the s&tart (seconds):"
 
 #: mp3_mixdown.py:184
 msgid "Sine"
@@ -2981,15 +2980,15 @@ msgstr "Split Settings"
 
 #: addonCore.py:287
 #: addonCore.py:428
-#: splitTrackBySilent.py:143
+#: splitTrackBySilent.py:166
 msgid "Split Track by Silent"
 msgstr "Split Track by Silent"
 
-#: splitTrackBySilent.py:169
+#: splitTrackBySilent.py:192
 msgid "Split Track by Silent: {}"
 msgstr "Split Track by Silent: {}"
 
-#: splitTrackBySilent.py:171
+#: splitTrackBySilent.py:194
 msgid "Split Track by Silent: {} files"
 msgstr "Split Track by Silent: {} files"
 
@@ -3000,7 +2999,7 @@ msgstr "Split complete! {} tracks created"
 
 #: splitAlbumByTracks.py:988
 #: splitAudio.py:308
-#: splitTrackBySilent.py:650
+#: splitTrackBySilent.py:788
 msgid "Split failed!"
 msgstr "Split failed!"
 
@@ -3060,7 +3059,7 @@ msgstr "Starting merge..."
 
 #: splitAlbumByTracks.py:915
 #: splitAudio.py:223
-#: splitTrackBySilent.py:544
+#: splitTrackBySilent.py:626
 msgid "Starting split operation..."
 msgstr "Starting split operation..."
 
@@ -3187,6 +3186,10 @@ msgstr "The CUE sheet could not be read."
 msgid "The destination folder could not be created."
 msgstr "The destination folder could not be created."
 
+#: splitTrackBySilent.py:604
+msgid "The detection settings changed. Press Analyze again first."
+msgstr "The detection settings changed. Press Analyze again first."
+
 #: Trim.py:268
 #: Trim.py:672
 #: splitAudio.py:188
@@ -3217,7 +3220,7 @@ msgstr "The length of this file is not known yet, so a CUE sheet cannot be check
 msgid "The length of {} is not known yet. Please wait a moment."
 msgstr "The length of {} is not known yet. Please wait a moment."
 
-#: splitTrackBySilent.py:536
+#: splitTrackBySilent.py:618
 msgid "The original track will be sent to the Recycle Bin after it has been trimmed. Continue?"
 msgstr "The original track will be sent to the Recycle Bin after it has been trimmed. Continue?"
 
@@ -3241,7 +3244,7 @@ msgstr "The preview start is past the end of {name}, which is {length} long"
 
 #: merge.py:718
 #: splitAlbumByTracks.py:852
-#: splitTrackBySilent.py:513
+#: splitTrackBySilent.py:589
 msgid "The preview was created but could not be played."
 msgstr "The preview was created but could not be played."
 
@@ -3273,7 +3276,7 @@ msgstr "The selected file has no video stream and cannot be previewed as video."
 msgid "The selected file has no video stream and cannot be trimmed as video. Choose Audio output instead."
 msgstr "The selected file has no video stream and cannot be trimmed as video. Choose Audio output instead."
 
-#: splitTrackBySilent.py:655
+#: splitTrackBySilent.py:793
 msgid "The track was trimmed"
 msgstr "The track was trimmed"
 
@@ -3315,7 +3318,7 @@ msgstr "This file is too large to be a CUE sheet."
 msgid "This mode requires re-encoding"
 msgstr "This mode requires re-encoding"
 
-#: splitTrackBySilent.py:471
+#: splitTrackBySilent.py:537
 msgid "This track has no silence to trim, so there is nothing to preview."
 msgstr "This track has no silence to trim, so there is nothing to preview."
 
@@ -3344,11 +3347,11 @@ msgid "Total progress:"
 msgstr "Total progress:"
 
 #: splitAlbumByTracks.py:449
-#: splitTrackBySilent.py:225
+#: splitTrackBySilent.py:247
 msgid "Track &title:"
 msgstr "Track &title:"
 
-#: mp3Gain.py:216
+#: mp3Gain.py:224
 msgid "Track Analysis"
 msgstr "Track Analysis"
 
@@ -3363,8 +3366,8 @@ msgstr "Track {:02d}"
 
 #: splitAlbumByTracks.py:445
 #: splitAudio.py:86
-#: splitTrackBySilent.py:218
-#: splitTrackBySilent.py:221
+#: splitTrackBySilent.py:240
+#: splitTrackBySilent.py:243
 msgid "Tracks"
 msgstr "Tracks"
 
@@ -3414,7 +3417,7 @@ msgstr "Trim failed!"
 msgid "Trim:"
 msgstr "Trim:"
 
-#: splitTrackBySilent.py:545
+#: splitTrackBySilent.py:627
 msgid "Trimmed"
 msgstr "Trimmed"
 
@@ -3591,8 +3594,8 @@ msgstr "expected {}"
 #: resizeImage.py:706
 #: splitAlbumByTracks.py:591
 #: splitAlbumByTracks.py:828
-#: splitTrackBySilent.py:347
-#: splitTrackBySilent.py:493
+#: splitTrackBySilent.py:399
+#: splitTrackBySilent.py:569
 msgid "ffmpeg could not be started"
 msgstr "ffmpeg could not be started"
 
@@ -3602,15 +3605,15 @@ msgstr "ffmpeg could not be started"
 #: convertVideo.py:379
 #: merge.py:664
 #: merge.py:1029
-#: mp3Gain.py:354
+#: mp3Gain.py:364
 #: mp3_mixdown.py:1561
 #: mp3_mixdown.py:1614
 #: resizeImage.py:640
 #: splitAlbumByTracks.py:553
 #: splitAlbumByTracks.py:886
 #: splitAudio.py:216
-#: splitTrackBySilent.py:307
-#: splitTrackBySilent.py:532
+#: splitTrackBySilent.py:359
+#: splitTrackBySilent.py:614
 msgid "ffmpeg.exe not found"
 msgstr "ffmpeg.exe not found"
 
@@ -3675,7 +3678,7 @@ msgid "the duration could not be read"
 msgstr "the duration could not be read"
 
 #: splitAlbumByTracks.py:573
-#: splitTrackBySilent.py:333
+#: splitTrackBySilent.py:385
 msgid "the duration of this file could not be read"
 msgstr "the duration of this file could not be read"
 
@@ -3742,7 +3745,7 @@ msgstr "{count} effects are switched on:"
 msgid "{count} files trimmed."
 msgstr "{count} files trimmed."
 
-#: splitTrackBySilent.py:407
+#: splitTrackBySilent.py:468
 msgid "{count} of {total} files have silence to trim. Review them in the list, then press Split."
 msgstr "{count} of {total} files have silence to trim. Review them in the list, then press Split."
 
@@ -3765,7 +3768,7 @@ msgstr "{filename}: {result}"
 msgid "{index} of {total}"
 msgstr "{index} of {total}"
 
-#: mp3Gain.py:261
+#: mp3Gain.py:269
 msgid "{name} ({db:.1f} dB)"
 msgstr "{name} ({db:.1f} dB)"
 
@@ -3789,23 +3792,23 @@ msgstr "{number}. {name}: from {start} to {end}, length {length}"
 msgid "{number}. {name}: from {start}, to the end of the track"
 msgstr "{number}. {name}: from {start}, to the end of the track"
 
-#: splitTrackBySilent.py:428
+#: splitTrackBySilent.py:494
 msgid "{number}. {title}: could not be analyzed ({reason})"
 msgstr "{number}. {title}: could not be analyzed ({reason})"
 
-#: splitTrackBySilent.py:419
+#: splitTrackBySilent.py:480
 msgid "{number}. {title}: cut {head} seconds at the start and {tail} seconds at the end, new length {length}"
 msgstr "{number}. {title}: cut {head} seconds at the start and {tail} seconds at the end, new length {length}"
 
-#: splitTrackBySilent.py:424
-msgid "{number}. {title}: no silence to trim"
-msgstr "{number}. {title}: no silence to trim"
+#: splitTrackBySilent.py:490
+msgid "{number}. {title}: no change needed, it is copied as it is"
+msgstr "{number}. {title}: no change needed, it is copied as it is"
 
-#: splitTrackBySilent.py:426
+#: splitTrackBySilent.py:492
 msgid "{number}. {title}: only silence was found, so it is left alone"
 msgstr "{number}. {title}: only silence was found, so it is left alone"
 
-#: splitTrackBySilent.py:429
+#: splitTrackBySilent.py:495
 msgid "{number}. {title}: waiting for analysis"
 msgstr "{number}. {title}: waiting for analysis"
 
@@ -3829,13 +3832,21 @@ msgstr "{width} by {height} pixels, {dpi} DPI"
 msgid "{width} by {height} pixels, {fps} fps, size {size}"
 msgstr "{width} by {height} pixels, {fps} fps, size {size}"
 
-#: splitTrackBySilent.py:657
+#: splitTrackBySilent.py:800
 msgid "{} could not be trimmed: {}"
 msgstr "{} could not be trimmed: {}"
 
 #: splitAlbumByTracks.py:758
 msgid "{} entries did not fit this file and were skipped."
 msgstr "{} entries did not fit this file and were skipped."
+
+#: splitTrackBySilent.py:798
+msgid "{} files needed no change and were copied as they are"
+msgstr "{} files needed no change and were copied as they are"
+
+#: splitTrackBySilent.py:796
+msgid "{} files needed no change and were left where they are"
+msgstr "{} files needed no change and were left where they are"
 
 #: resizeImage.py:363
 msgid "{} files removed"
@@ -3849,15 +3860,15 @@ msgstr "{} is shorter than the cross-fade duration"
 msgid "{} more warnings."
 msgstr "{} more warnings."
 
-#: splitTrackBySilent.py:404
+#: splitTrackBySilent.py:465
 msgid "{} of {} files have silence to trim"
 msgstr "{} of {} files have silence to trim"
 
-#: splitTrackBySilent.py:536
+#: splitTrackBySilent.py:618
 msgid "{} original tracks will be sent to the Recycle Bin after they have been trimmed. Continue?"
 msgstr "{} original tracks will be sent to the Recycle Bin after they have been trimmed. Continue?"
 
-#: splitTrackBySilent.py:659
+#: splitTrackBySilent.py:802
 msgid "{} originals could not be sent to the Recycle Bin and were kept"
 msgstr "{} originals could not be sent to the Recycle Bin and were kept"
 
@@ -3881,9 +3892,13 @@ msgstr "{} tracks found. Review them in the list, then press Split."
 msgid "{} tracks loaded from the CUE sheet. Review them in the list, then press Split."
 msgstr "{} tracks loaded from the CUE sheet. Review them in the list, then press Split."
 
-#: splitTrackBySilent.py:655
+#: splitTrackBySilent.py:793
 msgid "{} tracks trimmed"
 msgstr "{} tracks trimmed"
+
+#: splitTrackBySilent.py:804
+msgid "{} trimmed copies could not take the name of the original and were saved as: {}"
+msgstr "{} trimmed copies could not take the name of the original and were saved as: {}"
 
 #: merge.py:938
 msgid "{} were already in the list"

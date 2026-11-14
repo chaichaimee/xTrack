@@ -21,6 +21,8 @@ addonHandler.initTranslation()
 SUPPORTED_GAIN_EXTENSIONS = (".mp3", ".wav")
 
 DEFAULT_TARGET_VOLUME_DB = 89.0
+# Where the gain copies go when the original file names are kept.
+GAIN_SUBFOLDER_NAME = "Gain"
 # Classic mp3gain expresses loudness on an "89 dB" reference scale rather
 # than dBFS. This offset maps ffmpeg's volumedetect mean-volume (dBFS) onto
 # that same reference scale, so a track's reported value and the target
@@ -127,6 +129,7 @@ class MP3GainDialog(wx.Dialog):
 		self.destination_folder = ""
 		self.output_keep_same_folder = True
 		self.output_destination_folder = ""
+		self.output_keep_names = False
 		self.init_ui()
 		self.load_settings()
 		self.SetTitle(_("MP3 Gain: {} files").format(len(self.selected_files)))
@@ -200,6 +203,11 @@ class MP3GainDialog(wx.Dialog):
 		self.keep_same_folder_checkbox.SetValue(True)
 		self.keep_same_folder_checkbox.Bind(wx.EVT_CHECKBOX, self.on_toggle_keep_same_folder)
 		main_sizer.Add(self.keep_same_folder_checkbox, 0, wx.ALL, 5)
+
+		# Unchecked by default: the result is then named after the source with the target volume added.
+		self.keep_names_checkbox = wx.CheckBox(self, label=_("Keep the original &file names (save in a Gain subfolder)"))
+		self.keep_names_checkbox.SetValue(False)
+		main_sizer.Add(self.keep_names_checkbox, 0, wx.ALL, 5)
 
 		self.dest_folder_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Destination Folder"))
 		destFolderBox = self.dest_folder_sizer.GetStaticBox()
@@ -310,6 +318,7 @@ class MP3GainDialog(wx.Dialog):
 	def load_settings(self):
 		configData = load_config(self.config_path)
 		self.keep_same_folder_checkbox.SetValue(configData.get("MP3GainKeepSameFolder", True))
+		self.keep_names_checkbox.SetValue(bool(configData.get("MP3GainKeepNames", False)))
 		self.destination_folder = configData.get("MP3GainDestinationFolder", "")
 		self.dest_folder_ctrl.SetValue(self.destination_folder)
 		self.update_destination_visibility()
@@ -317,6 +326,7 @@ class MP3GainDialog(wx.Dialog):
 	def save_settings(self):
 		configData = load_config(self.config_path)
 		configData["MP3GainKeepSameFolder"] = self.keep_same_folder_checkbox.GetValue()
+		configData["MP3GainKeepNames"] = self.keep_names_checkbox.GetValue()
 		configData["MP3GainDestinationFolder"] = self.destination_folder
 		save_config(self.config_path, configData)
 
@@ -365,6 +375,7 @@ class MP3GainDialog(wx.Dialog):
 		self.current_action = action
 		self.target_volume_db = self.target_volume_ctrl.GetValue()
 		self.output_keep_same_folder = keepSameFolder
+		self.output_keep_names = self.keep_names_checkbox.GetValue()
 		self.output_destination_folder = self.destination_folder
 		self.save_settings()
 
@@ -453,10 +464,13 @@ class MP3GainDialog(wx.Dialog):
 			audioFilter += ",alimiter=level_in=1:level_out=1:limit=0.99"
 
 		outputDir = self.get_output_directory(file_path)
+		if outputDir is not None and self.output_keep_names:
+			outputDir = self.get_named_output_directory(file_path, outputDir)
 		if outputDir is None:
 			self.post(ui.message, limitSpokenText(_("Could not create the destination folder for {}").format(os.path.basename(file_path))))
 			return False
-		baseName = "{}_gain_{}dB".format(os.path.splitext(os.path.basename(file_path))[0], round(self.target_volume_db))
+		sourceBaseName = os.path.splitext(os.path.basename(file_path))[0]
+		baseName = sourceBaseName if self.output_keep_names else "{}_gain_{}dB".format(sourceBaseName, round(self.target_volume_db))
 		outputPath = os.path.join(outputDir, get_unique_filename(outputDir, baseName, sourceExtension))
 		partPath = partPathFor(outputPath)
 
@@ -491,6 +505,19 @@ class MP3GainDialog(wx.Dialog):
 			_("Created {name} at {target:.1f} dB").format(name=os.path.basename(outputPath), target=self.target_volume_db)
 		))
 		return True
+
+	def get_named_output_directory(self, file_path, outputDir):
+		"""The folder for a copy that keeps the source name: a Gain subfolder whenever the output folder is the source folder, so the copy never lands next to the original under the same name. None when that subfolder cannot be created."""
+		sourceDir = os.path.dirname(file_path)
+		if os.path.normcase(os.path.abspath(outputDir)) != os.path.normcase(os.path.abspath(sourceDir)):
+			return outputDir
+		gainDir = os.path.join(outputDir, GAIN_SUBFOLDER_NAME)
+		try:
+			os.makedirs(gainDir, exist_ok=True)
+		except OSError as e:
+			log.error(f"MP3 Gain failed to create {gainDir}: {e}")
+			return None
+		return gainDir
 
 	def get_output_directory(self, file_path):
 		"""Resolve where Apply should write its output, or None if a requested destination cannot be created. When the file came from a folder import, its relative album subfolder (e.g. b\\ or c\\) is replicated under a custom destination so albums stay separated there too, instead of being dumped together flat."""
